@@ -1,0 +1,31 @@
+[package]
+name = "dnd-nexus"
+version = "1.0.0"
+description = "D&D 5e 2024 Character Sheet Manager"
+authors = ["Your Name"]
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2.0", features = [] }
+
+[dependencies]
+tauri = { version = "2.0", features = [] }
+tauri-plugin-dialog = "2.0"
+tauri-plugin-fs = "2.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+rusqlite = { version = "0.32", features = ["bundled"] }
+uuid = { version = "1.6", features = ["v4", "serde"] }
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "z"
+strip = true
+
+

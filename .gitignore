@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+.pnpm-debug.log
+
+# Production build
+dist
+
+# Rust artifacts
+target
+src-tauri/target
+src-tauri/Cargo.lock
+
+# Database
+*.db
+!dnd5e_strict.db
+
+# IDE
+.vscode
+.cursor
+.idea
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log
+

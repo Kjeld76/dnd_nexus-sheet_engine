@@ -1,0 +1,58 @@
+// Prevents additional console window on Windows in release, DO NOT REMOVE!!
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
+mod db;
+mod core;
+mod commands;
+mod menu;
+
+use db::Database;
+use tauri::Manager;
+
+fn main() {
+    tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
+        .plugin(tauri_plugin_fs::init())
+        .setup(|app| {
+            // Menü initialisieren
+            let menu = menu::build_menu(app.handle())?;
+            app.set_menu(menu)?;
+            
+            app.on_menu_event(move |app, event| {
+                menu::handle_menu_event(app, event);
+            });
+
+            // Datenbank initialisieren
+            let database = db::init_database(app.handle())?;
+            app.manage(database);
+            
+            Ok(())
+        })
+        .invoke_handler(tauri::generate_handler![
+            commands::character::create_character,
+            commands::character::get_character,
+            commands::character::update_character,
+            commands::character::delete_character,
+            commands::character::list_characters,
+            commands::homebrew::create_custom_spell,
+            commands::homebrew::update_custom_spell,
+            commands::homebrew::delete_custom_spell,
+            commands::homebrew::get_all_spells,
+            commands::homebrew::restore_core_spell,
+            commands::pdf::export_character_pdf,
+            commands::files::backup_database,
+            commands::files::import_character,
+            commands::files::export_character,
+            commands::settings::get_setting,
+            commands::settings::set_setting,
+            commands::compendium::get_all_spells,
+            commands::compendium::get_all_species,
+            commands::compendium::get_all_classes,
+            commands::compendium::get_all_items,
+            commands::compendium::get_all_feats,
+            db::seed::import_phb_data,
+        ])
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
+}
+
