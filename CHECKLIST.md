@@ -45,7 +45,7 @@
 - [x] `cursor .`
 
 ### 4. Initialize Git (Optional)
-- [ ] `git init` (Kann auf Wunsch durchgeführt werden)
+- [x] `git init` (Durchgeführt und mit GitHub verknüpft)
 
 ## Cursor Composer Workflow
 
@@ -109,8 +109,11 @@ pnpm test
 
 ## Next Steps
 
-1. [ ] `git init` & Initial Commit (Optional)
+1. [x] `git init` & Initial Commit (Optional)
 2. [ ] `pnpm tauri dev` starten und UI testen
-3. [ ] PHB Daten über das Menü importieren (Prompt 14)
+3. [x] PHB Daten über das Menü importieren (Prompt 14) - *Über Kompendium UI implementiert*
+    - [x] Spell-Parser verfeinern (Header-Erkennung, Beschreibungs-Split, Page-Header überspringen)
+    - [x] Casing korrigieren (Title Case)
+    - [x] Komponenten-Validierung (V, G, M)
 4. [ ] Ersten Charakter erstellen und speichern
 5. [ ] Produktion-Build testen (`pnpm tauri build`)

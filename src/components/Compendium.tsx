@@ -92,15 +92,52 @@ export function Compendium() {
               </div>
               
               {activeTab === 'spells' && (
-                <div className="grid grid-cols-2 gap-2 text-sm text-slate-400">
-                  <div>Grad: {item.level === 0 ? 'Zaubertrick' : item.level}</div>
-                  <div>Schule: {item.school}</div>
-                  <div className="col-span-2 mt-1 line-clamp-2 italic">
+                <div className="mt-4 bg-slate-900/50 border border-slate-700 rounded-lg overflow-hidden">
+                  <div className="grid grid-cols-2 border-b border-slate-700">
+                    <div className="p-3 border-r border-slate-700">
+                      <div className="text-[10px] uppercase text-slate-500 font-bold mb-1">Zeitaufwand</div>
+                      <div className="text-sm flex items-center gap-2">
+                        {item.data.time}
+                        {item.data.ritual && <span className="w-4 h-4 rounded-full border border-indigo-500 flex items-center justify-center text-[10px] text-indigo-400 font-bold" title="Ritual">R</span>}
+                      </div>
+                    </div>
+                    <div className="p-3">
+                      <div className="text-[10px] uppercase text-slate-500 font-bold mb-1">Reichweite</div>
+                      <div className="text-sm">{item.data.range}</div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 border-b border-slate-700">
+                    <div className="p-3 border-r border-slate-700">
+                      <div className="text-[10px] uppercase text-slate-500 font-bold mb-1">Komponenten</div>
+                      <div className="text-sm">{item.data.components || '-'}</div>
+                    </div>
+                    <div className="p-3">
+                      <div className="text-[10px] uppercase text-slate-500 font-bold mb-1">Wirkungsdauer</div>
+                      <div className="text-sm flex items-center gap-2">
+                        {item.data.duration}
+                        {item.data.concentration && <span className="w-4 h-4 rounded-full border border-amber-500 flex items-center justify-center text-[10px] text-amber-400 font-bold" title="Konzentration">C</span>}
+                      </div>
+                    </div>
+                  </div>
+                  {item.data.materials && item.data.materials !== "" && (
+                    <div className="p-3 bg-slate-900/30 text-[11px] text-slate-500 italic border-b border-slate-700">
+                      * ({item.data.materials})
+                    </div>
+                  )}
+                  <div className="p-4 text-sm text-slate-300 leading-relaxed whitespace-pre-wrap border-b border-slate-700 italic">
                     {item.data.description}
                   </div>
-                  <div className="col-span-2 mt-2 flex flex-wrap gap-1">
+                  <div className="p-3 flex justify-between items-center bg-slate-900/80">
+                    <div className="text-xs font-bold text-indigo-400 uppercase tracking-widest">{item.school}</div>
+                    <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                      {item.level === 0 ? 'Zaubertrick' : `${item.level}. Grad`}
+                    </div>
+                  </div>
+                  <div className="p-2 flex flex-wrap gap-1 bg-indigo-900/10">
                     {item.data.classes?.map((c: string) => (
-                      <span key={c} className="bg-indigo-900/30 text-indigo-200 px-2 py-0.5 rounded text-[10px]">{c}</span>
+                      <span key={c} className="text-[9px] uppercase font-bold text-indigo-300/70 px-1.5 py-0.5 border border-indigo-300/20 rounded">
+                        {c}
+                      </span>
                     ))}
                   </div>
                 </div>

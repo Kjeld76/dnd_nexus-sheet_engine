@@ -24,3 +24,4 @@ Create application menu in src-tauri/src/menu.rs:
 
 
 
+

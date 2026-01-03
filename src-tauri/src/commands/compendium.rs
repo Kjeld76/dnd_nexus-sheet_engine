@@ -7,7 +7,7 @@ use serde_json::from_str;
 #[tauri::command]
 pub async fn get_all_spells(db: State<'_, Database>) -> Result<Vec<Spell>, String> {
     let conn = db.0.lock().unwrap();
-    let mut stmt = conn.prepare("SELECT id, name, level, school, data, source FROM all_spells ORDER BY level, name")
+    let mut stmt = conn.prepare("SELECT id, name, level, school, data, source FROM all_spells ORDER BY name")
         .map_err(|e| e.to_string())?;
     
     let iter = stmt.query_map([], |row| {
@@ -121,4 +121,5 @@ pub async fn get_all_feats(db: State<'_, Database>) -> Result<Vec<Feat>, String>
     }
     Ok(results)
 }
+
 

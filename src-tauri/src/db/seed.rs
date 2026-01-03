@@ -13,81 +13,80 @@ struct SeedSpell {
     data: String,
 }
 
+fn to_title_case(s: &str) -> String {
+    if s.is_empty() {
+        return s.to_string();
+    }
+    // Only transform if it's mostly uppercase
+    let is_upper = s.chars().filter(|c| c.is_alphabetic()).all(|c| c.is_uppercase());
+    if is_upper && s.len() > 2 {
+        return s.split_whitespace()
+            .map(|word| {
+                let mut chars = word.chars();
+                match chars.next() {
+                    None => String::new(),
+                    Some(f) => f.to_uppercase().collect::<String>() + &chars.as_str().to_lowercase(),
+                }
+            })
+            .collect::<Vec<_>>()
+            .join(" ");
+    }
+    s.to_string()
+}
+
 pub fn seed_core_data(conn: &mut Connection) -> Result<(), String> {
-    // Clear old data first
+    // Clear old data first before a fresh import
     clear_core_data(conn)?;
 
-    // Try to import from the strict database if it exists
-    let db_path = Path::new("../dnd5e_strict.db");
-    if db_path.exists() {
-        return import_from_strict_db(conn, db_path);
-    }
-
-    let tx = conn.transaction().map_err(|e| e.to_string())?;
-    
-    // Fallback to JSON files if strict DB is not found
-    if let Ok(content) = fs::read_to_string("../tools/output/spells.json") {
-        let spells: Vec<SeedSpell> = serde_json::from_str(&content).map_err(|e| e.to_string())?;
-        for spell in spells {
-            tx.execute(
-                "INSERT OR REPLACE INTO core_spells (id, name, level, school, data) VALUES (?, ?, ?, ?, ?)",
-                (Uuid::new_v4().to_string(), spell.name, spell.level, spell.school, spell.data),
-            ).map_err(|e| e.to_string())?;
+    // 1. Spells import from JSON (extracted from DOCX/PDF)
+    let spells_json_path = Path::new("../tools/output/spells.json");
+    if spells_json_path.exists() {
+        println!("Loading spells from {:?}", spells_json_path);
+        let content = fs::read_to_string(spells_json_path).map_err(|e| e.to_string())?;
+        let spells: serde_json::Value = serde_json::from_str(&content).map_err(|e| e.to_string())?;
+        
+        if let Some(spell_list) = spells.as_array() {
+            for s in spell_list {
+                let name = to_title_case(s["name"].as_str().unwrap_or_default());
+                let level = s["level"].as_i64().unwrap_or(0) as i32;
+                let school = to_title_case(s["school"].as_str().unwrap_or_default());
+                let data = s["data"].to_string();
+                
+                conn.execute(
+                    "INSERT INTO core_spells (id, name, level, school, data) VALUES (?, ?, ?, ?, ?)",
+                    (Uuid::new_v4().to_string(), name, level, school, data),
+                ).map_err(|e| e.to_string())?;
+            }
         }
     }
 
-    tx.commit().map_err(|e| e.to_string())?;
+    // 2. Import rest from strict database
+    let db_paths = [
+        Path::new("dnd5e_strict.db"),
+        Path::new("../dnd5e_strict.db"),
+        Path::new("src-tauri/dnd5e_strict.db"),
+    ];
+
+    let mut db_path = None;
+    for path in db_paths {
+        if path.exists() {
+            db_path = Some(path);
+            break;
+        }
+    }
+
+    if let Some(path) = db_path {
+        return import_remaining_from_strict_db(conn, path);
+    }
+
     Ok(())
 }
 
-fn import_from_strict_db(target_conn: &mut Connection, source_path: &Path) -> Result<(), String> {
+fn import_remaining_from_strict_db(target_conn: &mut Connection, source_path: &Path) -> Result<(), String> {
     let source_conn = Connection::open(source_path).map_err(|e| e.to_string())?;
     let tx = target_conn.transaction().map_err(|e| e.to_string())?;
 
-    // 1. Spells import (with class mapping)
-    let mut stmt = source_conn
-        .prepare("SELECT s.id, s.name, s.level, sc.name as school, s.time, s.range, s.duration, s.description, s.is_concentration, s.is_ritual 
-                  FROM spells s JOIN schools sc ON s.school_id = sc.id")
-        .map_err(|e| e.to_string())?;
-
-    let spell_iter = stmt
-        .query_map([], |row| {
-            let source_id: i32 = row.get(0)?;
-            let name: String = row.get(1)?;
-            let level: i32 = row.get(2)?;
-            let school: String = row.get(3)?;
-            
-            // Get classes for this spell
-            let mut class_stmt = source_conn.prepare("
-                SELECT c.name FROM classes c
-                JOIN spell_classes sc ON c.id = sc.class_id
-                WHERE sc.spell_id = ?
-            ").unwrap();
-            let classes: Vec<String> = class_stmt.query_map([source_id], |c_row| c_row.get(0)).unwrap().map(|c| c.unwrap()).collect();
-
-            let data = json!({
-                "time": row.get::<_, Option<String>>(4)?.unwrap_or_default(),
-                "range": row.get::<_, Option<String>>(5)?.unwrap_or_default(),
-                "duration": row.get::<_, Option<String>>(6)?.unwrap_or_default(),
-                "description": row.get::<_, Option<String>>(7)?.unwrap_or_default(),
-                "concentration": row.get::<_, Option<bool>>(8)?.unwrap_or(false),
-                "ritual": row.get::<_, Option<bool>>(9)?.unwrap_or(false),
-                "classes": classes
-            });
-            Ok((name, level, school, data.to_string()))
-        })
-        .map_err(|e| e.to_string())?;
-
-    for spell in spell_iter {
-        let (name, level, school, data) = spell.map_err(|e| e.to_string())?;
-        tx.execute(
-            "INSERT INTO core_spells (id, name, level, school, data) VALUES (?, ?, ?, ?, ?)",
-            (Uuid::new_v4().to_string(), name, level, school, data),
-        )
-        .map_err(|e| e.to_string())?;
-    }
-
-    // 2. Species import
+    // 1. Species import
     let mut stmt = source_conn
         .prepare("SELECT id, name, speed, size FROM species")
         .map_err(|e| e.to_string())?;
@@ -95,7 +94,7 @@ fn import_from_strict_db(target_conn: &mut Connection, source_path: &Path) -> Re
     let species_iter = stmt
         .query_map([], |row| {
             let source_id: i32 = row.get(0)?;
-            let name: String = row.get(1)?;
+            let name: String = to_title_case(&row.get::<_, String>(1)?);
             let speed: f64 = row.get(2)?;
             let size: String = row.get(3)?;
 
@@ -103,7 +102,7 @@ fn import_from_strict_db(target_conn: &mut Connection, source_path: &Path) -> Re
             let mut trait_stmt = source_conn.prepare("SELECT name, description FROM species_traits WHERE species_id = ?").unwrap();
             let traits: Vec<_> = trait_stmt.query_map([source_id], |t_row| {
                 Ok(json!({
-                    "name": t_row.get::<_, String>(0)?,
+                    "name": to_title_case(&t_row.get::<_, String>(0)?),
                     "description": t_row.get::<_, String>(1)?
                 }))
             }).unwrap().map(|t| t.unwrap()).collect();
@@ -127,7 +126,7 @@ fn import_from_strict_db(target_conn: &mut Connection, source_path: &Path) -> Re
         .map_err(|e| e.to_string())?;
     }
 
-    // 3. Classes import
+    // 2. Classes import
     let mut stmt = source_conn
         .prepare("SELECT name FROM classes")
         .map_err(|e| e.to_string())?;
@@ -135,7 +134,7 @@ fn import_from_strict_db(target_conn: &mut Connection, source_path: &Path) -> Re
     let class_iter = stmt.query_map([], |row| row.get::<_, String>(0)).map_err(|e| e.to_string())?;
 
     for class_name in class_iter {
-        let name = class_name.map_err(|e| e.to_string())?;
+        let name = to_title_case(&class_name.map_err(|e| e.to_string())?);
         let data = json!({}).to_string(); // Minimal data for now
         tx.execute(
             "INSERT INTO core_classes (id, name, data) VALUES (?, ?, ?)",
@@ -144,7 +143,7 @@ fn import_from_strict_db(target_conn: &mut Connection, source_path: &Path) -> Re
         .map_err(|e| e.to_string())?;
     }
 
-    // 4. Items import
+    // 3. Items import
     let mut stmt = source_conn
         .prepare("SELECT i.name, it.name as category, i.cost_cp, i.weight, 
                          w.damage_dice, dt.name as damage_type,
@@ -160,8 +159,8 @@ fn import_from_strict_db(target_conn: &mut Connection, source_path: &Path) -> Re
 
     let item_iter = stmt
         .query_map([], |row| {
-            let name: String = row.get(0)?;
-            let category: String = row.get(1)?;
+            let name: String = to_title_case(&row.get::<_, String>(0)?);
+            let category: String = to_title_case(&row.get::<_, String>(1)?);
             let mut data_map = serde_json::Map::new();
             let cost: Option<i32> = row.get(2).ok();
             data_map.insert("cost_cp".to_string(), json!(cost.unwrap_or(0)));
@@ -170,7 +169,7 @@ fn import_from_strict_db(target_conn: &mut Connection, source_path: &Path) -> Re
 
             if let Ok(Some(dice)) = row.get::<_, Option<String>>(4) {
                 data_map.insert("damage_dice".to_string(), json!(dice));
-                data_map.insert("damage_type".to_string(), json!(row.get::<_, Option<String>>(5).unwrap_or(None)));
+                data_map.insert("damage_type".to_string(), json!(row.get::<_, Option<String>>(5).map(|s| s.map(|x| to_title_case(&x))).unwrap_or(None)));
             }
 
             if let Ok(Some(ac)) = row.get::<_, Option<i32>>(6) {
@@ -181,7 +180,7 @@ fn import_from_strict_db(target_conn: &mut Connection, source_path: &Path) -> Re
             }
 
             if let Ok(Some(rarity)) = row.get::<_, Option<String>>(10) {
-                data_map.insert("rarity".to_string(), json!(rarity));
+                data_map.insert("rarity".to_string(), json!(to_title_case(&rarity)));
                 data_map.insert("attunement".to_string(), json!(row.get::<_, Option<bool>>(11).unwrap_or(None)));
             }
 
@@ -198,7 +197,7 @@ fn import_from_strict_db(target_conn: &mut Connection, source_path: &Path) -> Re
         .map_err(|e| e.to_string())?;
     }
 
-    // 5. Feats import
+    // 4. Feats import
     let mut stmt = source_conn
         .prepare("SELECT id, name, description FROM feats")
         .map_err(|e| e.to_string())?;
@@ -206,14 +205,14 @@ fn import_from_strict_db(target_conn: &mut Connection, source_path: &Path) -> Re
     let feat_iter = stmt
         .query_map([], |row| {
             let source_id: i32 = row.get(0)?;
-            let name: String = row.get(1)?;
+            let name: String = to_title_case(&row.get::<_, String>(1)?);
             let description: String = row.get(2)?;
 
             // Get effects for this feat
             let mut effect_stmt = source_conn.prepare("SELECT effect_type, effect_value FROM feat_effects WHERE feat_id = ?").unwrap();
             let effects: Vec<_> = effect_stmt.query_map([source_id], |e_row| {
                 Ok(json!({
-                    "type": e_row.get::<_, String>(0)?,
+                    "type": to_title_case(&e_row.get::<_, String>(0)?),
                     "value": e_row.get::<_, String>(1)?
                 }))
             }).unwrap().map(|e| e.unwrap()).collect();
@@ -252,7 +251,8 @@ pub fn clear_core_data(conn: &Connection) -> Result<(), String> {
 #[tauri::command]
 pub async fn import_phb_data(db: tauri::State<'_, crate::db::Database>) -> Result<(), String> {
     let mut conn = db.0.lock().unwrap();
-    seed_core_data(&mut conn)
+    println!("Starting PHB Import...");
+    seed_core_data(&mut conn)?;
+    println!("PHB Import finished successfully.");
+    Ok(())
 }
-
-

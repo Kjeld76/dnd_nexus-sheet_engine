@@ -46,6 +46,8 @@ export interface SpellData {
   concentration: boolean;
   ritual: boolean;
   classes: string[];
+  components: string;
+  materials: string;
 }
 
 export interface Species {

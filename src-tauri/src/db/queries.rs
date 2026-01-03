@@ -7,3 +7,4 @@ pub const UPDATE_CHARACTER: &str = "UPDATE characters SET data = ?, updated_at =
 pub const DELETE_CHARACTER: &str = "DELETE FROM characters WHERE id = ?";
 
 
+

@@ -23,6 +23,13 @@ pub fn init_database(app: &AppHandle) -> Result<Database, String> {
     
     // Migrations ausführen
     migrations::run_migrations(&conn)?;
+
+    // Core-Daten automatisch seeden, falls leer
+    let mut conn = conn;
+    let count: i32 = conn.query_row("SELECT COUNT(*) FROM core_spells", [], |r| r.get(0)).unwrap_or(0);
+    if count == 0 {
+        seed::seed_core_data(&mut conn).ok(); // Fehler ignorieren, falls Quelldatei fehlt
+    }
     
     Ok(Database(Mutex::new(conn)))
 }

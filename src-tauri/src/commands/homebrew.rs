@@ -64,36 +64,6 @@ pub async fn delete_custom_spell(
 }
 
 #[tauri::command]
-pub async fn get_all_spells(
-    db: State<'_, Database>,
-) -> Result<Vec<Spell>, String> {
-    let conn = db.0.lock().unwrap();
-    
-    let mut stmt = conn.prepare("SELECT id, name, level, school, data, source FROM all_spells ORDER BY level, name")
-        .map_err(|e| e.to_string())?;
-    
-    let spell_iter = stmt.query_map([], |row| {
-        let data_str: String = row.get(4)?;
-        let data: serde_json::Value = serde_json::from_str(&data_str).unwrap_or(serde_json::json!({}));
-        Ok(Spell {
-            id: row.get(0)?,
-            name: row.get(1)?,
-            level: row.get(2)?,
-            school: row.get(3)?,
-            data,
-            source: row.get(5)?,
-        })
-    }).map_err(|e| e.to_string())?;
-    
-    let mut spells = Vec::new();
-    for spell in spell_iter {
-        spells.push(spell.map_err(|e| e.to_string())?);
-    }
-    
-    Ok(spells)
-}
-
-#[tauri::command]
 pub async fn restore_core_spell(
     db: State<'_, Database>,
     spell_id: String,

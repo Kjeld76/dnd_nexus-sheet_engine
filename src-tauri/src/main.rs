@@ -37,7 +37,6 @@ fn main() {
             commands::homebrew::create_custom_spell,
             commands::homebrew::update_custom_spell,
             commands::homebrew::delete_custom_spell,
-            commands::homebrew::get_all_spells,
             commands::homebrew::restore_core_spell,
             commands::pdf::export_character_pdf,
             commands::files::backup_database,
