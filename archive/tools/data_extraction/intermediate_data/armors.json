@@ -1,0 +1,238 @@
+{
+  "armors": [
+    {
+      "id": "gepolsterte-rüstung",
+      "name": "Gepolsterte Rüstung",
+      "category": "Leichte Rüstung",
+      "base_ac": 11,
+      "strength_requirement": null,
+      "stealth_disadvantage": true,
+      "weight_kg": 4,
+      "cost_gp": 5,
+      "data": {
+        "dex_bonus": {
+          "apply": true,
+          "max": null
+        },
+        "ac_formula": "11 + GES-Modifikator",
+        "source_page": 219
+      }
+    },
+    {
+      "id": "lederrüstung",
+      "name": "Lederrüstung",
+      "category": "Leichte Rüstung",
+      "base_ac": 11,
+      "strength_requirement": null,
+      "stealth_disadvantage": false,
+      "weight_kg": 5,
+      "cost_gp": 10,
+      "data": {
+        "dex_bonus": {
+          "apply": true,
+          "max": null
+        },
+        "ac_formula": "11 + GES-Modifikator",
+        "source_page": 219
+      }
+    },
+    {
+      "id": "beschlagene-lederrüstung",
+      "name": "Beschlagene Lederrüstung",
+      "category": "Leichte Rüstung",
+      "base_ac": 12,
+      "strength_requirement": null,
+      "stealth_disadvantage": false,
+      "weight_kg": 6.5,
+      "cost_gp": 45,
+      "data": {
+        "dex_bonus": {
+          "apply": true,
+          "max": null
+        },
+        "ac_formula": "12 + GES-Modifikator",
+        "source_page": 219
+      }
+    },
+    {
+      "id": "fellrüstung",
+      "name": "Fellrüstung",
+      "category": "Mittelschwere Rüstung",
+      "base_ac": 12,
+      "strength_requirement": null,
+      "stealth_disadvantage": false,
+      "weight_kg": 6,
+      "cost_gp": 10,
+      "data": {
+        "dex_bonus": {
+          "apply": true,
+          "max": 2
+        },
+        "ac_formula": "12 + GES-Modifikator (max. 2)",
+        "source_page": 219
+      }
+    },
+    {
+      "id": "kettenhemd",
+      "name": "Kettenhemd",
+      "category": "Mittelschwere Rüstung",
+      "base_ac": 13,
+      "strength_requirement": null,
+      "stealth_disadvantage": false,
+      "weight_kg": 10,
+      "cost_gp": 50,
+      "data": {
+        "dex_bonus": {
+          "apply": true,
+          "max": 2
+        },
+        "ac_formula": "13 + GES-Modifikator (max. 2)",
+        "source_page": 219
+      }
+    },
+    {
+      "id": "schuppenpanzer",
+      "name": "Schuppenpanzer",
+      "category": "Mittelschwere Rüstung",
+      "base_ac": 14,
+      "strength_requirement": null,
+      "stealth_disadvantage": true,
+      "weight_kg": 22.5,
+      "cost_gp": 50,
+      "data": {
+        "dex_bonus": {
+          "apply": true,
+          "max": 2
+        },
+        "ac_formula": "14 + GES-Modifikator (max. 2)",
+        "source_page": 219
+      }
+    },
+    {
+      "id": "brustplatte",
+      "name": "Brustplatte",
+      "category": "Mittelschwere Rüstung",
+      "base_ac": 14,
+      "strength_requirement": null,
+      "stealth_disadvantage": false,
+      "weight_kg": 10,
+      "cost_gp": 400,
+      "data": {
+        "dex_bonus": {
+          "apply": true,
+          "max": 2
+        },
+        "ac_formula": "14 + GES-Modifikator (max. 2)",
+        "source_page": 219
+      }
+    },
+    {
+      "id": "plattenpanzer",
+      "name": "Plattenpanzer",
+      "category": "Mittelschwere Rüstung",
+      "base_ac": 15,
+      "strength_requirement": null,
+      "stealth_disadvantage": true,
+      "weight_kg": 20,
+      "cost_gp": 750,
+      "data": {
+        "dex_bonus": {
+          "apply": true,
+          "max": 2
+        },
+        "ac_formula": "15 + GES-Modifikator (max. 2)",
+        "source_page": 219
+      }
+    },
+    {
+      "id": "ringpanzer",
+      "name": "Ringpanzer",
+      "category": "Schwere Rüstung",
+      "base_ac": 14,
+      "strength_requirement": null,
+      "stealth_disadvantage": true,
+      "weight_kg": 20,
+      "cost_gp": 30,
+      "data": {
+        "dex_bonus": {
+          "apply": false,
+          "max": null
+        },
+        "ac_formula": "14",
+        "source_page": 219
+      }
+    },
+    {
+      "id": "kettenpanzer",
+      "name": "Kettenpanzer",
+      "category": "Schwere Rüstung",
+      "base_ac": 16,
+      "strength_requirement": 13,
+      "stealth_disadvantage": true,
+      "weight_kg": 27.5,
+      "cost_gp": 75,
+      "data": {
+        "dex_bonus": {
+          "apply": false,
+          "max": null
+        },
+        "ac_formula": "16",
+        "source_page": 219
+      }
+    },
+    {
+      "id": "schienenpanzer",
+      "name": "Schienenpanzer",
+      "category": "Schwere Rüstung",
+      "base_ac": 17,
+      "strength_requirement": 15,
+      "stealth_disadvantage": true,
+      "weight_kg": 30,
+      "cost_gp": 200,
+      "data": {
+        "dex_bonus": {
+          "apply": false,
+          "max": null
+        },
+        "ac_formula": "17",
+        "source_page": 219
+      }
+    },
+    {
+      "id": "ritterrüstung",
+      "name": "Ritterrüstung",
+      "category": "Schwere Rüstung",
+      "base_ac": 18,
+      "strength_requirement": 15,
+      "stealth_disadvantage": true,
+      "weight_kg": 32.5,
+      "cost_gp": 1500,
+      "data": {
+        "dex_bonus": {
+          "apply": false,
+          "max": null
+        },
+        "ac_formula": "18",
+        "source_page": 219
+      }
+    },
+    {
+      "id": "schild",
+      "name": "Schild",
+      "category": "Schild",
+      "base_ac": 2,
+      "strength_requirement": null,
+      "stealth_disadvantage": false,
+      "weight_kg": 3,
+      "cost_gp": 10,
+      "data": {
+        "dex_bonus": {
+          "apply": false,
+          "max": null
+        },
+        "ac_formula": "+2",
+        "source_page": 219
+      }
+    }
+  ]
+}

@@ -1,0 +1,473 @@
+[
+  {
+    "id": "bonus",
+    "name": "BONUS",
+    "category": "Rüstung",
+    "data": {
+      "ac": "00",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "8",
+    "name": "8",
+    "category": "Rüstung",
+    "data": {
+      "ac": "12",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "9",
+    "name": "9",
+    "category": "Rüstung",
+    "data": {
+      "ac": "13",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "10",
+    "name": "10",
+    "category": "Rüstung",
+    "data": {
+      "ac": "10",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "11",
+    "name": "11",
+    "category": "Rüstung",
+    "data": {
+      "ac": "11",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "barbar",
+    "name": "Barbar",
+    "category": "Rüstung",
+    "data": {
+      "ac": "15",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "barde",
+    "name": "Barde",
+    "category": "Rüstung",
+    "data": {
+      "ac": "14",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "druide",
+    "name": "Druide",
+    "category": "Rüstung",
+    "data": {
+      "ac": "12",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "hexenmeister",
+    "name": "Hexenmeister",
+    "category": "Rüstung",
+    "data": {
+      "ac": "14",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "kämpfer",
+    "name": "Kämpfer",
+    "category": "Rüstung",
+    "data": {
+      "ac": "15",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "kleriker",
+    "name": "Kleriker",
+    "category": "Rüstung",
+    "data": {
+      "ac": "14",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "magier",
+    "name": "Magier",
+    "category": "Rüstung",
+    "data": {
+      "ac": "12",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "mönch",
+    "name": "Mönch",
+    "category": "Rüstung",
+    "data": {
+      "ac": "12",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "paladin",
+    "name": "Paladin",
+    "category": "Rüstung",
+    "data": {
+      "ac": "15",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "schurke",
+    "name": "Schurke",
+    "category": "Rüstung",
+    "data": {
+      "ac": "12",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "waldläufer",
+    "name": "Waldläufer",
+    "category": "Rüstung",
+    "data": {
+      "ac": "12",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "zauberer",
+    "name": "Zauberer",
+    "category": "Rüstung",
+    "data": {
+      "ac": "10",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "10-11",
+    "name": "10-11",
+    "category": "Rüstung",
+    "data": {
+      "ac": "20",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "gesinnung",
+    "name": "Gesinnung",
+    "category": "Waffe",
+    "data": {
+      "damage": "1W4",
+      "type": "",
+      "weight": 0,
+      "price": 0,
+      "properties": ""
+    }
+  },
+  {
+    "id": "13",
+    "name": "13",
+    "category": "Rüstung",
+    "data": {
+      "ac": "13",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "17",
+    "name": "17",
+    "category": "Rüstung",
+    "data": {
+      "ac": "17",
+      "weight": 0,
+      "price": 0,
+      "strength_req": 0,
+      "stealth_disadvantage": false
+    }
+  },
+  {
+    "id": "1w6",
+    "name": "1W6",
+    "category": "Waffe",
+    "data": {
+      "damage": "1W6",
+      "type": "",
+      "weight": 0,
+      "price": 0,
+      "properties": ""
+    }
+  },
+  {
+    "id": "1w8",
+    "name": "1W8",
+    "category": "Waffe",
+    "data": {
+      "damage": "1W8",
+      "type": "",
+      "weight": 0,
+      "price": 0,
+      "properties": ""
+    }
+  },
+  {
+    "id": "1w10",
+    "name": "1W10",
+    "category": "Waffe",
+    "data": {
+      "damage": "1W10",
+      "type": "",
+      "weight": 0,
+      "price": 0,
+      "properties": ""
+    }
+  },
+  {
+    "id": "1w12",
+    "name": "1W12",
+    "category": "Waffe",
+    "data": {
+      "damage": "1W12",
+      "type": "",
+      "weight": 0,
+      "price": 0,
+      "properties": ""
+    }
+  },
+  {
+    "id": "gepolsterte-rüstung",
+    "name": "Gepolsterte Rüstung",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 500,
+      "weight": 4
+    }
+  },
+  {
+    "id": "lederrüstung",
+    "name": "Lederrüstung",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 1000,
+      "weight": 5
+    }
+  },
+  {
+    "id": "beschlagene-lederrüstung",
+    "name": "Beschlagene Lederrüstung",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 4500,
+      "weight": 6.5
+    }
+  },
+  {
+    "id": "nachteil",
+    "name": "Nachteil",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 5000,
+      "weight": 22.5
+    }
+  },
+  {
+    "id": "stä-13",
+    "name": "STÄ 13",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 7500,
+      "weight": 27.5
+    }
+  },
+  {
+    "id": "stä-15",
+    "name": "STÄ 15",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 20000,
+      "weight": 30
+    }
+  },
+  {
+    "id": "",
+    "name": "",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 1000,
+      "weight": 3
+    }
+  },
+  {
+    "id": "holzstab-auch-kampfstab",
+    "name": "Holzstab (auch Kampfstab)",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 500,
+      "weight": 2
+    }
+  },
+  {
+    "id": "dogge",
+    "name": "Dogge",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 2500,
+      "weight": 97.5
+    }
+  },
+  {
+    "id": "elefant",
+    "name": "Elefant",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 20000,
+      "weight": 2
+    }
+  },
+  {
+    "id": "kamel",
+    "name": "Kamel",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 5000,
+      "weight": 400
+    }
+  },
+  {
+    "id": "maultier",
+    "name": "Maultier",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 800,
+      "weight": 210
+    }
+  },
+  {
+    "id": "pony",
+    "name": "Pony",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 3000,
+      "weight": 112.5
+    }
+  },
+  {
+    "id": "reitpferd",
+    "name": "Reitpferd",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 7500,
+      "weight": 240
+    }
+  },
+  {
+    "id": "streitross",
+    "name": "Streitross",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 40000,
+      "weight": 270
+    }
+  },
+  {
+    "id": "zugpferd",
+    "name": "Zugpferd",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 5000,
+      "weight": 270
+    }
+  },
+  {
+    "id": "futter-pro-tag",
+    "name": "Futter (pro Tag)",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 5,
+      "weight": 5
+    }
+  },
+  {
+    "id": "karren",
+    "name": "Karren",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 1500,
+      "weight": 100
+    }
+  },
+  {
+    "id": "kutsche",
+    "name": "Kutsche",
+    "category": "Ausrüstung",
+    "data": {
+      "price": 10000,
+      "weight": 300
+    }
+  }
+]

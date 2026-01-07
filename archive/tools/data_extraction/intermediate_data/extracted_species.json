@@ -1,0 +1,403 @@
+[
+  {
+    "id": "aasimar",
+    "name": "AASIMAR",
+    "size": "Small",
+    "speed": 9,
+    "ability_score_increase": {
+      "type": "choice",
+      "choice": {
+        "count": 0,
+        "amount": 0
+      }
+    },
+    "traits": [
+      {
+        "name": "Dunkelsicht",
+        "description": "Du hast Dunkelsicht mit einer Reichweite von 18 Metern.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Heilende Hände",
+        "description": "Als magische Aktion kannst du eine Kreatur berühren und mit einer Anzahl von W4 in Höhe deines Übungsbonus würfeln. Die Kreatur erhält Trefferpunkte in Höhe des Gesamtergebnisses zurück. Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Lichtträger",
+        "description": "Du kennst den Zaubertrick Licht. Dein Attribut zum Wirken des Zaubers ist Charisma.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Celestische Offenbarung",
+        "description": "Wenn du die 3. Charakterstufe erreichst, kannst du dich als Bonusaktion entsprechend einer der Optionen unten verwandeln (wähle bei jeder Verwandlung eine Option aus). Die Verwandlung bleibt eine Minute lang bestehen, oder bis du sie beendest (keine Aktion erforderlich). Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden. Bis zum Ende der Verwandlung kannst du einmal pro Zug einem Ziel, dem du mit einem Angriff oder einem Zauber Schaden zufügst, zusätzlichen Schaden zufügen. Der zusätzliche Schaden entspricht deinem Übungsbonus und ist entweder gleißend (bei Himmlische Flügel und Inneres Strahlen) oder nekrotisch (bei Nekrotische Spukgestalt). Dies sind deine Verwandlungsoptionen:",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Himmlische Flügel",
+        "description": "Dir wachsen vorübergehend zwei geisterhafte Flügel. Bis zum Ende der Verwandlung hast du eine Flugbewegungsrate in Höhe deiner Bewegungsrate.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Inneres Strahlen",
+        "description": "Vorübergehend strahlt dir intensives Licht aus Augen und Mund. Für die Wirkungsdauer spendest du in einem Radius von drei Metern helles Licht und in einem Radius von weiteren drei Metern dämmriges Licht, und am Ende jedes deiner Züge erleidet jede Kreatur im Abstand von bis zu drei Metern von dir gleißenden Schaden in Höhe deines Übungsbonus.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Nekrotische Spukgestalt",
+        "description": "Deine Augen werden kurz zu Tümpeln der Dunkelheit, und dir wachsen flugunfähige Flügel. Alle Kreaturen im Abstand von bis zu drei Metern von dir, die nicht mit dir verbündet sind, müssen einen Charismarettungswurf (SG 8 plus dein Charismamodifikator plus dein Übungsbonus) bestehen, oder sie sind bis zum Ende deines nächsten Zugs verängstigt.",
+        "mechanical_effect": {}
+      }
+    ],
+    "languages": {
+      "known": [
+        "Gemeinsprache"
+      ],
+      "choose": 1
+    },
+    "data": {
+      "darkvision": 60
+    }
+  },
+  {
+    "id": "drachenblütiger",
+    "name": "DRACHENBLÜTIGER",
+    "size": "Medium",
+    "speed": 9,
+    "ability_score_increase": {
+      "type": "choice",
+      "choice": {
+        "count": 0,
+        "amount": 0
+      }
+    },
+    "traits": [
+      {
+        "name": "Drakonische Abstammung",
+        "description": "Deine Abstammungslinie geht auf einen Drachenvorfahren zurück. Wähle die Art des Drachen aus der Tabelle „Drakonische Ahnen\" aus. Diese Entscheidung bestimmt deine Odemwaffe, deine Schadensresistenz sowie dein Erscheinungsbild.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Drakonischer Flug",
+        "description": "Wenn du die 5. Charakterstufe erreichst, kannst du drakonische Magie kanalisieren, um vorübergehend fliegen zu können. Als Bonusaktion kannst du dir geisterhafte Flügel wachsen lassen, die zehn Minuten erhalten bleiben, oder bis du die Flügel verwirfst (keine Aktion erforderlich) oder kampfunfähig wirst. Mit den Flügeln hast du eine Flugbewegungsrate in Höhe deiner Bewegungsrate. Das Erscheinungsbild deiner Flügel entspricht der Energie deiner Odemwaffe. Du kannst dieses Merkmal erst nach einer langen Rast erneut verwenden.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Dunkelsicht",
+        "description": "Du hast Dunkelsicht mit einer Reichweite von 18 Metern.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Odemwaffe",
+        "description": "Wenn du in deinem Zug die Angriffsaktion ausführst, kannst du einen der Angriffe durch ein Ausatmen magischer Energie ersetzen (Kegel 4,5m oder Linie 9m). Schadenstyp nach drakonischer Abstammung. Schaden skaliert mit Stufe.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Schadensresistenz",
+        "description": "Du bist gegen die Schadensart resistent, die mit deiner drakonischen Abstammung assoziiert ist.",
+        "mechanical_effect": {}
+      }
+    ],
+    "languages": {
+      "known": [
+        "Gemeinsprache"
+      ],
+      "choose": 1
+    },
+    "data": {
+      "darkvision": 60
+    }
+  },
+  {
+    "id": "zwerg",
+    "name": "ZWERG",
+    "size": "Medium",
+    "speed": 9,
+    "ability_score_increase": {
+      "type": "choice",
+      "choice": {
+        "count": 0,
+        "amount": 0
+      }
+    },
+    "traits": [
+      {
+        "name": "Dunkelsicht",
+        "description": "Du hast Dunkelsicht mit einer Reichweite von 18 Metern.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Zwergische Unverwüstlichkeit",
+        "description": "Du bist gegen Giftschaden resistent. Außerdem bist du bei Rettungswürfen zum Vermeiden oder Beenden des Zustands Vergiftet im Vorteil.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Zwergische Zähigkeit",
+        "description": "Dein Trefferpunktemaximum wird um 1 und bei jedem Stufenaufstieg um 1 weiteren Punkt erhöht.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Steingespür",
+        "description": "Als Bonusaktion erhältst du zehn Minuten lang Erschütterungssinn mit einer Reichweite von 18 Metern. Du musst dich auf einer steinernen Oberfläche befinden oder eine solche berühren, um den Erschütterungssinn nutzen zu können. Die Häufigkeit entspricht deinem Übungsbonus. Du erhältst alle Anwendungen nach einer langen Rast zurück.",
+        "mechanical_effect": {}
+      }
+    ],
+    "languages": {
+      "known": [
+        "Gemeinsprache"
+      ],
+      "choose": 1
+    },
+    "data": {
+      "darkvision": 60
+    }
+  },
+  {
+    "id": "elf",
+    "name": "ELF",
+    "size": "Medium",
+    "speed": 9,
+    "ability_score_increase": {
+      "type": "choice",
+      "choice": {
+        "count": 0,
+        "amount": 0
+      }
+    },
+    "traits": [
+      {
+        "name": "Dunkelsicht",
+        "description": "Du hast Dunkelsicht mit einer Reichweite von 18 Metern.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Eifische Abstammung",
+        "description": "Du bist Teil einer Abstammungslinie (Drow, Hochelf, Waldelf), die dir übernatürliche Fähigkeiten und Zauber gewährt.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Feenblut",
+        "description": "Du bist bei Rettungswürfen zum Vermeiden oder Beenden des",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Scharfe Sinne",
+        "description": "Du bist in einer der Fertigkeiten Motiv erkennen, Überlebenskunst oder Wahrnehmung geübt.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Trance",
+        "description": "Du musst nicht schlafen und kannst eine lange Rast in vier Stunden beenden, wenn du diese Stunden in tranceartiger Meditation verbringst.",
+        "mechanical_effect": {}
+      }
+    ],
+    "languages": {
+      "known": [
+        "Gemeinsprache"
+      ],
+      "choose": 1
+    },
+    "data": {
+      "darkvision": 60
+    }
+  },
+  {
+    "id": "gnom",
+    "name": "GNOM",
+    "size": "Small",
+    "speed": 9,
+    "ability_score_increase": {
+      "type": "choice",
+      "choice": {
+        "count": 0,
+        "amount": 0
+      }
+    },
+    "traits": [
+      {
+        "name": "Gnomische Abstammung",
+        "description": "Du bist Teil einer Abstammungs­linie, die dir übernatürliche Fähigkeiten gewährt. Wähle eine der folgenden Optionen aus. Charisma, Intelligenz oder Weisheit ist dein Attribut zum Wirken der Zauber dieser Abstammungslinie (wähle das Attribut aus, wenn du dich für eine Linie entscheidest).",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Gnomische Gerissenheit",
+        "description": "Du bist bei Charisma-, Intelligenz- und Weisheitsrettungswürfen im Vorteil.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Felsengnom",
+        "description": "Du kennst die Zaubertricks Ausbessern und Taschenspielerei. Außerdem kannst du zehn Minuten verwenden und den Zaubertrick Taschenspielerei wirken, um ein winziges Uhrwerkgerät (RK 5,1 TP) zu bauen, beispielsweise ein Spielzeug, einen Anzünder oder eine Spieluhr. Bestimme die Funktion des Geräts, indem du einen Effekt von Taschenspielerei auswählst. Das Gerät erzeugt den Effekt, wann immer du - oder eine andere Kreatur - eine Bonusaktion ausführst, um es mit einer Berührung zu aktivieren. Wenn der ausgewählte Effekt Optionen aufweist, entscheidest du dich für eine dieser Optionen, wenn du das Gerät baust. Beispiel: Wenn du den Entfachen- und Löschen-Effekt des Zaubers auswählst, entscheidest du, ob das Gerät Feuer entfacht oder löscht — das Gerät tut nicht beides. Du kannst bis zu drei dieser Geräte gleichzeitig verfügbar haben. Jedes Gerät fällt entweder acht Stunden nach seiner Erschaffung oder dann auseinander, wenn du es mit einer Berührung (eine Verwenden-Aktion) zerlegst.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Waldgnom",
+        "description": "Du kennst den Zaubertrick Einfache Illusion. Außerdem hast du den Zauber Mit Tieren sprechen stets vorbereitet. Die Anzahl der Male, die du den Zauber ohne Zauberplatz wirken kannst, entspricht deinem Übungsbonus. Du erhältst alle verbrauchten Anwendungen nach einer langen Rast zurück. Du kannst den Zauber auch mit einem verfügbaren Zauberplatz wirken. I9O",
+        "mechanical_effect": {}
+      }
+    ],
+    "languages": {
+      "known": [
+        "Gemeinsprache"
+      ],
+      "choose": 1
+    },
+    "data": {
+      "darkvision": 60
+    }
+  },
+  {
+    "id": "goliath",
+    "name": "GOLIATH",
+    "size": "Medium",
+    "speed": 10.5,
+    "ability_score_increase": {
+      "type": "choice",
+      "choice": {
+        "count": 0,
+        "amount": 0
+      }
+    },
+    "traits": [
+      {
+        "name": "Ahne der Riesen",
+        "description": "Beschreibung folgt.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Großer Körperbau",
+        "description": "Beschreibung folgt.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Harte Schale",
+        "description": "Beschreibung folgt.",
+        "mechanical_effect": {}
+      }
+    ],
+    "languages": {
+      "known": [
+        "Gemeinsprache"
+      ],
+      "choose": 1
+    },
+    "data": {
+      "darkvision": 0
+    }
+  },
+  {
+    "id": "halbling",
+    "name": "HALBLING",
+    "size": "Small",
+    "speed": 9,
+    "ability_score_increase": {
+      "type": "choice",
+      "choice": {
+        "count": 0,
+        "amount": 0
+      }
+    },
+    "traits": [
+      {
+        "name": "Mutig",
+        "description": "Beschreibung folgt.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Halbling-Gewandtheit",
+        "description": "Beschreibung folgt.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Glückspilz",
+        "description": "Beschreibung folgt.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Tapfer",
+        "description": "Beschreibung folgt.",
+        "mechanical_effect": {}
+      }
+    ],
+    "languages": {
+      "known": [
+        "Gemeinsprache"
+      ],
+      "choose": 1
+    },
+    "data": {
+      "darkvision": 0
+    }
+  },
+  {
+    "id": "mensch",
+    "name": "MENSCH",
+    "size": "Small",
+    "speed": 9,
+    "ability_score_increase": {
+      "type": "choice",
+      "choice": {
+        "count": 0,
+        "amount": 0
+      }
+    },
+    "traits": [
+      {
+        "name": "Vielseitig",
+        "description": "Du erhältst ein Herkunftstalent deiner Wahl. Außerdem bist du in einer Fertigkeit deiner Wahl geübt.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Entschlossen",
+        "description": "Wenn du bei einer W20-Prüfung eine 1 würfelst, erhältst du Heldische Inspiration.",
+        "mechanical_effect": {}
+      }
+    ],
+    "languages": {
+      "known": [
+        "Gemeinsprache"
+      ],
+      "choose": 1
+    },
+    "data": {
+      "darkvision": 60
+    }
+  },
+  {
+    "id": "tiefling",
+    "name": "TIEFLING",
+    "size": "Small",
+    "speed": 9,
+    "ability_score_increase": {
+      "type": "choice",
+      "choice": {
+        "count": 0,
+        "amount": 0
+      }
+    },
+    "traits": [
+      {
+        "name": "Dunkelsicht",
+        "description": "Du hast Dunkelsicht mit einer Reichweite von 18 Metern.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Andere Welten",
+        "description": "Du hast eines der folgenden Erben: Abyssischer Tiefling, Chthonischer Tiefling oder Infernalischer Tiefling. Dies bestimmt deinen Zaubertrick und deine Resistenzen.",
+        "mechanical_effect": {}
+      },
+      {
+        "name": "Tiefling-Abstammung",
+        "description": "Du beherrscht zusätzliche Zauber basierend auf deinem Erbe.",
+        "mechanical_effect": {}
+      }
+    ],
+    "languages": {
+      "known": [
+        "Gemeinsprache"
+      ],
+      "choose": 1
+    },
+    "data": {
+      "darkvision": 60
+    }
+  }
+]

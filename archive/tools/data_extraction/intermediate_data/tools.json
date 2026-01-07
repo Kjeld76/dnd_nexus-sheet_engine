@@ -1,0 +1,535 @@
+{
+  "tools": [
+    {
+      "id": "alchemistenausrüstung",
+      "name": "Alchemistenausrüstung",
+      "category": "Werkzeug",
+      "cost_gp": 50,
+      "weight_kg": 4,
+      "data": {
+        "abilities": [
+          "INT"
+        ],
+        "use_actions": [
+          {
+            "action": "Eine Substanz identifizieren",
+            "dc": 15
+          }
+        ],
+        "crafting_items": [],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "brauerzubehör",
+      "name": "Brauerzubehör",
+      "category": "Werkzeug",
+      "cost_gp": 20,
+      "weight_kg": 4.5,
+      "data": {
+        "abilities": [
+          "INT"
+        ],
+        "use_actions": [
+          {
+            "action": "Ein vergiftetes Getränk erkennen",
+            "dc": 15
+          }
+        ],
+        "crafting_items": [],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "glasbläserwerkzeug",
+      "name": "Glasbläserwerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 30,
+      "weight_kg": 2.5,
+      "data": {
+        "abilities": [
+          "INT"
+        ],
+        "use_actions": [],
+        "crafting_items": [
+          "Fernrühr",
+          "Glasflasche",
+          "Lupe",
+          "Phiüle"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "holzschnitzerwerkzeug",
+      "name": "Holzschnitzerwerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 1,
+      "weight_kg": 2.5,
+      "data": {
+        "abilities": [
+          "DEX"
+        ],
+        "use_actions": [
+          {
+            "action": "Muster in Hülz schnitzen",
+            "dc": 10
+          }
+        ],
+        "crafting_items": [
+          "Fernkampfwaffen (außer Muskete",
+          "Pistüle"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "juwelierwerkzeug",
+      "name": "Juwelierwerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 25,
+      "weight_kg": 1,
+      "data": {
+        "abilities": [
+          "INT"
+        ],
+        "use_actions": [
+          {
+            "action": "Den Wert eines Edelsteins bestimmen",
+            "dc": 15
+          }
+        ],
+        "crafting_items": [
+          "Arkaner Fükus",
+          "Heiliges Symbül"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "kalligrafenwerkzeug",
+      "name": "Kalligrafenwerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 10,
+      "weight_kg": 2.5,
+      "data": {
+        "abilities": [
+          "DEX"
+        ],
+        "use_actions": [
+          {
+            "action": "Ästhetischen und fälschungssicheren Text nütieren",
+            "dc": 15
+          }
+        ],
+        "crafting_items": [
+          "Tinte",
+          "Zauberschriftrülle"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "kartografenwerkzeug",
+      "name": "Kartografenwerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 15,
+      "weight_kg": 3,
+      "data": {
+        "abilities": [
+          "WIS"
+        ],
+        "use_actions": [
+          {
+            "action": "Die Karte eines kleinen Gebiets zeichnen",
+            "dc": 15
+          }
+        ],
+        "crafting_items": [
+          "Karte"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "kochutensilien",
+      "name": "Kochutensilien",
+      "category": "Werkzeug",
+      "cost_gp": 1,
+      "weight_kg": 4,
+      "data": {
+        "abilities": [
+          "WIS"
+        ],
+        "use_actions": [
+          {
+            "action": "Geschmack vün Nahrung verbessern",
+            "dc": 10
+          },
+          {
+            "action": "vergiftete Nahrung erkennen",
+            "dc": 15
+          }
+        ],
+        "crafting_items": [
+          "Ratiünen"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "ledererwerkzeug",
+      "name": "Ledererwerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 5,
+      "weight_kg": 2.5,
+      "data": {
+        "abilities": [
+          "DEX"
+        ],
+        "use_actions": [],
+        "crafting_items": [
+          "Peitsche",
+          "Schleuder",
+          "Fellrüstung",
+          "beschlagene Lederrüstung",
+          "Lederrüstung",
+          "ArmbrustbülzenöBeutel",
+          "Behälter für Karten üder Schriftrüllen",
+          "Beutel",
+          "Köcher",
+          "Pergament",
+          "Rucksack",
+          "Trinkschlauch"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "malutensilien",
+      "name": "Malutensilien",
+      "category": "Werkzeug",
+      "cost_gp": 10,
+      "weight_kg": 2.5,
+      "data": {
+        "abilities": [
+          "WIS"
+        ],
+        "use_actions": [
+          {
+            "action": "Ein erkennbares Bild vün etwas anfertigen, was du gesehen hast",
+            "dc": 10
+          }
+        ],
+        "crafting_items": [
+          "Druidischer Fükus",
+          "Heiliges Symbül"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "maurerwerkzeug",
+      "name": "Maurerwerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 10,
+      "weight_kg": 4,
+      "data": {
+        "abilities": [
+          "STR"
+        ],
+        "use_actions": [],
+        "crafting_items": [],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "schmiedewerkzeug",
+      "name": "Schmiedewerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 20,
+      "weight_kg": 4,
+      "data": {
+        "abilities": [
+          "STR"
+        ],
+        "use_actions": [
+          {
+            "action": "einen Behälter aufbrechen",
+            "dc": 20
+          }
+        ],
+        "crafting_items": [
+          "Jede Nahkampfwaffe (außer Kampfstab",
+          "Knüppel",
+          "Peitsche und Zweihandknüppel)",
+          "mittelschwere Rüstung (außer Fellrüstung)",
+          "schwere Rüstung",
+          "Brechstange",
+          "Eimer",
+          "Eisenstachel",
+          "Eisentüpf",
+          "Enterhaken",
+          "Feuerwaffenmunitiün",
+          "Kette",
+          "Krähenfüße",
+          "Metallkügelchen",
+          "Schleudermunitiün"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "schreinerwerkzeug",
+      "name": "Schreinerwerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 8,
+      "weight_kg": 3,
+      "data": {
+        "abilities": [
+          "STR"
+        ],
+        "use_actions": [],
+        "crafting_items": [],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "schusterwerkzeug",
+      "name": "Schusterwerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 5,
+      "weight_kg": 2.5,
+      "data": {
+        "abilities": [
+          "DEX"
+        ],
+        "use_actions": [],
+        "crafting_items": [],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "töpferwerkzeug",
+      "name": "Töpferwerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 10,
+      "weight_kg": 1.5,
+      "data": {
+        "abilities": [
+          "INT"
+        ],
+        "use_actions": [
+          {
+            "action": "Bestimmen, was ein Keramikbehälter in den letzten 24 Stunden enthalten hat",
+            "dc": 15
+          }
+        ],
+        "crafting_items": [
+          "Krug",
+          "Lampe"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "tüftlerwerkzeug",
+      "name": "Tüftlerwerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 50,
+      "weight_kg": 5,
+      "data": {
+        "abilities": [
+          "DEX"
+        ],
+        "use_actions": [
+          {
+            "action": "Einen winzigen Gegenstand aus Abfällen herstellen, der nach einer Minute zerfällt",
+            "dc": 20
+          }
+        ],
+        "crafting_items": [
+          "Muskete",
+          "Pistüle",
+          "Glücke",
+          "abdeckbare Laterne",
+          "Blendlaterne",
+          "Flasche",
+          "Handschellen",
+          "Jagdfalle",
+          "Schaufel",
+          "Schlüss",
+          "Signalpfeife",
+          "Spiegel",
+          "Zunderkästchen"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "weberwerkzeug",
+      "name": "Weberwerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 1,
+      "weight_kg": 2.5,
+      "data": {
+        "abilities": [
+          "DEX"
+        ],
+        "use_actions": [
+          {
+            "action": "Einen Riss in Kleidung flicken",
+            "dc": 10
+          },
+          {
+            "action": "eine winzige Näharbeit anfertigen",
+            "dc": 10
+          }
+        ],
+        "crafting_items": [
+          "Gepülsterte Rüstung",
+          "feine Kleidung",
+          "Decke",
+          "Netz",
+          "Kürb",
+          "Reisekleidung",
+          "Rübe",
+          "Sack",
+          "Seil",
+          "Schlafsack",
+          "Schnur",
+          "Zelt"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "diebeswerkzeug",
+      "name": "Diebeswerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 25,
+      "weight_kg": 0.5,
+      "data": {
+        "abilities": [
+          "DEX"
+        ],
+        "use_actions": [
+          {
+            "action": "Ein Schlüss knacken",
+            "dc": 15
+          },
+          {
+            "action": "eine Falle entschärfen",
+            "dc": 15
+          }
+        ],
+        "crafting_items": [],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "fälscherausrüstung",
+      "name": "Fälscherausrüstung",
+      "category": "Werkzeug",
+      "cost_gp": 15,
+      "weight_kg": 2.5,
+      "data": {
+        "abilities": [
+          "DEX"
+        ],
+        "use_actions": [],
+        "crafting_items": [],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "giftmischerausrüstung",
+      "name": "Giftmischerausrüstung",
+      "category": "Werkzeug",
+      "cost_gp": 50,
+      "weight_kg": 1,
+      "data": {
+        "abilities": [
+          "INT"
+        ],
+        "use_actions": [
+          {
+            "action": "Einen vergifteten Gegenstand erkennen",
+            "dc": 10
+          }
+        ],
+        "crafting_items": [
+          "Einfaches Gift"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "kräuterkundeausrüstung",
+      "name": "Kräuterkundeausrüstung",
+      "category": "Werkzeug",
+      "cost_gp": 5,
+      "weight_kg": 1.5,
+      "data": {
+        "abilities": [
+          "INT"
+        ],
+        "use_actions": [
+          {
+            "action": "Eine Pflanze identifizieren",
+            "dc": 10
+          }
+        ],
+        "crafting_items": [
+          "Gegengift",
+          "Heilerausrüstung",
+          "Heiltrank",
+          "Kerze"
+        ],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "navigationswerkzeug",
+      "name": "Navigationswerkzeug",
+      "category": "Werkzeug",
+      "cost_gp": 25,
+      "weight_kg": 1,
+      "data": {
+        "abilities": [
+          "WIS"
+        ],
+        "use_actions": [
+          {
+            "action": "Einen Kurs festlegen",
+            "dc": 10
+          }
+        ],
+        "crafting_items": [],
+        "source_page": 220
+      }
+    },
+    {
+      "id": "verkleidungsausrüstung",
+      "name": "Verkleidungsausrüstung",
+      "category": "Werkzeug",
+      "cost_gp": 25,
+      "weight_kg": 1.5,
+      "data": {
+        "abilities": [
+          "CHA"
+        ],
+        "use_actions": [
+          {
+            "action": "Schminke auftragen",
+            "dc": 10
+          }
+        ],
+        "crafting_items": [
+          "Küstüm"
+        ],
+        "source_page": 220
+      }
+    }
+  ]
+}

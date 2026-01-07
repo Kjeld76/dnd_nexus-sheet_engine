@@ -1,0 +1,677 @@
+[
+  {
+    "id": "ausgebildet",
+    "name": "AUSGEBILDET",
+    "category": "Herkunft",
+    "data": {
+      "prerequisite": null,
+      "description": "Du bist in drei Fertigkeiten oder Werkzeugen deiner Wahl in beliebiger Kombination geübt. Kann wiederholt werden: Du kannst dieses Talent mehr als einmal verwenden."
+    }
+  },
+  {
+    "id": "eingeweihter-der-magie",
+    "name": "EINGEWEIHTER DER MAGIE",
+    "category": "Herkunft",
+    "data": {
+      "prerequisite": null,
+      "description": "Du erhältst folgende Vorzüge: Zwei Zaubertricks: Du beherrschst zwei Zaubertricks deiner Wahl aus der Zauberliste des Druiden, des Klerikers oder des Magiers. Dein Attribut zum Wirken der Zauber dieses Talents ist Intelligenz, Weisheit oder Charisma (wähle aus, wenn du dieses Talent auswählst). Zauber des I. Grades: Wähle einen Zauber des 1. Grades von der Liste aus, die du für die Zaubertricks dieses Talents ausgewählt hast. Du hast diesen Zauber stets vorbereitet. Du kannst ihn einmal wirken, ohne einen Zauberplatz zu verbrauchen. Diese Fähigkeit erhältst du nach einer langen Rast zurück. Du kannst den Zauber auch mit einem beliebigen verfügbaren Zauberplatz wirken. Zauberwechsel: Wann immer du eine neue Stufe erhältst, kannst du einen der Zauber, die du für dieses Talent ausgewählt hast, durch einen anderen Zauber des gleichen Grades von der ausgewählten Zauberliste ersetzen. Kann wiederholt werden: Du kannst dieses Talent mehr als einmal verwenden, aber du musst jedes Mal eine andere Zauberliste auswählen."
+    }
+  },
+  {
+    "id": "glückspilz",
+    "name": "GLÜCKSPILZ",
+    "category": "Herkunft",
+    "data": {
+      "prerequisite": null,
+      "description": "Du erhältst folgende Vorzüge: Glückspunkte: Du hast eine Anzahl von Glückspunkten in Höhe deines Übungsbonus, die du für die Vorzüge unten verbrauchen kannst. Du erhältst alle verbrauchten Glückspunkte nach einer langen Rast zurück. Vorteil: Wenn du eine W20-Prüfung ausführst, kannst du 1 Glückspunkt verbrauchen, damit der Prüfungswurf im Vorteil ist. Nachteil: Wenn eine Kreatur einen Angriffswurf mit einem W20 gegen dich ausführt, kannst du 1 Glückspunkt verbrauchen, damit der Angriffswurf im Nachteil ist."
+    }
+  },
+  {
+    "id": "handwerker",
+    "name": "HANDWERKER",
+    "category": "Herkunft",
+    "data": {
+      "prerequisite": null,
+      "description": "Du erhältst folgende Vorzüge: Werkzeug, mit dem du geübt bist: Du erhältst Übung im Umgang mit drei verschiedenen Handwerkszeugen deiner Wahl aus der Tabelle „Flinkes Handwerk\". Rabatt: Wann immer du einen nichtmagischen Gegenstand kaufst, erhältst du einen Rabatt von 20 Prozent auf den Kauf. Flinkes Handwerk: Nach einer langen Rast kannst du einen Ausrüstungsgegenstand aus der Tabelle „Flinkes Handwerk\" herstellen, sofern du über das Handwerkszeug verfügst, das mit diesem Gegenstand assoziiert ist, und im Umgang mit diesem Werkzeug geübt bist. Der Gegenstand bleibt bis nach der nächsten langen Rast erhalten und zerfällt dann. FLINKES HANDWERK"
+    }
+  },
+  {
+    "id": "heiler",
+    "name": "HEILER",
+    "category": "Herkunft",
+    "data": {
+      "prerequisite": null,
+      "description": "Du erhältst folgende Vorzüge: Kampfheiler: Wenn du eine Heilerausrüstung hast, kannst du eine Anwendung davon verbrauchen und als Verwenden-Aktion eine Kreatur im Abstand von bis zu 1,5 Metern von dir versorgen. Diese Kreatur kann einen ihrer Trefferpunktewürfel verbrauchen, mit dem du dann würfelst. Die Kreatur erhält Trefferpunkte in Höhe des Würfelergebnisses plus deines Übungsbonus zurück. Wiederholen von Heilungswürfen: Wann immer du würfelst, um die Anzahl von Trefferpunkten zu bestimmen, die du mit einem Zauber oder dem Kampfheiler Vorzug dieses Talents wiederherstellst, kannst du bei einem Ergebnis von 1 erneut würfeln. In diesem Fall musst du das neue Ergebnis verwenden."
+    }
+  },
+  {
+    "id": "kneipenschläger",
+    "name": "KNEIPENSCHLÄGER",
+    "category": "Herkunft",
+    "data": {
+      "prerequisite": null,
+      "description": "Du erhältst folgende Vorzüge: Verstärkter waffenloser Angriff Wenn du mit deinem waffenlosen Angriff triffst und Schaden bewirkst, kannst du statt des normalen Schadens des waffenlosen Angriffs Wuchtschaden in Höhe von 1W4 plus deinem Stärkemodifikator bewirken. Wiederholen von Schadenswürfen: Wann immer du für deinen waffenlosen Angriff mit einem Schadenswürfel würfelst, kannst du bei einem Ergebnis von 1 erneut würfeln. In diesem Fall musst du das neue Ergebnis verwenden. Improvisierte Waffen: Du bist im Umgang mit improvisierten Waffen geübt. Stoßen: Wenn du in deinem Zug als Teil der Angriffsaktion eine Kreatur mit einem waffenlosen Angriff triffst, kannst du dem Ziel Schaden zufügen und es außerdem 1,5 Meter weit von dir wegstoßen. Du kannst diesen Vorzug nur einmal pro Zug anwenden."
+    }
+  },
+  {
+    "id": "musiker",
+    "name": "MUSIKER",
+    "category": "Herkunft",
+    "data": {
+      "prerequisite": null,
+      "description": "Du erhältst folgende Vorzüge: Instrumentenvertrautheit: Du bist mit dem Spielen von drei Musikinstrumenten deiner Wahl geübt. Ermutigendes Lied: Wenn du eine kurze oder lange Rast beendest, kannst du auf einem Musikinstrument, mit dem du Übung hast, ein Lied spielen, das allen Verbündeten, die es hören können, Heldische Inspiration gibt. Die Anzahl von Verbündeten, die du auf diese Art beeinflussen kannst, entspricht deinem Übungsbonus."
+    }
+  },
+  {
+    "id": "wachsam",
+    "name": "WACHSAM",
+    "category": "Herkunft",
+    "data": {
+      "prerequisite": null,
+      "description": "Du erhältst folgende Vorzüge: Initiative-Übung: Wenn du die Initiative auswürfelst, kannst du dem Ergebnis deinen Übungsbonus hinzufügen. Initiativetausch: Sofort nach dem Auswürfeln der Initiative kannst du deine Initiative mit der eines bereitwilligen Verbündeten im selben Kampf tauschen. Der Tausch ist nicht möglich, wenn mindestens einer von euch beiden kampfunfähig ist."
+    }
+  },
+  {
+    "id": "wilder-angreifer",
+    "name": "WILDER ANGREIFER",
+    "category": "Herkunft",
+    "data": {
+      "prerequisite": null,
+      "description": "Du bist darin ausgebildet, besonders schadensintensive Schläge auszuführen. Einmal pro Zug kannst du, wenn du ein Ziel mit einer Waffe triffst, zweimal mit den Schadenswürfeln der Waffe würfeln und dir eins der Ergebnisse aussuchen."
+    }
+  },
+  {
+    "id": "zäh",
+    "name": "ZÄH",
+    "category": "Herkunft",
+    "data": {
+      "prerequisite": null,
+      "description": "Herkunftstalent Dein Trefferpunktemaximum wird um einen Betrag in doppelter Höhe deiner Charakterstufe erhöht, wenn du dieses Talent erhältst. Wann immer du danach eine Charakterstufe erhältst, wird dein Trefferpunktemaximum um weitere 2 Trefferpunkte erhöht."
+    }
+  },
+  {
+    "id": "armbrustexperte",
+    "name": "ARMBRUSTEXPERTE",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Geschicklichkeit 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Laden ignorieren: Du ignorierst die Eigenschaft Laden bei Handarmbrüsten, schweren Armbrüsten und leichten Armbrüsten (in diesem Talent zusammenfassend als Armbrüste bezeichnet). Wenn du eine Armbrust hältst, kannst du auch dann Geschosse nachladen, wenn du keine freie Hand hast. Feuern im Nahkampf: Wenn du dich im Abstand von bis zu 1,5 Metern von einem Gegner aufhältst, sind deine Angriffswürfe mit Armbrüsten dennoch nicht im Nachteil. Zwei-Waffen-Kampf: Wenn du den zusätzlichen Angriff mit der Eigenschaft Leicht ausführst, kannst du seinem Schaden deinen Attributsmodifikator hinzufügen, sofern der Angriff mit einer Armbrust ausgeführt wird, welche die Eigenschaft Leicht hat, und du dem Schaden diesen Modifikator nicht schon hinzugefügt hast. 2O2"
+    }
+  },
+  {
+    "id": "athlet",
+    "name": "ATHLET",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Stärke oder Geschicklichkeit 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Kletterbewegungsrate: Du erhältst eine Kletter-bewegungsrate in Höhe deiner Bewegungsrate. Aufspringen: Wenn du umgestoßen wurdest, kannst du mit nur 1,5 Metern Bewegung aufstehen. Springen: Du kannst einen Weit- oder Hochsprung ausführen, nachdem du dich nur 1,5 Meter weit bewegt hast."
+    }
+  },
+  {
+    "id": "attributswerterhöhung",
+    "name": "ATTRIBUTSWERTERHÖHUNG",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Erhöhe einen Attributswert deiner Wahl um 2 Punkte oder zwei Attributswerte deiner Wahl um je 1 Punkt. Kein Attribut kann dadurch einen Wert von 20 überschreiten. Kann wiederholt werden: Du kannst dieses Talent mehr als einmal verwenden."
+    }
+  },
+  {
+    "id": "aufmerksam",
+    "name": "AUFMERKSAM",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Intelligenz oder Weisheit 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Intelligenz- oder dein Weisheitswert wird um 1 Punkt erhöht (auf höchstens 20). Scharfer Beobachter: Wähle eine der folgenden Fertigkeiten aus: Motiv erkennen, Nachforschungen oder Wahrnehmung. Wenn du in der ausgewählten Fertigkeit nicht geübt bist, so bist du es nun. Wenn du bereits darin geübt bist, erhältst du Expertise darin. Schnelles Suchen: Du kannst die Suchen-Aktion als Bonusaktion ausführen."
+    }
+  },
+  {
+    "id": "belastbar",
+    "name": "BELASTBAR",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Wähle ein Attribut aus, in dessen Rettungswürfen du nicht geübt bist. Erhöhe den ausgewählten Attributswert um 1 (auf höchstens 20). Übung in Rettungswürfen: Du bist in Rettungswürfen mit dem ausgewählten Attribut geübt."
+    }
+  },
+  {
+    "id": "berittener-kämpfer",
+    "name": "BERITTENER KÄMPFER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke-, dein Geschicklichkeits- oder dein Weisheitswert wird um 1 Punkt erhöht (auf höchstens 20). Berittener Schlag: Solange du beritten bist, bist du bei Angriffswürfen gegen unberittene Kreaturen im Abstand von bis zu 1,5 Metern von deinem Reittier im Vorteil, sofern die Kreaturen um mindestens eine Kategorie kleiner als dein Reittier sind. Beiseite springen: Wenn dein Reittier von einem Effekt profitiert, der ihm einen Geschicklichkeitsrettungswurf ermöglicht, um nur den halben Schaden zu erleiden, so erleidet es stattdessen bei einem Erfolg gar keinen und bei einem Misserfolg nur den halben Schaden. Damit dein Reittier diesen Vorzug erhält, musst du es reiten, und keiner von euch beiden darf kampfunfähig sein. Umlenken: Wenn du beritten bist, kannst du einen Angriff auf dein Reittier auf dich umlenken, sofern du nicht kampfunfähig bist."
+    }
+  },
+  {
+    "id": "defensiver-duellant",
+    "name": "DEFENSIVER DUELLANT",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Geschicklichkeit 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Parieren: Wenn du eine Finesse-Waffe hältst und eine andere Kreatur dich mit einem Nahkampfangriff trifft, kannst du eine Reaktion ausführen, um deiner Rüstungsklasse deinen Übungsbonus hinzuzufügen, sodass der Angriff auf dich möglicherweise scheitert. Dieser Bonus auf deine RK bei Nahkampfangriffen bleibt bis zum Beginn deines nächsten Zugs erhalten."
+    }
+  },
+  {
+    "id": "elementar-adept",
+    "name": "ELEMENTAR-ADEPT",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, Merkmal Zauberwirken oder Merkmal Paktmagie",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Intelligenz-, dein Weisheits- oder dein Charismawert wird um 1 Punkt erhöht (auf maximal 20). Energiebeherrschung: Wähle eine der folgenden Schadensarten aus: Blitz, Feuer, Kälte, Säure oder Schall. Zauber, die du wirkst, ignorieren Resistenz gegen Schaden der ausgewählten Art. Außerdem kannst du, wenn du den Schaden eines gewirkten Zaubers auswürfelst, der Schaden dieser Art bewirkt, jede gewürfelte 1 als 2 werten. Kann wiederholt werden: Du kannst dieses Talent mehr als einmal verwenden, aber du musst jedes Mal eine andere Schadensart für Energiebeherrschung auswählen."
+    }
+  },
+  {
+    "id": "feenberührt",
+    "name": "FEENBERÜHRT",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Dein Kontakt mit der Feenwildnis-Magie gewährt dir folgende Vorzüge: Attributswerterhöhung: Dein Intelligenz-, dein Weisheits- oder dein Charismawert wird um 1 Punkt erhöht (auf höchstens 20). Feenmagie: Wähle einen Zauber des 1. Grades aus der Schule der Erkenntnis- oder der Schule der Verzauberungsmagie aus. Du hast diesen Zauber sowie den Zauber Nebelschritt stets vorbereitet. Du musst keinen Zauberplatz verbrauchen, um diese Zauber zu wirken. Wenn du einen der Zauber auf diese Art wirkst, kannst du ihn erst nach einer langen Rast erneut auf diese Art wirken. Du kannst diese Zauber auch mit einem beliebigen verfügbaren Zauberplatz des entsprechenden Grades wirken. Das Attribut zum Wirken dieser Zauber ist das durch dieses Talent erhöhte."
+    }
+  },
+  {
+    "id": "fertigkeitsexperte",
+    "name": "FERTIGKEITSEXPERTE",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 20). Fertigkeit, in der du geübt bist: Du bist in einer Fertigkeit deiner Wahl geübt. Expertise: Wähle eine Fertigkeit aus, in der du geübt bist, aber keine Expertise hast. Du erhältst Expertise in dieser Fertigkeit. FLINK Allgemeines Talent (Voraussetzung: min. 4. Stufe, min. Geschicklichkeit oder Konstitution 13) Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Geschicklichkeitsoder dein Konstitutionswert wird um 1 Punkt erhöht (auf höchstens 20). Erhöhte Bewegungsrate: Deine Bewegungsrate ist um drei Meter erhöht. Spurt über schwieriges Gelände: Wenn du in deinem Zug die Spurt-Aktion ausführst, kostet schwieriges Gelände dich für den Rest dieses Zugs keine zusätzliche Bewegung. Flinke Bewegung: Gelegenheitsangriffe auf dich sind im Nachteil."
+    }
+  },
+  {
+    "id": "giftmischer",
+    "name": "GIFTMISCHER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Geschicklichkeits- oder dein Intelligenzwert wird um 1 Punkt erhöht (auf höchstens 20). Verstärktes Gift: Wenn du einen Schadenswurf ausführst, der Giftschaden bewirkt, wird Resistenz gegen Giftschaden ignoriert. Gift mischen: Du bist im Umgang mit der Giftmischer-ausrüstung geübt. Mit einer Stunde Arbeit mit dieser Ausrüstung sowie Verbrauchen von Material im Wert von 50 GM kannst du eine Anzahl von Giftdosen in Höhe deines Übungsbonus herstellen. Als Bonusaktion kannst du eine Giftdosis an einer Waffe oder einem Geschoss anbringen. Wird das Gift angewendet, so behält es seine Wirksamkeit eine Minute oder so lang bei, bis du mit dem vergifteten Gegenstand Schaden bewirkst. Wenn eine Kreatur durch den vergifteten Gegenstand Schaden erleidet, muss sie einen Konstitutionsrettungswurf (SG 8 plus dein Modifikator des Attributs, das durch dieses Talent erhöht wurde, plus dein Übungsbonus) bestehen, oder sie erleidet 2W8 Giftschaden und ist bis zum Ende deines nächsten Zugs vergiftet. HAUER Kochutensilien: Du bist im Umgang mit Kochutensilien geübt, wenn du es noch nicht sein solltest. Auffüllende Mahlzeit: Im Rahmen einer kurzen Rast kannst du spezielle Speisen zubereiten, sofern du die Zutaten und Kochutensilien zur Hand hast. Du kannst Mahlzeiten für eine Anzahl von Kreaturen in Höhe von 4 plus deinem Übungsbonus zubereiten. Wenn eine Kreatur nach der kurzen Rast die Mahlzeit isst und mindestens einen Trefferwürfel verbraucht, erhält sie 1W8 zusätzliche Trefferpunkte zurück. Stärkende Leckereien: Mit einer Stunde Arbeit oder nach einer langen Rast kannst du eine Anzahl von Leckereien in Höhe deines Übungsbonus zubereiten, sofern du die Zutaten und Kochutensilien zur Hand hast. Diese Leckereien sind nach der Herstellung acht Stunden lang genießbar. Eine Kreatur, die mit einer Bonusaktion eine der Leckereien isst, erhält eine Anzahl von temporären Trefferpunkten in Höhe deines Übungsbonus."
+    }
+  },
+  {
+    "id": "kriegswaffenvertrautheit",
+    "name": "KRIEGSWAFFENVERTRAUTHEIT",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Übung mit Waffen: Du erhältst Übung im Umgang mit Kriegswaffen."
+    }
+  },
+  {
+    "id": "leicht-gerüstet",
+    "name": "LEICHT GERÜSTET",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Rüstungsvertrautheit: Du erhältst Vertrautheit mit leichter Rüstung sowie mit Schilden. Allgemeines Talent (Voraussetzung: min. 4. Stufe) Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Schenkelschlag: Einmal pro Zug kannst du, wenn du eine Kreatur mit einem Angriff triffst, der Hiebschaden bewirkt, die Bewegungsrate der Kreatur bis zum Beginn deines nächsten Zugs um drei Meter verringern. Verstärkter kritischer Treffer: Wenn du einen kritischen Treffer erzielst, der einer Kreatur Hiebschaden zufügt, so ist diese Kreatur bis zum Beginn deines nächsten Zugs bei Angriffswürfen im Nachteil."
+    }
+  },
+  {
+    "id": "inspirierender-anführer",
+    "name": "INSPIRIERENDER ANFÜHRER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Weisheit oder Charisma 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Weisheits- oder dein Charismawert wird um 1 Punkt erhöht (auf höchstens 20). Stärkendes Auftreten: Nach einer kurzen oder langen Rast kannst du einen inspirierenden Auftritt in Form einer Ansprache, eines Liedes oder Tanzes darbieten. Wähle in diesem Fall bis zu sechs Verbündete (du selbst kannst dazugehören) im Abstand von bis zu neun Metern von dir aus, die den Auftritt miterleben. Die ausgewählten Kreaturen erhalten jeweils temporäre Trefferpunkte in Höhe deiner Charakterstufe plus deines Modifikators des Attributs, das du mit diesem Talent erhöht hast."
+    }
+  },
+  {
+    "id": "kampferprobter-zauberwirker",
+    "name": "KAMPFERPROBTER ZAUBERWIRKER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, Merkmal Zauberwirken oder Merkmal Paktmagie",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Intelligenz-, dein Weisheitsoder dein Charismawert wird um 1 Punkt erhöht (auf maximal 20). Konzentration: Du bist bei Konstitutionsrettungswürfen zum Aufrechterhalten der Konzentration im Vorteil. Reaktiver Zauber: Wenn eine Kreatur deine Reichweite verlässt und dich zu einem Gelegenheitsangriff provoziert, kannst du eine Reaktion ausführen, um einen Zauber auf die Kreatur zu wirken, anstatt einen Gelegenheitsangriff auszuführen. Der Zauber muss den Zeitaufwand von einer Aktion haben und kann nur auf diese Kreatur zielen. Gestenkomponenten: Du kannst die Gestenkomponenten eines Zaubers auch dann ausführen, wenn du in mindestens einer Hand Waffen oder einen Schild trägst."
+    }
+  },
+  {
+    "id": "koch",
+    "name": "KOCH",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Konstitutions- oder dein Weisheitswert wird um 1 Punkt erhöht (auf höchstens 20). L204 zw--"
+    }
+  },
+  {
+    "id": "magiertöter",
+    "name": "MAGIERTÖTER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Konzentrationsbrecher: Wenn du einer Kreatur Schaden zufügst, die sich konzentriert, so ist sie beim Rettungswurf, den sie zum Aufrechterhalten der Konzentration ausführt, im Nachteil. Bewachter Wille: Wenn du bei einem Intelligenz-, Weisheits- oder Charismarettungswurf scheiterst, kannst du bewirken, dass er stattdessen gelingt. Du kannst diesen Vorzug erst nach einer kurzen oder langen Rast erneut verwenden."
+    }
+  },
+  {
+    "id": "meister-der-grossen-waffen",
+    "name": "MEISTER DER GROSSEN WAFFEN",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Stärke 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärkewert wird um 1 Punkt erhöht (auf höchstens 20). Meisterung schwerer Waffen: Wenn du eine Kreatur als Teil der Angriffsaktion in deinem Zug mit einer Waffe triffst, welche die Eigenschaft Schwer hat, kannst du dem Ziel mit dieser Waffe zusätzlichen Schaden zufügen. Der zusätzliche Schaden entspricht deinem Übungsbonus. Fällen: Sofort, nachdem du mit einer Nahkampfwaffe einen kritischen Treffer erzielt oder die Trefferpunkte einer Kreatur auf 0 verringert hast, kannst du als Bonusaktion einen Angriff mit dieser Waffe ausführen."
+    }
+  },
+  {
+    "id": "meister-der-mittelschweren-rüstungen",
+    "name": "MEISTER DER MITTELSCHWEREN RÜSTUNGEN",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, Vertrautheit mit mittelschwerer Rüstung",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Geschickter Träger: Wenn du eine mittelschwere Rüstung trägst, kannst du deiner RK 3 statt 2 hinzufügen, sofern du einen Geschicklichkeitswert von mindestens 16 hast."
+    }
+  },
+  {
+    "id": "meister-der-schweren-rüstungen",
+    "name": "MEISTER DER SCHWEREN RÜSTUNGEN",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, Vertrautheit mit schwerer Rüstung",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Konstitutions- oder dein Stärkewert wird um 1 Punkt erhöht (auf höchstens 20). Schadensverringerung: Wenn du von einem Angriff getroffen wirst, während du schwere Rüstung trägst, wird jeder Stich-, Hieb- und Wuchtschaden durch diesen Angriff um einen Betrag in Höhe deines Übungsbonus verringert."
+    }
+  },
+  {
+    "id": "messerstecher",
+    "name": "MESSERSTECHER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Durchbohren: Wenn du eine Kreatur mit einem Angriff triffst, der Stichschaden verursacht, kannst du einmal pro Zug einen der Schadenswürfel erneut würfeln. In diesem Fall musst du das neue Ergebnis verwenden. Verstärkter kritischer Treffer: Wenn du einen kritischen Treffer erzielst, der Stichschaden bewirkt, kannst du mit einem zusätzlichen Schadenswürfel würfeln."
+    }
+  },
+  {
+    "id": "mittelschwer-gerüstet",
+    "name": "MITTELSCHWER GERÜSTET",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, Vertrautheit mit leichter Rüstung",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Rüstungsvertrautheit: Du erhältst Vertrautheit mit mittelschwerer Rüstung."
+    }
+  },
+  {
+    "id": "ringer",
+    "name": "RINGER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Stärke oder Geschicklichkeit 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Zuschlagen und packen: Wenn du eine Kreatur als Teil der Angriffsaktion in deinem Zug mit einem waffenlosen Angriff triffst, kannst du sowohl den Schaden bewirken als auch die Packen-Option verwenden. Du kannst diesen Vorzug nur einmal pro Zug anwenden. Angriffsvorteil: Du bist bei Angriffswürfen gegen eine Kreatur, die du gepackt hältst, im Vorteil. Flinker Ringer: Du musst keine zusätzliche Bewegungsrate verbrauchen, wenn du eine Kreatur bewegst, die du gepackt hältst, sofern die Kreatur höchstens so groß ist wie du."
+    }
+  },
+  {
+    "id": "ritualwirker",
+    "name": "RITUALWIRKER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Intelligenz, Weisheit oder Charisma 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Intelligenz-, dein Weisheits- oder dein Charismawert wird um 1 Punkt erhöht (auf maximal 20). Ritualzauber: Wähle eine Anzahl von Zaubern des 1. Grades in Höhe deines Übungsbonus aus, die als Rituale gekennzeichnet sind. Diese Zauber hast du stets vorbereitet und kannst sie mit beliebigen Zauberplätzen wirken, die du hast. Das Attribut zum Wirken dieser Zauber ist das durch dieses Talent erhöhte. Wann immer sich danach dein Übungsbonus erhöht, kannst du einen zusätzlichen Zauber des 1. Grades, der als Ritual gekennzeichnet ist, den durch dieses Merkmal stets vorbereiteten Zaubern hinzufügen. Schnelles Ritual: Mit diesem Vorzug kannst du einen Ritualzauber, den du vorbereitet hast, mit seinem normalen Zeitaufwand anstatt des verlängerten Ritualzeitaufwands wirken. Dafür benötigst du keinen Zauberplatz. Wirkst du den Zauber auf diese Art, so kannst du diesen Vorzug erst nach einer langen Rast erneut anwenden."
+    }
+  },
+  {
+    "id": "scharfer-verstand",
+    "name": "SCHARFER VERSTAND",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Intelligenz 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Intelligenzwert wird um 1 Punkt erhöht (auf höchstens 20). Überlieferungswissen: Wähle eine der folgenden Fertigkeiten aus: Arkane Kunde, Geschichte, Nachforschungen, Naturkunde oder Religion. Wenn du in der ausgewählten Fertigkeit nicht geübt bist, so bist du es nun. Wenn du bereits darin geübt bist, erhältst du Expertise darin. Schnelles Studium: Du kannst die Studieren-Aktion als Bonusaktion ausführen."
+    }
+  },
+  {
+    "id": "scharfschütze",
+    "name": "SCHARFSCHÜTZE",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Geschicklichkeit 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Deckung umgehen: Deine Fernkampfangriffe mit Waffen ignorieren Teildeckung sowie Dreivierteldeckung. Feuern im Nahkampf: Wenn du dich im Abstand von bis zu 1,5 Metern von einem Gegner aufhältst, sind deine Angriffswürfe mit Fernkampfwaffen dennoch nicht im Nachteil. Fernschüsse: Bei Angriffen auf Maximalreichweite sind deine Angriffswürfe mit Fernkampfwaffen nicht im Nachteil."
+    }
+  },
+  {
+    "id": "schattenberührt",
+    "name": "SCHATTENBERÜHRT",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Dein Kontakt mit der Schattensaum-Magie gewährt dir folgende Vorzüge: Attributswerterhöhung: Dein Intelligenz-, dein Weisheits- oder dein Charismawert wird um 1 Punkt erhöht (auf höchstens 20). Schattenmagie: Wähle einen Zauber des 1. Grades aus der Schule der Illusionsmagie oder der Schule der Nekromantie aus. Diesen Zauber sowie den Zauber Unsichtbarkeit hast du stets vorbereitet. Du musst keinen Zauberplatz verbrauchen, um diese Zauber zu wirken. Wenn du einen der Zauber auf diese Art wirkst, kannst du ihn erst nach einer langen Rast erneut auf diese Art wirken. Du kannst diese Zauber auch mit einem beliebigen verfügbaren Zauberplatz des entsprechenden Grades wirken. Das Attribut zum Wirken dieser Zauber ist das durch dieses Talent erhöhte."
+    }
+  },
+  {
+    "id": "schauspieler",
+    "name": "SCHAUSPIELER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Charisma 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Charismawert wird um 1 Punkt erhöht (auf höchstens 20). Nachahmen: Wenn du dich als eine andere (reale oder fiktive) Person ausgibst, bist du bei Charismawürfen (Täuschen oder Auftreten), die du ausführst, um andere davon zu überzeugen, dass du wirklich diese Person bist, im Vorteil. Stimmen nachahmen: Du kannst die Geräusche anderer Kreaturen nachahmen, auch Sprache. Eine Kreatur, die deine Nachahmung hört, muss einen Weisheitswurf (Motiv erkennen) bestehen, um die Nachahmung als solche zu erkennen (SG 8 plus dein Charismamodifikator plus dein Übungsbonus)."
+    }
+  },
+  {
+    "id": "schildmeister",
+    "name": "SCHILDMEISTER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, Vertrautheit mit Schilden",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärkewert wird um 1 Punkt erhöht (auf höchstens 20). Schildstoß: Wenn du eine Kreatur im Abstand von bis zu 1,5 Metern von dir als Teil der Angriffsaktion angreifst und mit einer Nahkampfwaffe triffst, kannst du dem Ziel sofort einen Schildstoß versetzen, sofern du einen Schild führst, und das Ziel zu einem Stärkerettungswurf (SG 8 plus dein Stärkemodifikator plus dein Übungsbonus) zwingen. Scheitert der Wurf, so stößt du das Ziel (nach deiner Wahl) entweder 1,5 Meter weit von dir weg, oder du stößt es um. Du kannst diesen Vorzug nur einmal in jedem deiner Züge anwenden. Mit Schild decken: Bist du einem Effekt ausgesetzt, der dir einen Geschicklichkeitsrettungswurf erlaubt, um den Schaden zu halbieren, so kannst du eine Reaktion ausführen, um bei einem Erfolg gar keinen und bei einem Misserfolg den halben Schaden zu erleiden."
+    }
+  },
+  {
+    "id": "schleicher",
+    "name": "SCHLEICHER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Geschicklichkeit 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Blindsicht: Du erlangst Blindsicht mit einer Reichweite von drei Metern. Nebel des Krieges: Du nutzt das Chaos der Schlacht aus, sodass all deine Geschicklichkeitswürfe (Heimlichkeit), die du im Kampf als Teil der Verstecken-Aktion ausführst, im Vorteil sind. Heckenschütze: Wenn du einen Angriffswurf ausführst, während du verborgen bist, und der Wurf scheitert, so gibt er deinen Ort nicht preis."
+    }
+  },
+  {
+    "id": "schwer-gerüstet",
+    "name": "SCHWER GERÜSTET",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, Vertrautheit mit mittelschwerer Rüstung",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Konstitutions- oder dein Stärkewert wird um 1 Punkt erhöht (auf höchstens 20). Rüstungsvertrautheit: Du erhältst Vertrautheit mit schwerer Rüstung."
+    }
+  },
+  {
+    "id": "stangenwaffenmeister",
+    "name": "STANGENWAFFENMEISTER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Stärke oder Geschicklichkeit 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Geschicklichkeitsoder dein Stärkewert wird um 1 Punkt erhöht (auf höchstens 20). Stangenschlag: Sofort, nachdem du die Angriffsaktion ausgeführt und mit einem Kampfstab, einem Speer oder einer Waffe mit den Eigenschaften Schwer und Weitreichend angegriffen hast, kannst du eine Bonusaktion verwenden, um einen Nahkampfangriff mit dem anderen Ende der Waffe auszuführen. Die Waffe bewirkt Wuchtschaden, und ihr Schadenswürfel für diesen Angriff ist ein W4. Reaktiver Schlag: Wenn du einen Kampfstab, einen Speer oder eine Waffe mit den Eigenschaften Schwer und Weitreichend hältst, kannst du mit einer Reaktion einen Nahkampfangriff gegen eine Kreatur ausführen, die sich in die Reichweite dieser Waffe begibt."
+    }
+  },
+  {
+    "id": "stürmer",
+    "name": "STÜRMER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Stärke oder Geschicklichkeit 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Verbesserter Spurt: Wenn du die Spurt-Aktion ausführst, ist deine Bewegungsrate bei dieser Aktion um drei Meter erhöht. Sturmangriff: Wenn du dich als Teil der Angriffsaktion mindestens drei Meter weit in gerader Linie auf ein Ziel zubewegst, bevor du es mit einem Nahkampfangriffswurf triffst, wähle eine der folgenden Effekte aus: Erhalte entweder einen Bonus von 1W8 auf den Schadenswurf des Angriffs oder stoße das Ziel bis zu drei Meter weit von dir weg, sofern es höchstens um eine Kategorie größer ist als du. Du kannst diesen Vorzug nur einmal in jedem deiner Züge anwenden."
+    }
+  },
+  {
+    "id": "telekinetiker",
+    "name": "TELEKINETIKER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Intelligenz-, dein Weisheits- oder dein Charismawert wird um 1 Punkt erhöht (auf höchstens 20). Schwache Telekinese: Du erlernst den Zauber Magierhand. Du kannst ihn ohne Verbal- oder Gestenkomponenten wirken und die geisterhafte Hand unsichtbar sein lassen, und die Reichweite des Zaubers sowie der Abstand zum Ziel sind jeweils um neun Meter erhöht. Das Attribut zum Wirken dieses Zaubers ist das durch dieses Talent erhöhte. Telekinetischer Stoß: Als Bonusaktion kannst du einer Kreatur im Abstand von bis zu neun Metern von dir, die du sehen kannst, einen telekinetischen Stoß versetzen. Das Ziel muss einen Stärkerettungswurf (SG 8 plus Attributsmodifikator des durch dieses Talent erhöhten Werts plus dein Übungsbonus) bestehen, oder es wird 1,5 Meter auf dich zu- oder von dir wegbewegt."
+    }
+  },
+  {
+    "id": "telepath",
+    "name": "TELEPATH",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Intelligenz-, dein Weisheits- oder dein Charismawert wird um 1 Punkt erhöht (auf höchstens 20). Telepathische Äußerung: Du kannst mit einer beliebigen Kreatur im Abstand von bis zu 18 Metern von dir, die du sehen kannst, telepathisch sprechen. Deine telepathischen Äußerungen erfolgen in einer Sprache, die du kennst, und die Kreatur versteht dich nur, wenn sie diese Sprache kennt. Die Kreatur kann dir jedoch nicht auf telepathische Weise antworten. Gedanken wahrnehmen: Du hast den Zauber Gedanken wahrnehmen stets vorbereitet. Du kannst ihn ohne Zauberplatz und ohne Zauberkomponenten wirken, kannst ihn aber erst nach einer langen Rast erneut auf diese Weise wirken. Du kannst ihn auch mit verfügbaren Zauberplätzen des entsprechenden Grades wirken. Das Attribut zum Wirken dieses Zaubers ist das durch dieses Talent erhöhte."
+    }
+  },
+  {
+    "id": "wächter",
+    "name": "WÄCHTER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Stärke oder Geschicklichkeit 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Wächter: Sofort, nachdem eine Kreatur im Abstand von bis zu 1,5 Metern von dir die Rückzug-Aktion ausgeführt oder ein Ziel außer dir mit einem Angriff getroffen hat, kannst du einen Gelegenheitsangriff gegen diese Kreatur ausführen. Anhalten: Wenn du eine Kreatur mit einem Gelegenheitsangriff triffst, ist die Bewegungsrate dieser Kreatur für den Rest des aktuellen Zugs auf 0 verringert."
+    }
+  },
+  {
+    "id": "waffenmeister",
+    "name": "WAFFENMEISTER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Meisterschaftseigenschaft: Deine Vertrautheit mit Waffen gestattet dir, die Meisterschaftseigenschaft einer Art von einfacher Waffe oder Kriegswaffe deiner Wahl zu verwenden, sofern du Übung im Umgang mit dieser Waffe hast. Wann immer du eine lange Rast beendest, kannst du die Art der Waffe durch eine andere ersetzen, welche die Bedingungen erfüllt."
+    }
+  },
+  {
+    "id": "widerstandsfähig",
+    "name": "WIDERSTANDSFÄHIG",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Konstitutionswert wird um 1 Punkt erhöht (auf höchstens 20). Dem Tode trotzen: Du bist bei Todesrettungswürfen im Vorteil. Schnelle Erholung: Als Bonusaktion kannst du einen deiner Trefferpunktewürfel verbrauchen, mit ihm würfeln und eine Anzahl von Trefferpunkten in Höhe des Ergebnisses zurückerhalten."
+    }
+  },
+  {
+    "id": "zermalmer",
+    "name": "ZERMALMER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Konstitutionswert wird um 1 Punkt erhöht (auf höchstens 20). Stoßen: Wenn du eine Kreatur mit einem Angriff triffst, der Wuchtschaden bewirkt, kannst du sie 1,5 Meter in einen freien Bereich stoßen, sofern sie um höchstens um eine Kategorie größer ist als du. Verstärkter kritischer Treffer: Wenn du einen kritischen Treffer erzielst, der einer Kreatur Wuchtschaden zufügt, sind Angriffswürfe gegen diese Kreatur bis zum Beginn deines nächsten Zugs im Vorteil."
+    }
+  },
+  {
+    "id": "zielgenauer-zauberschütze",
+    "name": "ZIELGENAUER ZAUBERSCHÜTZE",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, Merkmal Zauberwirken oder Merkmal Paktmagie",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Intelligenz-, dein Weisheits- oder dein Charismawert wird um 1 Punkt erhöht (auf maximal 20). Deckung umgehen: Deine Zauberangriffswürfe ignorieren Teildeckung sowie Dreivierteldeckung. Zaubern im Nahkampf: Wenn du dich im Abstand von bis zu 1,5 Metern von einem Gegner aufhältst, sind deine Angriffswürfe mit Zaubern dennoch nicht im Nachteil. Erhöhte Reichweite: Wenn du einen Zauber wirkst, der eine Reichweite von mindestens drei Metern hat und erfordert, dass du einen Angriffswurf ausführst, kannst du die Reichweite des Zaubers um 18 Meter erhöhen."
+    }
+  },
+  {
+    "id": "zwei-waffen-kämpfer",
+    "name": "ZWEI-WAFFEN-KÄMPFER",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Stärke oder Geschicklichkeit 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Verstärkter Zwei-Waffen-Kampf: Wenn du in deinem Zug die Angriffsaktion ausführst und mit einer Waffe angreifst, welche die Eigenschaft Leicht hat, kannst du später im selben Zug als Bonusaktion einen zusätzlichen Angriff mit einer anderen Waffe ausführen. Es muss sich um eine Nahkampfwaffe mit der Eigenschaft Zweihändig handeln. Du kannst dem Schaden des zusätzlichen Angriffs nicht deinen Attributsmodifikator hinzufügen, sofern dieser Modifikator nicht negativ ist. Schnelles Ziehen: Du kannst zwei Waffen ziehen oder wegstecken, die nicht die Eigenschaft Zweihändig haben, wenn du normalerweise nur eine Waffe ziehen oder wegstecken könntest."
+    }
+  },
+  {
+    "id": "abfangen",
+    "name": "ABFANGEN",
+    "category": "Kampfstil",
+    "data": {
+      "prerequisite": "Kampfstil-Merkmal",
+      "description": "Wenn eine Kreatur, die du sehen kannst, eine andere Kreatur im Abstand von bis zu1,5 Metern von dir mit einem Angriffswurf trifft, kannst du eine Reaktion ausführen, um den Schaden, den das Ziel erleidet, um1W10 plus deinen Übungsbonus zu verringern. Du musst einen Schild, eine einfache Waffe oder eine Kriegswaffe tragen, um diese Reaktion ausführen zu können."
+    }
+  },
+  {
+    "id": "blinder-kampf",
+    "name": "BLINDER KAMPF",
+    "category": "Kampfstil",
+    "data": {
+      "prerequisite": "Kampfstil-Merkmal",
+      "description": "Du erlangst Blindsicht mit einer Reichweite von drei Metern."
+    }
+  },
+  {
+    "id": "bogenschiessen",
+    "name": "BOGENSCHIESSEN",
+    "category": "Kampfstil",
+    "data": {
+      "prerequisite": "Kampfstil-Merkmal",
+      "description": "Du erhältst einen Bonus von +2 auf alle Angriffswürfe mit Fernkampfwaffen."
+    }
+  },
+  {
+    "id": "duellieren",
+    "name": "DUELLIEREN",
+    "category": "Kampfstil",
+    "data": {
+      "prerequisite": "Kampfstil-Merkmal",
+      "description": "Hältst du eine Nahkampfwaffe in einer Hand und keine weiteren Waffen, so erhältst du einen Bonus von +2 auf Schadenswürfe mit dieser Waffe."
+    }
+  },
+  {
+    "id": "kampf-mit-grossen-waffen",
+    "name": "KAMPF MIT GROSSEN WAFFEN",
+    "category": "Kampfstil",
+    "data": {
+      "prerequisite": "Kampfstil-Merkmal",
+      "description": "Wenn du den Schaden eines Angriffs mit einer Nahkampfwaffe auswürfelst, die du mit beiden Händen hältst, kannst du alle Ergebnisse des Schadenswürfels von 1 oder 2 als 3 werten. Die Waffe muss die Eigenschaft Zweihändig oder Vielseitig besitzen, damit du diesen Vorzug erhältst."
+    }
+  },
+  {
+    "id": "leibwache",
+    "name": "LEIBWACHE",
+    "category": "Kampfstil",
+    "data": {
+      "prerequisite": "Kampfstil-Merkmal",
+      "description": "Wenn eine Kreatur, die du sehen kannst, ein Ziel außer dir im Abstand von bis zu 1,5 Metern von dir angreift, kannst du eine Reaktion ausführen, um das Ziel mit deinem Schild zu schützen, sofern du einen hältst. Damit sind auslösender Angriffswurf sowie alle weiteren Angriffswürfe gegen das Ziel bis zum Beginn deines nächsten Zugs im Nachteil, sofern du dich nicht weiter als 1,5 Meter vom Ziel entfernst."
+    }
+  },
+  {
+    "id": "unbewaffneter-kampf",
+    "name": "UNBEWAFFNETER KAMPF",
+    "category": "Kampfstil",
+    "data": {
+      "prerequisite": "Kampfstil-Merkmal",
+      "description": "Wenn du mit deinem waffenlosen Angriff triffst und Schaden bewirkst, kannst du statt des normalen Schadens des waffenlosen Angriffs Wuchtschaden in Höhe von 1W6 plus deinem Stärkemodifikator bewirken. Wenn du beim Angriffswurf weder Waffen noch Schild hältst, verwende einen W8 statt des W6. Zu Beginn jedes deiner Züge kannst du einer Kreatur, die du gepackt hältst, 1W4 Wuchtschaden zufügen."
+    }
+  },
+  {
+    "id": "verteidigung",
+    "name": "VERTEIDIGUNG",
+    "category": "Kampfstil",
+    "data": {
+      "prerequisite": "Kampfstil-Merkmal",
+      "description": "Wenn du leichte, mittelschwere oder schwere Rüstung trägst, erhältst du einen Bonus von +1 auf die Rüstungsklasse."
+    }
+  },
+  {
+    "id": "wurfwaffenkampf",
+    "name": "WURFWAFFENKAMPF",
+    "category": "Kampfstil",
+    "data": {
+      "prerequisite": "Kampfstil-Merkmal",
+      "description": "Wenn du bei einem Fernkampfangriff mit einer Waffe triffst, welche die Wurfwaffe-Eigenschaft hat, erhältst du einen Schadensbonus von +2 auf den Schadenswurf."
+    }
+  },
+  {
+    "id": "zwei-waffen-kampf",
+    "name": "ZWEI-WAFFEN-KAMPF",
+    "category": "Kampfstil",
+    "data": {
+      "prerequisite": "Kampfstil-Merkmal",
+      "description": "Wenn du als Ergebnis der Eigenschaft Leicht einer Waffe einen zusätzlichen Angriff ausführst, kannst du dem Angriffsschaden deinen Attributsmodifikator hinzufügen, sofern du dies nicht ohnehin schon tust. EPISCHE-GABE-TALENTE"
+    }
+  },
+  {
+    "id": "gabe-der-begabung",
+    "name": "GABE DER BEGABUNG",
+    "category": "Epische Gabe",
+    "data": {
+      "prerequisite": "min. 19. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30). Vielseitiger Adept: Du bist in allen Fertigkeiten geübt. Expertise: Wähle eine Fertigkeit aus, in der du keine Expertise hast. Du erhältst Expertise in dieser Fertigkeit. Flimmerschritte: Sofort, nachdem du die Angriffsaktion oder die magische Aktion ausgeführt hast, kannst du dich bis zu neun Meter weit in einen freien Bereich teleportieren, den du sehen kannst."
+    }
+  },
+  {
+    "id": "gabe-der-energieresistenz",
+    "name": "GABE DER ENERGIERESISTENZ",
+    "category": "Epische Gabe",
+    "data": {
+      "prerequisite": "min. 19. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30). Energieresistenzen: Du erhältst Resistenz gegen zwei der folgenden Schadensarten deiner Wahl: Blitz, Feuer, Gift, Gleißend, Kälte, Nekrotisch, Psychisch, Säure oder Schall. Wann immer du eine lange Rast beendest, kannst du deine Entscheidungen ändern. Energieumleitung: Wenn du Schaden von einer der beiden für den Vorzug Energieresistenzen ausgewählten Arten erleidest, kannst du eine Reaktion ausführen, um Schaden dieser Art zu einer anderen Kreatur im Abstand von bis zu 18 Metern von dir umzuleiten, die du sehen kannst und die nicht über vollständige Deckung verfügt. In diesem Fall muss die Kreatur einen Geschicklichkeitsrettungswurf (SG 8 plus dein Konstitutionsmodifikator plus dein Übungsbonus) bestehen, oder sie erleidet Schaden in Höhe von 2W12 plus deinem Konstitutionsmodifikator."
+    }
+  },
+  {
+    "id": "gabe-der-erholung",
+    "name": "GABE DER ERHOLUNG",
+    "category": "Epische Gabe",
+    "data": {
+      "prerequisite": "min. 19. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30). Letztes Gefecht: Wenn deine Trefferpunkte auf 0 sinken würden, behältst du stattdessen 1 Trefferpunkt und erhältst eine Anzahl von Trefferpunkten in Höhe der Hälfte deines Trefferpunktemaximums zurück. Du kannst diesen Vorzug erst nach einer langen Rast erneut verwenden. Lebenskraft zurückerhalten: Du hast einen Vorrat von zehn W10. Als Bonusaktion kannst du Würfel aus dem Vorrat verbrauchen, indem du mit ihnen würfelst und eine Anzahl von Trefferpunkten in Höhe des Gesamtergebnisses des Würfelwurfs zurückerhältst. Du erhältst alle verbrauchten Würfel nach einer langen Rast zurück."
+    }
+  },
+  {
+    "id": "gabe-des-dimensionsreisens",
+    "name": "GABE DES DIMENSIONSREISENS",
+    "category": "Epische Gabe",
+    "data": {
+      "prerequisite": "min. 19. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30). 21O"
+    }
+  },
+  {
+    "id": "gabe-der-geschwindigkeit",
+    "name": "GABE DER GESCHWINDIGKEIT",
+    "category": "Epische Gabe",
+    "data": {
+      "prerequisite": "min. 19. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30). Entfesselungskünstler: Als Bonusaktion kannst du die Rückzug-Aktion ausführen und damit auch den Zustand Gepackt bei dir selbst beenden. Schnelligkeit: Deine Bewegungsrate ist um neun Meter erhöht."
+    }
+  },
+  {
+    "id": "gabe-der-kampffertigkeit",
+    "name": "GABE DER KAMPFFERTIGKEIT",
+    "category": "Epische Gabe",
+    "data": {
+      "prerequisite": "min. 19. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30). Unübertroffenes Zielen: Wenn du bei einem Angriffswurf nicht triffst, kannst du den Wurf in einen Treffer verwandeln. Wenn du diesen Vorzug angewendet hast, ist dies erst nach Beginn deines nächsten Zugs erneut möglich."
+    }
+  },
+  {
+    "id": "gabe-des-nachtgeists",
+    "name": "GABE DES NACHTGEISTS",
+    "category": "Epische Gabe",
+    "data": {
+      "prerequisite": "min. 19. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30). Schattentarnung: In dämmrigem Licht oder Dunkelheit kannst du dich als Bonusaktion unsichtbar machen. Der Zustand endet sofort, nachdem du eine Aktion, eine Bonusaktion oder eine Reaktion ausgeführt hast. Schattige Gestalt: In dämmrigem Licht oder Dunkelheit bist du gegen alle Schadensarten außer Gleißend und Psychisch resistent."
+    }
+  },
+  {
+    "id": "gabe-des-schicksals",
+    "name": "GABE DES SCHICKSALS",
+    "category": "Epische Gabe",
+    "data": {
+      "prerequisite": "min. 19. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30). Schicksal verbessern: Wenn du oder eine andere Kreatur im Abstand von bis zu 18 Metern von dir eine W20-Prüfung ablegt, kannst du mit 2W4 würfeln und der W20-Prüfung das Gesamtergebnis als Bonus oder Malus hinzufügen. Du kannst diesen Vorzug erst nach einem Initiativewurf oder einer kurzen oder langen Rast erneut verwenden."
+    }
+  },
+  {
+    "id": "gabe-der-standhaftigkeit",
+    "name": "GABE DER STANDHAFTIGKEIT",
+    "category": "Epische Gabe",
+    "data": {
+      "prerequisite": "min. 19. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30). Gestärkte Gesundheit: Dein Trefferpunktemaximum wird um 40 erhöht. Wann immer du außerdem Trefferpunkte zurückerhältst, kannst du zusätzlich Trefferpunkte in Höhe deines Konstitutionsmodifikators zurückerhalten. Wenn du auf diese Art zusätzlich Trefferpunkte erhalten hast, ist dies erst nach Beginn deines nächsten Zugs erneut möglich."
+    }
+  },
+  {
+    "id": "gabe-des-unwiderstehlichen-angriffs",
+    "name": "GABE DES UNWIDERSTEHLICHEN ANGRIFFS",
+    "category": "Epische Gabe",
+    "data": {
+      "prerequisite": "min. 19. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 30). Verteidigung überwinden: Jeder Hieb-, Stich- und Wuchtschaden, den du bewirkst, ignoriert entsprechende Resistenzen. Überwältigender Schlag: Wenn du bei einem Angriffswurf mit dem W20 eine 20 würfelst, kannst du dem Ziel zusätzlichen Schaden in Höhe des durch dieses Talent erhöhten Attributswerts zufügen. Der zusätzliche Schaden ist von der gleichen Art wie der Schaden des Angriffs."
+    }
+  },
+  {
+    "id": "gabe-des-wahren-blicks",
+    "name": "GABE DES WAHREN BLICKS",
+    "category": "Epische Gabe",
+    "data": {
+      "prerequisite": "min. 19. Stufe",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Ein Attributswert deiner Wahl wird um 1 Punkt erhöht (auf höchstens 30). Wahrer Blick: Du hast Wahrer Blick mit einer Reichweite von 18 Metern."
+    }
+  },
+  {
+    "id": "gabe-der-zaubererinnerung",
+    "name": "GABE DER ZAUBERERINNERUNG",
+    "category": "Epische Gabe",
+    "data": {
+      "prerequisite": "min. 19. Stufe, Merkmal Zauberwirken",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Intelligenz-, dein Weisheits- oder dein Charismawert wird um 1 Punkt erhöht (auf maximal 30). Freies Zauberwirken: Wann immer du einen Zauber mit einem Zauberplatz des 1. bis 4. Grades wirkst, würfle mit 1W4. Wenn das Würfelergebnis dem Grad des Zauberplatzes entspricht, so wird dieser nicht verbraucht."
+    }
+  },
+  {
+    "id": "aufschlitzer-hauer",
+    "name": "AUFSCHLITZER (HAUER)",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Stärke oder Geschicklichkeit 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Stärke- oder dein Geschicklichkeitswert wird um 1 Punkt erhöht (auf höchstens 20). Schenkelschlag: Einmal pro Zug kannst du, wenn du eine Kreatur mit einem Angriff triffst, der Hiebschaden bewirkt, die Bewegungsrate der Kreatur bis zum Beginn deines nächsten Zugs um drei Meter verringern. Verstärkter kritischer Treffer: Wenn du einen kritischen Treffer erzielst, der einer Kreatur Hiebschaden zufügt, so ist diese Kreatur bis zum Beginn deines nächsten Zugs bei Angriffswürfen im Nachteil."
+    }
+  },
+  {
+    "id": "flink",
+    "name": "FLINK",
+    "category": "Allgemein",
+    "data": {
+      "prerequisite": "min. 4. Stufe, min. Geschicklichkeit oder Konstitution 13",
+      "description": "Du erhältst folgende Vorzüge: Attributswerterhöhung: Dein Geschicklichkeitsoder dein Konstitutionswert wird um 1 Punkt erhöht (auf höchstens 20). Erhöhte Bewegungsrate: Deine Bewegungsrate ist um drei Meter erhöht. Spurt über schwieriges Gelände: Wenn du in deinem Zug die Spurt-Aktion ausführst, kostet schwieriges Gelände dich für den Rest dieses Zugs keine zusätzliche Bewegung. Flinke Bewegung: Gelegenheitsangriffe auf dich sind im Nachteil."
+    }
+  }
+]

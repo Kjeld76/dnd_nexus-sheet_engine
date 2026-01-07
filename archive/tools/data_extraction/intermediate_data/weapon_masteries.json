@@ -1,0 +1,108 @@
+{
+  "masteries": [
+    {
+      "id": "sap",
+      "name": "Auslaugen",
+      "description": "Wenn du eine Kreatur mit dieser Waffe triffst, ist diese Kreatur bei ihrem nächsten Angriffswurf vor Beginn deines nächsten Zugs im Nachteil.",
+      "data": {
+        "trigger": "on_hit",
+        "effect": {
+          "type": "disadvantage",
+          "target": "enemy",
+          "duration": "next_attack"
+        }
+      }
+    },
+    {
+      "id": "nick",
+      "name": "Einkerben",
+      "description": "Wenn du den zusätzlichen Angriff der Eigenschaft Leicht ausführst, kannst du dies als Teil der Angriffsaktion statt als Bonusaktion tun. Einmal pro Zug.",
+      "data": {
+        "trigger": "on_light_attack",
+        "effect": {
+          "type": "action_efficiency",
+          "benefit": "use_attack_action_for_bonus_attack",
+          "limit": "1/turn"
+        }
+      }
+    },
+    {
+      "id": "vex",
+      "name": "Plagen",
+      "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, bist du beim nächsten Angriffswurf gegen diese Kreatur vor Ende deines nächsten Zugs im Vorteil.",
+      "data": {
+        "trigger": "on_hit_damage",
+        "effect": {
+          "type": "advantage",
+          "on_next_attack": true,
+          "against_same_target": true
+        }
+      }
+    },
+    {
+      "id": "cleave",
+      "name": "Spalten",
+      "description": "Wenn du eine Kreatur mit einem Nahkampfangriffswurf triffst, kannst du einen weiteren Nahkampfangriff auf eine zweite Kreatur im Abstand von bis zu 1,5 Metern ausführen. Einmal pro Zug, kein Attributsmodifikator auf Schaden.",
+      "data": {
+        "trigger": "on_hit",
+        "effect": {
+          "type": "additional_attack",
+          "max_distance_m": 1.5,
+          "damage_mod": 0
+        }
+      }
+    },
+    {
+      "id": "push",
+      "name": "Stoßen",
+      "description": "Wenn du eine Kreatur mit dieser Waffe triffst, kannst du sie bis zu drei Meter weit in gerader Linie von dir wegstoßen, sofern sie von höchstens großer Größe ist.",
+      "data": {
+        "trigger": "on_hit",
+        "effect": {
+          "type": "push",
+          "distance_m": 3,
+          "max_size": "Large"
+        }
+      }
+    },
+    {
+      "id": "graze",
+      "name": "Streifen",
+      "description": "Wenn dein Angriffswurf mit dieser Waffe eine Kreatur verfehlt, kannst du der Kreatur Schaden in Höhe des Attributsmodifikators zufügen.",
+      "data": {
+        "trigger": "on_miss",
+        "effect": {
+          "type": "damage_on_miss",
+          "amount": "attr_mod"
+        }
+      }
+    },
+    {
+      "id": "topple",
+      "name": "Umstoßen",
+      "description": "Wenn du eine Kreatur mit dieser Waffe triffst, kannst du sie zu einem Konstitutionsrettungswurf zwingen. Scheitert der Wurf, so wird die Kreatur umgestoßen.",
+      "data": {
+        "trigger": "on_hit",
+        "effect": {
+          "type": "condition",
+          "condition": "prone",
+          "save_attr": "CON",
+          "save_dc": "8 + mod + proficiency"
+        }
+      }
+    },
+    {
+      "id": "slow",
+      "name": "Verlangsamen",
+      "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, kannst du ihre Bewegungsrate bis zum Beginn deines nächsten Zugs um drei Meter verringern.",
+      "data": {
+        "trigger": "on_hit_damage",
+        "effect": {
+          "type": "speed_reduction",
+          "amount_m": 3,
+          "duration": "next_turn"
+        }
+      }
+    }
+  ]
+}

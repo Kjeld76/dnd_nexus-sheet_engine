@@ -1,0 +1,1954 @@
+{
+  "weapons": [
+    {
+      "id": "beil",
+      "name": "Beil",
+      "category": "Einfache Waffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W6",
+      "damage_type": "Hieb",
+      "weight_kg": 1,
+      "cost_gp": 5,
+      "data": {
+        "properties": [
+          "light",
+          "thrown"
+        ],
+        "mastery": "vex",
+        "source_page": 213,
+        "thrown_range": {
+          "normal": 6,
+          "max": 18
+        },
+        "property_details": {
+          "light": {
+            "id": "light",
+            "name": "Leicht",
+            "description": "Wenn du in deinem Zug die Angriffsaktion ausführst und mit einer leichten Waffe angreifst, kannst du später im selben Zug als Bonusaktion einen zusätzlichen Angriff ausführen. (Beachte: Einkerben Mastery kann dies ändern).",
+            "data": {
+              "mechanical_effect": "bonus_attack_eligible"
+            }
+          },
+          "thrown": {
+            "id": "thrown",
+            "name": "Wurfwaffe",
+            "description": "Waffen mit der Eigenschaft Wurfwaffe können geworfen werden, um Fernkampfangriffe auszuführen. Sie können als Teil des Angriffs gezogen werden.",
+            "data": {
+              "mechanical_effect": "thrown_ranged_attack"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "vex",
+          "name": "Plagen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, bist du beim nächsten Angriffswurf gegen diese Kreatur vor Ende deines nächsten Zugs im Vorteil.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "advantage",
+              "on_next_attack": true,
+              "against_same_target": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "dolch",
+      "name": "Dolch",
+      "category": "Einfache Waffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W4",
+      "damage_type": "Stich",
+      "weight_kg": 0.5,
+      "cost_gp": 2,
+      "data": {
+        "properties": [
+          "finesse",
+          "light",
+          "thrown"
+        ],
+        "mastery": "nick",
+        "source_page": 213,
+        "thrown_range": {
+          "normal": 6,
+          "max": 18
+        },
+        "property_details": {
+          "finesse": {
+            "id": "finesse",
+            "name": "Finesse",
+            "description": "Wenn du mit Finesse-Waffen angreifst, hast du bei Angriffs- und Schadenswürfen die Wahl zwischen deinem Stärke- und deinem Geschicklichkeitsmodifikator. Du musst allerdings bei beiden Würfen denselben Modifikator verwenden.",
+            "data": {
+              "mechanical_effect": "choice(STR, DEX)",
+              "affects": [
+                "attack_rolls",
+                "damage_rolls"
+              ]
+            }
+          },
+          "light": {
+            "id": "light",
+            "name": "Leicht",
+            "description": "Wenn du in deinem Zug die Angriffsaktion ausführst und mit einer leichten Waffe angreifst, kannst du später im selben Zug als Bonusaktion einen zusätzlichen Angriff ausführen. (Beachte: Einkerben Mastery kann dies ändern).",
+            "data": {
+              "mechanical_effect": "bonus_attack_eligible"
+            }
+          },
+          "thrown": {
+            "id": "thrown",
+            "name": "Wurfwaffe",
+            "description": "Waffen mit der Eigenschaft Wurfwaffe können geworfen werden, um Fernkampfangriffe auszuführen. Sie können als Teil des Angriffs gezogen werden.",
+            "data": {
+              "mechanical_effect": "thrown_ranged_attack"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "nick",
+          "name": "Einkerben",
+          "description": "Wenn du den zusätzlichen Angriff der Eigenschaft Leicht ausführst, kannst du dies als Teil der Angriffsaktion statt als Bonusaktion tun. Einmal pro Zug.",
+          "data": {
+            "trigger": "on_light_attack",
+            "effect": {
+              "type": "action_efficiency",
+              "benefit": "use_attack_action_for_bonus_attack",
+              "limit": "1/turn"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "kampfstab",
+      "name": "Kampfstab",
+      "category": "Einfache Waffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W6",
+      "damage_type": "Wucht",
+      "weight_kg": 2,
+      "cost_gp": 0.2,
+      "data": {
+        "properties": [
+          "versatile"
+        ],
+        "mastery": "topple",
+        "source_page": 213,
+        "versatile_damage": "1W8",
+        "property_details": {
+          "versatile": {
+            "id": "versatile",
+            "name": "Vielseitig",
+            "description": "Waffen mit der Eigenschaft Vielseitig können mit einer Hand oder mit zwei Händen geführt werden. Mit der Eigenschaft wird ein Schadenswert in Klammern genannt, der bei zweihändiger Führung gilt.",
+            "data": {
+              "mechanical_effect": "variable_damage"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "topple",
+          "name": "Umstoßen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, kannst du sie zu einem Konstitutionsrettungswurf zwingen. Scheitert der Wurf, so wird die Kreatur umgestoßen.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "condition",
+              "condition": "prone",
+              "save_attr": "CON",
+              "save_dc": "8 + mod + proficiency"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "knüppel",
+      "name": "Knüppel",
+      "category": "Einfache Waffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W4",
+      "damage_type": "Wucht",
+      "weight_kg": 1,
+      "cost_gp": 0.1,
+      "data": {
+        "properties": [
+          "light"
+        ],
+        "mastery": "slow",
+        "source_page": 213,
+        "property_details": {
+          "light": {
+            "id": "light",
+            "name": "Leicht",
+            "description": "Wenn du in deinem Zug die Angriffsaktion ausführst und mit einer leichten Waffe angreifst, kannst du später im selben Zug als Bonusaktion einen zusätzlichen Angriff ausführen. (Beachte: Einkerben Mastery kann dies ändern).",
+            "data": {
+              "mechanical_effect": "bonus_attack_eligible"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "slow",
+          "name": "Verlangsamen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, kannst du ihre Bewegungsrate bis zum Beginn deines nächsten Zugs um drei Meter verringern.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "speed_reduction",
+              "amount_m": 3,
+              "duration": "next_turn"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "leichter-hammer",
+      "name": "Leichter Hammer",
+      "category": "Einfache Waffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W4",
+      "damage_type": "Wucht",
+      "weight_kg": 1,
+      "cost_gp": 2,
+      "data": {
+        "properties": [
+          "light",
+          "thrown"
+        ],
+        "mastery": "nick",
+        "source_page": 213,
+        "thrown_range": {
+          "normal": 6,
+          "max": 18
+        },
+        "property_details": {
+          "light": {
+            "id": "light",
+            "name": "Leicht",
+            "description": "Wenn du in deinem Zug die Angriffsaktion ausführst und mit einer leichten Waffe angreifst, kannst du später im selben Zug als Bonusaktion einen zusätzlichen Angriff ausführen. (Beachte: Einkerben Mastery kann dies ändern).",
+            "data": {
+              "mechanical_effect": "bonus_attack_eligible"
+            }
+          },
+          "thrown": {
+            "id": "thrown",
+            "name": "Wurfwaffe",
+            "description": "Waffen mit der Eigenschaft Wurfwaffe können geworfen werden, um Fernkampfangriffe auszuführen. Sie können als Teil des Angriffs gezogen werden.",
+            "data": {
+              "mechanical_effect": "thrown_ranged_attack"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "nick",
+          "name": "Einkerben",
+          "description": "Wenn du den zusätzlichen Angriff der Eigenschaft Leicht ausführst, kannst du dies als Teil der Angriffsaktion statt als Bonusaktion tun. Einmal pro Zug.",
+          "data": {
+            "trigger": "on_light_attack",
+            "effect": {
+              "type": "action_efficiency",
+              "benefit": "use_attack_action_for_bonus_attack",
+              "limit": "1/turn"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "sichel",
+      "name": "Sichel",
+      "category": "Einfache Waffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W4",
+      "damage_type": "Hieb",
+      "weight_kg": 1,
+      "cost_gp": 1,
+      "data": {
+        "properties": [
+          "light"
+        ],
+        "mastery": "nick",
+        "source_page": 213,
+        "property_details": {
+          "light": {
+            "id": "light",
+            "name": "Leicht",
+            "description": "Wenn du in deinem Zug die Angriffsaktion ausführst und mit einer leichten Waffe angreifst, kannst du später im selben Zug als Bonusaktion einen zusätzlichen Angriff ausführen. (Beachte: Einkerben Mastery kann dies ändern).",
+            "data": {
+              "mechanical_effect": "bonus_attack_eligible"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "nick",
+          "name": "Einkerben",
+          "description": "Wenn du den zusätzlichen Angriff der Eigenschaft Leicht ausführst, kannst du dies als Teil der Angriffsaktion statt als Bonusaktion tun. Einmal pro Zug.",
+          "data": {
+            "trigger": "on_light_attack",
+            "effect": {
+              "type": "action_efficiency",
+              "benefit": "use_attack_action_for_bonus_attack",
+              "limit": "1/turn"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "speer",
+      "name": "Speer",
+      "category": "Einfache Waffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W6",
+      "damage_type": "Stich",
+      "weight_kg": 1.5,
+      "cost_gp": 1,
+      "data": {
+        "properties": [
+          "versatile",
+          "thrown"
+        ],
+        "mastery": "sap",
+        "source_page": 213,
+        "versatile_damage": "1W8",
+        "thrown_range": {
+          "normal": 6,
+          "max": 18
+        },
+        "property_details": {
+          "versatile": {
+            "id": "versatile",
+            "name": "Vielseitig",
+            "description": "Waffen mit der Eigenschaft Vielseitig können mit einer Hand oder mit zwei Händen geführt werden. Mit der Eigenschaft wird ein Schadenswert in Klammern genannt, der bei zweihändiger Führung gilt.",
+            "data": {
+              "mechanical_effect": "variable_damage"
+            }
+          },
+          "thrown": {
+            "id": "thrown",
+            "name": "Wurfwaffe",
+            "description": "Waffen mit der Eigenschaft Wurfwaffe können geworfen werden, um Fernkampfangriffe auszuführen. Sie können als Teil des Angriffs gezogen werden.",
+            "data": {
+              "mechanical_effect": "thrown_ranged_attack"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "sap",
+          "name": "Auslaugen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, ist diese Kreatur bei ihrem nächsten Angriffswurf vor Beginn deines nächsten Zugs im Nachteil.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "disadvantage",
+              "target": "enemy",
+              "duration": "next_attack"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "streitkolben",
+      "name": "Streitkolben",
+      "category": "Einfache Waffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W6",
+      "damage_type": "Wucht",
+      "weight_kg": 2,
+      "cost_gp": 5,
+      "data": {
+        "properties": [],
+        "mastery": "sap",
+        "source_page": 213,
+        "property_details": {},
+        "mastery_details": {
+          "id": "sap",
+          "name": "Auslaugen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, ist diese Kreatur bei ihrem nächsten Angriffswurf vor Beginn deines nächsten Zugs im Nachteil.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "disadvantage",
+              "target": "enemy",
+              "duration": "next_attack"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "wurfspeer",
+      "name": "Wurfspeer",
+      "category": "Einfache Waffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W6",
+      "damage_type": "Stich",
+      "weight_kg": 1,
+      "cost_gp": 0.5,
+      "data": {
+        "properties": [
+          "thrown"
+        ],
+        "mastery": "slow",
+        "source_page": 213,
+        "thrown_range": {
+          "normal": 9,
+          "max": 36
+        },
+        "property_details": {
+          "thrown": {
+            "id": "thrown",
+            "name": "Wurfwaffe",
+            "description": "Waffen mit der Eigenschaft Wurfwaffe können geworfen werden, um Fernkampfangriffe auszuführen. Sie können als Teil des Angriffs gezogen werden.",
+            "data": {
+              "mechanical_effect": "thrown_ranged_attack"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "slow",
+          "name": "Verlangsamen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, kannst du ihre Bewegungsrate bis zum Beginn deines nächsten Zugs um drei Meter verringern.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "speed_reduction",
+              "amount_m": 3,
+              "duration": "next_turn"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "zweihandknüppel",
+      "name": "Zweihandknüppel",
+      "category": "Einfache Waffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W8",
+      "damage_type": "Wucht",
+      "weight_kg": 5,
+      "cost_gp": 0.2,
+      "data": {
+        "properties": [
+          "two-handed"
+        ],
+        "mastery": "push",
+        "source_page": 213,
+        "property_details": {
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "push",
+          "name": "Stoßen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, kannst du sie bis zu drei Meter weit in gerader Linie von dir wegstoßen, sofern sie von höchstens großer Größe ist.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "push",
+              "distance_m": 3,
+              "max_size": "Large"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "kurzbogen",
+      "name": "Kurzbogen",
+      "category": "Einfache Waffen",
+      "weapon_type": "Fernkampf",
+      "damage_dice": "1W6",
+      "damage_type": "Stich",
+      "weight_kg": 1,
+      "cost_gp": 25,
+      "data": {
+        "properties": [
+          "ammunition",
+          "two-handed"
+        ],
+        "mastery": "vex",
+        "source_page": 213,
+        "range": {
+          "normal": 24,
+          "max": 96
+        },
+        "ammunition_type": "Pfeil",
+        "property_details": {
+          "ammunition": {
+            "id": "ammunition",
+            "name": "Geschosse",
+            "description": "Du kannst Waffen mit der Eigenschaft Geschosse nur für Fernkampfangriffe verwenden, wenn du über entsprechende Geschosse verfügst. Jeder Angriff verbraucht ein Geschoss. Es ist Teil des Angriffs, die Waffe mit Geschossen zu laden.",
+            "data": {
+              "mechanical_effect": "requires_ammo",
+              "affects": [
+                "ranged_attacks"
+              ]
+            }
+          },
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "vex",
+          "name": "Plagen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, bist du beim nächsten Angriffswurf gegen diese Kreatur vor Ende deines nächsten Zugs im Vorteil.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "advantage",
+              "on_next_attack": true,
+              "against_same_target": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "leichte-armbrust",
+      "name": "Leichte Armbrust",
+      "category": "Einfache Waffen",
+      "weapon_type": "Fernkampf",
+      "damage_dice": "1W8",
+      "damage_type": "Stich",
+      "weight_kg": 2.5,
+      "cost_gp": 25,
+      "data": {
+        "properties": [
+          "ammunition",
+          "loading",
+          "two-handed"
+        ],
+        "mastery": "slow",
+        "source_page": 213,
+        "range": {
+          "normal": 24,
+          "max": 96
+        },
+        "ammunition_type": "Bolzen",
+        "property_details": {
+          "ammunition": {
+            "id": "ammunition",
+            "name": "Geschosse",
+            "description": "Du kannst Waffen mit der Eigenschaft Geschosse nur für Fernkampfangriffe verwenden, wenn du über entsprechende Geschosse verfügst. Jeder Angriff verbraucht ein Geschoss. Es ist Teil des Angriffs, die Waffe mit Geschossen zu laden.",
+            "data": {
+              "mechanical_effect": "requires_ammo",
+              "affects": [
+                "ranged_attacks"
+              ]
+            }
+          },
+          "loading": {
+            "id": "loading",
+            "name": "Laden",
+            "description": "Du kannst mit einer Aktion, Bonusaktion oder Reaktion immer nur ein Geschoss aus einer Waffe mit der Eigenschaft Laden abfeuern, egal, wie viele Angriffe dir zur Verfügung stehen.",
+            "data": {
+              "mechanical_effect": "limit_one_shot_per_action"
+            }
+          },
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "slow",
+          "name": "Verlangsamen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, kannst du ihre Bewegungsrate bis zum Beginn deines nächsten Zugs um drei Meter verringern.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "speed_reduction",
+              "amount_m": 3,
+              "duration": "next_turn"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "schleuder",
+      "name": "Schleuder",
+      "category": "Einfache Waffen",
+      "weapon_type": "Fernkampf",
+      "damage_dice": "1W4",
+      "damage_type": "Wucht",
+      "weight_kg": 0,
+      "cost_gp": 0.1,
+      "data": {
+        "properties": [
+          "ammunition"
+        ],
+        "mastery": "slow",
+        "source_page": 213,
+        "range": {
+          "normal": 9,
+          "max": 36
+        },
+        "ammunition_type": "Kugel",
+        "property_details": {
+          "ammunition": {
+            "id": "ammunition",
+            "name": "Geschosse",
+            "description": "Du kannst Waffen mit der Eigenschaft Geschosse nur für Fernkampfangriffe verwenden, wenn du über entsprechende Geschosse verfügst. Jeder Angriff verbraucht ein Geschoss. Es ist Teil des Angriffs, die Waffe mit Geschossen zu laden.",
+            "data": {
+              "mechanical_effect": "requires_ammo",
+              "affects": [
+                "ranged_attacks"
+              ]
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "slow",
+          "name": "Verlangsamen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, kannst du ihre Bewegungsrate bis zum Beginn deines nächsten Zugs um drei Meter verringern.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "speed_reduction",
+              "amount_m": 3,
+              "duration": "next_turn"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "wurfpfeil",
+      "name": "Wurfpfeil",
+      "category": "Einfache Waffen",
+      "weapon_type": "Fernkampf",
+      "damage_dice": "1W4",
+      "damage_type": "Stich",
+      "weight_kg": 0.125,
+      "cost_gp": 0.05,
+      "data": {
+        "properties": [
+          "finesse",
+          "thrown"
+        ],
+        "mastery": "vex",
+        "source_page": 213,
+        "thrown_range": {
+          "normal": 6,
+          "max": 18
+        },
+        "property_details": {
+          "finesse": {
+            "id": "finesse",
+            "name": "Finesse",
+            "description": "Wenn du mit Finesse-Waffen angreifst, hast du bei Angriffs- und Schadenswürfen die Wahl zwischen deinem Stärke- und deinem Geschicklichkeitsmodifikator. Du musst allerdings bei beiden Würfen denselben Modifikator verwenden.",
+            "data": {
+              "mechanical_effect": "choice(STR, DEX)",
+              "affects": [
+                "attack_rolls",
+                "damage_rolls"
+              ]
+            }
+          },
+          "thrown": {
+            "id": "thrown",
+            "name": "Wurfwaffe",
+            "description": "Waffen mit der Eigenschaft Wurfwaffe können geworfen werden, um Fernkampfangriffe auszuführen. Sie können als Teil des Angriffs gezogen werden.",
+            "data": {
+              "mechanical_effect": "thrown_ranged_attack"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "vex",
+          "name": "Plagen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, bist du beim nächsten Angriffswurf gegen diese Kreatur vor Ende deines nächsten Zugs im Vorteil.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "advantage",
+              "on_next_attack": true,
+              "against_same_target": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "dreizack",
+      "name": "Dreizack",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W8",
+      "damage_type": "Stich",
+      "weight_kg": 2,
+      "cost_gp": 5,
+      "data": {
+        "properties": [
+          "versatile",
+          "thrown"
+        ],
+        "mastery": "topple",
+        "source_page": 213,
+        "versatile_damage": "1W10",
+        "thrown_range": {
+          "normal": 6,
+          "max": 18
+        },
+        "property_details": {
+          "versatile": {
+            "id": "versatile",
+            "name": "Vielseitig",
+            "description": "Waffen mit der Eigenschaft Vielseitig können mit einer Hand oder mit zwei Händen geführt werden. Mit der Eigenschaft wird ein Schadenswert in Klammern genannt, der bei zweihändiger Führung gilt.",
+            "data": {
+              "mechanical_effect": "variable_damage"
+            }
+          },
+          "thrown": {
+            "id": "thrown",
+            "name": "Wurfwaffe",
+            "description": "Waffen mit der Eigenschaft Wurfwaffe können geworfen werden, um Fernkampfangriffe auszuführen. Sie können als Teil des Angriffs gezogen werden.",
+            "data": {
+              "mechanical_effect": "thrown_ranged_attack"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "topple",
+          "name": "Umstoßen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, kannst du sie zu einem Konstitutionsrettungswurf zwingen. Scheitert der Wurf, so wird die Kreatur umgestoßen.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "condition",
+              "condition": "prone",
+              "save_attr": "CON",
+              "save_dc": "8 + mod + proficiency"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "flegel",
+      "name": "Flegel",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W8",
+      "damage_type": "Wucht",
+      "weight_kg": 1,
+      "cost_gp": 10,
+      "data": {
+        "properties": [],
+        "mastery": "sap",
+        "source_page": 213,
+        "property_details": {},
+        "mastery_details": {
+          "id": "sap",
+          "name": "Auslaugen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, ist diese Kreatur bei ihrem nächsten Angriffswurf vor Beginn deines nächsten Zugs im Nachteil.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "disadvantage",
+              "target": "enemy",
+              "duration": "next_attack"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "glefe",
+      "name": "Glefe",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W10",
+      "damage_type": "Hieb",
+      "weight_kg": 3,
+      "cost_gp": 20,
+      "data": {
+        "properties": [
+          "heavy",
+          "reach",
+          "two-handed"
+        ],
+        "mastery": "graze",
+        "source_page": 213,
+        "property_details": {
+          "heavy": {
+            "id": "heavy",
+            "name": "Schwer",
+            "description": "Du bist bei Angriffswürfen mit schweren Waffen im Nachteil, wenn du bei Nahkampfwaffen einen Stärkewert von weniger als 13 und bei Fernkampfwaffen einen Geschicklichkeitswert von weniger als 13 hast.",
+            "data": {
+              "mechanical_effect": "disadvantage_on_low_attr",
+              "min_attr": 13
+            }
+          },
+          "reach": {
+            "id": "reach",
+            "name": "Weitreichend",
+            "description": "Bei Waffen mit der Eigenschaft Weitreichend ist die normale Angriffsreichweite um 1,5 Meter erhöht. Dies gilt auch bei Gelegenheitsangriffen.",
+            "data": {
+              "mechanical_effect": "reach_bonus",
+              "bonus_m": 1.5
+            }
+          },
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "graze",
+          "name": "Streifen",
+          "description": "Wenn dein Angriffswurf mit dieser Waffe eine Kreatur verfehlt, kannst du der Kreatur Schaden in Höhe des Attributsmodifikators zufügen.",
+          "data": {
+            "trigger": "on_miss",
+            "effect": {
+              "type": "damage_on_miss",
+              "amount": "attr_mod"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "hellebarde",
+      "name": "Hellebarde",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W10",
+      "damage_type": "Hieb",
+      "weight_kg": 3,
+      "cost_gp": 20,
+      "data": {
+        "properties": [
+          "heavy",
+          "reach",
+          "two-handed"
+        ],
+        "mastery": "cleave",
+        "source_page": 213,
+        "property_details": {
+          "heavy": {
+            "id": "heavy",
+            "name": "Schwer",
+            "description": "Du bist bei Angriffswürfen mit schweren Waffen im Nachteil, wenn du bei Nahkampfwaffen einen Stärkewert von weniger als 13 und bei Fernkampfwaffen einen Geschicklichkeitswert von weniger als 13 hast.",
+            "data": {
+              "mechanical_effect": "disadvantage_on_low_attr",
+              "min_attr": 13
+            }
+          },
+          "reach": {
+            "id": "reach",
+            "name": "Weitreichend",
+            "description": "Bei Waffen mit der Eigenschaft Weitreichend ist die normale Angriffsreichweite um 1,5 Meter erhöht. Dies gilt auch bei Gelegenheitsangriffen.",
+            "data": {
+              "mechanical_effect": "reach_bonus",
+              "bonus_m": 1.5
+            }
+          },
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "cleave",
+          "name": "Spalten",
+          "description": "Wenn du eine Kreatur mit einem Nahkampfangriffswurf triffst, kannst du einen weiteren Nahkampfangriff auf eine zweite Kreatur im Abstand von bis zu 1,5 Metern ausführen. Einmal pro Zug, kein Attributsmodifikator auf Schaden.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "additional_attack",
+              "max_distance_m": 1.5,
+              "damage_mod": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "kriegshammer",
+      "name": "Kriegshammer",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W8",
+      "damage_type": "Wucht",
+      "weight_kg": 2.5,
+      "cost_gp": 15,
+      "data": {
+        "properties": [
+          "versatile"
+        ],
+        "mastery": "push",
+        "source_page": 213,
+        "versatile_damage": "1W10",
+        "property_details": {
+          "versatile": {
+            "id": "versatile",
+            "name": "Vielseitig",
+            "description": "Waffen mit der Eigenschaft Vielseitig können mit einer Hand oder mit zwei Händen geführt werden. Mit der Eigenschaft wird ein Schadenswert in Klammern genannt, der bei zweihändiger Führung gilt.",
+            "data": {
+              "mechanical_effect": "variable_damage"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "push",
+          "name": "Stoßen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, kannst du sie bis zu drei Meter weit in gerader Linie von dir wegstoßen, sofern sie von höchstens großer Größe ist.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "push",
+              "distance_m": 3,
+              "max_size": "Large"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "kriegspicke",
+      "name": "Kriegspicke",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W8",
+      "damage_type": "Stich",
+      "weight_kg": 1,
+      "cost_gp": 5,
+      "data": {
+        "properties": [
+          "versatile"
+        ],
+        "mastery": "sap",
+        "source_page": 213,
+        "versatile_damage": "1W10",
+        "property_details": {
+          "versatile": {
+            "id": "versatile",
+            "name": "Vielseitig",
+            "description": "Waffen mit der Eigenschaft Vielseitig können mit einer Hand oder mit zwei Händen geführt werden. Mit der Eigenschaft wird ein Schadenswert in Klammern genannt, der bei zweihändiger Führung gilt.",
+            "data": {
+              "mechanical_effect": "variable_damage"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "sap",
+          "name": "Auslaugen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, ist diese Kreatur bei ihrem nächsten Angriffswurf vor Beginn deines nächsten Zugs im Nachteil.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "disadvantage",
+              "target": "enemy",
+              "duration": "next_attack"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "krummsäbel",
+      "name": "Krummsäbel",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W6",
+      "damage_type": "Hieb",
+      "weight_kg": 1.5,
+      "cost_gp": 25,
+      "data": {
+        "properties": [
+          "finesse",
+          "light"
+        ],
+        "mastery": "nick",
+        "source_page": 213,
+        "property_details": {
+          "finesse": {
+            "id": "finesse",
+            "name": "Finesse",
+            "description": "Wenn du mit Finesse-Waffen angreifst, hast du bei Angriffs- und Schadenswürfen die Wahl zwischen deinem Stärke- und deinem Geschicklichkeitsmodifikator. Du musst allerdings bei beiden Würfen denselben Modifikator verwenden.",
+            "data": {
+              "mechanical_effect": "choice(STR, DEX)",
+              "affects": [
+                "attack_rolls",
+                "damage_rolls"
+              ]
+            }
+          },
+          "light": {
+            "id": "light",
+            "name": "Leicht",
+            "description": "Wenn du in deinem Zug die Angriffsaktion ausführst und mit einer leichten Waffe angreifst, kannst du später im selben Zug als Bonusaktion einen zusätzlichen Angriff ausführen. (Beachte: Einkerben Mastery kann dies ändern).",
+            "data": {
+              "mechanical_effect": "bonus_attack_eligible"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "nick",
+          "name": "Einkerben",
+          "description": "Wenn du den zusätzlichen Angriff der Eigenschaft Leicht ausführst, kannst du dies als Teil der Angriffsaktion statt als Bonusaktion tun. Einmal pro Zug.",
+          "data": {
+            "trigger": "on_light_attack",
+            "effect": {
+              "type": "action_efficiency",
+              "benefit": "use_attack_action_for_bonus_attack",
+              "limit": "1/turn"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "kurzschwert",
+      "name": "Kurzschwert",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W6",
+      "damage_type": "Stich",
+      "weight_kg": 1,
+      "cost_gp": 10,
+      "data": {
+        "properties": [
+          "finesse",
+          "light"
+        ],
+        "mastery": "vex",
+        "source_page": 213,
+        "property_details": {
+          "finesse": {
+            "id": "finesse",
+            "name": "Finesse",
+            "description": "Wenn du mit Finesse-Waffen angreifst, hast du bei Angriffs- und Schadenswürfen die Wahl zwischen deinem Stärke- und deinem Geschicklichkeitsmodifikator. Du musst allerdings bei beiden Würfen denselben Modifikator verwenden.",
+            "data": {
+              "mechanical_effect": "choice(STR, DEX)",
+              "affects": [
+                "attack_rolls",
+                "damage_rolls"
+              ]
+            }
+          },
+          "light": {
+            "id": "light",
+            "name": "Leicht",
+            "description": "Wenn du in deinem Zug die Angriffsaktion ausführst und mit einer leichten Waffe angreifst, kannst du später im selben Zug als Bonusaktion einen zusätzlichen Angriff ausführen. (Beachte: Einkerben Mastery kann dies ändern).",
+            "data": {
+              "mechanical_effect": "bonus_attack_eligible"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "vex",
+          "name": "Plagen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, bist du beim nächsten Angriffswurf gegen diese Kreatur vor Ende deines nächsten Zugs im Vorteil.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "advantage",
+              "on_next_attack": true,
+              "against_same_target": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "langschwert",
+      "name": "Langschwert",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W8",
+      "damage_type": "Hieb",
+      "weight_kg": 1.5,
+      "cost_gp": 15,
+      "data": {
+        "properties": [
+          "versatile"
+        ],
+        "mastery": "sap",
+        "source_page": 213,
+        "versatile_damage": "1W10",
+        "property_details": {
+          "versatile": {
+            "id": "versatile",
+            "name": "Vielseitig",
+            "description": "Waffen mit der Eigenschaft Vielseitig können mit einer Hand oder mit zwei Händen geführt werden. Mit der Eigenschaft wird ein Schadenswert in Klammern genannt, der bei zweihändiger Führung gilt.",
+            "data": {
+              "mechanical_effect": "variable_damage"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "sap",
+          "name": "Auslaugen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, ist diese Kreatur bei ihrem nächsten Angriffswurf vor Beginn deines nächsten Zugs im Nachteil.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "disadvantage",
+              "target": "enemy",
+              "duration": "next_attack"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "lanze",
+      "name": "Lanze",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W10",
+      "damage_type": "Stich",
+      "weight_kg": 3,
+      "cost_gp": 10,
+      "data": {
+        "properties": [
+          "heavy",
+          "reach",
+          "two-handed"
+        ],
+        "mastery": "topple",
+        "source_page": 213,
+        "property_details": {
+          "heavy": {
+            "id": "heavy",
+            "name": "Schwer",
+            "description": "Du bist bei Angriffswürfen mit schweren Waffen im Nachteil, wenn du bei Nahkampfwaffen einen Stärkewert von weniger als 13 und bei Fernkampfwaffen einen Geschicklichkeitswert von weniger als 13 hast.",
+            "data": {
+              "mechanical_effect": "disadvantage_on_low_attr",
+              "min_attr": 13
+            }
+          },
+          "reach": {
+            "id": "reach",
+            "name": "Weitreichend",
+            "description": "Bei Waffen mit der Eigenschaft Weitreichend ist die normale Angriffsreichweite um 1,5 Meter erhöht. Dies gilt auch bei Gelegenheitsangriffen.",
+            "data": {
+              "mechanical_effect": "reach_bonus",
+              "bonus_m": 1.5
+            }
+          },
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "topple",
+          "name": "Umstoßen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, kannst du sie zu einem Konstitutionsrettungswurf zwingen. Scheitert der Wurf, so wird die Kreatur umgestoßen.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "condition",
+              "condition": "prone",
+              "save_attr": "CON",
+              "save_dc": "8 + mod + proficiency"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "morgenstern",
+      "name": "Morgenstern",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W8",
+      "damage_type": "Stich",
+      "weight_kg": 2,
+      "cost_gp": 15,
+      "data": {
+        "properties": [],
+        "mastery": "sap",
+        "source_page": 213,
+        "property_details": {},
+        "mastery_details": {
+          "id": "sap",
+          "name": "Auslaugen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, ist diese Kreatur bei ihrem nächsten Angriffswurf vor Beginn deines nächsten Zugs im Nachteil.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "disadvantage",
+              "target": "enemy",
+              "duration": "next_attack"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "peitsche",
+      "name": "Peitsche",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W4",
+      "damage_type": "Hieb",
+      "weight_kg": 1.5,
+      "cost_gp": 2,
+      "data": {
+        "properties": [
+          "finesse",
+          "reach"
+        ],
+        "mastery": "slow",
+        "source_page": 213,
+        "property_details": {
+          "finesse": {
+            "id": "finesse",
+            "name": "Finesse",
+            "description": "Wenn du mit Finesse-Waffen angreifst, hast du bei Angriffs- und Schadenswürfen die Wahl zwischen deinem Stärke- und deinem Geschicklichkeitsmodifikator. Du musst allerdings bei beiden Würfen denselben Modifikator verwenden.",
+            "data": {
+              "mechanical_effect": "choice(STR, DEX)",
+              "affects": [
+                "attack_rolls",
+                "damage_rolls"
+              ]
+            }
+          },
+          "reach": {
+            "id": "reach",
+            "name": "Weitreichend",
+            "description": "Bei Waffen mit der Eigenschaft Weitreichend ist die normale Angriffsreichweite um 1,5 Meter erhöht. Dies gilt auch bei Gelegenheitsangriffen.",
+            "data": {
+              "mechanical_effect": "reach_bonus",
+              "bonus_m": 1.5
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "slow",
+          "name": "Verlangsamen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, kannst du ihre Bewegungsrate bis zum Beginn deines nächsten Zugs um drei Meter verringern.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "speed_reduction",
+              "amount_m": 3,
+              "duration": "next_turn"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "pike",
+      "name": "Pike",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W10",
+      "damage_type": "Stich",
+      "weight_kg": 9,
+      "cost_gp": 5,
+      "data": {
+        "properties": [
+          "heavy",
+          "reach",
+          "two-handed"
+        ],
+        "mastery": "push",
+        "source_page": 213,
+        "property_details": {
+          "heavy": {
+            "id": "heavy",
+            "name": "Schwer",
+            "description": "Du bist bei Angriffswürfen mit schweren Waffen im Nachteil, wenn du bei Nahkampfwaffen einen Stärkewert von weniger als 13 und bei Fernkampfwaffen einen Geschicklichkeitswert von weniger als 13 hast.",
+            "data": {
+              "mechanical_effect": "disadvantage_on_low_attr",
+              "min_attr": 13
+            }
+          },
+          "reach": {
+            "id": "reach",
+            "name": "Weitreichend",
+            "description": "Bei Waffen mit der Eigenschaft Weitreichend ist die normale Angriffsreichweite um 1,5 Meter erhöht. Dies gilt auch bei Gelegenheitsangriffen.",
+            "data": {
+              "mechanical_effect": "reach_bonus",
+              "bonus_m": 1.5
+            }
+          },
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "push",
+          "name": "Stoßen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, kannst du sie bis zu drei Meter weit in gerader Linie von dir wegstoßen, sofern sie von höchstens großer Größe ist.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "push",
+              "distance_m": 3,
+              "max_size": "Large"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "rapier",
+      "name": "Rapier",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W8",
+      "damage_type": "Stich",
+      "weight_kg": 1,
+      "cost_gp": 25,
+      "data": {
+        "properties": [
+          "finesse"
+        ],
+        "mastery": "vex",
+        "source_page": 213,
+        "property_details": {
+          "finesse": {
+            "id": "finesse",
+            "name": "Finesse",
+            "description": "Wenn du mit Finesse-Waffen angreifst, hast du bei Angriffs- und Schadenswürfen die Wahl zwischen deinem Stärke- und deinem Geschicklichkeitsmodifikator. Du musst allerdings bei beiden Würfen denselben Modifikator verwenden.",
+            "data": {
+              "mechanical_effect": "choice(STR, DEX)",
+              "affects": [
+                "attack_rolls",
+                "damage_rolls"
+              ]
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "vex",
+          "name": "Plagen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, bist du beim nächsten Angriffswurf gegen diese Kreatur vor Ende deines nächsten Zugs im Vorteil.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "advantage",
+              "on_next_attack": true,
+              "against_same_target": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "streitaxt",
+      "name": "Streitaxt",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W8",
+      "damage_type": "Hieb",
+      "weight_kg": 2,
+      "cost_gp": 10,
+      "data": {
+        "properties": [
+          "versatile"
+        ],
+        "mastery": "topple",
+        "source_page": 213,
+        "versatile_damage": "1W10",
+        "property_details": {
+          "versatile": {
+            "id": "versatile",
+            "name": "Vielseitig",
+            "description": "Waffen mit der Eigenschaft Vielseitig können mit einer Hand oder mit zwei Händen geführt werden. Mit der Eigenschaft wird ein Schadenswert in Klammern genannt, der bei zweihändiger Führung gilt.",
+            "data": {
+              "mechanical_effect": "variable_damage"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "topple",
+          "name": "Umstoßen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, kannst du sie zu einem Konstitutionsrettungswurf zwingen. Scheitert der Wurf, so wird die Kreatur umgestoßen.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "condition",
+              "condition": "prone",
+              "save_attr": "CON",
+              "save_dc": "8 + mod + proficiency"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "zweihandaxt",
+      "name": "Zweihandaxt",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "1W12",
+      "damage_type": "Hieb",
+      "weight_kg": 3.5,
+      "cost_gp": 30,
+      "data": {
+        "properties": [
+          "heavy",
+          "two-handed"
+        ],
+        "mastery": "cleave",
+        "source_page": 213,
+        "property_details": {
+          "heavy": {
+            "id": "heavy",
+            "name": "Schwer",
+            "description": "Du bist bei Angriffswürfen mit schweren Waffen im Nachteil, wenn du bei Nahkampfwaffen einen Stärkewert von weniger als 13 und bei Fernkampfwaffen einen Geschicklichkeitswert von weniger als 13 hast.",
+            "data": {
+              "mechanical_effect": "disadvantage_on_low_attr",
+              "min_attr": 13
+            }
+          },
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "cleave",
+          "name": "Spalten",
+          "description": "Wenn du eine Kreatur mit einem Nahkampfangriffswurf triffst, kannst du einen weiteren Nahkampfangriff auf eine zweite Kreatur im Abstand von bis zu 1,5 Metern ausführen. Einmal pro Zug, kein Attributsmodifikator auf Schaden.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "additional_attack",
+              "max_distance_m": 1.5,
+              "damage_mod": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "zweihandhammer",
+      "name": "Zweihandhammer",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "2W6",
+      "damage_type": "Wucht",
+      "weight_kg": 5,
+      "cost_gp": 10,
+      "data": {
+        "properties": [
+          "heavy",
+          "two-handed"
+        ],
+        "mastery": "topple",
+        "source_page": 213,
+        "property_details": {
+          "heavy": {
+            "id": "heavy",
+            "name": "Schwer",
+            "description": "Du bist bei Angriffswürfen mit schweren Waffen im Nachteil, wenn du bei Nahkampfwaffen einen Stärkewert von weniger als 13 und bei Fernkampfwaffen einen Geschicklichkeitswert von weniger als 13 hast.",
+            "data": {
+              "mechanical_effect": "disadvantage_on_low_attr",
+              "min_attr": 13
+            }
+          },
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "topple",
+          "name": "Umstoßen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, kannst du sie zu einem Konstitutionsrettungswurf zwingen. Scheitert der Wurf, so wird die Kreatur umgestoßen.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "condition",
+              "condition": "prone",
+              "save_attr": "CON",
+              "save_dc": "8 + mod + proficiency"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "zweihandschwert",
+      "name": "Zweihandschwert",
+      "category": "Kriegswaffen",
+      "weapon_type": "Nahkampf",
+      "damage_dice": "2W6",
+      "damage_type": "Hieb",
+      "weight_kg": 3,
+      "cost_gp": 50,
+      "data": {
+        "properties": [
+          "heavy",
+          "two-handed"
+        ],
+        "mastery": "graze",
+        "source_page": 213,
+        "property_details": {
+          "heavy": {
+            "id": "heavy",
+            "name": "Schwer",
+            "description": "Du bist bei Angriffswürfen mit schweren Waffen im Nachteil, wenn du bei Nahkampfwaffen einen Stärkewert von weniger als 13 und bei Fernkampfwaffen einen Geschicklichkeitswert von weniger als 13 hast.",
+            "data": {
+              "mechanical_effect": "disadvantage_on_low_attr",
+              "min_attr": 13
+            }
+          },
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "graze",
+          "name": "Streifen",
+          "description": "Wenn dein Angriffswurf mit dieser Waffe eine Kreatur verfehlt, kannst du der Kreatur Schaden in Höhe des Attributsmodifikators zufügen.",
+          "data": {
+            "trigger": "on_miss",
+            "effect": {
+              "type": "damage_on_miss",
+              "amount": "attr_mod"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "blasrohr",
+      "name": "Blasrohr",
+      "category": "Kriegswaffen",
+      "weapon_type": "Fernkampf",
+      "damage_dice": "1",
+      "damage_type": "Stich",
+      "weight_kg": 0.5,
+      "cost_gp": 10,
+      "data": {
+        "properties": [
+          "ammunition",
+          "loading"
+        ],
+        "mastery": "vex",
+        "source_page": 213,
+        "range": {
+          "normal": 7.5,
+          "max": 30
+        },
+        "ammunition_type": "Blasrohrpfeil",
+        "property_details": {
+          "ammunition": {
+            "id": "ammunition",
+            "name": "Geschosse",
+            "description": "Du kannst Waffen mit der Eigenschaft Geschosse nur für Fernkampfangriffe verwenden, wenn du über entsprechende Geschosse verfügst. Jeder Angriff verbraucht ein Geschoss. Es ist Teil des Angriffs, die Waffe mit Geschossen zu laden.",
+            "data": {
+              "mechanical_effect": "requires_ammo",
+              "affects": [
+                "ranged_attacks"
+              ]
+            }
+          },
+          "loading": {
+            "id": "loading",
+            "name": "Laden",
+            "description": "Du kannst mit einer Aktion, Bonusaktion oder Reaktion immer nur ein Geschoss aus einer Waffe mit der Eigenschaft Laden abfeuern, egal, wie viele Angriffe dir zur Verfügung stehen.",
+            "data": {
+              "mechanical_effect": "limit_one_shot_per_action"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "vex",
+          "name": "Plagen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, bist du beim nächsten Angriffswurf gegen diese Kreatur vor Ende deines nächsten Zugs im Vorteil.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "advantage",
+              "on_next_attack": true,
+              "against_same_target": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "handarmbrust",
+      "name": "Handarmbrust",
+      "category": "Kriegswaffen",
+      "weapon_type": "Fernkampf",
+      "damage_dice": "1W6",
+      "damage_type": "Stich",
+      "weight_kg": 1.5,
+      "cost_gp": 75,
+      "data": {
+        "properties": [
+          "ammunition",
+          "light",
+          "loading"
+        ],
+        "mastery": "vex",
+        "source_page": 213,
+        "range": {
+          "normal": 9,
+          "max": 36
+        },
+        "ammunition_type": "Bolzen",
+        "property_details": {
+          "ammunition": {
+            "id": "ammunition",
+            "name": "Geschosse",
+            "description": "Du kannst Waffen mit der Eigenschaft Geschosse nur für Fernkampfangriffe verwenden, wenn du über entsprechende Geschosse verfügst. Jeder Angriff verbraucht ein Geschoss. Es ist Teil des Angriffs, die Waffe mit Geschossen zu laden.",
+            "data": {
+              "mechanical_effect": "requires_ammo",
+              "affects": [
+                "ranged_attacks"
+              ]
+            }
+          },
+          "light": {
+            "id": "light",
+            "name": "Leicht",
+            "description": "Wenn du in deinem Zug die Angriffsaktion ausführst und mit einer leichten Waffe angreifst, kannst du später im selben Zug als Bonusaktion einen zusätzlichen Angriff ausführen. (Beachte: Einkerben Mastery kann dies ändern).",
+            "data": {
+              "mechanical_effect": "bonus_attack_eligible"
+            }
+          },
+          "loading": {
+            "id": "loading",
+            "name": "Laden",
+            "description": "Du kannst mit einer Aktion, Bonusaktion oder Reaktion immer nur ein Geschoss aus einer Waffe mit der Eigenschaft Laden abfeuern, egal, wie viele Angriffe dir zur Verfügung stehen.",
+            "data": {
+              "mechanical_effect": "limit_one_shot_per_action"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "vex",
+          "name": "Plagen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, bist du beim nächsten Angriffswurf gegen diese Kreatur vor Ende deines nächsten Zugs im Vorteil.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "advantage",
+              "on_next_attack": true,
+              "against_same_target": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "langbogen",
+      "name": "Langbogen",
+      "category": "Kriegswaffen",
+      "weapon_type": "Fernkampf",
+      "damage_dice": "1W8",
+      "damage_type": "Stich",
+      "weight_kg": 1,
+      "cost_gp": 50,
+      "data": {
+        "properties": [
+          "ammunition",
+          "heavy",
+          "two-handed"
+        ],
+        "mastery": "slow",
+        "source_page": 213,
+        "range": {
+          "normal": 45,
+          "max": 180
+        },
+        "ammunition_type": "Pfeil",
+        "property_details": {
+          "ammunition": {
+            "id": "ammunition",
+            "name": "Geschosse",
+            "description": "Du kannst Waffen mit der Eigenschaft Geschosse nur für Fernkampfangriffe verwenden, wenn du über entsprechende Geschosse verfügst. Jeder Angriff verbraucht ein Geschoss. Es ist Teil des Angriffs, die Waffe mit Geschossen zu laden.",
+            "data": {
+              "mechanical_effect": "requires_ammo",
+              "affects": [
+                "ranged_attacks"
+              ]
+            }
+          },
+          "heavy": {
+            "id": "heavy",
+            "name": "Schwer",
+            "description": "Du bist bei Angriffswürfen mit schweren Waffen im Nachteil, wenn du bei Nahkampfwaffen einen Stärkewert von weniger als 13 und bei Fernkampfwaffen einen Geschicklichkeitswert von weniger als 13 hast.",
+            "data": {
+              "mechanical_effect": "disadvantage_on_low_attr",
+              "min_attr": 13
+            }
+          },
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "slow",
+          "name": "Verlangsamen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, kannst du ihre Bewegungsrate bis zum Beginn deines nächsten Zugs um drei Meter verringern.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "speed_reduction",
+              "amount_m": 3,
+              "duration": "next_turn"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "muskete",
+      "name": "Muskete",
+      "category": "Kriegswaffen",
+      "weapon_type": "Fernkampf",
+      "damage_dice": "1W12",
+      "damage_type": "Stich",
+      "weight_kg": 5,
+      "cost_gp": 500,
+      "data": {
+        "properties": [
+          "ammunition",
+          "loading",
+          "two-handed"
+        ],
+        "mastery": "slow",
+        "source_page": 213,
+        "range": {
+          "normal": 12,
+          "max": 36
+        },
+        "ammunition_type": "Kugel",
+        "property_details": {
+          "ammunition": {
+            "id": "ammunition",
+            "name": "Geschosse",
+            "description": "Du kannst Waffen mit der Eigenschaft Geschosse nur für Fernkampfangriffe verwenden, wenn du über entsprechende Geschosse verfügst. Jeder Angriff verbraucht ein Geschoss. Es ist Teil des Angriffs, die Waffe mit Geschossen zu laden.",
+            "data": {
+              "mechanical_effect": "requires_ammo",
+              "affects": [
+                "ranged_attacks"
+              ]
+            }
+          },
+          "loading": {
+            "id": "loading",
+            "name": "Laden",
+            "description": "Du kannst mit einer Aktion, Bonusaktion oder Reaktion immer nur ein Geschoss aus einer Waffe mit der Eigenschaft Laden abfeuern, egal, wie viele Angriffe dir zur Verfügung stehen.",
+            "data": {
+              "mechanical_effect": "limit_one_shot_per_action"
+            }
+          },
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "slow",
+          "name": "Verlangsamen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, kannst du ihre Bewegungsrate bis zum Beginn deines nächsten Zugs um drei Meter verringern.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "speed_reduction",
+              "amount_m": 3,
+              "duration": "next_turn"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "pistole",
+      "name": "Pistole",
+      "category": "Kriegswaffen",
+      "weapon_type": "Fernkampf",
+      "damage_dice": "1W10",
+      "damage_type": "Stich",
+      "weight_kg": 1.5,
+      "cost_gp": 250,
+      "data": {
+        "properties": [
+          "ammunition",
+          "loading"
+        ],
+        "mastery": "vex",
+        "source_page": 213,
+        "range": {
+          "normal": 9,
+          "max": 27
+        },
+        "ammunition_type": "Kugel",
+        "property_details": {
+          "ammunition": {
+            "id": "ammunition",
+            "name": "Geschosse",
+            "description": "Du kannst Waffen mit der Eigenschaft Geschosse nur für Fernkampfangriffe verwenden, wenn du über entsprechende Geschosse verfügst. Jeder Angriff verbraucht ein Geschoss. Es ist Teil des Angriffs, die Waffe mit Geschossen zu laden.",
+            "data": {
+              "mechanical_effect": "requires_ammo",
+              "affects": [
+                "ranged_attacks"
+              ]
+            }
+          },
+          "loading": {
+            "id": "loading",
+            "name": "Laden",
+            "description": "Du kannst mit einer Aktion, Bonusaktion oder Reaktion immer nur ein Geschoss aus einer Waffe mit der Eigenschaft Laden abfeuern, egal, wie viele Angriffe dir zur Verfügung stehen.",
+            "data": {
+              "mechanical_effect": "limit_one_shot_per_action"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "vex",
+          "name": "Plagen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst und ihr Schaden zufügst, bist du beim nächsten Angriffswurf gegen diese Kreatur vor Ende deines nächsten Zugs im Vorteil.",
+          "data": {
+            "trigger": "on_hit_damage",
+            "effect": {
+              "type": "advantage",
+              "on_next_attack": true,
+              "against_same_target": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "schwere-armbrust",
+      "name": "Schwere Armbrust",
+      "category": "Kriegswaffen",
+      "weapon_type": "Fernkampf",
+      "damage_dice": "1W10",
+      "damage_type": "Stich",
+      "weight_kg": 9,
+      "cost_gp": 50,
+      "data": {
+        "properties": [
+          "ammunition",
+          "loading",
+          "heavy",
+          "two-handed"
+        ],
+        "mastery": "push",
+        "source_page": 213,
+        "range": {
+          "normal": 30,
+          "max": 120
+        },
+        "ammunition_type": "Bolzen",
+        "property_details": {
+          "ammunition": {
+            "id": "ammunition",
+            "name": "Geschosse",
+            "description": "Du kannst Waffen mit der Eigenschaft Geschosse nur für Fernkampfangriffe verwenden, wenn du über entsprechende Geschosse verfügst. Jeder Angriff verbraucht ein Geschoss. Es ist Teil des Angriffs, die Waffe mit Geschossen zu laden.",
+            "data": {
+              "mechanical_effect": "requires_ammo",
+              "affects": [
+                "ranged_attacks"
+              ]
+            }
+          },
+          "loading": {
+            "id": "loading",
+            "name": "Laden",
+            "description": "Du kannst mit einer Aktion, Bonusaktion oder Reaktion immer nur ein Geschoss aus einer Waffe mit der Eigenschaft Laden abfeuern, egal, wie viele Angriffe dir zur Verfügung stehen.",
+            "data": {
+              "mechanical_effect": "limit_one_shot_per_action"
+            }
+          },
+          "heavy": {
+            "id": "heavy",
+            "name": "Schwer",
+            "description": "Du bist bei Angriffswürfen mit schweren Waffen im Nachteil, wenn du bei Nahkampfwaffen einen Stärkewert von weniger als 13 und bei Fernkampfwaffen einen Geschicklichkeitswert von weniger als 13 hast.",
+            "data": {
+              "mechanical_effect": "disadvantage_on_low_attr",
+              "min_attr": 13
+            }
+          },
+          "two-handed": {
+            "id": "two-handed",
+            "name": "Zweihändig",
+            "description": "Waffen mit der Eigenschaft Zweihändig müssen mit zwei Händen geführt werden.",
+            "data": {
+              "mechanical_effect": "requires_two_hands"
+            }
+          }
+        },
+        "mastery_details": {
+          "id": "push",
+          "name": "Stoßen",
+          "description": "Wenn du eine Kreatur mit dieser Waffe triffst, kannst du sie bis zu drei Meter weit in gerader Linie von dir wegstoßen, sofern sie von höchstens großer Größe ist.",
+          "data": {
+            "trigger": "on_hit",
+            "effect": {
+              "type": "push",
+              "distance_m": 3,
+              "max_size": "Large"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

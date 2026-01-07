@@ -1,0 +1,110 @@
+[
+  {
+    "id": "akrobatik",
+    "name": "Akrobatik",
+    "ability": "DEX",
+    "description": "In einer heiklen Situation auf den Füßen bleiben oder ein akrobatisches Kunststück vollführen"
+  },
+  {
+    "id": "arkane-kunde",
+    "name": "Arkane Kunde",
+    "ability": "INT",
+    "description": "Dir Wissen über Zauber, magische Gegenstände und die Existenzebenen ins Gedächtnis rufen"
+  },
+  {
+    "id": "athletik",
+    "name": "Athletik",
+    "ability": "STR",
+    "description": "Weiter springen als gewöhnlich, in rauer See über Wasser bleiben oder etwas zerstören"
+  },
+  {
+    "id": "auftreten",
+    "name": "Auftreten",
+    "ability": "CHA",
+    "description": "Schauspielern, eine Geschichte erzählen, Musik spielen oder tanzen"
+  },
+  {
+    "id": "einschüchterung",
+    "name": "Einschüchterung",
+    "ability": "CHA",
+    "description": "Jemanden so beeindrucken oder bedrohen, dass er tut, was du von ihm willst"
+  },
+  {
+    "id": "fingerfertigkeit",
+    "name": "Fingerfertigkeit",
+    "ability": "DEX",
+    "description": "Jemanden bestehlen, einen Gegenstand in der Hand verbergen oder Taschenspielertricks ausführen"
+  },
+  {
+    "id": "geschichte",
+    "name": "Geschichte",
+    "ability": "INT",
+    "description": "Dir Wissen über historische Ereignisse und Persönlichkeiten, Nationen und Kulturen ins Gedächtnis rufen"
+  },
+  {
+    "id": "heilkunde",
+    "name": "Heilkunde",
+    "ability": "WIS",
+    "description": "Eine Krankheit diagnostizieren oder feststellen, woran ein Toter gestorben ist"
+  },
+  {
+    "id": "heimlichkeit",
+    "name": "Heimlichkeit",
+    "ability": "DEX",
+    "description": "Unbemerkt bleiben, indem du dich leise bewegst und hinter Dingen versteckst"
+  },
+  {
+    "id": "mit-tieren-umgehen",
+    "name": "Mit Tieren umgehen",
+    "ability": "WIS",
+    "description": "Ein Tier beruhigen, trainieren oder zu einem bestimmten Verhalten bewegen"
+  },
+  {
+    "id": "motiv-erkennen",
+    "name": "Motiv erkennen",
+    "ability": "WIS",
+    "description": "Stimmung und Absichten einer Person erfassen"
+  },
+  {
+    "id": "nachforschungen",
+    "name": "Nachforschungen",
+    "ability": "INT",
+    "description": "Obskure Informationen in Büchern finden oder erschließen, wie etwas funktioniert"
+  },
+  {
+    "id": "naturkunde",
+    "name": "Naturkunde",
+    "ability": "INT",
+    "description": "Dir Wissen über Gelände, Pflanzen, Tiere und Wetter ins Gedächtnis rufen"
+  },
+  {
+    "id": "religion",
+    "name": "Religion",
+    "ability": "INT",
+    "description": "Dir Wissen über Götter, religiöse Rituale und heilige Symbole ins Gedächtnis rufen"
+  },
+  {
+    "id": "täuschen",
+    "name": "Täuschen",
+    "ability": "CHA",
+    "description": "Überzeugend eine Lüge vortragen oder dich verkleiden"
+  },
+  {
+    "id": "überlebenskunst",
+    "name": "Überlebenskunst",
+    "ability": "WIS",
+    "description": "Spuren folgen, Nahrung suchen, Pfade finden oder natürliche Gefahren vermeiden"
+  },
+  {
+    "id": "überzeugen",
+    "name": "Überzeugen",
+    "ability": "CHA",
+    "description": "Jemanden ehrlich und geschickt von etwas überzeugen"
+  },
+  {
+    "id": "wahrnehmung",
+    "name": "Wahrnehmung",
+    "ability": "WIS",
+    "description": "Durch Kombinieren von Sinneseindrücken etwas bemerken, was einem eigentlich leicht entgeht"
+  }
+]
