@@ -1,6 +1,6 @@
 [package]
 name = "dnd-nexus"
-version = "1.2.0"
+version = "1.3.1"
 description = "D&D 5e 2024 Character Sheet Manager"
 authors = ["Your Name"]
 edition = "2021"

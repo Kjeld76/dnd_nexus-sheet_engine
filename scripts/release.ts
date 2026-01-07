@@ -1,0 +1,67 @@
+import { readFileSync, writeFileSync } from 'fs';
+import { execSync } from 'child_process';
+import path from 'path';
+
+// Usage: npx tsx scripts/release.ts [patch|minor|major] "Commit message"
+
+const type = process.argv[2] || 'patch';
+const message = process.argv[3] || 'chore: release new version';
+
+function getVersion() {
+    const pkg = JSON.parse(readFileSync('package.json', 'utf-8'));
+    return pkg.version;
+}
+
+function bumpVersion(version: string, type: string) {
+    const parts = version.split('.').map(Number);
+    if (type === 'major') parts[0]++;
+    else if (type === 'minor') parts[1]++;
+    else parts[2]++;
+    
+    if (type === 'major' || type === 'minor') parts[2] = 0;
+    if (type === 'major') parts[1] = 0;
+    
+    return parts.join('.');
+}
+
+function updateFile(filePath: string, oldVersion: string, newVersion: string) {
+    const content = readFileSync(filePath, 'utf-8');
+    const updated = content.replace(oldVersion, newVersion);
+    writeFileSync(filePath, updated);
+    console.log(`Updated ${filePath} to ${newVersion}`);
+}
+
+async function run() {
+    const oldVersion = getVersion();
+    const newVersion = bumpVersion(oldVersion, type);
+
+    console.log(`Bumping version from ${oldVersion} to ${newVersion}...`);
+
+    // 1. Update files
+    updateFile('package.json', `"version": "${oldVersion}"`, `"version": "${newVersion}"`);
+    updateFile('src-tauri/tauri.conf.json', `"version": "${oldVersion}"`, `"version": "${newVersion}"`);
+    updateFile('src-tauri/Cargo.toml', `version = "${oldVersion}"`, `version = "${newVersion}"`);
+
+    // 2. Git commands
+    try {
+        console.log('Staging changes...');
+        execSync('git add .');
+        
+        console.log('Committing...');
+        execSync(`git commit -m "chore: release v${newVersion} - ${message}"`);
+        
+        console.log('Tagging...');
+        execSync(`git tag -a v${newVersion} -m "Release v${newVersion}"`);
+        
+        console.log('Pushing to origin...');
+        execSync('git push origin main --tags');
+        
+        console.log(`Successfully released v${newVersion}! 🚀`);
+    } catch (error) {
+        console.error('Git operation failed:', error.message);
+        process.exit(1);
+    }
+}
+
+run();
+
