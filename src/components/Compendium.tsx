@@ -1,31 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import { useCompendiumStore } from '../lib/compendiumStore';
-import { compendiumApi } from '../lib/api';
-import { 
-  Zap, Users, Shield, Sword, Package, Award, Search, 
-  Plus, Edit2, Book, Info, Brain, ChevronRight,
-  Sparkles, ScrollText, Target, Clock, Compass
-} from 'lucide-react';
-import clsx, { type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-import { CompendiumEditor } from './CompendiumEditor';
+import { useState, useEffect } from "react";
+import { useCompendiumStore } from "../lib/compendiumStore";
+import {
+  Zap,
+  Users,
+  Shield,
+  Sword,
+  Package,
+  Award,
+  Search,
+  Plus,
+  Edit2,
+  Book,
+  Info,
+  Brain,
+  ChevronRight,
+  Sparkles,
+  ScrollText,
+  Target,
+  Clock,
+  Compass,
+} from "lucide-react";
+import clsx, { type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { CompendiumEditor } from "./CompendiumEditor";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-type Tab = 'spells' | 'species' | 'classes' | 'weapons' | 'armor' | 'tools' | 'gear' | 'feats' | 'skills';
+type Tab =
+  | "spells"
+  | "species"
+  | "classes"
+  | "weapons"
+  | "armor"
+  | "tools"
+  | "gear"
+  | "feats"
+  | "skills";
 
 export function Compendium() {
-  const [activeTab, setActiveTab] = useState<Tab>('spells');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [activeTab, setActiveTab] = useState<Tab>("spells");
+  const [searchTerm, setSearchTerm] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedSubclass, setSelectedSubclass] = useState<any>(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
-  
-  const { 
-    spells, species, classes, weapons, armor, tools, gear, feats, skills,
-    isLoading, fetchSpells, fetchSpecies, fetchClasses, fetchWeapons, fetchArmor, fetchTools, fetchGear, fetchFeats, fetchSkills
+
+  const {
+    spells,
+    species,
+    classes,
+    weapons,
+    armor,
+    tools,
+    gear,
+    feats,
+    skills,
+    isLoading,
+    fetchSpells,
+    fetchSpecies,
+    fetchClasses,
+    fetchWeapons,
+    fetchArmor,
+    fetchTools,
+    fetchGear,
+    fetchFeats,
+    fetchSkills,
   } = useCompendiumStore();
 
   useEffect(() => {
@@ -36,15 +76,33 @@ export function Compendium() {
     setSelectedId(null);
     setSelectedSubclass(null);
     switch (activeTab) {
-      case 'spells': fetchSpells(); break;
-      case 'species': fetchSpecies(); break;
-      case 'classes': fetchClasses(); break;
-      case 'weapons': fetchWeapons(); break;
-      case 'armor': fetchArmor(); break;
-      case 'tools': fetchTools(); break;
-      case 'gear': fetchGear(); break;
-      case 'feats': fetchFeats(); break;
-      case 'skills': fetchSkills(); break;
+      case "spells":
+        fetchSpells();
+        break;
+      case "species":
+        fetchSpecies();
+        break;
+      case "classes":
+        fetchClasses();
+        break;
+      case "weapons":
+        fetchWeapons();
+        break;
+      case "armor":
+        fetchArmor();
+        break;
+      case "tools":
+        fetchTools();
+        break;
+      case "gear":
+        fetchGear();
+        break;
+      case "feats":
+        fetchFeats();
+        break;
+      case "skills":
+        fetchSkills();
+        break;
     }
   };
 
@@ -52,32 +110,52 @@ export function Compendium() {
     const s = searchTerm.toLowerCase();
     let baseData: any[] = [];
     switch (activeTab) {
-      case 'spells': baseData = spells; break;
-      case 'species': baseData = species; break;
-      case 'classes': baseData = classes; break;
-      case 'weapons': baseData = weapons; break;
-      case 'armor': baseData = armor; break;
-      case 'tools': baseData = tools; break;
-      case 'gear': baseData = gear; break;
-      case 'feats': baseData = feats; break;
-      case 'skills': baseData = skills; break;
+      case "spells":
+        baseData = spells;
+        break;
+      case "species":
+        baseData = species;
+        break;
+      case "classes":
+        baseData = classes;
+        break;
+      case "weapons":
+        baseData = weapons;
+        break;
+      case "armor":
+        baseData = armor;
+        break;
+      case "tools":
+        baseData = tools;
+        break;
+      case "gear":
+        baseData = gear;
+        break;
+      case "feats":
+        baseData = feats;
+        break;
+      case "skills":
+        baseData = skills;
+        break;
     }
-    return baseData.filter(x => x.name.toLowerCase().includes(s));
+    return baseData.filter((x) => x.name.toLowerCase().includes(s));
   };
 
   const data = getFilteredData();
-  const selectedItem = data.find(x => x.id === selectedId);
+  const selectedItem = data.find((x) => x.id === selectedId);
 
   const renderSourceBadge = (source: string) => {
-    if (source === 'core' || !source) return null;
+    if (source === "core" || !source) return null;
     return (
-      <span className={cn(
-        "text-[9px] px-1.5 py-0.5 rounded-full font-black uppercase ml-2",
-        source === 'homebrew' 
-          ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20" 
-          : "bg-primary/10 text-primary border border-primary/20"
-      )}>
-        {source === 'homebrew' ? 'Custom' : 'Edit'}
+      <span
+        className={cn(
+          "text-[9px] px-1.5 py-0.5 rounded-full font-black uppercase ml-2",
+          source === "homebrew"
+            ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20"
+            : "bg-primary/10 text-primary border border-primary/20",
+        )}
+      >
+        {source === "homebrew" ? "Custom" : "Edit"}
       </span>
     );
   };
@@ -87,13 +165,23 @@ export function Compendium() {
       onClick={() => setActiveTab(tab)}
       className={cn(
         "flex items-center gap-2.5 px-5 py-2.5 rounded-xl transition-all relative overflow-hidden group",
-        activeTab === tab 
-          ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-105" 
-          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+        activeTab === tab
+          ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-105"
+          : "text-muted-foreground hover:bg-muted hover:text-foreground",
       )}
     >
-      <Icon size={18} className={cn("transition-transform group-hover:scale-110", activeTab === tab ? "text-primary-foreground" : "text-muted-foreground")} />
-      <span className="text-xs font-black uppercase tracking-wider">{label}</span>
+      <Icon
+        size={18}
+        className={cn(
+          "transition-transform group-hover:scale-110",
+          activeTab === tab
+            ? "text-primary-foreground"
+            : "text-muted-foreground",
+        )}
+      />
+      <span className="text-xs font-black uppercase tracking-wider">
+        {label}
+      </span>
     </button>
   );
 
@@ -102,19 +190,19 @@ export function Compendium() {
       <header className="px-8 py-6 border-b border-border bg-card/80 backdrop-blur-xl shrink-0 z-20 sticky top-0 shadow-sm">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 px-1 max-w-full">
-            {renderTabButton('spells', 'Zauber', Zap)}
-            {renderTabButton('classes', 'Klassen', Shield)}
-            {renderTabButton('species', 'Spezies', Users)}
-            {renderTabButton('weapons', 'Waffen', Sword)}
-            {renderTabButton('armor', 'Rüstungen', Shield)}
-            {renderTabButton('tools', 'Werkzeuge', Package)}
-            {renderTabButton('gear', 'Ausrüstung', Package)}
-            {renderTabButton('feats', 'Talente', Award)}
-            {renderTabButton('skills', 'Fertigkeiten', Brain)}
+            {renderTabButton("spells", "Zauber", Zap)}
+            {renderTabButton("classes", "Klassen", Shield)}
+            {renderTabButton("species", "Spezies", Users)}
+            {renderTabButton("weapons", "Waffen", Sword)}
+            {renderTabButton("armor", "Rüstungen", Shield)}
+            {renderTabButton("tools", "Werkzeuge", Package)}
+            {renderTabButton("gear", "Ausrüstung", Package)}
+            {renderTabButton("feats", "Talente", Award)}
+            {renderTabButton("skills", "Fertigkeiten", Brain)}
           </div>
-          
+
           <div className="flex items-center gap-4 shrink-0 w-full lg:w-auto">
-            <button 
+            <button
               onClick={() => {
                 setSelectedId(null);
                 setIsEditorOpen(true);
@@ -125,7 +213,10 @@ export function Compendium() {
             </button>
 
             <div className="relative flex-1 lg:w-80">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60" size={18} />
+              <Search
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60"
+                size={18}
+              />
               <input
                 type="text"
                 placeholder="Kompendium durchsuchen..."
@@ -145,7 +236,9 @@ export function Compendium() {
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-20 space-y-4">
                 <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent shadow-xl shadow-primary/20"></div>
-                <p className="text-[10px] font-black uppercase tracking-widest text-primary/40">Rufe alte Schriften auf...</p>
+                <p className="text-[10px] font-black uppercase tracking-widest text-primary/40">
+                  Rufe alte Schriften auf...
+                </p>
               </div>
             ) : data.length === 0 ? (
               <div className="p-12 text-center text-muted-foreground/40 text-sm italic border-2 border-dashed border-border rounded-[2rem]">
@@ -161,40 +254,60 @@ export function Compendium() {
                   }}
                   className={cn(
                     "w-full text-left px-5 py-4 rounded-2xl transition-all group relative overflow-hidden",
-                    selectedId === item.id 
-                      ? "bg-card border-2 border-primary shadow-xl shadow-primary/5" 
-                      : "hover:bg-card hover:border-border border-2 border-transparent"
+                    selectedId === item.id
+                      ? "bg-card border-2 border-primary shadow-xl shadow-primary/5"
+                      : "hover:bg-card hover:border-border border-2 border-transparent",
                   )}
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div className="flex items-center overflow-hidden flex-1">
-                      <span className={cn(
-                        "text-base font-black truncate leading-none",
-                        selectedId === item.id ? "text-primary" : "text-foreground group-hover:text-primary transition-colors"
-                      )}>
+                      <span
+                        className={cn(
+                          "text-base font-black truncate leading-none",
+                          selectedId === item.id
+                            ? "text-primary"
+                            : "text-foreground group-hover:text-primary transition-colors",
+                        )}
+                      >
                         {item.name}
                       </span>
                       {renderSourceBadge(item.source)}
                     </div>
-                    {activeTab === 'spells' && (
-                      <span className={cn(
-                        "text-[10px] font-black px-2 py-0.5 rounded-md",
-                        selectedId === item.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
-                      )}>
+                    {activeTab === "spells" && (
+                      <span
+                        className={cn(
+                          "text-[10px] font-black px-2 py-0.5 rounded-md",
+                          selectedId === item.id
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted text-muted-foreground",
+                        )}
+                      >
                         G{item.level}
                       </span>
                     )}
                   </div>
                   <div className="flex gap-3 items-center">
                     <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-                      {activeTab === 'spells' ? item.school : 
-                       activeTab === 'classes' ? `W${item.data.hit_die} Hit Die` :
-                       activeTab === 'weapons' ? item.damage_dice :
-                       activeTab === 'armor' ? `RK ${item.base_ac}` :
-                       item.category || 'PHB'}
+                      {activeTab === "spells"
+                        ? item.school
+                        : activeTab === "classes"
+                          ? `W${item.data.hit_die} Hit Die`
+                          : activeTab === "weapons"
+                            ? item.damage_dice
+                            : activeTab === "armor"
+                              ? `RK ${item.base_ac}`
+                              : item.category || "PHB"}
                     </span>
                     <div className="flex-1 h-px bg-border/50" />
-                    <ChevronRight size={14} className={cn("transition-transform", selectedId === item.id ? "translate-x-1 text-primary" : "text-muted-foreground/30")} />
+                    <ChevronRight
+                      size={14}
+                      className={cn(
+                        "transition-transform",
+                        selectedId === item.id
+                          ? "translate-x-1 text-primary"
+                          : "text-muted-foreground/30",
+                      )}
+                    />
                   </div>
                 </button>
               ))
@@ -208,8 +321,12 @@ export function Compendium() {
             <div className="h-full flex flex-col items-center justify-center text-muted-foreground/20 space-y-8 animate-reveal">
               <Book size={140} strokeWidth={0.5} className="opacity-40" />
               <div className="text-center space-y-2">
-                <p className="text-2xl font-black tracking-[0.4em] uppercase opacity-30">Nexus-Wissen</p>
-                <p className="text-sm font-medium tracking-wide italic">Wähle eine Legende aus dem Archiv</p>
+                <p className="text-2xl font-black tracking-[0.4em] uppercase opacity-30">
+                  Nexus-Wissen
+                </p>
+                <p className="text-sm font-medium tracking-wide italic">
+                  Wähle eine Legende aus dem Archiv
+                </p>
               </div>
             </div>
           ) : (
@@ -222,27 +339,38 @@ export function Compendium() {
                   </div>
                   {renderSourceBadge(selectedItem.source)}
                   <div className="h-px w-12 bg-border" />
-                  <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.3em]">PHB v2024 Reference</span>
+                  <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.3em]">
+                    PHB v2024 Reference
+                  </span>
                 </div>
 
                 <div className="space-y-4">
                   <h1 className="text-7xl lg:text-9xl font-black text-foreground tracking-tighter leading-[0.8] font-serif italic selection:bg-primary/20">
-                    {selectedSubclass ? selectedSubclass.name : selectedItem.name}
+                    {selectedSubclass
+                      ? selectedSubclass.name
+                      : selectedItem.name}
                   </h1>
                   {selectedSubclass && (
                     <div className="flex items-center gap-3 text-primary">
                       <ChevronRight size={20} />
-                      <p className="text-2xl font-bold tracking-tight italic">Unterklasse von {selectedItem.name}</p>
+                      <p className="text-2xl font-bold tracking-tight italic">
+                        Unterklasse von {selectedItem.name}
+                      </p>
                     </div>
                   )}
                 </div>
 
-                <button 
+                <button
                   onClick={() => setIsEditorOpen(true)}
                   className="flex items-center gap-3 px-8 py-4 bg-card border border-border text-foreground hover:text-primary hover:border-primary/50 rounded-2xl transition-all shadow-xl hover:shadow-primary/5 active:scale-95 group"
                 >
-                  <Edit2 size={20} className="group-hover:rotate-12 transition-transform" />
-                  <span className="text-xs font-black uppercase tracking-widest">Eintrag bearbeiten</span>
+                  <Edit2
+                    size={20}
+                    className="group-hover:rotate-12 transition-transform"
+                  />
+                  <span className="text-xs font-black uppercase tracking-widest">
+                    Eintrag bearbeiten
+                  </span>
                 </button>
               </div>
 
@@ -253,18 +381,22 @@ export function Compendium() {
                   {/* Knowledge Block */}
                   <div className="space-y-8">
                     <div className="flex items-center gap-6">
-                      <h4 className="text-[11px] font-black text-primary uppercase tracking-[0.5em] whitespace-nowrap">Beschreibung</h4>
+                      <h4 className="text-[11px] font-black text-primary uppercase tracking-[0.5em] whitespace-nowrap">
+                        Beschreibung
+                      </h4>
                       <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
                     </div>
 
                     <div className="bg-card p-12 lg:p-16 rounded-[4rem] border border-border shadow-2xl shadow-foreground/[0.03] relative group overflow-hidden">
                       <div className="absolute top-0 left-0 w-2 h-full bg-primary/10 group-hover:bg-primary transition-colors duration-700" />
                       <p className="text-foreground/90 leading-relaxed text-2xl lg:text-3xl whitespace-pre-wrap font-medium italic first-letter:text-6xl first-letter:font-black first-letter:text-primary first-letter:mr-2">
-                        {selectedItem.description || selectedItem.data?.description || 'Keine Beschreibung im Archiv gefunden.'}
+                        {selectedItem.description ||
+                          selectedItem.data?.description ||
+                          "Keine Beschreibung im Archiv gefunden."}
                       </p>
                     </div>
 
-                    {activeTab === 'spells' && selectedItem.higher_levels && (
+                    {activeTab === "spells" && selectedItem.higher_levels && (
                       <div className="p-12 bg-primary/[0.02] rounded-[3rem] border-2 border-dashed border-primary/10 relative group">
                         <Sparkles className="absolute top-8 right-8 text-primary/20 group-hover:rotate-12 group-hover:scale-125 transition-all duration-500" />
                         <h4 className="text-xs font-black text-primary uppercase tracking-[0.4em] mb-8 flex items-center gap-4">
@@ -278,10 +410,13 @@ export function Compendium() {
                   </div>
 
                   {/* Species Specifics */}
-                  {activeTab === 'species' && (
+                  {activeTab === "species" && (
                     <div className="grid grid-cols-1 gap-10">
                       {selectedItem.data.traits?.map((trait: any) => (
-                        <div key={trait.name} className="bg-card p-12 rounded-[3.5rem] border border-border shadow-xl hover:border-primary/40 transition-all group relative overflow-hidden">
+                        <div
+                          key={trait.name}
+                          className="bg-card p-12 rounded-[3.5rem] border border-border shadow-xl hover:border-primary/40 transition-all group relative overflow-hidden"
+                        >
                           <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/5 rounded-full group-hover:scale-150 transition-transform duration-1000" />
                           <h4 className="text-3xl font-black text-foreground mb-8 flex items-center gap-6">
                             <div className="w-16 h-16 rounded-[1.5rem] bg-primary/10 flex items-center justify-center shadow-inner group-hover:rotate-12 transition-transform">
@@ -289,14 +424,16 @@ export function Compendium() {
                             </div>
                             {trait.name}
                           </h4>
-                          <p className="text-xl text-muted-foreground leading-relaxed italic border-l-4 border-border/50 pl-10 group-hover:border-primary/30 transition-colors">{trait.description}</p>
+                          <p className="text-xl text-muted-foreground leading-relaxed italic border-l-4 border-border/50 pl-10 group-hover:border-primary/30 transition-colors">
+                            {trait.description}
+                          </p>
                         </div>
                       ))}
                     </div>
                   )}
 
                   {/* Class Features Timeline */}
-                  {activeTab === 'classes' && (
+                  {activeTab === "classes" && (
                     <div className="space-y-16">
                       <div className="flex flex-wrap gap-4 p-4 bg-muted/20 rounded-[2.5rem] border border-border w-fit shadow-inner backdrop-blur-sm">
                         <button
@@ -305,7 +442,7 @@ export function Compendium() {
                             "px-10 py-4 rounded-2xl text-xs font-black uppercase tracking-widest border transition-all active:scale-95",
                             !selectedSubclass
                               ? "bg-primary text-primary-foreground border-primary shadow-2xl shadow-primary/30"
-                              : "text-muted-foreground border-transparent hover:bg-card hover:text-primary"
+                              : "text-muted-foreground border-transparent hover:bg-card hover:text-primary",
                           )}
                         >
                           Basisklasse
@@ -318,7 +455,7 @@ export function Compendium() {
                               "px-10 py-4 rounded-2xl text-xs font-black uppercase tracking-widest border transition-all active:scale-95",
                               selectedSubclass?.name === sc.name
                                 ? "bg-primary text-primary-foreground border-primary shadow-2xl shadow-primary/30"
-                                : "text-muted-foreground border-transparent hover:bg-card hover:text-primary"
+                                : "text-muted-foreground border-transparent hover:bg-card hover:text-primary",
                             )}
                           >
                             {sc.name}
@@ -331,27 +468,46 @@ export function Compendium() {
                           <div className="w-20 h-20 rounded-[2.5rem] bg-primary/10 flex items-center justify-center shadow-lg">
                             <Award size={40} className="text-primary" />
                           </div>
-                          {selectedSubclass ? 'Spezialisierung' : 'Pfad der Klasse'}
+                          {selectedSubclass
+                            ? "Spezialisierung"
+                            : "Pfad der Klasse"}
                         </h3>
-                        
+
                         <div className="space-y-16 relative pl-10 lg:pl-16">
                           <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary via-border to-transparent rounded-full" />
-                          {Object.entries((selectedSubclass ? selectedSubclass.features : selectedItem.data.features_by_level) || {}).map(([level, features]: [string, any]) => (
-                            features.length > 0 && (
-                              <div key={level} className="relative pl-16 group">
-                                <div className="absolute left-[-52px] lg:left-[-76px] top-4 w-10 h-10 rounded-full bg-background border-[6px] border-primary shadow-2xl group-hover:scale-125 transition-transform z-10" />
-                                <span className="text-lg font-black text-primary/30 uppercase tracking-[0.5em] mb-10 block">Grad {level}</span>
-                                <div className="grid gap-10">
-                                  {features.map((f: any) => (
-                                    <div key={f.name} className="bg-card p-12 lg:p-16 rounded-[4rem] border border-border shadow-2xl shadow-foreground/[0.02] hover:border-primary/20 transition-all group/feat">
-                                      <h5 className="text-3xl font-black text-foreground mb-8 group-hover/feat:text-primary transition-colors italic font-serif">{f.name}</h5>
-                                      <p className="text-xl text-muted-foreground italic leading-relaxed border-l-4 border-border pl-10 group-hover/feat:border-primary transition-colors">{f.description}</p>
-                                    </div>
-                                  ))}
+                          {Object.entries(
+                            (selectedSubclass
+                              ? selectedSubclass.features
+                              : selectedItem.data.features_by_level) || {},
+                          ).map(
+                            ([level, features]: [string, any]) =>
+                              features.length > 0 && (
+                                <div
+                                  key={level}
+                                  className="relative pl-16 group"
+                                >
+                                  <div className="absolute left-[-52px] lg:left-[-76px] top-4 w-10 h-10 rounded-full bg-background border-[6px] border-primary shadow-2xl group-hover:scale-125 transition-transform z-10" />
+                                  <span className="text-lg font-black text-primary/30 uppercase tracking-[0.5em] mb-10 block">
+                                    Grad {level}
+                                  </span>
+                                  <div className="grid gap-10">
+                                    {features.map((f: any) => (
+                                      <div
+                                        key={f.name}
+                                        className="bg-card p-12 lg:p-16 rounded-[4rem] border border-border shadow-2xl shadow-foreground/[0.02] hover:border-primary/20 transition-all group/feat"
+                                      >
+                                        <h5 className="text-3xl font-black text-foreground mb-8 group-hover/feat:text-primary transition-colors italic font-serif">
+                                          {f.name}
+                                        </h5>
+                                        <p className="text-xl text-muted-foreground italic leading-relaxed border-l-4 border-border pl-10 group-hover/feat:border-primary transition-colors">
+                                          {f.description}
+                                        </p>
+                                      </div>
+                                    ))}
+                                  </div>
                                 </div>
-                              </div>
-                            )
-                          ))}
+                              ),
+                          )}
                         </div>
                       </div>
                     </div>
@@ -362,76 +518,196 @@ export function Compendium() {
                 <aside className="xl:col-span-4 space-y-10 sticky top-36">
                   <div className="bg-card p-12 rounded-[4.5rem] border border-border shadow-2xl shadow-foreground/[0.04] relative overflow-hidden group">
                     <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-primary to-transparent opacity-30 group-hover:opacity-100 transition-opacity duration-1000" />
-                    
-                    <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.6em] mb-16 border-b border-border pb-8 text-center">Eigenschaften</h4>
-                    
+
+                    <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.6em] mb-16 border-b border-border pb-8 text-center">
+                      Eigenschaften
+                    </h4>
+
                     <div className="space-y-12">
-                      {activeTab === 'spells' && (
+                      {activeTab === "spells" && (
                         <>
-                          <StatRow label="Zaubergrad" value={`Stufe ${selectedItem.level}`} highlight icon={Sparkles} />
-                          <StatRow label="Schule" value={selectedItem.school} icon={Brain} />
-                          <StatRow label="Zeitaufwand" value={selectedItem.casting_time} icon={Clock} />
-                          <StatRow label="Reichweite" value={selectedItem.range} icon={Target} />
-                          <StatRow label="Dauer" value={selectedItem.duration} icon={Clock} />
-                          <StatRow label="Komponenten" value={selectedItem.components} icon={ScrollText} />
+                          <StatRow
+                            label="Zaubergrad"
+                            value={`Stufe ${selectedItem.level}`}
+                            highlight
+                            icon={Sparkles}
+                          />
+                          <StatRow
+                            label="Schule"
+                            value={selectedItem.school}
+                            icon={Brain}
+                          />
+                          <StatRow
+                            label="Zeitaufwand"
+                            value={selectedItem.casting_time}
+                            icon={Clock}
+                          />
+                          <StatRow
+                            label="Reichweite"
+                            value={selectedItem.range}
+                            icon={Target}
+                          />
+                          <StatRow
+                            label="Dauer"
+                            value={selectedItem.duration}
+                            icon={Clock}
+                          />
+                          <StatRow
+                            label="Komponenten"
+                            value={selectedItem.components}
+                            icon={ScrollText}
+                          />
                           {selectedItem.material_components && (
                             <div className="bg-muted/30 p-10 rounded-[3rem] border border-border mt-10 relative group">
-                              <Info className="absolute top-6 right-6 text-primary/30 group-hover:text-primary transition-colors" size={20} />
-                              <span className="text-[10px] font-black text-primary/60 uppercase tracking-[0.4em] block mb-4">Materialien</span>
-                              <p className="text-sm text-muted-foreground font-medium italic leading-relaxed">{selectedItem.material_components}</p>
+                              <Info
+                                className="absolute top-6 right-6 text-primary/30 group-hover:text-primary transition-colors"
+                                size={20}
+                              />
+                              <span className="text-[10px] font-black text-primary/60 uppercase tracking-[0.4em] block mb-4">
+                                Materialien
+                              </span>
+                              <p className="text-sm text-muted-foreground font-medium italic leading-relaxed">
+                                {selectedItem.material_components}
+                              </p>
                             </div>
                           )}
-                          <StatRow label="Klassen" value={selectedItem.classes} highlight icon={Users} />
+                          <StatRow
+                            label="Klassen"
+                            value={selectedItem.classes}
+                            highlight
+                            icon={Users}
+                          />
                         </>
                       )}
-                      
-                      {activeTab === 'weapons' && (
+
+                      {activeTab === "weapons" && (
                         <>
-                          <StatRow label="Schaden" value={selectedItem.damage_dice} highlight icon={Zap} />
-                          <StatRow label="Typ" value={selectedItem.damage_type} />
-                          <StatRow label="Eigenschaft" value={selectedItem.weapon_type} icon={Sword} />
-                          <StatRow label="Meisterung" value={selectedItem.data.mastery_details?.name || selectedItem.data.mastery} highlight icon={Award} />
+                          <StatRow
+                            label="Schaden"
+                            value={selectedItem.damage_dice}
+                            highlight
+                            icon={Zap}
+                          />
+                          <StatRow
+                            label="Typ"
+                            value={selectedItem.damage_type}
+                          />
+                          <StatRow
+                            label="Eigenschaft"
+                            value={selectedItem.weapon_type}
+                            icon={Sword}
+                          />
+                          <StatRow
+                            label="Meisterung"
+                            value={
+                              selectedItem.data.mastery_details?.name ||
+                              selectedItem.data.mastery
+                            }
+                            highlight
+                            icon={Award}
+                          />
                           <div className="grid grid-cols-2 gap-8 border-t border-border pt-8 mt-8">
-                            <StatRow label="Gewicht" value={`${selectedItem.weight_kg} kg`} />
-                            <StatRow label="Preis" value={`${selectedItem.cost_gp} GM`} />
+                            <StatRow
+                              label="Gewicht"
+                              value={`${selectedItem.weight_kg} kg`}
+                            />
+                            <StatRow
+                              label="Preis"
+                              value={`${selectedItem.cost_gp} GM`}
+                            />
                           </div>
                         </>
                       )}
 
-                      {activeTab === 'armor' && (
+                      {activeTab === "armor" && (
                         <>
-                          <StatRow label="Rüstungsklasse" value={selectedItem.base_ac} highlight icon={Shield} />
+                          <StatRow
+                            label="Rüstungsklasse"
+                            value={selectedItem.base_ac}
+                            highlight
+                            icon={Shield}
+                          />
                           <StatRow label="Typ" value={selectedItem.category} />
-                          <StatRow label="Stärke" value={selectedItem.strength_requirement || '—'} />
-                          <StatRow label="Schleichen" value={selectedItem.stealth_disadvantage ? 'Nachteil' : 'Normal'} />
+                          <StatRow
+                            label="Stärke"
+                            value={selectedItem.strength_requirement || "—"}
+                          />
+                          <StatRow
+                            label="Schleichen"
+                            value={
+                              selectedItem.stealth_disadvantage
+                                ? "Nachteil"
+                                : "Normal"
+                            }
+                          />
                           <div className="grid grid-cols-2 gap-8 border-t border-border pt-8 mt-8">
-                            <StatRow label="Gewicht" value={`${selectedItem.weight_kg} kg`} />
-                            <StatRow label="Preis" value={`${selectedItem.cost_gp} GM`} />
+                            <StatRow
+                              label="Gewicht"
+                              value={`${selectedItem.weight_kg} kg`}
+                            />
+                            <StatRow
+                              label="Preis"
+                              value={`${selectedItem.cost_gp} GM`}
+                            />
                           </div>
                         </>
                       )}
 
-                      {activeTab === 'classes' && (
+                      {activeTab === "classes" && (
                         <>
-                          <StatRow label="Trefferwürfel" value={`W${selectedItem.data.hit_die}`} highlight icon={Zap} />
-                          <StatRow label="Rettungswürfe" value={selectedItem.data.saving_throws?.join(', ')} icon={Shield} />
+                          <StatRow
+                            label="Trefferwürfel"
+                            value={`W${selectedItem.data.hit_die}`}
+                            highlight
+                            icon={Zap}
+                          />
+                          <StatRow
+                            label="Rettungswürfe"
+                            value={selectedItem.data.saving_throws?.join(", ")}
+                            icon={Shield}
+                          />
                         </>
                       )}
 
-                      {activeTab === 'species' && (
+                      {activeTab === "species" && (
                         <>
-                          <StatRow label="Größe" value={selectedItem.data.size} icon={Users} />
-                          <StatRow label="Bewegung" value={`${selectedItem.data.speed} m`} highlight icon={Compass} />
-                          <StatRow label="Sprachen" value={selectedItem.data.languages?.known?.join(', ')} />
+                          <StatRow
+                            label="Größe"
+                            value={selectedItem.data.size}
+                            icon={Users}
+                          />
+                          <StatRow
+                            label="Bewegung"
+                            value={`${selectedItem.data.speed} m`}
+                            highlight
+                            icon={Compass}
+                          />
+                          <StatRow
+                            label="Sprachen"
+                            value={selectedItem.data.languages?.known?.join(
+                              ", ",
+                            )}
+                          />
                         </>
                       )}
 
-                      {(activeTab === 'gear' || activeTab === 'tools') && (
+                      {(activeTab === "gear" || activeTab === "tools") && (
                         <>
-                          <StatRow label="Preis" value={`${selectedItem.cost_gp} GM`} />
-                          <StatRow label="Gewicht" value={`${selectedItem.weight_kg} kg`} />
-                          {activeTab === 'tools' && (
-                            <StatRow label="Attribute" value={selectedItem.data.abilities?.join(', ')} highlight icon={Brain} />
+                          <StatRow
+                            label="Preis"
+                            value={`${selectedItem.cost_gp} GM`}
+                          />
+                          <StatRow
+                            label="Gewicht"
+                            value={`${selectedItem.weight_kg} kg`}
+                          />
+                          {activeTab === "tools" && (
+                            <StatRow
+                              label="Attribute"
+                              value={selectedItem.data.abilities?.join(", ")}
+                              highlight
+                              icon={Brain}
+                            />
                           )}
                         </>
                       )}
@@ -439,28 +715,33 @@ export function Compendium() {
                   </div>
 
                   {/* Property Details for Weapons */}
-                  {activeTab === 'weapons' && selectedItem.data.properties?.length > 0 && (
-                    <div className="bg-card p-12 rounded-[4rem] border border-border shadow-2xl space-y-8 animate-reveal">
-                      <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
-                        <Info size={18} /> Details
-                      </h4>
-                      <div className="space-y-8">
-                        {selectedItem.data.properties.map((p: string) => {
-                          const detail = selectedItem.data.property_details?.[p.toLowerCase()];
-                          return (
-                            <div key={p} className="space-y-3 group">
-                              <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
-                                {detail?.name || p}
-                              </span>
-                              <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20 group-hover:border-primary transition-colors">
-                                {detail?.description || 'Keine Beschreibung im PHB.'}
-                              </p>
-                            </div>
-                          );
-                        })}
+                  {activeTab === "weapons" &&
+                    selectedItem.data.properties?.length > 0 && (
+                      <div className="bg-card p-12 rounded-[4rem] border border-border shadow-2xl space-y-8 animate-reveal">
+                        <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
+                          <Info size={18} /> Details
+                        </h4>
+                        <div className="space-y-8">
+                          {selectedItem.data.properties.map((p: string) => {
+                            const detail =
+                              selectedItem.data.property_details?.[
+                                p.toLowerCase()
+                              ];
+                            return (
+                              <div key={p} className="space-y-3 group">
+                                <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
+                                  {detail?.name || p}
+                                </span>
+                                <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20 group-hover:border-primary transition-colors">
+                                  {detail?.description ||
+                                    "Keine Beschreibung im PHB."}
+                                </p>
+                              </div>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
                 </aside>
               </div>
             </div>
@@ -469,9 +750,9 @@ export function Compendium() {
       </main>
 
       {isEditorOpen && (
-        <CompendiumEditor 
-          type={activeTab} 
-          initialData={selectedItem} 
+        <CompendiumEditor
+          type={activeTab}
+          initialData={selectedItem}
           onClose={() => setIsEditorOpen(false)}
           onSave={() => {
             setIsEditorOpen(false);
@@ -483,22 +764,46 @@ export function Compendium() {
   );
 }
 
-function StatRow({ label, value, highlight = false, icon: Icon }: { label: string, value: any, highlight?: boolean, icon?: any }) {
+function StatRow({
+  label,
+  value,
+  highlight = false,
+  icon: Icon,
+}: {
+  label: string;
+  value: any;
+  highlight?: boolean;
+  icon?: any;
+}) {
   return (
     <div className="flex flex-col gap-4 group">
       <div className="flex items-center gap-3">
-        {Icon && <Icon size={16} className="text-primary/30 group-hover:text-primary transition-all group-hover:scale-110" />}
-        <span className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-[0.4em] leading-none">{label}</span>
+        {Icon && (
+          <Icon
+            size={16}
+            className="text-primary/30 group-hover:text-primary transition-all group-hover:scale-110"
+          />
+        )}
+        <span className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-[0.4em] leading-none">
+          {label}
+        </span>
       </div>
-      <span className={cn(
-        "text-2xl font-bold tracking-tighter transition-all leading-none",
-        highlight 
-          ? "text-primary selection:bg-primary/20" 
-          : "text-foreground opacity-90"
-      )}>
-        {value || '—'}
+      <span
+        className={cn(
+          "text-2xl font-bold tracking-tighter transition-all leading-none",
+          highlight
+            ? "text-primary selection:bg-primary/20"
+            : "text-foreground opacity-90",
+        )}
+      >
+        {value || "—"}
       </span>
-      <div className={cn("h-px w-full bg-gradient-to-r from-border/50 to-transparent", highlight && "from-primary/20")} />
+      <div
+        className={cn(
+          "h-px w-full bg-gradient-to-r from-border/50 to-transparent",
+          highlight && "from-primary/20",
+        )}
+      />
     </div>
   );
 }

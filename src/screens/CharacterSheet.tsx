@@ -1,32 +1,51 @@
-import React, { useEffect } from 'react';
-import { useCharacterStore } from '../lib/store';
-import { AttributeBlock } from '../components/character/AttributeBlock';
-import { SkillList } from '../components/character/SkillList';
-import { CombatStats } from '../components/character/CombatStats';
-import { ModifiersList } from '../components/character/ModifiersList';
-import { Save, User, Swords, Wand2, Backpack, Book, ChevronLeft, Sparkles, Settings } from 'lucide-react';
-import { calculateLevelFromXP, getXPForNextLevel } from '../lib/math';
-import clsx, { type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { useEffect, useState } from "react";
+import { useCharacterStore } from "../lib/store";
+import { AttributeBlock } from "../components/character/AttributeBlock";
+import { SkillList } from "../components/character/SkillList";
+import { CombatStats } from "../components/character/CombatStats";
+import { ModifiersList } from "../components/character/ModifiersList";
+import {
+  Save,
+  User,
+  Swords,
+  Wand2,
+  Backpack,
+  Book,
+  ChevronLeft,
+  Sparkles,
+  Settings,
+} from "lucide-react";
+import { calculateLevelFromXP, getXPForNextLevel } from "../lib/math";
+import clsx, { type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-import { useCompendiumStore } from '../lib/compendiumStore';
+import { useCompendiumStore } from "../lib/compendiumStore";
 
 export function CharacterSheet() {
-  const { 
-    currentCharacter, 
+  const {
+    currentCharacter,
     setCurrentCharacter,
-    updateAttribute, 
+    updateAttribute,
     updateMeta,
-    removeModifier, 
+    removeModifier,
     saveCharacter,
-    isLoading 
+    isLoading,
   } = useCharacterStore();
 
-  const { weapons = [], armor = [], species = [], classes = [], fetchClasses, fetchSpecies, fetchWeapons, fetchArmor } = useCompendiumStore();
+  const {
+    weapons = [],
+    armor = [],
+    species = [],
+    classes = [],
+    fetchClasses,
+    fetchSpecies,
+    fetchWeapons,
+    fetchArmor,
+  } = useCompendiumStore();
 
   useEffect(() => {
     fetchClasses();
@@ -35,25 +54,27 @@ export function CharacterSheet() {
     fetchArmor();
   }, [fetchClasses, fetchSpecies, fetchWeapons, fetchArmor]);
 
-  // Find current class and species names
-  const currentClass = classes.find(c => c.id === currentCharacter?.meta.class_id);
-  const currentSpecies = species.find(s => s.id === currentCharacter?.meta.species_id);
-  
+  // Find current class name
+  const currentClass = classes.find(
+    (c) => c.id === currentCharacter?.meta.class_id,
+  );
+
   // Get subclasses for current class
   const subclasses = currentClass?.data?.subclasses || [];
-  const currentSubclass = subclasses.find((s: any) => s.id === currentCharacter?.meta.subclass_id);
 
-  const [activeTab, setActiveTab] = React.useState<'combat' | 'spells' | 'inventory' | 'notes'>('combat');
+  const [activeTab, setActiveTab] = useState<
+    "combat" | "spells" | "inventory" | "notes"
+  >("combat");
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === 's') {
+      if (e.ctrlKey && e.key === "s") {
         e.preventDefault();
         saveCharacter();
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [saveCharacter]);
 
   if (!currentCharacter) {
@@ -61,7 +82,9 @@ export function CharacterSheet() {
       <div className="flex items-center justify-center min-h-screen bg-background text-foreground">
         <div className="flex flex-col items-center gap-4 opacity-30">
           <User size={80} strokeWidth={1} />
-          <p className="text-xl font-black uppercase tracking-widest italic">Kein Charakter geladen</p>
+          <p className="text-xl font-black uppercase tracking-widest italic">
+            Kein Charakter geladen
+          </p>
         </div>
       </div>
     );
@@ -78,13 +101,16 @@ export function CharacterSheet() {
           >
             <ChevronLeft className="w-8 h-8" />
           </button>
-          
+
           <div className="flex items-center gap-8 border-l-2 border-border pl-8 overflow-hidden">
             <div className="relative group shrink-0">
               <div className="absolute -inset-2 bg-primary/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="p-6 bg-primary text-primary-foreground rounded-[2rem] shadow-2xl shadow-primary/20 relative">
                 <User className="w-10 h-10" />
-                <Sparkles size={20} className="absolute -top-2 -right-2 text-white animate-pulse" />
+                <Sparkles
+                  size={20}
+                  className="absolute -top-2 -right-2 text-white animate-pulse"
+                />
               </div>
             </div>
             <div className="overflow-hidden flex-1">
@@ -97,9 +123,13 @@ export function CharacterSheet() {
               />
               <div className="flex flex-wrap items-center gap-3">
                 <div className="flex items-center gap-2 bg-primary/10 px-4 py-1 rounded-lg">
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Stufe {calculateLevelFromXP(currentCharacter.meta.xp)}</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+                    Stufe {calculateLevelFromXP(currentCharacter.meta.xp)}
+                  </span>
                   <div className="h-4 w-px bg-primary/20 mx-2" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">XP</span>
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">
+                    XP
+                  </span>
                   <input
                     type="number"
                     min="0"
@@ -112,60 +142,93 @@ export function CharacterSheet() {
                     onBlur={() => saveCharacter()}
                     className="bg-transparent text-primary font-black text-sm w-20 border-none outline-none focus:ring-0"
                   />
-                  {getXPForNextLevel(calculateLevelFromXP(currentCharacter.meta.xp)) && (
+                  {getXPForNextLevel(
+                    calculateLevelFromXP(currentCharacter.meta.xp),
+                  ) && (
                     <span className="text-[9px] font-bold text-primary/30 ml-1">
-                      / {getXPForNextLevel(calculateLevelFromXP(currentCharacter.meta.xp))} bis Level Up
+                      /{" "}
+                      {getXPForNextLevel(
+                        calculateLevelFromXP(currentCharacter.meta.xp),
+                      )}{" "}
+                      bis Level Up
                     </span>
                   )}
                 </div>
-                
+
                 <div className="flex items-center gap-2 bg-muted/30 px-3 py-1 rounded-lg border border-border/50">
                   <select
-                    value={currentCharacter.meta.class_id || ''}
+                    value={currentCharacter.meta.class_id || ""}
                     onChange={(e) => {
-                      updateMeta({ class_id: e.target.value, subclass_id: undefined });
+                      updateMeta({
+                        class_id: e.target.value,
+                        subclass_id: undefined,
+                      });
                       setTimeout(saveCharacter, 100);
                     }}
                     className="bg-transparent text-[10px] font-bold uppercase tracking-wider text-foreground/70 outline-none border-none cursor-pointer hover:text-primary transition-colors"
                   >
-                    <option value="" disabled className="bg-card">Klasse wählen</option>
-                    {classes.map(c => (
-                      <option key={c.id} value={c.id} className="bg-card text-foreground">{c.name}</option>
+                    <option value="" disabled className="bg-card">
+                      Klasse wählen
+                    </option>
+                    {classes.map((c) => (
+                      <option
+                        key={c.id}
+                        value={c.id}
+                        className="bg-card text-foreground"
+                      >
+                        {c.name}
+                      </option>
                     ))}
                   </select>
-                  
+
                   {currentClass && subclasses.length > 0 && (
                     <>
                       <div className="w-1 h-1 bg-foreground/20 rounded-full" />
                       <select
-                        value={currentCharacter.meta.subclass_id || ''}
+                        value={currentCharacter.meta.subclass_id || ""}
                         onChange={(e) => {
                           updateMeta({ subclass_id: e.target.value });
                           setTimeout(saveCharacter, 100);
                         }}
                         className="bg-transparent text-[10px] font-bold uppercase tracking-wider text-foreground/70 outline-none border-none cursor-pointer hover:text-primary transition-colors"
                       >
-                        <option value="" className="bg-card">Unterklasse wählen</option>
+                        <option value="" className="bg-card">
+                          Unterklasse wählen
+                        </option>
                         {subclasses.map((s: any) => (
-                          <option key={s.id} value={s.id} className="bg-card text-foreground">{s.name}</option>
+                          <option
+                            key={s.id}
+                            value={s.id}
+                            className="bg-card text-foreground"
+                          >
+                            {s.name}
+                          </option>
                         ))}
                       </select>
                     </>
                   )}
-                  
+
                   <div className="w-1 h-1 bg-foreground/20 rounded-full" />
-                  
+
                   <select
-                    value={currentCharacter.meta.species_id || ''}
+                    value={currentCharacter.meta.species_id || ""}
                     onChange={(e) => {
                       updateMeta({ species_id: e.target.value });
                       setTimeout(saveCharacter, 100);
                     }}
                     className="bg-transparent text-[10px] font-bold uppercase tracking-wider text-foreground/70 outline-none border-none cursor-pointer hover:text-primary transition-colors"
                   >
-                    <option value="" disabled className="bg-card">Volk wählen</option>
-                    {species.map(s => (
-                      <option key={s.id} value={s.id} className="bg-card text-foreground">{s.name}</option>
+                    <option value="" disabled className="bg-card">
+                      Volk wählen
+                    </option>
+                    {species.map((s) => (
+                      <option
+                        key={s.id}
+                        value={s.id}
+                        className="bg-card text-foreground"
+                      >
+                        {s.name}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -184,68 +247,121 @@ export function CharacterSheet() {
             className="flex-1 lg:flex-none flex items-center justify-center gap-4 bg-primary text-primary-foreground px-10 py-5 rounded-[2rem] font-black uppercase text-sm tracking-[0.1em] transition-all shadow-2xl shadow-primary/20 active:scale-95 disabled:opacity-50"
           >
             <Save className="w-6 h-6" />
-            <span>{isLoading ? 'Speichert...' : 'Sichern'}</span>
+            <span>{isLoading ? "Speichert..." : "Sichern"}</span>
           </button>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto">
-        {activeTab === 'combat' && (
+        {activeTab === "combat" && (
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
             {/* Left Column: Attributes */}
             <div className="xl:col-span-2 flex flex-col gap-5 animate-in slide-in-from-left-8 duration-500">
-              <AttributeBlock name="Stärke" value={currentCharacter.attributes.str} onChange={(v) => updateAttribute('str', v)} onBlur={saveCharacter} />
-              <AttributeBlock name="Geschick" value={currentCharacter.attributes.dex} onChange={(v) => updateAttribute('dex', v)} onBlur={saveCharacter} />
-              <AttributeBlock name="Konstitution" value={currentCharacter.attributes.con} onChange={(v) => updateAttribute('con', v)} onBlur={saveCharacter} />
-              <AttributeBlock name="Intelligenz" value={currentCharacter.attributes.int} onChange={(v) => updateAttribute('int', v)} onBlur={saveCharacter} />
-              <AttributeBlock name="Weisheit" value={currentCharacter.attributes.wis} onChange={(v) => updateAttribute('wis', v)} onBlur={saveCharacter} />
-              <AttributeBlock name="Charisma" value={currentCharacter.attributes.cha} onChange={(v) => updateAttribute('cha', v)} onBlur={saveCharacter} />
+              <AttributeBlock
+                name="Stärke"
+                value={currentCharacter.attributes.str}
+                onChange={(v) => updateAttribute("str", v)}
+                onBlur={saveCharacter}
+              />
+              <AttributeBlock
+                name="Geschick"
+                value={currentCharacter.attributes.dex}
+                onChange={(v) => updateAttribute("dex", v)}
+                onBlur={saveCharacter}
+              />
+              <AttributeBlock
+                name="Konstitution"
+                value={currentCharacter.attributes.con}
+                onChange={(v) => updateAttribute("con", v)}
+                onBlur={saveCharacter}
+              />
+              <AttributeBlock
+                name="Intelligenz"
+                value={currentCharacter.attributes.int}
+                onChange={(v) => updateAttribute("int", v)}
+                onBlur={saveCharacter}
+              />
+              <AttributeBlock
+                name="Weisheit"
+                value={currentCharacter.attributes.wis}
+                onChange={(v) => updateAttribute("wis", v)}
+                onBlur={saveCharacter}
+              />
+              <AttributeBlock
+                name="Charisma"
+                value={currentCharacter.attributes.cha}
+                onChange={(v) => updateAttribute("cha", v)}
+                onBlur={saveCharacter}
+              />
             </div>
 
             {/* Center Column: Combat & Skills */}
             <div className="xl:col-span-7 flex flex-col gap-10 animate-in slide-in-from-bottom-8 duration-700">
               <div className="bg-card p-2 rounded-[3rem] border border-border shadow-2xl shadow-foreground/[0.02]">
-                <CombatStats 
-                  character={currentCharacter} 
-                  characterClass={classes.find(c => c.id === currentCharacter.meta.class_id)}
+                <CombatStats
+                  character={currentCharacter}
+                  characterClass={classes.find(
+                    (c) => c.id === currentCharacter.meta.class_id,
+                  )}
                   inventoryItems={[...weapons, ...armor]}
                 />
               </div>
               <div className="bg-card p-4 rounded-[3.5rem] border border-border shadow-2xl shadow-foreground/[0.02]">
-                <SkillList character={currentCharacter} onToggleProficiency={(s) => console.log('Toggle skill:', s)} />
+                <SkillList
+                  character={currentCharacter}
+                  onToggleProficiency={(s) => console.log("Toggle skill:", s)}
+                />
               </div>
             </div>
 
             {/* Right Column: Modifiers */}
             <div className="xl:col-span-3 animate-in slide-in-from-right-8 duration-500">
               <div className="sticky top-10">
-                <ModifiersList modifiers={currentCharacter.modifiers} onRemove={removeModifier} />
+                <ModifiersList
+                  modifiers={currentCharacter.modifiers}
+                  onRemove={removeModifier}
+                />
               </div>
             </div>
           </div>
         )}
 
-        {activeTab === 'spells' && (
+        {activeTab === "spells" && (
           <div className="p-20 text-center bg-card rounded-[4rem] border border-border animate-in fade-in duration-500">
             <Wand2 size={80} className="mx-auto mb-8 text-primary opacity-20" />
-            <h2 className="text-4xl font-black italic font-serif mb-4 text-foreground">Zauberbuch</h2>
-            <p className="text-muted-foreground italic">Hier werden bald alle deine arkane Künste gelistet.</p>
+            <h2 className="text-4xl font-black italic font-serif mb-4 text-foreground">
+              Zauberbuch
+            </h2>
+            <p className="text-muted-foreground italic">
+              Hier werden bald alle deine arkane Künste gelistet.
+            </p>
           </div>
         )}
 
-        {activeTab === 'inventory' && (
+        {activeTab === "inventory" && (
           <div className="p-20 text-center bg-card rounded-[4rem] border border-border animate-in fade-in duration-500">
-            <Backpack size={80} className="mx-auto mb-8 text-primary opacity-20" />
-            <h2 className="text-4xl font-black italic font-serif mb-4 text-foreground">Inventar</h2>
-            <p className="text-muted-foreground italic">Deine gesammelten Schätze und Ausrüstung.</p>
+            <Backpack
+              size={80}
+              className="mx-auto mb-8 text-primary opacity-20"
+            />
+            <h2 className="text-4xl font-black italic font-serif mb-4 text-foreground">
+              Inventar
+            </h2>
+            <p className="text-muted-foreground italic">
+              Deine gesammelten Schätze und Ausrüstung.
+            </p>
           </div>
         )}
 
-        {activeTab === 'notes' && (
+        {activeTab === "notes" && (
           <div className="p-20 text-center bg-card rounded-[4rem] border border-border animate-in fade-in duration-500">
             <Book size={80} className="mx-auto mb-8 text-primary opacity-20" />
-            <h2 className="text-4xl font-black italic font-serif mb-4 text-foreground">Notizen</h2>
-            <p className="text-muted-foreground italic">Halte deine Abenteuer und Geheimnisse fest.</p>
+            <h2 className="text-4xl font-black italic font-serif mb-4 text-foreground">
+              Notizen
+            </h2>
+            <p className="text-muted-foreground italic">
+              Halte deine Abenteuer und Geheimnisse fest.
+            </p>
           </div>
         )}
       </main>
@@ -253,33 +369,78 @@ export function CharacterSheet() {
       {/* Navigation Tabs (Floating Bottom) */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-2xl px-6 z-50">
         <nav className="bg-card/70 backdrop-blur-2xl border border-border px-10 py-4 rounded-[3rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] flex justify-around items-center gap-4 lg:gap-8">
-          <TabItem icon={<Swords className="w-6 h-6" />} label="Kampf" active={activeTab === 'combat'} onClick={() => setActiveTab('combat')} />
-          <TabItem icon={<Wand2 className="w-6 h-6" />} label="Zauber" active={activeTab === 'spells'} onClick={() => setActiveTab('spells')} />
-          <TabItem icon={<Backpack className="w-6 h-6" />} label="Inventar" active={activeTab === 'inventory'} onClick={() => setActiveTab('inventory')} />
-          <TabItem icon={<Book className="w-6 h-6" />} label="Notizen" active={activeTab === 'notes'} onClick={() => setActiveTab('notes')} />
+          <TabItem
+            icon={<Swords className="w-6 h-6" />}
+            label="Kampf"
+            active={activeTab === "combat"}
+            onClick={() => setActiveTab("combat")}
+          />
+          <TabItem
+            icon={<Wand2 className="w-6 h-6" />}
+            label="Zauber"
+            active={activeTab === "spells"}
+            onClick={() => setActiveTab("spells")}
+          />
+          <TabItem
+            icon={<Backpack className="w-6 h-6" />}
+            label="Inventar"
+            active={activeTab === "inventory"}
+            onClick={() => setActiveTab("inventory")}
+          />
+          <TabItem
+            icon={<Book className="w-6 h-6" />}
+            label="Notizen"
+            active={activeTab === "notes"}
+            onClick={() => setActiveTab("notes")}
+          />
         </nav>
       </div>
     </div>
   );
 }
 
-function TabItem({ icon, label, active = false, onClick }: { icon: React.ReactNode, label: string, active?: boolean, onClick?: () => void }) {
+function TabItem({
+  icon,
+  label,
+  active = false,
+  onClick,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  active?: boolean;
+  onClick?: () => void;
+}) {
   return (
-    <button onClick={onClick} className="flex flex-col items-center gap-2 group transition-all relative px-4">
-      <div className={cn(
-        "p-4 rounded-2xl transition-all duration-300 relative overflow-hidden",
-        active 
-          ? "bg-primary text-primary-foreground shadow-xl shadow-primary/30 scale-110 -translate-y-2" 
-          : "text-muted-foreground hover:text-foreground hover:bg-muted"
-      )}>
+    <button
+      onClick={onClick}
+      className="flex flex-col items-center gap-2 group transition-all relative px-4"
+    >
+      <div
+        className={cn(
+          "p-4 rounded-2xl transition-all duration-300 relative overflow-hidden",
+          active
+            ? "bg-primary text-primary-foreground shadow-xl shadow-primary/30 scale-110 -translate-y-2"
+            : "text-muted-foreground hover:text-foreground hover:bg-muted",
+        )}
+      >
         {icon}
-        {active && <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20" />}
+        {active && (
+          <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20" />
+        )}
       </div>
-      <span className={cn(
-        "text-[10px] uppercase font-black tracking-[0.2em] transition-all",
-        active ? "text-primary opacity-100 translate-y-[-4px]" : "text-muted-foreground opacity-40 group-hover:opacity-100"
-      )}>{label}</span>
-      {active && <div className="absolute -bottom-1 w-1 h-1 bg-primary rounded-full shadow-[0_0_10px_rgba(var(--primary),0.5)]" />}
+      <span
+        className={cn(
+          "text-[10px] uppercase font-black tracking-[0.2em] transition-all",
+          active
+            ? "text-primary opacity-100 translate-y-[-4px]"
+            : "text-muted-foreground opacity-40 group-hover:opacity-100",
+        )}
+      >
+        {label}
+      </span>
+      {active && (
+        <div className="absolute -bottom-1 w-1 h-1 bg-primary rounded-full shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
+      )}
     </button>
   );
 }
