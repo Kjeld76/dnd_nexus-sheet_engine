@@ -1,4 +1,10 @@
-# D&D Nexus (v1.2.0)
+# D&D Nexus (v1.3.1)
+
+## 📦 Releases & Versionierung
+Die App nutzt ein automatisiertes System zur Versionierung. Details findest du im [Release Guide](RELEASE_GUIDE.md).
+
+Befehl zum Releasen:
+- `pnpm release [patch|minor|major] "Nachricht"`
 
 D&D Nexus ist eine Desktop-Anwendung zur Verwaltung von Charakterbögen für Dungeons & Dragons 5e (Regelwerk 2024). Die Software basiert auf Tauri 2.0 und kombiniert ein React-Frontend mit einem Rust-Backend und lokaler SQLite-Datenspeicherung.
 
