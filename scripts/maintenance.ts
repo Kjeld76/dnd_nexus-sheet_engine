@@ -53,9 +53,9 @@ async function run() {
             console.log("   - dist/ entfernt");
         }
         
-        // Tauri Clean für Rust Artefakte
-        console.log("   - Führe Tauri Clean aus...");
-        execSync('pnpm tauri clean', { stdio: 'inherit' });
+        // Cargo Clean für Rust Artefakte
+        console.log("   - Führe Cargo Clean aus...");
+        execSync('cd src-tauri && cargo clean', { stdio: 'inherit' });
     } catch (e) {
         console.warn("⚠️ Warnung beim Aufräumen:", e.message);
     }
