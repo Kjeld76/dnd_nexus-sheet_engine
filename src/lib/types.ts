@@ -4,6 +4,8 @@ export interface Character {
   attributes: Attributes;
   health: HealthPool;
   proficiencies: CharacterProficiencies;
+  spellcasting?: CharacterSpellcasting;
+  appearance?: CharacterAppearance;
   modifiers: Modifier[];
   inventory: CharacterItem[];
 }
@@ -18,6 +20,23 @@ export interface CharacterMeta {
   alignment?: string;
   xp: number;
   use_metric: boolean;
+}
+
+export interface CharacterAppearance {
+  age?: string;
+  height?: string;
+  weight?: string;
+  eyes?: string;
+  skin?: string;
+  hair?: string;
+}
+
+export interface CharacterSpellcasting {
+  ability: keyof Attributes;
+  save_dc: number;
+  attack_bonus: number;
+  slots: Record<number, { total: number; used: number }>;
+  prepared_spells: string[]; // List of spell IDs
 }
 
 export interface HealthPool {

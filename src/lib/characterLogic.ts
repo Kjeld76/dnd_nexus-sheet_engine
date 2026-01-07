@@ -1,4 +1,4 @@
-import { Character, Attributes, Modifier, Class } from './types';
+import { Character, Attributes, Modifier, Class, Armor, Weapon, CharacterItem } from './types';
 import { calculateModifier, calculateProficiencyBonus } from './math';
 
 export interface DerivedStats {
@@ -9,11 +9,42 @@ export interface DerivedStats {
   saving_throws: Record<keyof Attributes, number>;
   skills: Record<string, number>;
   passive_perception: number;
+  spell_save_dc: number;
+  spell_attack_bonus: number;
   encumbrance: {
     max: number;
     current: number;
   };
+  weapon_attacks: WeaponAttack[];
 }
+
+export interface WeaponAttack {
+  name: string;
+  attack_bonus: number;
+  damage: string;
+  properties: string[];
+}
+
+export const SKILL_MAP: Record<string, keyof Attributes> = {
+  'Athletik': 'str',
+  'Akrobatik': 'dex',
+  'Fingerfertigkeit': 'dex',
+  'Heimlichkeit': 'dex',
+  'Arkana': 'int',
+  'Geschichte': 'int',
+  'Nachforschen': 'int',
+  'Naturkunde': 'int',
+  'Religion': 'int',
+  'Tierkunde': 'wis',
+  'Motiv erkennen': 'wis',
+  'Heilkunde': 'wis',
+  'Wahrnehmung': 'wis',
+  'Überlebenskunst': 'wis',
+  'Täuschen': 'cha',
+  'Einschüchtern': 'cha',
+  'Auftreten': 'cha',
+  'Überzeugen': 'cha',
+};
 
 /**
  * Calculates all derived statistics for a character based on PHB 2024 rules.
@@ -21,6 +52,7 @@ export interface DerivedStats {
 export const calculateDerivedStats = (
   character: Character, 
   characterClass?: Class,
+  inventoryItems: (Weapon | Armor | any)[] = [],
   activeModifiers: Modifier[] = []
 ): DerivedStats => {
   const level = character.meta.level;
@@ -30,20 +62,43 @@ export const calculateDerivedStats = (
   const profBonus = calculateProficiencyBonus(level);
 
   // 1. HP Calculation
-  // PHB 2024: Level 1 = Max Hit Die + CON. Level 2+ = (Avg or Roll) + CON per level.
   let hp_max = 0;
   if (characterClass) {
     const hitDie = characterClass.data.hit_die || 8;
     const avgHitDie = Math.floor(hitDie / 2) + 1;
     hp_max = hitDie + conMod + (level - 1) * (avgHitDie + conMod);
   } else {
-    // Fallback if no class selected
     hp_max = 10 + conMod + (level - 1) * (6 + conMod);
   }
 
   // 2. AC Calculation
-  // Base 10 + Dex. In Phase 4 we will integrate armor logic.
-  let ac = 10 + dexMod;
+  // Find equipped armor and shield
+  const equippedArmor = character.inventory
+    .map(invItem => ({ ...invItem, data: inventoryItems.find(i => i.id === invItem.item_id) }))
+    .find(item => item.is_equipped && item.data?.base_ac !== undefined);
+  
+  const hasShield = character.inventory
+    .map(invItem => ({ ...invItem, data: inventoryItems.find(i => i.id === invItem.item_id) }))
+    .some(item => item.is_equipped && item.data?.name?.toLowerCase().includes('schild'));
+
+  let ac = 10 + dexMod; // Base unarmored
+
+  if (equippedArmor && equippedArmor.data) {
+    const armor = equippedArmor.data as Armor;
+    const category = armor.category?.toLowerCase() || '';
+    
+    if (category.includes('leicht')) {
+      ac = armor.base_ac + dexMod;
+    } else if (category.includes('mittel')) {
+      ac = armor.base_ac + Math.min(dexMod, 2);
+    } else if (category.includes('schwer')) {
+      ac = armor.base_ac;
+    }
+  }
+
+  if (hasShield) {
+    ac += 2;
+  }
 
   // 3. Initiative
   let initiative = dexMod;
@@ -64,16 +119,55 @@ export const calculateDerivedStats = (
     });
   }
 
-  // 5. Skills (simplified for now, using base attributes)
+  // 5. Skills
   const skills: Record<string, number> = {};
+  Object.entries(SKILL_MAP).forEach(([skillName, attr]) => {
+    const isProficient = character.proficiencies?.skills?.includes(skillName);
+    skills[skillName] = calculateModifier(attributes[attr]) + (isProficient ? profBonus : 0);
+  });
 
   // 6. Passive Perception
-  const perceptionMod = calculateModifier(attributes.wis) + (character.proficiencies?.skills?.includes('Wahrnehmung') ? profBonus : 0);
-  const passive_perception = 10 + perceptionMod;
+  const passive_perception = 10 + (skills['Wahrnehmung'] || calculateModifier(attributes.wis));
 
-  // 7. Encumbrance (Strength * 15 lbs or * 7.5 kg)
+  // 7. Spellcasting Stats
+  let spell_save_dc = 0;
+  let spell_attack_bonus = 0;
+  if (character.spellcasting) {
+    const spellMod = calculateModifier(attributes[character.spellcasting.ability]);
+    spell_save_dc = 8 + profBonus + spellMod;
+    spell_attack_bonus = profBonus + spellMod;
+  }
+
+  // 8. Weapon Attacks
+  const weapon_attacks: WeaponAttack[] = character.inventory
+    .map(invItem => ({ ...invItem, data: inventoryItems.find(i => i.id === invItem.item_id) }))
+    .filter(item => item.data?.damage_dice !== undefined)
+    .map(item => {
+      const weapon = item.data as Weapon;
+      const isProficient = character.proficiencies?.weapons?.includes(weapon.name) || 
+                          character.proficiencies?.weapons?.includes(weapon.weapon_type);
+      
+      const isRanged = weapon.weapon_type?.toLowerCase().includes('fernkampf');
+      const isFinesse = weapon.data?.properties?.some((p: string) => p.toLowerCase() === 'finesse');
+      
+      let abilityMod = calculateModifier(attributes.str);
+      if (isRanged) abilityMod = calculateModifier(attributes.dex);
+      else if (isFinesse) abilityMod = Math.max(calculateModifier(attributes.str), calculateModifier(attributes.dex));
+
+      return {
+        name: weapon.name,
+        attack_bonus: abilityMod + (isProficient ? profBonus : 0),
+        damage: `${weapon.damage_dice}${abilityMod >= 0 ? '+' : ''}${abilityMod} ${weapon.damage_type}`,
+        properties: weapon.data?.properties || []
+      };
+    });
+
+  // 9. Encumbrance
   const maxWeight = character.meta.use_metric ? attributes.str * 7.5 : attributes.str * 15;
-  const currentWeight = 0; // Will be calculated from inventory
+  const currentWeight = character.inventory.reduce((sum, item) => {
+    const data = inventoryItems.find(i => i.id === item.item_id);
+    return sum + (data?.weight_kg || 0) * item.quantity;
+  }, 0);
 
   // Apply Modifiers
   activeModifiers.forEach(mod => {
@@ -99,10 +193,12 @@ export const calculateDerivedStats = (
     saving_throws,
     skills,
     passive_perception,
+    spell_save_dc,
+    spell_attack_bonus,
     encumbrance: {
       max: maxWeight,
       current: currentWeight
-    }
+    },
+    weapon_attacks
   };
 };
-

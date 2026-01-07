@@ -1,6 +1,6 @@
 [package]
 name = "dnd-nexus"
-version = "1.3.2"
+version = "1.4.0"
 description = "D&D 5e 2024 Character Sheet Manager"
 authors = ["Your Name"]
 edition = "2021"
@@ -25,15 +25,19 @@ encoding_rs = "0.8"
 default = ["custom-protocol"]
 custom-protocol = ["tauri/custom-protocol"]
 
+[profile.dev]
+incremental = false
+debug = 0
+
 [profile.dev.package."*"]
-opt-level = 2
+opt-level = 0
 debug = false
 
 [profile.release]
-panic = "abort"
-codegen-units = 1
-lto = true
-opt-level = "z"
-strip = true
+panic = "abort" # Reduziert Binary-Größe
+codegen-units = 1 # Erhöht Optimierung (langsamer Build, bessere Performance)
+lto = true # Link Time Optimization für maximale Kompression
+opt-level = "s" # "s" optimiert auf Größe, "z" wäre noch aggressiver (aber teurer in Laufzeit)
+strip = true # Entfernt alle Debug-Symbole aus der Binary
 
 

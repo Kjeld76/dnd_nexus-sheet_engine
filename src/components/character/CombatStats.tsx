@@ -1,48 +1,83 @@
 import React from 'react';
-import { Character } from '../../lib/types';
-import { Shield, Zap, Wind, Heart, Sparkles } from 'lucide-react';
+import { Character, Class, Weapon, Armor } from '../../lib/types';
+import { Shield, Zap, Wind, Heart, Sparkles, Sword } from 'lucide-react';
 import { formatModifier } from '../../lib/math';
 import { calculateDerivedStats } from '../../lib/characterLogic';
 
 interface Props {
   character: Character;
+  characterClass?: Class;
+  inventoryItems: (Weapon | Armor | any)[];
 }
 
-export const CombatStats: React.FC<Props> = ({ character }) => {
-  const stats = calculateDerivedStats(character);
+export const CombatStats: React.FC<Props> = ({ character, characterClass, inventoryItems }) => {
+  const stats = calculateDerivedStats(character, characterClass, inventoryItems);
   
-  const speed = 30; // ft (In Phase 4 we will get this from Species)
+  const speed = characterClass?.data?.speed || 30; // ft
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 w-full p-6">
-      <StatCard 
-        icon={Shield} 
-        label="Rüstungsklasse" 
-        value={stats.ac} 
-        color="primary" 
-      />
-      
-      <StatCard 
-        icon={Zap} 
-        label="Initiative" 
-        value={formatModifier(stats.initiative)} 
-        color="amber" 
-      />
+    <div className="flex flex-col gap-10">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 w-full p-6">
+        <StatCard 
+          icon={Shield} 
+          label="Rüstungsklasse" 
+          value={stats.ac} 
+          color="primary" 
+        />
+        
+        <StatCard 
+          icon={Zap} 
+          label="Initiative" 
+          value={formatModifier(stats.initiative)} 
+          color="amber" 
+        />
 
-      <StatCard 
-        icon={Wind} 
-        label="Bewegung" 
-        value={character.meta.use_metric ? `${(speed * 0.3).toFixed(1)}m` : `${speed}ft`} 
-        color="blue" 
-      />
+        <StatCard 
+          icon={Wind} 
+          label="Bewegung" 
+          value={character.meta.use_metric ? `${(speed * 0.3).toFixed(1)}m` : `${speed}ft`} 
+          color="blue" 
+        />
 
-      <StatCard 
-        icon={Heart} 
-        label="Trefferpunkte" 
-        value={stats.hp_max} 
-        color="red" 
-        isMain
-      />
+        <StatCard 
+          icon={Heart} 
+          label="Trefferpunkte" 
+          value={stats.hp_max} 
+          color="red" 
+          isMain
+        />
+      </div>
+
+      {stats.weapon_attacks.length > 0 && (
+        <div className="px-6 space-y-6">
+          <div className="flex items-center gap-4">
+            <Sword size={20} className="text-primary" />
+            <h3 className="text-xl font-black italic font-serif">Angriffe</h3>
+            <div className="flex-1 h-px bg-border" />
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {stats.weapon_attacks.map((atk, i) => (
+              <div key={atk.name + i} className="bg-card p-6 rounded-[2rem] border border-border flex justify-between items-center group hover:border-primary/30 transition-all shadow-xl shadow-foreground/[0.01]">
+                <div className="space-y-1">
+                  <p className="text-lg font-bold tracking-tight group-hover:text-primary transition-colors">{atk.name}</p>
+                  <p className="text-xs text-muted-foreground italic">{atk.properties.join(', ')}</p>
+                </div>
+                <div className="flex items-center gap-6">
+                  <div className="text-center">
+                    <p className="text-[8px] font-black uppercase text-muted-foreground tracking-widest opacity-50">Bonus</p>
+                    <p className="text-2xl font-black text-primary">{formatModifier(atk.attack_bonus)}</p>
+                  </div>
+                  <div className="text-center bg-muted/50 px-4 py-2 rounded-xl">
+                    <p className="text-[8px] font-black uppercase text-muted-foreground tracking-widest opacity-50">Schaden</p>
+                    <p className="text-sm font-bold">{atk.damage}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

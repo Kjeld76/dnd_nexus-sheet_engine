@@ -7,14 +7,97 @@ pub struct Character {
     pub id: Uuid,
     pub meta: CharacterMeta,
     pub attributes: Attributes,
+    #[serde(default)]
+    pub health: HealthPool,
+    #[serde(default)]
+    pub proficiencies: CharacterProficiencies,
+    pub spellcasting: Option<CharacterSpellcasting>,
+    pub appearance: Option<CharacterAppearance>,
+    #[serde(default)]
     pub modifiers: Vec<Modifier>,
+    #[serde(default)]
+    pub inventory: Vec<CharacterItem>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct CharacterMeta {
     pub name: String,
     pub level: i32,
+    pub species_id: Option<String>,
+    pub class_id: Option<String>,
+    pub subclass_id: Option<String>,
+    pub background_id: Option<String>,
+    pub alignment: Option<String>,
+    #[serde(default)]
+    pub xp: i32,
     pub use_metric: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct HealthPool {
+    pub current: i32,
+    pub max: i32,
+    pub temp: i32,
+    pub hit_dice_max: i32,
+    pub hit_dice_used: i32,
+    pub death_saves: DeathSaves,
+}
+
+impl Default for HealthPool {
+    fn default() -> Self {
+        Self {
+            current: 10,
+            max: 10,
+            temp: 0,
+            hit_dice_max: 1,
+            hit_dice_used: 0,
+            death_saves: DeathSaves::default(),
+        }
+    }
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, Default)]
+pub struct DeathSaves {
+    pub successes: i32,
+    pub failures: i32,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone, Default)]
+pub struct CharacterProficiencies {
+    pub skills: Vec<String>,
+    pub saving_throws: Vec<String>,
+    pub weapons: Vec<String>,
+    pub armor: Vec<String>,
+    pub tools: Vec<String>,
+    pub languages: Vec<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct CharacterItem {
+    pub id: String,
+    pub item_id: String,
+    pub quantity: i32,
+    pub is_equipped: bool,
+    pub custom_data: Option<Value>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct CharacterSpellcasting {
+    pub ability: String,
+    pub save_dc: i32,
+    pub attack_bonus: i32,
+    pub slots: Value, // Using Value for flexible slot mapping
+    pub prepared_spells: Vec<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct CharacterAppearance {
+    pub age: Option<String>,
+    pub height: Option<String>,
+    pub weight: Option<String>,
+    pub eyes: Option<String>,
+    pub skin: Option<String>,
+    pub hair: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

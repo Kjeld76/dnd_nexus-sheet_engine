@@ -13,6 +13,8 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+import { useCompendiumStore } from '../lib/compendiumStore';
+
 export function CharacterSheet() {
   const { 
     currentCharacter, 
@@ -23,6 +25,25 @@ export function CharacterSheet() {
     saveCharacter,
     isLoading 
   } = useCharacterStore();
+
+  const { weapons = [], armor = [], species = [], classes = [], fetchClasses, fetchSpecies, fetchWeapons, fetchArmor } = useCompendiumStore();
+
+  useEffect(() => {
+    fetchClasses();
+    fetchSpecies();
+    fetchWeapons();
+    fetchArmor();
+  }, [fetchClasses, fetchSpecies, fetchWeapons, fetchArmor]);
+
+  // Find current class and species names
+  const currentClass = classes.find(c => c.id === currentCharacter?.meta.class_id);
+  const currentSpecies = species.find(s => s.id === currentCharacter?.meta.species_id);
+  
+  // Get subclasses for current class
+  const subclasses = currentClass?.data?.subclasses || [];
+  const currentSubclass = subclasses.find((s: any) => s.id === currentCharacter?.meta.subclass_id);
+
+  const [activeTab, setActiveTab] = React.useState<'combat' | 'spells' | 'inventory' | 'notes'>('combat');
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -47,7 +68,7 @@ export function CharacterSheet() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-6 pb-32 transition-colors duration-500 overflow-y-auto custom-scrollbar">
+    <div className="h-full bg-background text-foreground p-6 pb-32 transition-colors duration-500 overflow-y-auto custom-scrollbar relative">
       {/* Dynamic Header */}
       <header className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between mb-12 bg-card/60 backdrop-blur-xl p-8 rounded-[3rem] border border-border shadow-2xl shadow-foreground/[0.02] gap-8">
         <div className="flex items-center gap-8 w-full lg:w-auto">
@@ -97,7 +118,57 @@ export function CharacterSheet() {
                     </span>
                   )}
                 </div>
-                <span className="text-muted-foreground font-bold text-xs opacity-60">Waldläufer • Gloom Stalker • Elfe</span>
+                
+                <div className="flex items-center gap-2 bg-muted/30 px-3 py-1 rounded-lg border border-border/50">
+                  <select
+                    value={currentCharacter.meta.class_id || ''}
+                    onChange={(e) => {
+                      updateMeta({ class_id: e.target.value, subclass_id: undefined });
+                      setTimeout(saveCharacter, 100);
+                    }}
+                    className="bg-transparent text-[10px] font-bold uppercase tracking-wider text-foreground/70 outline-none border-none cursor-pointer hover:text-primary transition-colors"
+                  >
+                    <option value="" disabled className="bg-card">Klasse wählen</option>
+                    {classes.map(c => (
+                      <option key={c.id} value={c.id} className="bg-card text-foreground">{c.name}</option>
+                    ))}
+                  </select>
+                  
+                  {currentClass && subclasses.length > 0 && (
+                    <>
+                      <div className="w-1 h-1 bg-foreground/20 rounded-full" />
+                      <select
+                        value={currentCharacter.meta.subclass_id || ''}
+                        onChange={(e) => {
+                          updateMeta({ subclass_id: e.target.value });
+                          setTimeout(saveCharacter, 100);
+                        }}
+                        className="bg-transparent text-[10px] font-bold uppercase tracking-wider text-foreground/70 outline-none border-none cursor-pointer hover:text-primary transition-colors"
+                      >
+                        <option value="" className="bg-card">Unterklasse wählen</option>
+                        {subclasses.map((s: any) => (
+                          <option key={s.id} value={s.id} className="bg-card text-foreground">{s.name}</option>
+                        ))}
+                      </select>
+                    </>
+                  )}
+                  
+                  <div className="w-1 h-1 bg-foreground/20 rounded-full" />
+                  
+                  <select
+                    value={currentCharacter.meta.species_id || ''}
+                    onChange={(e) => {
+                      updateMeta({ species_id: e.target.value });
+                      setTimeout(saveCharacter, 100);
+                    }}
+                    className="bg-transparent text-[10px] font-bold uppercase tracking-wider text-foreground/70 outline-none border-none cursor-pointer hover:text-primary transition-colors"
+                  >
+                    <option value="" disabled className="bg-card">Volk wählen</option>
+                    {species.map(s => (
+                      <option key={s.id} value={s.id} className="bg-card text-foreground">{s.name}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -118,51 +189,83 @@ export function CharacterSheet() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto grid grid-cols-1 xl:grid-cols-12 gap-10">
-        {/* Left Column: Attributes */}
-        <div className="xl:col-span-2 flex flex-col gap-5 animate-in slide-in-from-left-8 duration-500">
-          <AttributeBlock name="Stärke" value={currentCharacter.attributes.str} onChange={(v) => updateAttribute('str', v)} onBlur={saveCharacter} />
-          <AttributeBlock name="Geschick" value={currentCharacter.attributes.dex} onChange={(v) => updateAttribute('dex', v)} onBlur={saveCharacter} />
-          <AttributeBlock name="Konstitution" value={currentCharacter.attributes.con} onChange={(v) => updateAttribute('con', v)} onBlur={saveCharacter} />
-          <AttributeBlock name="Intelligenz" value={currentCharacter.attributes.int} onChange={(v) => updateAttribute('int', v)} onBlur={saveCharacter} />
-          <AttributeBlock name="Weisheit" value={currentCharacter.attributes.wis} onChange={(v) => updateAttribute('wis', v)} onBlur={saveCharacter} />
-          <AttributeBlock name="Charisma" value={currentCharacter.attributes.cha} onChange={(v) => updateAttribute('cha', v)} onBlur={saveCharacter} />
-        </div>
+      <main className="max-w-7xl mx-auto">
+        {activeTab === 'combat' && (
+          <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
+            {/* Left Column: Attributes */}
+            <div className="xl:col-span-2 flex flex-col gap-5 animate-in slide-in-from-left-8 duration-500">
+              <AttributeBlock name="Stärke" value={currentCharacter.attributes.str} onChange={(v) => updateAttribute('str', v)} onBlur={saveCharacter} />
+              <AttributeBlock name="Geschick" value={currentCharacter.attributes.dex} onChange={(v) => updateAttribute('dex', v)} onBlur={saveCharacter} />
+              <AttributeBlock name="Konstitution" value={currentCharacter.attributes.con} onChange={(v) => updateAttribute('con', v)} onBlur={saveCharacter} />
+              <AttributeBlock name="Intelligenz" value={currentCharacter.attributes.int} onChange={(v) => updateAttribute('int', v)} onBlur={saveCharacter} />
+              <AttributeBlock name="Weisheit" value={currentCharacter.attributes.wis} onChange={(v) => updateAttribute('wis', v)} onBlur={saveCharacter} />
+              <AttributeBlock name="Charisma" value={currentCharacter.attributes.cha} onChange={(v) => updateAttribute('cha', v)} onBlur={saveCharacter} />
+            </div>
 
-        {/* Center Column: Combat & Skills */}
-        <div className="xl:col-span-7 flex flex-col gap-10 animate-in slide-in-from-bottom-8 duration-700">
-          <div className="bg-card p-2 rounded-[3rem] border border-border shadow-2xl shadow-foreground/[0.02]">
-            <CombatStats character={currentCharacter} />
-          </div>
-          <div className="bg-card p-4 rounded-[3.5rem] border border-border shadow-2xl shadow-foreground/[0.02]">
-            <SkillList character={currentCharacter} onToggleProficiency={(s) => console.log('Toggle skill:', s)} />
-          </div>
-        </div>
+            {/* Center Column: Combat & Skills */}
+            <div className="xl:col-span-7 flex flex-col gap-10 animate-in slide-in-from-bottom-8 duration-700">
+              <div className="bg-card p-2 rounded-[3rem] border border-border shadow-2xl shadow-foreground/[0.02]">
+                <CombatStats 
+                  character={currentCharacter} 
+                  characterClass={classes.find(c => c.id === currentCharacter.meta.class_id)}
+                  inventoryItems={[...weapons, ...armor]}
+                />
+              </div>
+              <div className="bg-card p-4 rounded-[3.5rem] border border-border shadow-2xl shadow-foreground/[0.02]">
+                <SkillList character={currentCharacter} onToggleProficiency={(s) => console.log('Toggle skill:', s)} />
+              </div>
+            </div>
 
-        {/* Right Column: Modifiers */}
-        <div className="xl:col-span-3 animate-in slide-in-from-right-8 duration-500">
-          <div className="sticky top-10">
-            <ModifiersList modifiers={currentCharacter.modifiers} onRemove={removeModifier} />
+            {/* Right Column: Modifiers */}
+            <div className="xl:col-span-3 animate-in slide-in-from-right-8 duration-500">
+              <div className="sticky top-10">
+                <ModifiersList modifiers={currentCharacter.modifiers} onRemove={removeModifier} />
+              </div>
+            </div>
           </div>
-        </div>
+        )}
+
+        {activeTab === 'spells' && (
+          <div className="p-20 text-center bg-card rounded-[4rem] border border-border animate-in fade-in duration-500">
+            <Wand2 size={80} className="mx-auto mb-8 text-primary opacity-20" />
+            <h2 className="text-4xl font-black italic font-serif mb-4 text-foreground">Zauberbuch</h2>
+            <p className="text-muted-foreground italic">Hier werden bald alle deine arkane Künste gelistet.</p>
+          </div>
+        )}
+
+        {activeTab === 'inventory' && (
+          <div className="p-20 text-center bg-card rounded-[4rem] border border-border animate-in fade-in duration-500">
+            <Backpack size={80} className="mx-auto mb-8 text-primary opacity-20" />
+            <h2 className="text-4xl font-black italic font-serif mb-4 text-foreground">Inventar</h2>
+            <p className="text-muted-foreground italic">Deine gesammelten Schätze und Ausrüstung.</p>
+          </div>
+        )}
+
+        {activeTab === 'notes' && (
+          <div className="p-20 text-center bg-card rounded-[4rem] border border-border animate-in fade-in duration-500">
+            <Book size={80} className="mx-auto mb-8 text-primary opacity-20" />
+            <h2 className="text-4xl font-black italic font-serif mb-4 text-foreground">Notizen</h2>
+            <p className="text-muted-foreground italic">Halte deine Abenteuer und Geheimnisse fest.</p>
+          </div>
+        )}
       </main>
 
       {/* Navigation Tabs (Floating Bottom) */}
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-2xl px-6 z-50">
         <nav className="bg-card/70 backdrop-blur-2xl border border-border px-10 py-4 rounded-[3rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] flex justify-around items-center gap-4 lg:gap-8">
-          <TabItem icon={<Swords className="w-6 h-6" />} label="Kampf" active />
-          <TabItem icon={<Wand2 className="w-6 h-6" />} label="Zauber" />
-          <TabItem icon={<Backpack className="w-6 h-6" />} label="Inventar" />
-          <TabItem icon={<Book className="w-6 h-6" />} label="Notizen" />
+          <TabItem icon={<Swords className="w-6 h-6" />} label="Kampf" active={activeTab === 'combat'} onClick={() => setActiveTab('combat')} />
+          <TabItem icon={<Wand2 className="w-6 h-6" />} label="Zauber" active={activeTab === 'spells'} onClick={() => setActiveTab('spells')} />
+          <TabItem icon={<Backpack className="w-6 h-6" />} label="Inventar" active={activeTab === 'inventory'} onClick={() => setActiveTab('inventory')} />
+          <TabItem icon={<Book className="w-6 h-6" />} label="Notizen" active={activeTab === 'notes'} onClick={() => setActiveTab('notes')} />
         </nav>
       </div>
     </div>
   );
 }
 
-function TabItem({ icon, label, active = false }: { icon: React.ReactNode, label: string, active?: boolean }) {
+function TabItem({ icon, label, active = false, onClick }: { icon: React.ReactNode, label: string, active?: boolean, onClick?: () => void }) {
   return (
-    <button className="flex flex-col items-center gap-2 group transition-all relative px-4">
+    <button onClick={onClick} className="flex flex-col items-center gap-2 group transition-all relative px-4">
       <div className={cn(
         "p-4 rounded-2xl transition-all duration-300 relative overflow-hidden",
         active 

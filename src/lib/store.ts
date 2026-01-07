@@ -164,6 +164,12 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
       const list = await characterApi.list();
       const migratedList = list.map(character => ({
         ...character,
+        meta: {
+          ...character.meta,
+          xp: character.meta.xp || 0,
+          level: character.meta.level || 1,
+          use_metric: character.meta.use_metric ?? true
+        },
         proficiencies: character.proficiencies || {
           skills: [],
           saving_throws: [],
@@ -180,7 +186,8 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
           hit_dice_used: 0,
           death_saves: { successes: 0, failures: 0 }
         },
-        inventory: character.inventory || []
+        inventory: character.inventory || [],
+        modifiers: character.modifiers || []
       }));
       set({ characters: migratedList, isLoading: false });
     } catch (err) {

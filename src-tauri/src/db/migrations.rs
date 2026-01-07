@@ -354,6 +354,19 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         FROM custom_feats WHERE parent_id IS NULL;
         CREATE VIEW all_skills AS SELECT id, name, ability, description, 'core' as source FROM core_skills;
 
+        -- Indizes für Performance (Checklist 6: < 10ms Lookups)
+        CREATE INDEX IF NOT EXISTS idx_core_spells_name ON core_spells(name);
+        CREATE INDEX IF NOT EXISTS idx_custom_spells_name ON custom_spells(name);
+        CREATE INDEX IF NOT EXISTS idx_custom_spells_parent ON custom_spells(parent_id);
+        
+        CREATE INDEX IF NOT EXISTS idx_core_weapons_name ON core_weapons(name);
+        CREATE INDEX IF NOT EXISTS idx_custom_weapons_name ON custom_weapons(name);
+        
+        CREATE INDEX IF NOT EXISTS idx_core_armors_name ON core_armors(name);
+        CREATE INDEX IF NOT EXISTS idx_custom_armors_name ON custom_armors(name);
+
+        CREATE INDEX IF NOT EXISTS idx_characters_updated ON characters(updated_at);
+
         COMMIT;"
     ).map_err(|e| format!("Migration error: {}", e))
 }

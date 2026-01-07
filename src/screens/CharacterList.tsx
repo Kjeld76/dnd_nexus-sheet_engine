@@ -4,13 +4,13 @@ import { Plus, User, Sparkles, ChevronRight } from 'lucide-react';
 import { Character } from '../lib/types';
 
 export function CharacterList() {
-  const { characters, loadCharacterList, setCurrentCharacter, isLoading } = useCharacterStore();
+  const { characters, loadCharacterList, setCurrentCharacter, saveCharacter, isLoading } = useCharacterStore();
 
   useEffect(() => {
     loadCharacterList();
   }, [loadCharacterList]);
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     const newChar: Character = {
       id: crypto.randomUUID(),
       meta: {
@@ -41,7 +41,12 @@ export function CharacterList() {
       inventory: [],
       modifiers: [],
     };
+    
+    // Set as current AND save to DB immediately so it appears in the list
     setCurrentCharacter(newChar);
+    setTimeout(async () => {
+      await saveCharacter();
+    }, 100);
   };
 
   return (
