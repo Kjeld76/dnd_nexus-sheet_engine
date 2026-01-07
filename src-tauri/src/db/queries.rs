@@ -16,3 +16,4 @@ pub const DELETE_CHARACTER: &str = "DELETE FROM characters WHERE id = ?";
 
 
 
+
