@@ -1,14 +1,18 @@
-# D&D Nexus
+# D&D Nexus (v1.2.0)
 
 D&D Nexus ist eine Desktop-Anwendung zur Verwaltung von Charakterbögen für Dungeons & Dragons 5e (Regelwerk 2024). Die Software basiert auf Tauri 2.0 und kombiniert ein React-Frontend mit einem Rust-Backend und lokaler SQLite-Datenspeicherung.
 
-## Funktionsumfang
+## Funktionsumfang (v1.2.0)
 
 * **Charakter-Management**: Verwaltung von Charakteren gemäß den 5e 2024 Regeln, einschließlich Attributsberechnungen, Fertigkeiten und Fortschrittssystem.
-* **Kompendium**: Durchsuchbare Datenbank für Zauber, Spezies, Klassen, Gegenstände und Talente (Feats).
-* **PHB-Datenimport**: Integriertes Tool zum Extrahieren und Strukturieren von Daten aus offiziellen Regelwerken (unterstützt DOCX und PDF).
-* **Homebrew-System**: Möglichkeit zur Erstellung und Einbindung eigener Inhalte (Zauber, Items etc.), die die Core-Datenbank erweitern oder überschreiben können.
-* **Datenmodell**: Kombination aus festem Schema für Meta-Daten und flexiblen JSON-Strukturen für entities-spezifische Daten.
+* **Kompendium & Editor**: 
+    * Durchsuchbare Datenbank für Zauber, Spezies, Klassen, Gegenstände und Talente.
+    * **Neu:** Integrierter Editor zum Bearbeiten bestehender Core-Daten (als Override) und Erstellen komplett neuer Homebrew-Inhalte.
+    * Unterstützung für detaillierte Zauber-Attribute (Materialkomponenten, Klassen-Zuweisung, etc.).
+    * **JSON-Modus**: Fortgeschrittene Bearbeitung der Rohdaten direkt im Editor möglich.
+* **Homebrew-System**: Nahtlose Integration von eigenen Inhalten, die Core-Daten überschreiben oder ergänzen, ohne die Originaldaten zu löschen.
+* **PHB-Datenimport**: Spezialisiertes Tooling zum Extrahieren von Daten aus offiziellen PDFs/DOCX.
+* **Optimiertes UI**: Modernes, dunkles Design mit verbessertem Layout für maximale Übersichtlichkeit und Lesbarkeit der Statistiken.
 
 ## Technischer Stack
 
