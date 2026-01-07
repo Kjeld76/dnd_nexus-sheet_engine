@@ -1,15 +1,22 @@
-# D&D Nexus (v1.4.5)
+# D&D Nexus (v1.4.4)
 
 ## 📖 Dokumentation & Wiki
-Alle technischen Details, die Datenbank-Struktur und Architektur-Entscheidungen findest du in unserem **[Projekt-Wiki](WIKI.md)**.
+Alle technischen Details, die Datenbank-Struktur und Architektur-Entscheidungen findest du in unserem **[Online-Wiki](https://github.com/Kjeld76/dnd_nexus-sheet_engine/wiki)** oder lokal im Ordner `wiki/`.
 
 ## 📦 Releases & Versionierung
-Die App nutzt ein automatisiertes System zur Versionierung. Details findest du im [Release & Maintenance Guide](RELEASE_GUIDE.md).
+Die App nutzt ein vollautomatisiertes System zur Versionierung und Qualitätssicherung. Details findest du im [Release & Maintenance Guide](RELEASE_GUIDE.md).
 
-Befehl zum Releasen:
-- `pnpm release [patch|minor|major] "Nachricht"`
+### Automatisierter Workflow
+1.  **Entwicklung**: Code schreiben.
+2.  **Commit**: Lokale Prüfung durch Husky & lint-staged.
+3.  **Release/Maintenance**: `pnpm maintenance patch "Nachricht"`.
+    *   Führt Tests & Linting aus.
+    *   Archiviert alte Logs.
+    *   Erhöht die Version in allen Dateien (inkl. Wiki & README).
+    *   Pusht Code und Wiki-Updates zu GitHub.
+    *   GitHub Actions baut automatisch den Installer (`.msi`).
 
-D&D Nexus ist eine Desktop-Anwendung zur Verwaltung von Charakterbögen für Dungeons & Dragons 5e (Regelwerk 2024). Die Software basiert auf Tauri 2.0 und kombiniert ein React-Frontend mit einem Rust-Backend und lokaler SQLite-Datenspeicherung.
+D&D Nexus ist eine Desktop-Anwendung zur Verwaltung von Charakterbögen für Dungeons & Dragons 5e (Regelwerk 2024).
 
 ## Funktionsumfang (v1.4.5)
 

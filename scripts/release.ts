@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { execSync } from 'child_process';
 
 // Usage: npx tsx scripts/release.ts [patch|minor|major] "Commit message"
@@ -49,6 +49,23 @@ async function run() {
         console.log(`Updated README.md version markers to v${newVersion}`);
     } catch (e) {
         console.warn('Could not update README.md:', e.message);
+    }
+
+    // 1.1 Update Wiki (if exists)
+    try {
+        const wikiHomePath = 'wiki/Home.md';
+        if (existsSync(wikiHomePath)) {
+            const wikiContent = readFileSync(wikiHomePath, 'utf-8');
+            const updatedWiki = wikiContent.replace(/\*Nexus Version: v\d+\.\d+\.\d+\*/g, `*Nexus Version: v${newVersion}*`);
+            writeFileSync(wikiHomePath, updatedWiki);
+            console.log(`Updated ${wikiHomePath} version marker to v${newVersion}`);
+            
+            // Push wiki if it's a git repo
+            console.log('Pushing Wiki changes...');
+            execSync('cd wiki && git add . && git commit -m "Update version to v' + newVersion + '" && git push', { stdio: 'inherit' });
+        }
+    } catch (e) {
+        console.log('No local wiki repository found or update failed. Skipping wiki automation.');
     }
 
     // 2. Git commands
