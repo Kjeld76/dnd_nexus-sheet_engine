@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { X, Save, Trash2, Code, Layout, Copy, Download, Upload } from 'lucide-react';
+import { X, Save, Trash2, Code, Layout, Copy, Info, Sparkles } from 'lucide-react';
 import { homebrewApi } from '../lib/api';
 import { CustomSpell, CustomWeapon, CustomArmor, CustomItem } from '../lib/types';
-import { clsx, type ClassValue } from 'clsx';
+import clsx, { type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 function cn(...inputs: ClassValue[]) {
@@ -38,7 +38,6 @@ export function CompendiumEditor({ type, initialData, onClose, onSave }: Props) 
     try {
       let dataToSave = viewMode === 'json' ? JSON.parse(jsonValue) : formData;
       
-      // Ensure IDs and parent relation
       const finalData = {
         ...dataToSave,
         parent_id: initialData?.source === 'core' ? initialData.id : initialData?.parent_id,
@@ -61,23 +60,9 @@ export function CompendiumEditor({ type, initialData, onClose, onSave }: Props) 
     }
   };
 
-  const handleJsonSync = () => {
-    if (viewMode === 'form') {
-      setJsonValue(JSON.stringify(formData, null, 2));
-      setViewMode('json');
-    } else {
-      try {
-        setFormData(JSON.parse(jsonValue));
-        setViewMode('form');
-      } catch (e) {
-        alert('Ungültiges JSON-Format');
-      }
-    }
-  };
-
   const copyToClipboard = () => {
     navigator.clipboard.writeText(jsonValue);
-    alert('JSON in Zwischenablage kopiert');
+    alert('JSON kopiert');
   };
 
   const handleDelete = async () => {
@@ -93,151 +78,155 @@ export function CompendiumEditor({ type, initialData, onClose, onSave }: Props) 
   };
 
   return (
-    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col text-slate-100">
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[100] p-4 backdrop-blur-xl animate-in fade-in duration-300">
+      <div className="bg-card border border-border rounded-[3.5rem] shadow-2xl w-full max-w-5xl max-h-[95vh] overflow-hidden flex flex-col text-foreground relative">
+        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary/20 via-primary to-primary/20 opacity-50" />
+        
         {/* Header */}
-        <div className="p-6 border-b border-slate-800 flex justify-between items-center bg-indigo-600/10">
-          <div className="flex items-center gap-4">
-            <h2 className="text-xl font-black uppercase tracking-tight">
-              {initialData ? `${formData.name || 'Eintrag'} bearbeiten` : 'Neu hinzufügen'}
-            </h2>
-            <div className="flex bg-slate-950 rounded-lg p-1 border border-slate-800">
+        <div className="p-10 border-b border-border flex justify-between items-center bg-muted/20">
+          <div className="flex items-center gap-8">
+            <div className="space-y-1">
+              <h2 className="text-3xl font-black tracking-tighter italic font-serif">
+                {initialData ? `${formData.name || 'Eintrag'} anpassen` : 'Neue Legende erschaffen'}
+              </h2>
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground opacity-50">Editor & Repository</p>
+            </div>
+            
+            <div className="flex bg-muted/50 rounded-[1.25rem] p-1.5 border border-border">
               <button 
                 onClick={() => setViewMode('form')}
-                className={cn("px-3 py-1 rounded text-[10px] font-black uppercase flex items-center gap-2 transition-all", viewMode === 'form' ? "bg-indigo-600 text-white" : "text-slate-500 hover:text-slate-300")}
+                className={cn(
+                  "px-6 py-2 rounded-xl text-[10px] font-black uppercase flex items-center gap-2 transition-all", 
+                  viewMode === 'form' ? "bg-primary text-primary-foreground shadow-lg" : "text-muted-foreground hover:text-foreground"
+                )}
               >
-                <Layout size={12} /> Formular
+                <Layout size={14} /> Formular
               </button>
               <button 
                 onClick={() => setViewMode('json')}
-                className={cn("px-3 py-1 rounded text-[10px] font-black uppercase flex items-center gap-2 transition-all", viewMode === 'json' ? "bg-indigo-600 text-white" : "text-slate-500 hover:text-slate-300")}
+                className={cn(
+                  "px-6 py-2 rounded-xl text-[10px] font-black uppercase flex items-center gap-2 transition-all", 
+                  viewMode === 'json' ? "bg-primary text-primary-foreground shadow-lg" : "text-muted-foreground hover:text-foreground"
+                )}
               >
-                <Code size={12} /> JSON
+                <Code size={14} /> JSON
               </button>
             </div>
           </div>
-          <button onClick={onClose} className="text-slate-500 hover:text-white transition-colors">
-            <X size={24} />
+          <button onClick={onClose} className="p-4 rounded-2xl hover:bg-red-500/10 text-muted-foreground hover:text-red-500 transition-all active:scale-90">
+            <X size={32} />
           </button>
         </div>
         
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-12 custom-scrollbar">
           {viewMode === 'form' ? (
-            <div className="space-y-8">
-              {/* Basis-Info */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Name</label>
+            <div className="space-y-12">
+              {/* Basis-Info Card */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="space-y-4">
+                  <label className="text-xs font-black text-primary uppercase tracking-[0.2em] ml-2">Identität</label>
                   <input 
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm focus:border-indigo-500 transition-all outline-none"
+                    className="w-full bg-muted/30 border-2 border-border rounded-[1.5rem] px-8 py-5 text-xl font-bold focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all outline-none"
                     value={formData.name}
                     onChange={e => setFormData({...formData, name: e.target.value})}
+                    placeholder="Name des Eintrags..."
                   />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Quelle / Typ</label>
-                  <div className="flex bg-slate-950 rounded-xl p-1 border border-slate-800 h-[46px]">
+                <div className="space-y-4">
+                  <label className="text-xs font-black text-primary uppercase tracking-[0.2em] ml-2">Ursprung</label>
+                  <div className="flex bg-muted/30 rounded-[1.5rem] p-2 border-2 border-border h-[72px]">
                     <button 
                       onClick={() => setFormData({...formData, is_homebrew: false})}
-                      className={cn("flex-1 rounded-lg text-[10px] font-black uppercase transition-all", !formData.is_homebrew ? "bg-slate-800 text-white" : "text-slate-600 hover:text-slate-400")}
+                      className={cn(
+                        "flex-1 rounded-xl text-xs font-black uppercase tracking-widest transition-all", 
+                        !formData.is_homebrew ? "bg-card text-foreground shadow-xl border border-border" : "text-muted-foreground/50 hover:text-foreground"
+                      )}
                     >
                       Core (PHB)
                     </button>
                     <button 
                       onClick={() => setFormData({...formData, is_homebrew: true})}
-                      className={cn("flex-1 rounded-lg text-[10px] font-black uppercase transition-all", formData.is_homebrew ? "bg-amber-600/20 text-amber-400" : "text-slate-600 hover:text-slate-400")}
+                      className={cn(
+                        "flex-1 rounded-xl text-xs font-black uppercase tracking-widest transition-all", 
+                        formData.is_homebrew ? "bg-primary text-primary-foreground shadow-xl" : "text-muted-foreground/50 hover:text-foreground"
+                      )}
                     >
-                      Custom (Homebrew)
+                      Custom
                     </button>
                   </div>
                 </div>
-                {type === 'spells' && (
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Level</label>
-                      <input type="number" className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm outline-none" value={formData.level} onChange={e => setFormData({...formData, level: parseInt(e.target.value)})}/>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Schule</label>
-                      <input className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm outline-none" value={formData.school} onChange={e => setFormData({...formData, school: e.target.value})}/>
-                    </div>
+              </div>
+
+              {/* Advanced Section for Spells */}
+              {type === 'spells' && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <div className="space-y-4">
+                    <label className="text-xs font-black text-primary uppercase tracking-[0.2em] ml-2">Zaubergrad</label>
+                    <input type="number" className="w-full bg-muted/30 border-2 border-border rounded-[1.5rem] px-8 py-5 text-xl font-bold focus:border-primary outline-none" value={formData.level} onChange={e => setFormData({...formData, level: parseInt(e.target.value)})}/>
                   </div>
-                )}
+                  <div className="space-y-4">
+                    <label className="text-xs font-black text-primary uppercase tracking-[0.2em] ml-2">Schule</label>
+                    <input className="w-full bg-muted/30 border-2 border-border rounded-[1.5rem] px-8 py-5 text-xl font-bold focus:border-primary outline-none" value={formData.school} onChange={e => setFormData({...formData, school: e.target.value})} placeholder="z.B. Evokation"/>
+                  </div>
+                </div>
+              )}
+
+              {/* Description Card */}
+              <div className="space-y-4">
+                <label className="text-xs font-black text-primary uppercase tracking-[0.2em] ml-2">Wissens-Text</label>
+                <div className="relative group">
+                  <textarea 
+                    className="w-full bg-muted/30 border-2 border-border rounded-[2.5rem] px-10 py-8 text-lg h-64 outline-none focus:border-primary transition-all resize-none custom-scrollbar leading-relaxed italic font-medium"
+                    value={formData.description || formData.data?.description}
+                    onChange={e => setFormData({...formData, description: e.target.value})}
+                    placeholder="Schreibe die Geschichte oder Wirkung auf..."
+                  />
+                  <div className="absolute top-6 right-6 opacity-20 group-hover:opacity-100 transition-opacity">
+                    <Sparkles className="text-primary" />
+                  </div>
+                </div>
               </div>
 
-              {/* Beschreibung */}
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Beschreibung</label>
-                <textarea 
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm h-40 outline-none focus:border-indigo-500 transition-all resize-none custom-scrollbar"
-                  value={formData.description || formData.data?.description}
-                  onChange={e => setFormData({...formData, description: e.target.value})}
-                />
-              </div>
-
-              {/* Statistik-Block */}
-              <div className="bg-slate-950/50 border border-slate-800 rounded-2xl p-6">
-                <h3 className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-                  <Layout size={14} /> Statistik & Metadaten
+              {/* Detail Stats Grid */}
+              <div className="bg-card p-10 rounded-[3rem] border border-border shadow-inner relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-8 opacity-5">
+                   <Info size={120} />
+                </div>
+                <h3 className="text-xl font-black text-foreground tracking-tighter mb-10 flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <Layout size={20} className="text-primary" />
+                  </div>
+                  Technische Daten
                 </h3>
                 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
                   {type === 'spells' && (
                     <>
-                      <div className="space-y-2">
-                        <label className="text-[9px] font-bold text-slate-600 uppercase tracking-wider">Zeit</label>
-                        <input className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs" value={formData.casting_time} onChange={e => setFormData({...formData, casting_time: e.target.value})}/>
+                      <EditorInput label="Zeit" value={formData.casting_time} onChange={v => setFormData({...formData, casting_time: v})} />
+                      <EditorInput label="Reichweite" value={formData.range} onChange={v => setFormData({...formData, range: v})} />
+                      <EditorInput label="Dauer" value={formData.duration} onChange={v => setFormData({...formData, duration: v})} />
+                      <EditorInput label="Komponenten" value={formData.components} onChange={v => setFormData({...formData, components: v})} />
+                      <div className="md:col-span-2">
+                        <EditorInput label="Materialien" value={formData.material_components} onChange={v => setFormData({...formData, material_components: v})} placeholder="Optionale Komponenten..."/>
                       </div>
-                      <div className="space-y-2">
-                        <label className="text-[9px] font-bold text-slate-600 uppercase tracking-wider">Reichweite</label>
-                        <input className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs" value={formData.range} onChange={e => setFormData({...formData, range: e.target.value})}/>
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[9px] font-bold text-slate-600 uppercase tracking-wider">Dauer</label>
-                        <input className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs" value={formData.duration} onChange={e => setFormData({...formData, duration: e.target.value})}/>
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[9px] font-bold text-slate-600 uppercase tracking-wider">Komponenten</label>
-                        <input className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs" value={formData.components} onChange={e => setFormData({...formData, components: e.target.value})}/>
-                      </div>
-                      <div className="space-y-2 md:col-span-2">
-                        <label className="text-[9px] font-bold text-slate-600 uppercase tracking-wider">Materialkomponenten</label>
-                        <input className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs" value={formData.material_components} onChange={e => setFormData({...formData, material_components: e.target.value})} placeholder="z.B. eine Prise Salz..."/>
-                      </div>
-                      <div className="space-y-2 md:col-span-3">
-                        <label className="text-[9px] font-bold text-slate-600 uppercase tracking-wider">Klassen</label>
-                        <input className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs" value={formData.classes} onChange={e => setFormData({...formData, classes: e.target.value})}/>
+                      <div className="md:col-span-3">
+                        <EditorInput label="Klassen" value={formData.classes} onChange={v => setFormData({...formData, classes: v})} placeholder="Magier, Hexenmeister..."/>
                       </div>
                     </>
                   )}
                   {(type === 'weapons' || type === 'armor' || type === 'gear' || type === 'tools') && (
                     <>
-                      <div className="space-y-2">
-                        <label className="text-[9px] font-bold text-slate-600 uppercase tracking-wider">Preis (GM)</label>
-                        <input type="number" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs" value={formData.cost_gp} onChange={e => setFormData({...formData, cost_gp: parseFloat(e.target.value)})}/>
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[9px] font-bold text-slate-600 uppercase tracking-wider">Gewicht (KG)</label>
-                        <input type="number" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs" value={formData.weight_kg} onChange={e => setFormData({...formData, weight_kg: parseFloat(e.target.value)})}/>
-                      </div>
+                      <EditorInput label="Preis (GM)" type="number" value={formData.cost_gp} onChange={v => setFormData({...formData, cost_gp: parseFloat(v)})} />
+                      <EditorInput label="Gewicht (KG)" type="number" value={formData.weight_kg} onChange={v => setFormData({...formData, weight_kg: parseFloat(v)})} />
                       {type === 'weapons' && (
                         <>
-                          <div className="space-y-2">
-                            <label className="text-[9px] font-bold text-slate-600 uppercase tracking-wider">Schaden</label>
-                            <input className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs" value={formData.damage_dice} onChange={e => setFormData({...formData, damage_dice: e.target.value})}/>
-                          </div>
-                          <div className="space-y-2">
-                            <label className="text-[9px] font-bold text-slate-600 uppercase tracking-wider">Schadenstyp</label>
-                            <input className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs" value={formData.damage_type} onChange={e => setFormData({...formData, damage_type: e.target.value})}/>
-                          </div>
+                          <EditorInput label="Schaden" value={formData.damage_dice} onChange={v => setFormData({...formData, damage_dice: v})} />
+                          <EditorInput label="Schadenstyp" value={formData.damage_type} onChange={v => setFormData({...formData, damage_type: v})} />
                         </>
                       )}
                       {type === 'armor' && (
-                        <div className="space-y-2">
-                          <label className="text-[9px] font-bold text-slate-600 uppercase tracking-wider">Rüstungsklasse</label>
-                          <input type="number" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs" value={formData.base_ac} onChange={e => setFormData({...formData, base_ac: parseInt(e.target.value)})}/>
-                        </div>
+                        <EditorInput label="RK" type="number" value={formData.base_ac} onChange={v => setFormData({...formData, base_ac: parseInt(v)})} />
                       )}
                     </>
                   )}
@@ -245,17 +234,18 @@ export function CompendiumEditor({ type, initialData, onClose, onSave }: Props) 
               </div>
             </div>
           ) : (
-            <div className="h-full flex flex-col gap-4">
-              <div className="flex justify-between items-center px-2">
-                <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest">Rohdaten Editor (JSON)</p>
-                <div className="flex gap-2">
-                  <button onClick={copyToClipboard} className="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-all flex items-center gap-2 text-[10px] uppercase font-black">
-                    <Copy size={14} /> Kopieren
-                  </button>
+            <div className="h-full flex flex-col gap-8 animate-in zoom-in-95 duration-300">
+              <div className="flex justify-between items-center">
+                <div className="space-y-1">
+                  <p className="text-sm font-black text-primary uppercase tracking-[0.3em]">Code Repository</p>
+                  <p className="text-xs text-muted-foreground italic">Direkte Bearbeitung des Datenobjekts.</p>
                 </div>
+                <button onClick={copyToClipboard} className="px-8 py-3 bg-muted hover:bg-primary hover:text-primary-foreground rounded-2xl transition-all flex items-center gap-3 text-xs font-black uppercase tracking-widest border border-border">
+                  <Copy size={16} /> In die Zwischenablage
+                </button>
               </div>
               <textarea 
-                className="flex-1 w-full bg-slate-950 border border-slate-800 rounded-2xl p-6 text-xs font-mono text-indigo-300 outline-none focus:border-indigo-500 transition-all resize-none custom-scrollbar leading-relaxed h-[500px]"
+                className="flex-1 w-full bg-card border-2 border-border rounded-[2.5rem] p-10 text-sm font-mono text-primary outline-none focus:border-primary transition-all resize-none custom-scrollbar leading-relaxed shadow-inner min-h-[500px]"
                 value={jsonValue}
                 onChange={e => setJsonValue(e.target.value)}
                 placeholder="{ ... }"
@@ -265,22 +255,23 @@ export function CompendiumEditor({ type, initialData, onClose, onSave }: Props) 
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-slate-800 flex justify-between gap-4 bg-slate-950/50">
+        <div className="p-10 border-t border-border flex justify-between gap-6 bg-muted/20">
           {initialData?.source !== 'core' && initialData?.id && (
             <button 
               onClick={handleDelete}
-              className="flex items-center gap-2 px-4 py-2 text-red-500 hover:bg-red-500/10 rounded-xl transition-colors font-black uppercase text-xs tracking-widest border border-red-500/20"
+              className="flex items-center gap-3 px-8 py-4 text-red-500 hover:bg-red-500 hover:text-white rounded-[1.5rem] transition-all font-black uppercase text-xs tracking-[0.2em] border border-red-500/20 shadow-xl shadow-red-500/5"
             >
-              <Trash2 size={16} /> Löschen
+              <Trash2 size={20} /> Löschen
             </button>
           )}
-          <div className="flex gap-4 ml-auto">
-            <button onClick={onClose} className="px-6 py-2 text-slate-400 font-black uppercase text-xs tracking-widest hover:text-white">Abbrechen</button>
+          <div className="flex gap-6 ml-auto">
+            <button onClick={onClose} className="px-10 py-4 text-muted-foreground font-black uppercase text-xs tracking-[0.2em] hover:text-foreground transition-colors">Abbrechen</button>
             <button 
               onClick={handleSave}
-              className="flex items-center gap-3 px-8 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all font-black uppercase text-xs tracking-widest shadow-lg shadow-indigo-500/20"
+              className="flex items-center gap-4 px-12 py-5 bg-primary text-primary-foreground rounded-[1.5rem] hover:scale-105 transition-all font-black uppercase text-sm tracking-[0.2em] shadow-2xl shadow-primary/30 active:scale-95"
             >
-              <Save size={18} /> Speichern
+              <Save size={24} />
+              Speichern
             </button>
           </div>
         </div>
@@ -289,3 +280,17 @@ export function CompendiumEditor({ type, initialData, onClose, onSave }: Props) 
   );
 }
 
+function EditorInput({ label, value, onChange, type = "text", placeholder = "" }: { label: string, value: any, onChange: (v: string) => void, type?: string, placeholder?: string }) {
+  return (
+    <div className="space-y-2">
+      <label className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em] ml-1">{label}</label>
+      <input 
+        type={type}
+        className="w-full bg-background border border-border rounded-2xl px-5 py-3.5 text-base font-bold focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all outline-none shadow-sm"
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        placeholder={placeholder}
+      />
+    </div>
+  );
+}

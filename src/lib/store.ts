@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Character, Attributes, Modifier } from './types';
+import { Character, Attributes, Modifier, CharacterMeta } from './types';
 import { characterApi } from './api';
 
 interface CharacterState {
@@ -12,6 +12,8 @@ interface CharacterState {
   loadCharacter: (id: string) => Promise<void>;
   saveCharacter: () => Promise<void>;
   updateAttribute: (attr: keyof Attributes, value: number) => void;
+  updateMeta: (meta: Partial<CharacterMeta>) => void;
+  updateProficiency: (type: keyof Character['proficiencies'], id: string, add: boolean) => void;
   addModifier: (modifier: Modifier) => void;
   removeModifier: (id: string) => void;
   loadCharacterList: () => Promise<void>;
@@ -29,7 +31,31 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   loadCharacter: async (id) => {
     set({ isLoading: true, error: null });
     try {
-      const character = await characterApi.get(id);
+      let character = await characterApi.get(id);
+      
+      // Migration for old characters
+      if (!character.proficiencies) {
+        character.proficiencies = {
+          skills: [],
+          saving_throws: [],
+          weapons: [],
+          armor: [],
+          tools: [],
+          languages: ['Common']
+        };
+      }
+      if (!character.health) {
+        character.health = {
+          current: 10,
+          max: 10,
+          temp: 0,
+          hit_dice_max: 1,
+          hit_dice_used: 0,
+          death_saves: { successes: 0, failures: 0 }
+        };
+      }
+      if (!character.inventory) character.inventory = [];
+
       set({ currentCharacter: character, isLoading: false });
     } catch (err) {
       set({ error: (err as Error).message, isLoading: false });
@@ -42,7 +68,6 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
 
     set({ isLoading: true, error: null });
     try {
-      // Check if character already exists in list (simple heuristic)
       const exists = characters.some(c => c.id === currentCharacter.id);
       
       if (exists) {
@@ -57,6 +82,41 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     } catch (err) {
       set({ error: (err as Error).message, isLoading: false });
     }
+  },
+
+  updateMeta: (meta) => {
+    const { currentCharacter } = get();
+    if (!currentCharacter) return;
+
+    set({
+      currentCharacter: {
+        ...currentCharacter,
+        meta: {
+          ...currentCharacter.meta,
+          ...meta,
+        },
+      },
+    });
+  },
+
+  updateProficiency: (type, id, add) => {
+    const { currentCharacter } = get();
+    if (!currentCharacter) return;
+
+    const currentList = currentCharacter.proficiencies[type] as string[];
+    const newList = add 
+      ? [...currentList, id] 
+      : currentList.filter(x => x !== id);
+
+    set({
+      currentCharacter: {
+        ...currentCharacter,
+        proficiencies: {
+          ...currentCharacter.proficiencies,
+          [type]: newList,
+        },
+      },
+    });
   },
 
   updateAttribute: (attr, value) => {
@@ -102,10 +162,29 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const list = await characterApi.list();
-      set({ characters: list, isLoading: false });
+      const migratedList = list.map(character => ({
+        ...character,
+        proficiencies: character.proficiencies || {
+          skills: [],
+          saving_throws: [],
+          weapons: [],
+          armor: [],
+          tools: [],
+          languages: ['Common']
+        },
+        health: character.health || {
+          current: 10,
+          max: 10,
+          temp: 0,
+          hit_dice_max: 1,
+          hit_dice_used: 0,
+          death_saves: { successes: 0, failures: 0 }
+        },
+        inventory: character.inventory || []
+      }));
+      set({ characters: migratedList, isLoading: false });
     } catch (err) {
       set({ error: (err as Error).message, isLoading: false });
     }
   },
 }));
-

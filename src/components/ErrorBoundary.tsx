@@ -27,16 +27,18 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen bg-gray-900 flex items-center justify-center p-6">
-          <div className="bg-gray-800 border border-red-500/50 p-8 rounded-2xl max-w-md w-full shadow-2xl text-center">
-            <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-white mb-2">Hoppla! Etwas ging schief.</h1>
-            <p className="text-gray-400 mb-6 text-sm">
+        <div className="min-h-screen bg-background flex items-center justify-center p-6">
+          <div className="bg-card border border-destructive/50 p-10 rounded-[3rem] max-w-md w-full shadow-2xl shadow-foreground/5 text-center transition-all animate-in zoom-in-95">
+            <div className="p-4 bg-destructive/10 rounded-2xl w-fit mx-auto mb-6">
+              <AlertCircle className="w-12 h-12 text-destructive" />
+            </div>
+            <h1 className="text-3xl font-black text-foreground mb-3 uppercase tracking-tighter leading-none">Hoppla!</h1>
+            <p className="text-muted-foreground mb-10 font-medium">
               {this.state.error?.message || 'Ein unerwarteter Fehler ist aufgetreten.'}
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-xl font-bold mx-auto transition-all"
+              className="flex items-center justify-center gap-3 w-full bg-primary text-primary-foreground px-8 py-4 rounded-2xl font-black uppercase text-xs tracking-widest hover:opacity-90 transition-all shadow-xl shadow-primary/20 active:scale-95"
             >
               <RefreshCcw className="w-5 h-5" />
               App neu laden

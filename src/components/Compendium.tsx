@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useCompendiumStore } from '../lib/compendiumStore';
-import { compendiumApi, homebrewApi } from '../lib/api';
-import { Book, Zap, Users, Shield, Sword, Package, Award, Search, Info, Brain, Plus, Edit2 } from 'lucide-react';
-import { clsx, type ClassValue } from 'clsx';
+import { compendiumApi } from '../lib/api';
+import { 
+  Zap, Users, Shield, Sword, Package, Award, Search, 
+  Plus, Edit2, Book, Info, Brain, ChevronRight,
+  Sparkles, ScrollText, Target, Clock, Compass
+} from 'lucide-react';
+import clsx, { type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { CompendiumEditor } from './CompendiumEditor';
 
@@ -68,8 +72,10 @@ export function Compendium() {
     if (source === 'core' || !source) return null;
     return (
       <span className={cn(
-        "text-[8px] px-1 py-0.5 rounded font-black uppercase ml-1.5",
-        source === 'homebrew' ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" : "bg-purple-500/20 text-purple-400 border border-purple-500/30"
+        "text-[9px] px-1.5 py-0.5 rounded-full font-black uppercase ml-2",
+        source === 'homebrew' 
+          ? "bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20" 
+          : "bg-primary/10 text-primary border border-primary/20"
       )}>
         {source === 'homebrew' ? 'Custom' : 'Edit'}
       </span>
@@ -80,22 +86,22 @@ export function Compendium() {
     <button
       onClick={() => setActiveTab(tab)}
       className={cn(
-        "flex items-center gap-2 px-4 py-2 rounded-md transition-all whitespace-nowrap",
+        "flex items-center gap-2.5 px-5 py-2.5 rounded-xl transition-all relative overflow-hidden group",
         activeTab === tab 
-          ? "bg-indigo-600 text-white shadow-sm" 
-          : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+          ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-105" 
+          : "text-muted-foreground hover:bg-muted hover:text-foreground"
       )}
     >
-      <Icon size={16} />
-      <span className="text-sm font-bold uppercase tracking-wider">{label}</span>
+      <Icon size={18} className={cn("transition-transform group-hover:scale-110", activeTab === tab ? "text-primary-foreground" : "text-muted-foreground")} />
+      <span className="text-xs font-black uppercase tracking-wider">{label}</span>
     </button>
   );
 
   return (
-    <div className="flex flex-col h-full bg-slate-950 text-slate-100 overflow-hidden">
-      <header className="px-6 py-4 border-b border-slate-800 bg-slate-900/50 shrink-0">
-        <div className="flex items-center justify-between gap-8">
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+    <div className="flex flex-col h-full bg-background text-foreground overflow-hidden">
+      <header className="px-8 py-6 border-b border-border bg-card/80 backdrop-blur-xl shrink-0 z-20 sticky top-0 shadow-sm">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 px-1 max-w-full">
             {renderTabButton('spells', 'Zauber', Zap)}
             {renderTabButton('classes', 'Klassen', Shield)}
             {renderTabButton('species', 'Spezies', Users)}
@@ -107,38 +113,23 @@ export function Compendium() {
             {renderTabButton('skills', 'Fertigkeiten', Brain)}
           </div>
           
-          <div className="flex items-center gap-4 shrink-0">
+          <div className="flex items-center gap-4 shrink-0 w-full lg:w-auto">
             <button 
               onClick={() => {
                 setSelectedId(null);
                 setIsEditorOpen(true);
               }}
-              className="flex items-center gap-2 px-4 py-2 bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600 hover:text-white border border-emerald-500/30 rounded-lg text-xs font-black uppercase tracking-widest transition-all"
+              className="flex-1 lg:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 text-white hover:bg-emerald-600 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-emerald-500/20 active:scale-95"
             >
-              <Plus size={16} /> Neu
+              <Plus size={18} /> Neu
             </button>
 
-            <button
-              onClick={async () => {
-                try {
-                  await compendiumApi.importPhbData();
-                  refreshData();
-                  alert('Daten erfolgreich synchronisiert!');
-                } catch (err) {
-                  alert('Fehler beim Synchronisieren: ' + err);
-                }
-              }}
-              className="px-4 py-2 bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600 hover:text-white border border-indigo-500/30 rounded-lg text-xs font-black uppercase tracking-widest transition-all"
-            >
-              PHB Daten synchronisieren
-            </button>
-
-            <div className="relative w-80">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+            <div className="relative flex-1 lg:w-80">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60" size={18} />
               <input
                 type="text"
-                placeholder="Suchen..."
-                className="w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm text-white focus:ring-1 focus:ring-indigo-500 transition-all outline-none"
+                placeholder="Kompendium durchsuchen..."
+                className="w-full pl-12 pr-6 py-3 bg-muted/30 border border-border rounded-2xl text-sm focus:ring-4 focus:ring-primary/10 transition-all outline-none border-b-2 focus:border-primary"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -148,360 +139,333 @@ export function Compendium() {
       </header>
 
       <main className="flex flex-1 overflow-hidden">
-        {/* Left: Master List */}
-        <div className="w-96 border-r border-slate-800 flex flex-col bg-slate-900/20 overflow-hidden">
-          <div className="flex-1 overflow-y-auto custom-scrollbar">
+        {/* Left: Sidebar List */}
+        <aside className="w-96 border-r border-border flex flex-col bg-muted/10 overflow-hidden">
+          <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-2">
             {isLoading ? (
-              <div className="flex justify-center py-10"><div className="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-500"></div></div>
-            ) : data.length === 0 ? (
-              <div className="p-10 text-center text-slate-600 text-sm italic">Nichts gefunden</div>
-            ) : (
-              <div className="divide-y divide-slate-800/50">
-                {data.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => {
-                      setSelectedId(item.id);
-                      setSelectedSubclass(null);
-                    }}
-                    className={cn(
-                      "w-full text-left px-6 py-4 transition-all hover:bg-indigo-600/5 group",
-                      selectedId === item.id ? "bg-indigo-600/10 border-r-2 border-indigo-500" : ""
-                    )}
-                  >
-                    <div className="flex justify-between items-start mb-1">
-                      <div className="flex items-center overflow-hidden">
-                        <span className={cn(
-                          "text-sm font-black uppercase tracking-wide truncate transition-colors",
-                          selectedId === item.id ? "text-indigo-400" : "text-slate-300 group-hover:text-slate-100"
-                        )}>
-                          {item.name}
-                        </span>
-                        {renderSourceBadge(item.source)}
-                      </div>
-                      {activeTab === 'spells' && (
-                        <span className="text-xs font-bold text-slate-600 ml-2">G{item.level}</span>
-                      )}
-                    </div>
-                    <div className="flex gap-2 items-center">
-                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-tighter">
-                        {activeTab === 'spells' ? item.school : 
-                         activeTab === 'classes' ? `W${item.data.hit_die}` :
-                         activeTab === 'weapons' ? item.damage_dice :
-                         activeTab === 'armor' ? `RK ${item.base_ac}` :
-                         item.category || ''}
-                      </span>
-                    </div>
-                  </button>
-                ))}
+              <div className="flex flex-col items-center justify-center py-20 space-y-4">
+                <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent shadow-xl shadow-primary/20"></div>
+                <p className="text-[10px] font-black uppercase tracking-widest text-primary/40">Rufe alte Schriften auf...</p>
               </div>
+            ) : data.length === 0 ? (
+              <div className="p-12 text-center text-muted-foreground/40 text-sm italic border-2 border-dashed border-border rounded-[2rem]">
+                Keine Einträge gefunden
+              </div>
+            ) : (
+              data.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => {
+                    setSelectedId(item.id);
+                    setSelectedSubclass(null);
+                  }}
+                  className={cn(
+                    "w-full text-left px-5 py-4 rounded-2xl transition-all group relative overflow-hidden",
+                    selectedId === item.id 
+                      ? "bg-card border-2 border-primary shadow-xl shadow-primary/5" 
+                      : "hover:bg-card hover:border-border border-2 border-transparent"
+                  )}
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="flex items-center overflow-hidden flex-1">
+                      <span className={cn(
+                        "text-base font-black truncate leading-none",
+                        selectedId === item.id ? "text-primary" : "text-foreground group-hover:text-primary transition-colors"
+                      )}>
+                        {item.name}
+                      </span>
+                      {renderSourceBadge(item.source)}
+                    </div>
+                    {activeTab === 'spells' && (
+                      <span className={cn(
+                        "text-[10px] font-black px-2 py-0.5 rounded-md",
+                        selectedId === item.id ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+                      )}>
+                        G{item.level}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex gap-3 items-center">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                      {activeTab === 'spells' ? item.school : 
+                       activeTab === 'classes' ? `W${item.data.hit_die} Hit Die` :
+                       activeTab === 'weapons' ? item.damage_dice :
+                       activeTab === 'armor' ? `RK ${item.base_ac}` :
+                       item.category || 'PHB'}
+                    </span>
+                    <div className="flex-1 h-px bg-border/50" />
+                    <ChevronRight size={14} className={cn("transition-transform", selectedId === item.id ? "translate-x-1 text-primary" : "text-muted-foreground/30")} />
+                  </div>
+                </button>
+              ))
             )}
           </div>
-        </div>
+        </aside>
 
-        <div className="flex-1 overflow-y-auto bg-slate-950/50 relative custom-scrollbar">
+        {/* Right: Main Content */}
+        <section className="flex-1 overflow-y-auto bg-background relative custom-scrollbar scroll-smooth">
           {!selectedItem ? (
-            <div className="h-full flex flex-col items-center justify-center text-slate-600 opacity-50 space-y-4">
-              <Book size={64} strokeWidth={1} />
-              <p className="text-lg font-medium tracking-widest uppercase">Wähle einen Eintrag aus</p>
+            <div className="h-full flex flex-col items-center justify-center text-muted-foreground/20 space-y-8 animate-reveal">
+              <Book size={140} strokeWidth={0.5} className="opacity-40" />
+              <div className="text-center space-y-2">
+                <p className="text-2xl font-black tracking-[0.4em] uppercase opacity-30">Nexus-Wissen</p>
+                <p className="text-sm font-medium tracking-wide italic">Wähle eine Legende aus dem Archiv</p>
+              </div>
             </div>
           ) : (
-            <div className="w-full p-12 max-w-6xl mx-auto">
-              <div className="animate-in fade-in slide-in-from-right-4 duration-300">
-                <div className="flex flex-col lg:flex-row gap-8 items-start mb-12 pb-10 border-b border-slate-800/50">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-5 mb-5">
-                      <h1 className="text-6xl font-black text-white uppercase tracking-tighter leading-none drop-shadow-sm">
-                        {selectedSubclass ? selectedSubclass.name : selectedItem.name}
-                      </h1>
-                      <button 
-                        onClick={() => setIsEditorOpen(true)}
-                        className="p-3 text-slate-500 hover:text-indigo-400 hover:bg-indigo-500/10 rounded-full transition-all border border-transparent hover:border-indigo-500/20"
-                        title="Eintrag bearbeiten"
-                      >
-                        <Edit2 size={24} />
-                      </button>
+            <div className="w-full p-10 lg:p-20 max-w-6xl mx-auto space-y-20 animate-reveal">
+              {/* Header Card */}
+              <div className="space-y-8">
+                <div className="flex flex-wrap items-center gap-4">
+                  <div className="px-6 py-2 bg-primary/10 text-primary border border-primary/20 text-[10px] font-black uppercase rounded-full tracking-[0.3em] shadow-sm">
+                    {activeTab.slice(0, -1)}
+                  </div>
+                  {renderSourceBadge(selectedItem.source)}
+                  <div className="h-px w-12 bg-border" />
+                  <span className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.3em]">PHB v2024 Reference</span>
+                </div>
+
+                <div className="space-y-4">
+                  <h1 className="text-7xl lg:text-9xl font-black text-foreground tracking-tighter leading-[0.8] font-serif italic selection:bg-primary/20">
+                    {selectedSubclass ? selectedSubclass.name : selectedItem.name}
+                  </h1>
+                  {selectedSubclass && (
+                    <div className="flex items-center gap-3 text-primary">
+                      <ChevronRight size={20} />
+                      <p className="text-2xl font-bold tracking-tight italic">Unterklasse von {selectedItem.name}</p>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <span className="px-4 py-1.5 bg-indigo-600/20 text-indigo-400 border border-indigo-500/30 text-[10px] font-black uppercase rounded-lg tracking-widest shadow-lg shadow-indigo-900/20">
-                        {activeTab.slice(0, -1)}
-                      </span>
-                      {selectedItem.source === 'core' ? (
-                        <span className="px-4 py-1.5 bg-slate-800/50 text-slate-500 border border-slate-700/50 text-[10px] font-black uppercase rounded-lg tracking-widest">
-                          PHB 2024
-                        </span>
-                      ) : (
-                        renderSourceBadge(selectedItem.source)
+                  )}
+                </div>
+
+                <button 
+                  onClick={() => setIsEditorOpen(true)}
+                  className="flex items-center gap-3 px-8 py-4 bg-card border border-border text-foreground hover:text-primary hover:border-primary/50 rounded-2xl transition-all shadow-xl hover:shadow-primary/5 active:scale-95 group"
+                >
+                  <Edit2 size={20} className="group-hover:rotate-12 transition-transform" />
+                  <span className="text-xs font-black uppercase tracking-widest">Eintrag bearbeiten</span>
+                </button>
+              </div>
+
+              {/* Layout Grid */}
+              <div className="grid grid-cols-1 xl:grid-cols-12 gap-20 items-start">
+                {/* Left Column (Details) */}
+                <div className="xl:col-span-8 space-y-16">
+                  {/* Knowledge Block */}
+                  <div className="space-y-8">
+                    <div className="flex items-center gap-6">
+                      <h4 className="text-[11px] font-black text-primary uppercase tracking-[0.5em] whitespace-nowrap">Beschreibung</h4>
+                      <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
+                    </div>
+
+                    <div className="bg-card p-12 lg:p-16 rounded-[4rem] border border-border shadow-2xl shadow-foreground/[0.03] relative group overflow-hidden">
+                      <div className="absolute top-0 left-0 w-2 h-full bg-primary/10 group-hover:bg-primary transition-colors duration-700" />
+                      <p className="text-foreground/90 leading-relaxed text-2xl lg:text-3xl whitespace-pre-wrap font-medium italic first-letter:text-6xl first-letter:font-black first-letter:text-primary first-letter:mr-2">
+                        {selectedItem.description || selectedItem.data?.description || 'Keine Beschreibung im Archiv gefunden.'}
+                      </p>
+                    </div>
+
+                    {activeTab === 'spells' && selectedItem.higher_levels && (
+                      <div className="p-12 bg-primary/[0.02] rounded-[3rem] border-2 border-dashed border-primary/10 relative group">
+                        <Sparkles className="absolute top-8 right-8 text-primary/20 group-hover:rotate-12 group-hover:scale-125 transition-all duration-500" />
+                        <h4 className="text-xs font-black text-primary uppercase tracking-[0.4em] mb-8 flex items-center gap-4">
+                          <Zap size={18} /> Verstärkung
+                        </h4>
+                        <p className="text-xl text-muted-foreground/80 leading-relaxed italic border-l-4 border-primary/20 pl-10">
+                          {selectedItem.higher_levels}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Species Specifics */}
+                  {activeTab === 'species' && (
+                    <div className="grid grid-cols-1 gap-10">
+                      {selectedItem.data.traits?.map((trait: any) => (
+                        <div key={trait.name} className="bg-card p-12 rounded-[3.5rem] border border-border shadow-xl hover:border-primary/40 transition-all group relative overflow-hidden">
+                          <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/5 rounded-full group-hover:scale-150 transition-transform duration-1000" />
+                          <h4 className="text-3xl font-black text-foreground mb-8 flex items-center gap-6">
+                            <div className="w-16 h-16 rounded-[1.5rem] bg-primary/10 flex items-center justify-center shadow-inner group-hover:rotate-12 transition-transform">
+                              <Zap size={32} className="text-primary" />
+                            </div>
+                            {trait.name}
+                          </h4>
+                          <p className="text-xl text-muted-foreground leading-relaxed italic border-l-4 border-border/50 pl-10 group-hover:border-primary/30 transition-colors">{trait.description}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Class Features Timeline */}
+                  {activeTab === 'classes' && (
+                    <div className="space-y-16">
+                      <div className="flex flex-wrap gap-4 p-4 bg-muted/20 rounded-[2.5rem] border border-border w-fit shadow-inner backdrop-blur-sm">
+                        <button
+                          onClick={() => setSelectedSubclass(null)}
+                          className={cn(
+                            "px-10 py-4 rounded-2xl text-xs font-black uppercase tracking-widest border transition-all active:scale-95",
+                            !selectedSubclass
+                              ? "bg-primary text-primary-foreground border-primary shadow-2xl shadow-primary/30"
+                              : "text-muted-foreground border-transparent hover:bg-card hover:text-primary"
+                          )}
+                        >
+                          Basisklasse
+                        </button>
+                        {selectedItem.data.subclasses?.map((sc: any) => (
+                          <button
+                            key={sc.name}
+                            onClick={() => setSelectedSubclass(sc)}
+                            className={cn(
+                              "px-10 py-4 rounded-2xl text-xs font-black uppercase tracking-widest border transition-all active:scale-95",
+                              selectedSubclass?.name === sc.name
+                                ? "bg-primary text-primary-foreground border-primary shadow-2xl shadow-primary/30"
+                                : "text-muted-foreground border-transparent hover:bg-card hover:text-primary"
+                            )}
+                          >
+                            {sc.name}
+                          </button>
+                        ))}
+                      </div>
+
+                      <div className="space-y-16">
+                        <h3 className="text-5xl font-black text-foreground tracking-tighter flex items-center gap-8">
+                          <div className="w-20 h-20 rounded-[2.5rem] bg-primary/10 flex items-center justify-center shadow-lg">
+                            <Award size={40} className="text-primary" />
+                          </div>
+                          {selectedSubclass ? 'Spezialisierung' : 'Pfad der Klasse'}
+                        </h3>
+                        
+                        <div className="space-y-16 relative pl-10 lg:pl-16">
+                          <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary via-border to-transparent rounded-full" />
+                          {Object.entries((selectedSubclass ? selectedSubclass.features : selectedItem.data.features_by_level) || {}).map(([level, features]: [string, any]) => (
+                            features.length > 0 && (
+                              <div key={level} className="relative pl-16 group">
+                                <div className="absolute left-[-52px] lg:left-[-76px] top-4 w-10 h-10 rounded-full bg-background border-[6px] border-primary shadow-2xl group-hover:scale-125 transition-transform z-10" />
+                                <span className="text-lg font-black text-primary/30 uppercase tracking-[0.5em] mb-10 block">Grad {level}</span>
+                                <div className="grid gap-10">
+                                  {features.map((f: any) => (
+                                    <div key={f.name} className="bg-card p-12 lg:p-16 rounded-[4rem] border border-border shadow-2xl shadow-foreground/[0.02] hover:border-primary/20 transition-all group/feat">
+                                      <h5 className="text-3xl font-black text-foreground mb-8 group-hover/feat:text-primary transition-colors italic font-serif">{f.name}</h5>
+                                      <p className="text-xl text-muted-foreground italic leading-relaxed border-l-4 border-border pl-10 group-hover/feat:border-primary transition-colors">{f.description}</p>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Right Column (Stats) */}
+                <aside className="xl:col-span-4 space-y-10 sticky top-36">
+                  <div className="bg-card p-12 rounded-[4.5rem] border border-border shadow-2xl shadow-foreground/[0.04] relative overflow-hidden group">
+                    <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-primary to-transparent opacity-30 group-hover:opacity-100 transition-opacity duration-1000" />
+                    
+                    <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.6em] mb-16 border-b border-border pb-8 text-center">Eigenschaften</h4>
+                    
+                    <div className="space-y-12">
+                      {activeTab === 'spells' && (
+                        <>
+                          <StatRow label="Zaubergrad" value={`Stufe ${selectedItem.level}`} highlight icon={Sparkles} />
+                          <StatRow label="Schule" value={selectedItem.school} icon={Brain} />
+                          <StatRow label="Zeitaufwand" value={selectedItem.casting_time} icon={Clock} />
+                          <StatRow label="Reichweite" value={selectedItem.range} icon={Target} />
+                          <StatRow label="Dauer" value={selectedItem.duration} icon={Clock} />
+                          <StatRow label="Komponenten" value={selectedItem.components} icon={ScrollText} />
+                          {selectedItem.material_components && (
+                            <div className="bg-muted/30 p-10 rounded-[3rem] border border-border mt-10 relative group">
+                              <Info className="absolute top-6 right-6 text-primary/30 group-hover:text-primary transition-colors" size={20} />
+                              <span className="text-[10px] font-black text-primary/60 uppercase tracking-[0.4em] block mb-4">Materialien</span>
+                              <p className="text-sm text-muted-foreground font-medium italic leading-relaxed">{selectedItem.material_components}</p>
+                            </div>
+                          )}
+                          <StatRow label="Klassen" value={selectedItem.classes} highlight icon={Users} />
+                        </>
+                      )}
+                      
+                      {activeTab === 'weapons' && (
+                        <>
+                          <StatRow label="Schaden" value={selectedItem.damage_dice} highlight icon={Zap} />
+                          <StatRow label="Typ" value={selectedItem.damage_type} />
+                          <StatRow label="Eigenschaft" value={selectedItem.weapon_type} icon={Sword} />
+                          <StatRow label="Meisterung" value={selectedItem.data.mastery_details?.name || selectedItem.data.mastery} highlight icon={Award} />
+                          <div className="grid grid-cols-2 gap-8 border-t border-border pt-8 mt-8">
+                            <StatRow label="Gewicht" value={`${selectedItem.weight_kg} kg`} />
+                            <StatRow label="Preis" value={`${selectedItem.cost_gp} GM`} />
+                          </div>
+                        </>
+                      )}
+
+                      {activeTab === 'armor' && (
+                        <>
+                          <StatRow label="Rüstungsklasse" value={selectedItem.base_ac} highlight icon={Shield} />
+                          <StatRow label="Typ" value={selectedItem.category} />
+                          <StatRow label="Stärke" value={selectedItem.strength_requirement || '—'} />
+                          <StatRow label="Schleichen" value={selectedItem.stealth_disadvantage ? 'Nachteil' : 'Normal'} />
+                          <div className="grid grid-cols-2 gap-8 border-t border-border pt-8 mt-8">
+                            <StatRow label="Gewicht" value={`${selectedItem.weight_kg} kg`} />
+                            <StatRow label="Preis" value={`${selectedItem.cost_gp} GM`} />
+                          </div>
+                        </>
+                      )}
+
+                      {activeTab === 'classes' && (
+                        <>
+                          <StatRow label="Trefferwürfel" value={`W${selectedItem.data.hit_die}`} highlight icon={Zap} />
+                          <StatRow label="Rettungswürfe" value={selectedItem.data.saving_throws?.join(', ')} icon={Shield} />
+                        </>
+                      )}
+
+                      {activeTab === 'species' && (
+                        <>
+                          <StatRow label="Größe" value={selectedItem.data.size} icon={Users} />
+                          <StatRow label="Bewegung" value={`${selectedItem.data.speed} m`} highlight icon={Compass} />
+                          <StatRow label="Sprachen" value={selectedItem.data.languages?.known?.join(', ')} />
+                        </>
+                      )}
+
+                      {(activeTab === 'gear' || activeTab === 'tools') && (
+                        <>
+                          <StatRow label="Preis" value={`${selectedItem.cost_gp} GM`} />
+                          <StatRow label="Gewicht" value={`${selectedItem.weight_kg} kg`} />
+                          {activeTab === 'tools' && (
+                            <StatRow label="Attribute" value={selectedItem.data.abilities?.join(', ')} highlight icon={Brain} />
+                          )}
+                        </>
                       )}
                     </div>
                   </div>
-                </div>
 
-                <div className="grid grid-cols-1 xl:grid-cols-12 gap-16">
-                  {/* Left: Main Content */}
-                  <div className="xl:col-span-8 space-y-12">
-                    {activeTab === 'spells' && (
-                      <div className="space-y-10">
-                        <div className="bg-slate-900/30 p-10 rounded-[2rem] border border-slate-800/50 relative overflow-hidden group shadow-inner">
-                          <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-indigo-600 to-transparent opacity-50" />
-                          <p className="text-slate-200 leading-relaxed text-xl whitespace-pre-wrap font-medium italic opacity-90">
-                            {selectedItem.description}
-                          </p>
-                        </div>
-                        {selectedItem.higher_levels && (
-                          <div className="p-8 bg-indigo-500/5 rounded-3xl border border-indigo-500/10 shadow-sm">
-                            <h4 className="text-[11px] font-black text-indigo-400 uppercase tracking-[0.25em] mb-4">Auf höheren Stufen</h4>
-                            <p className="text-base text-slate-400 leading-relaxed italic border-l-2 border-indigo-500/20 pl-6">
-                              {selectedItem.higher_levels}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    {/* ... Rest of the tab content ... */}
-
-                    {activeTab === 'species' && (
-                      <div className="space-y-10">
-                        <div className="grid grid-cols-1 gap-8">
-                          {selectedItem.data.traits?.map((trait: any) => (
-                            <div key={trait.name} className="bg-slate-900/30 p-8 rounded-3xl border border-slate-800/50 shadow-sm hover:border-indigo-500/30 transition-colors">
-                              <h4 className="text-base font-black text-white uppercase tracking-widest mb-4 flex items-center gap-4">
-                                <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                                  <Zap size={18} className="text-amber-500" />
-                                </div>
-                                {trait.name}
-                              </h4>
-                              <p className="text-base text-slate-400 leading-relaxed italic border-l-2 border-slate-800 pl-6">{trait.description}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {activeTab === 'skills' && (
-                      <div className="space-y-10">
-                        <div className="bg-slate-900/30 p-10 rounded-[2rem] border border-slate-800/50 shadow-inner">
-                          <h4 className="text-[11px] font-black text-indigo-400 uppercase tracking-[0.25em] mb-6">Anwendung</h4>
-                          <p className="text-slate-200 leading-relaxed text-xl whitespace-pre-wrap font-medium italic opacity-90 border-l-4 border-indigo-500/20 pl-8">
-                            {selectedItem.description}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-
-                    {activeTab === 'classes' && (
-                      <div className="space-y-12">
-                        <div className="flex flex-wrap gap-3 p-2 bg-slate-900/50 rounded-2xl border border-slate-800/50 w-fit">
-                          {selectedItem.data.subclasses?.map((sc: any) => (
-                            <button
-                              key={sc.name}
-                              onClick={() => setSelectedSubclass(selectedSubclass?.name === sc.name ? null : sc)}
-                              className={cn(
-                                "px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest border transition-all",
-                                selectedSubclass?.name === sc.name
-                                  ? "bg-indigo-600 text-white border-indigo-500 shadow-lg shadow-indigo-500/20"
-                                  : "text-slate-400 border-transparent hover:bg-slate-800 hover:text-indigo-300"
-                              )}
-                            >
-                              {sc.name}
-                            </button>
-                          ))}
-                        </div>
-
-                        <div className="space-y-10">
-                          <h3 className="text-xl font-black text-white uppercase tracking-[0.2em] flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center">
-                              <Award size={22} className="text-indigo-500" />
-                            </div>
-                            {selectedSubclass ? 'Unterklassenmerkmale' : 'Klassenmerkmale'}
-                          </h3>
-                          
-                          <div className="space-y-10 relative pl-4">
-                            <div className="absolute left-0 top-0 w-1 h-full bg-slate-800/50 rounded-full" />
-                            {Object.entries((selectedSubclass ? selectedSubclass.features : selectedItem.data.features_by_level) || {}).map(([level, features]: [string, any]) => (
-                              features.length > 0 && (
-                                <div key={level} className="relative pl-10">
-                                  <div className="absolute left-[-22px] top-1.5 w-5 h-5 rounded-full bg-indigo-500 border-4 border-slate-950 shadow-sm" />
-                                  <span className="text-xs font-black text-indigo-400/60 uppercase tracking-widest mb-6 block">Stufe {level}</span>
-                                  <div className="grid gap-6">
-                                    {features.map((f: any) => (
-                                      <div key={f.name} className="bg-slate-900/30 p-8 rounded-[2rem] border border-slate-800/50 shadow-sm hover:border-indigo-500/20 transition-all">
-                                        <h5 className="text-base font-black text-white uppercase tracking-wide mb-4">{f.name}</h5>
-                                        <p className="text-base text-slate-400 italic leading-relaxed border-l-2 border-slate-800 pl-6">{f.description}</p>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </div>
-                              )
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {activeTab === 'feats' && (
-                      <div className="space-y-10">
-                        <div className="bg-slate-900/30 p-10 rounded-[2rem] border border-slate-800/50 shadow-inner">
-                          {selectedItem.data.prerequisite && (
-                            <div className="mb-8 p-4 bg-indigo-500/5 rounded-2xl border border-indigo-500/10 inline-block">
-                              <h4 className="text-[10px] font-black text-indigo-400 uppercase tracking-[0.2em] mb-1">Voraussetzung</h4>
-                              <p className="text-lg font-bold text-white italic">{selectedItem.data.prerequisite}</p>
-                            </div>
-                          )}
-                          <p className="text-slate-200 leading-relaxed text-xl whitespace-pre-wrap font-medium italic opacity-90 border-l-4 border-indigo-500/20 pl-8">
-                            {selectedItem.data.description}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-
-                    {['gear', 'tools', 'weapons', 'armor'].includes(activeTab) && (
-                      <div className="space-y-10">
-                        <div className="bg-slate-900/30 p-10 rounded-[2rem] border border-slate-800/50 shadow-inner">
-                          <p className="text-slate-200 leading-relaxed text-xl whitespace-pre-wrap font-medium italic opacity-90 border-l-4 border-indigo-500/20 pl-8">
-                            {selectedItem.description || selectedItem.data?.description || 'Keine Beschreibung verfügbar.'}
-                          </p>
-                        </div>
-                        
-                        {activeTab === 'tools' && selectedItem.data.use_actions?.length > 0 && (
-                          <div className="space-y-6">
-                            <h4 className="text-lg font-black text-white uppercase tracking-widest flex items-center gap-4">
-                              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center">
-                                <Zap size={20} className="text-indigo-500" />
-                              </div>
-                              Verwendung
-                            </h4>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                              {selectedItem.data.use_actions.map((ua: any, idx: number) => (
-                                <div key={idx} className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800/50 flex justify-between items-center group hover:border-indigo-500/30 transition-all">
-                                  <span className="text-slate-300 text-base italic">{ua.action}</span>
-                                  <span className="bg-emerald-500/10 text-emerald-400 text-xs px-4 py-2 rounded-lg font-black border border-emerald-500/20 shadow-sm">SG {ua.dc}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-
-                    {activeTab === 'skills' && (
-                      <div className="space-y-10">
-                        <div className="bg-slate-900/30 p-10 rounded-[2rem] border border-slate-800/50 shadow-inner">
-                          <h4 className="text-[11px] font-black text-indigo-400 uppercase tracking-[0.25em] mb-6">Anwendung</h4>
-                          <p className="text-slate-200 leading-relaxed text-xl whitespace-pre-wrap font-medium italic opacity-90 border-l-4 border-indigo-500/20 pl-8">
-                            {selectedItem.description}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Right Column: Stats/Meta */}
-                  <div className="xl:col-span-4 space-y-8">
-                    <div className="bg-slate-900/40 p-8 rounded-[2.5rem] border border-slate-800/50 shadow-2xl backdrop-blur-md">
-                      <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-[0.4em] mb-10 border-b border-slate-800/50 pb-5 text-center">Eigenschaften</h4>
-                      
+                  {/* Property Details for Weapons */}
+                  {activeTab === 'weapons' && selectedItem.data.properties?.length > 0 && (
+                    <div className="bg-card p-12 rounded-[4rem] border border-border shadow-2xl space-y-8 animate-reveal">
+                      <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
+                        <Info size={18} /> Details
+                      </h4>
                       <div className="space-y-8">
-                        {activeTab === 'spells' && (
-                          <>
-                            <StatRow label="Zaubergrad" value={`Stufe ${selectedItem.level}`} highlight />
-                            <StatRow label="Zauberschule" value={selectedItem.school} />
-                            <StatRow label="Zeitaufwand" value={selectedItem.casting_time} />
-                            <StatRow label="Reichweite" value={selectedItem.range} />
-                            <StatRow label="Wirkungsdauer" value={selectedItem.duration} />
-                            <StatRow label="Komponenten" value={selectedItem.components} />
-                            {selectedItem.material_components && (
-                              <div className="bg-indigo-500/5 p-5 rounded-2xl border border-indigo-500/10 mt-4">
-                                <span className="text-[9px] font-black text-indigo-400/60 uppercase tracking-[0.25em] block mb-2">Materialien</span>
-                                <p className="text-xs text-slate-400 italic leading-relaxed">{selectedItem.material_components}</p>
-                              </div>
-                            )}
-                            <StatRow label="Verfügbare Klassen" value={selectedItem.classes} highlight />
-                          </>
-                        )}
-                        {/* ... Rest of Stats logic remains similar but with new StatRow ... */}
-                        {activeTab === 'weapons' && (
-                          <>
-                            <StatRow label="Schaden" value={selectedItem.damage_dice} highlight />
-                            <StatRow label="Typ" value={selectedItem.damage_type} />
-                            <StatRow label="Eigenschaft" value={selectedItem.weapon_type} />
-                            <StatRow label="Kategorie" value={selectedItem.category} />
-                            <StatRow label="Meisterung" value={selectedItem.data.mastery_details?.name || selectedItem.data.mastery} highlight />
-                            <StatRow label="Gewicht" value={`${selectedItem.weight_kg} kg`} />
-                            <StatRow label="Preis" value={`${selectedItem.cost_gp} GM`} />
-                          </>
-                        )}
-                        {activeTab === 'armor' && (
-                          <>
-                            <StatRow label="Rüstungsklasse" value={selectedItem.base_ac} highlight />
-                            <StatRow label="AC-Formel" value={selectedItem.data.ac_formula} />
-                            <StatRow label="Kategorie" value={selectedItem.category} />
-                            <StatRow label="Max. GES-Bonus" value={selectedItem.data.dex_bonus?.max === null ? 'Unbegrenzt' : selectedItem.data.dex_bonus?.max || 'Keiner'} />
-                            <StatRow label="Stärke" value={selectedItem.strength_requirement || '-'} />
-                            <StatRow label="Schleichen" value={selectedItem.stealth_disadvantage ? 'Nachteil' : 'Normal'} />
-                            <StatRow label="Gewicht" value={`${selectedItem.weight_kg} kg`} />
-                            <StatRow label="Preis" value={`${selectedItem.cost_gp} GM`} />
-                          </>
-                        )}
-                        {activeTab === 'classes' && (
-                          <>
-                            <StatRow label="Trefferwürfel" value={`W${selectedItem.data.hit_die}`} />
-                            <StatRow label="Rettungswürfe" value={selectedItem.data.saving_throws?.join(', ')} />
-                          </>
-                        )}
-                        {activeTab === 'species' && (
-                          <>
-                            <StatRow label="Größe" value={selectedItem.data.size === 'Medium' ? 'Mittelgroß' : selectedItem.data.size === 'Small' ? 'Klein' : selectedItem.data.size} />
-                            <StatRow label="Bewegung" value={`${selectedItem.data.speed} m`} highlight />
-                            <StatRow label="Sprachen" value={selectedItem.data.languages?.known?.join(', ')} />
-                          </>
-                        )}
-                        {activeTab === 'feats' && (
-                          <>
-                            <StatRow label="Kategorie" value={selectedItem.category} highlight />
-                          </>
-                        )}
-                        {activeTab === 'skills' && (
-                          <>
-                            <StatRow label="Attribut" value={selectedItem.ability} highlight />
-                          </>
-                        )}
-                        {(activeTab === 'gear' || activeTab === 'tools') && (
-                          <>
-                            <StatRow label="Preis" value={`${selectedItem.cost_gp} GM`} />
-                            <StatRow label="Gewicht" value={`${selectedItem.weight_kg} kg`} />
-                            {activeTab === 'tools' && (
-                              <StatRow label="Attribut" value={selectedItem.data.abilities?.join(', ')} highlight />
-                            )}
-                          </>
-                        )}
+                        {selectedItem.data.properties.map((p: string) => {
+                          const detail = selectedItem.data.property_details?.[p.toLowerCase()];
+                          return (
+                            <div key={p} className="space-y-3 group">
+                              <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
+                                {detail?.name || p}
+                              </span>
+                              <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20 group-hover:border-primary transition-colors">
+                                {detail?.description || 'Keine Beschreibung im PHB.'}
+                              </p>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
-
-                    {activeTab === 'weapons' && selectedItem.data.properties?.length > 0 && (
-                      <div className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800">
-                        <h4 className="text-xs font-black text-slate-500 uppercase tracking-widest mb-4">Eigenschaften</h4>
-                        <div className="flex flex-wrap gap-3">
-                          {selectedItem.data.properties.map((p: string) => {
-                            const detail = selectedItem.data.property_details?.[p.toLowerCase()];
-                            return (
-                              <div key={p} className="w-full space-y-2 mb-3 last:mb-0">
-                                <span className="px-3 py-1 bg-slate-800 text-indigo-300 text-[10px] font-black uppercase rounded border border-slate-700 inline-block">
-                                  {detail?.name || p}
-                                </span>
-                                <p className="text-xs text-slate-500 italic leading-snug pl-1">{detail?.description}</p>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                  )}
+                </aside>
               </div>
             </div>
           )}
-        </div>
+        </section>
       </main>
 
       {isEditorOpen && (
@@ -519,16 +483,22 @@ export function Compendium() {
   );
 }
 
-function StatRow({ label, value, highlight = false }: { label: string, value: any, highlight?: boolean }) {
+function StatRow({ label, value, highlight = false, icon: Icon }: { label: string, value: any, highlight?: boolean, icon?: any }) {
   return (
-    <div className="flex flex-col gap-2.5">
-      <span className="text-[10px] font-black text-slate-600 uppercase tracking-[0.25em] leading-none">{label}</span>
+    <div className="flex flex-col gap-4 group">
+      <div className="flex items-center gap-3">
+        {Icon && <Icon size={16} className="text-primary/30 group-hover:text-primary transition-all group-hover:scale-110" />}
+        <span className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-[0.4em] leading-none">{label}</span>
+      </div>
       <span className={cn(
-        "text-base font-bold tracking-tight transition-all leading-snug",
-        highlight ? "text-indigo-400" : "text-slate-200"
+        "text-2xl font-bold tracking-tighter transition-all leading-none",
+        highlight 
+          ? "text-primary selection:bg-primary/20" 
+          : "text-foreground opacity-90"
       )}>
         {value || '—'}
       </span>
+      <div className={cn("h-px w-full bg-gradient-to-r from-border/50 to-transparent", highlight && "from-primary/20")} />
     </div>
   );
 }

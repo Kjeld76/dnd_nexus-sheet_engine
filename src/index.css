@@ -2,38 +2,117 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@layer base {
+  :root, .light {
+    /* Sophisticated Creme Light Theme */
+    --background: 35 30% 98%; /* Warm Creme White */
+    --foreground: 224 71% 4%;  /* Dark Nexus Blue (as text) */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #111827; /* gray-900 per .cursorrules */
+    --card: 35 25% 96%; /* Slightly darker creme for depth */
+    --card-foreground: 224 71% 4%;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    --popover: 35 30% 98%;
+    --popover-foreground: 224 71% 4%;
+
+    --primary: 230 85% 55%; 
+    --primary-foreground: 35 30% 98%; /* Creme text on primary */
+
+    --secondary: 224 71% 4% / 0.05%;
+    --secondary-foreground: 224 71% 4%;
+
+    --muted: 35 20% 92%;
+    --muted-foreground: 224 71% 4% / 60%;
+
+    --accent: 35 25% 94%;
+    --accent-foreground: 224 71% 4%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 35 30% 98%;
+
+    --border: 224 71% 4% / 10%;
+    --input: 224 71% 4% / 5%;
+    --ring: 230 85% 55%;
+
+    --radius: 1rem;
+  }
+
+  .dark {
+    /* The Dark Blue Nexus Theme */
+    --background: 224 71% 4%; /* Dark Nexus Blue */
+    --foreground: 35 30% 98%;  /* Creme White (as text) */
+
+    --card: 224 71% 7%;
+    --card-foreground: 35 30% 98%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 35 30% 98%;
+
+    --primary: 230 85% 65%;
+    --primary-foreground: 224 71% 4%; /* Dark blue text on primary */
+
+    --secondary: 35 30% 98% / 10%;
+    --secondary-foreground: 35 30% 98%;
+
+    --muted: 224 71% 12%;
+    --muted-foreground: 35 30% 98% / 60%;
+
+    --accent: 224 71% 15%;
+    --accent-foreground: 35 30% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 35 30% 98%;
+
+    --border: 35 30% 98% / 15%;
+    --input: 35 30% 98% / 10%;
+    --ring: 230 85% 65%;
+  }
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background)) !important;
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
 }
 
+/* UI Elements */
+.glass {
+  background-color: hsl(var(--background) / 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid hsl(var(--border));
+}
 
+.animate-reveal {
+  animation: reveal 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
 
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: Merriweather, Georgia, serif;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
 
-
-
-
-
-
-
-
-
+/* Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--muted-foreground) / 0.2);
+  border-radius: 10px;
+}

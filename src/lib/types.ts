@@ -2,13 +2,51 @@ export interface Character {
   id: string;
   meta: CharacterMeta;
   attributes: Attributes;
+  health: HealthPool;
+  proficiencies: CharacterProficiencies;
   modifiers: Modifier[];
+  inventory: CharacterItem[];
 }
 
 export interface CharacterMeta {
   name: string;
   level: number;
+  species_id?: string;
+  class_id?: string;
+  subclass_id?: string;
+  background_id?: string;
+  alignment?: string;
+  xp: number;
   use_metric: boolean;
+}
+
+export interface HealthPool {
+  current: number;
+  max: number;
+  temp: number;
+  hit_dice_max: number;
+  hit_dice_used: number;
+  death_saves: {
+    successes: number;
+    failures: number;
+  };
+}
+
+export interface CharacterProficiencies {
+  skills: string[]; // List of skill IDs or names
+  saving_throws: (keyof Attributes)[];
+  weapons: string[];
+  armor: string[];
+  tools: string[];
+  languages: string[];
+}
+
+export interface CharacterItem {
+  id: string;
+  item_id: string; // Reference to compendium
+  quantity: number;
+  is_equipped: boolean;
+  custom_data?: any;
 }
 
 export interface Attributes {
