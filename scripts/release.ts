@@ -1,6 +1,5 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { execSync } from 'child_process';
-import path from 'path';
 
 // Usage: npx tsx scripts/release.ts [patch|minor|major] "Commit message"
 
@@ -41,6 +40,16 @@ async function run() {
     updateFile('package.json', `"version": "${oldVersion}"`, `"version": "${newVersion}"`);
     updateFile('src-tauri/tauri.conf.json', `"version": "${oldVersion}"`, `"version": "${newVersion}"`);
     updateFile('src-tauri/Cargo.toml', `version = "${oldVersion}"`, `version = "${newVersion}"`);
+    
+    // Update README versioning (handles all occurrences in (vX.X.X) format)
+    try {
+        const readmeContent = readFileSync('README.md', 'utf-8');
+        const updatedReadme = readmeContent.replace(/\(v\d+\.\d+\.\d+\)/g, `(v${newVersion})`);
+        writeFileSync('README.md', updatedReadme);
+        console.log(`Updated README.md version markers to v${newVersion}`);
+    } catch (e) {
+        console.warn('Could not update README.md:', e.message);
+    }
 
     // 2. Git commands
     try {

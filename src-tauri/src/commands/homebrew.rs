@@ -1,6 +1,8 @@
 use tauri::State;
 use crate::db::Database;
-use crate::core::types::{CustomSpell, CustomWeapon, CustomArmor, CustomItem};
+use crate::types::spell::CustomSpell;
+use crate::types::weapons::CustomWeapon;
+use crate::types::compendium::{CustomArmor, CustomItem};
 use uuid::Uuid;
 use rusqlite::params;
 
@@ -9,7 +11,7 @@ pub async fn upsert_custom_spell(
     db: State<'_, Database>,
     spell: CustomSpell,
 ) -> Result<String, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     
     let id = spell.id.clone().unwrap_or_else(|| Uuid::new_v4().to_string());
     let is_homebrew = spell.is_homebrew.unwrap_or(spell.parent_id.is_none());
@@ -42,7 +44,7 @@ pub async fn upsert_custom_weapon(
     db: State<'_, Database>,
     weapon: CustomWeapon,
 ) -> Result<String, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let id = weapon.id.clone().unwrap_or_else(|| Uuid::new_v4().to_string());
     let is_homebrew = weapon.is_homebrew.unwrap_or(weapon.parent_id.is_none());
     let data_json = serde_json::to_string(&weapon.data).map_err(|e: serde_json::Error| e.to_string())?;
@@ -70,7 +72,7 @@ pub async fn upsert_custom_armor(
     db: State<'_, Database>,
     armor: CustomArmor,
 ) -> Result<String, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let id = armor.id.clone().unwrap_or_else(|| Uuid::new_v4().to_string());
     let is_homebrew = armor.is_homebrew.unwrap_or(armor.parent_id.is_none());
     let data_json = serde_json::to_string(&armor.data).map_err(|e: serde_json::Error| e.to_string())?;
@@ -98,7 +100,7 @@ pub async fn upsert_custom_item(
     db: State<'_, Database>,
     item: CustomItem,
 ) -> Result<String, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let id = item.id.clone().unwrap_or_else(|| Uuid::new_v4().to_string());
     let is_homebrew = item.is_homebrew.unwrap_or(item.parent_id.is_none());
     let data_json = serde_json::to_string(&item.data).map_err(|e: serde_json::Error| e.to_string())?;
@@ -134,7 +136,7 @@ pub async fn delete_custom_entry(
     id: String,
     table_type: String,
 ) -> Result<(), String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let table = match table_type.as_str() {
         "spell" => "custom_spells",
         "weapon" => "custom_weapons",

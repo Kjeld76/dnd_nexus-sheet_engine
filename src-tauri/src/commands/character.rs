@@ -1,6 +1,6 @@
 use tauri::State;
 use crate::db::Database;
-use crate::core::types::Character;
+use crate::types::character::Character;
 use uuid::Uuid;
 use crate::db::queries;
 
@@ -9,7 +9,7 @@ pub async fn create_character(
     db: State<'_, Database>,
     mut character: Character,
 ) -> Result<Character, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     
     if character.id == Uuid::nil() {
         character.id = Uuid::new_v4();
@@ -30,7 +30,7 @@ pub async fn get_character(
     db: State<'_, Database>,
     id: String,
 ) -> Result<Character, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     
     let mut stmt = conn.prepare("SELECT data FROM characters WHERE id = ?")
         .map_err(|e: rusqlite::Error| e.to_string())?;
@@ -48,7 +48,7 @@ pub async fn update_character(
     id: String,
     character: Character,
 ) -> Result<(), String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let data = serde_json::to_string(&character).map_err(|e: serde_json::Error| e.to_string())?;
     
     conn.execute(
@@ -64,7 +64,7 @@ pub async fn delete_character(
     db: State<'_, Database>,
     id: String,
 ) -> Result<(), String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     
     conn.execute(
         queries::DELETE_CHARACTER,
@@ -78,7 +78,7 @@ pub async fn delete_character(
 pub async fn list_characters(
     db: State<'_, Database>,
 ) -> Result<Vec<Character>, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     
     let mut stmt = conn.prepare(queries::SELECT_ALL_CHARACTERS)
         .map_err(|e: rusqlite::Error| e.to_string())?;

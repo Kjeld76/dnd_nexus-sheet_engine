@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { Character, Attributes, Modifier, CharacterMeta } from './types';
-import { characterApi } from './api';
+import { create } from "zustand";
+import { Character, Attributes, Modifier, CharacterMeta } from "./types";
+import { characterApi } from "./api";
 
 interface CharacterState {
   currentCharacter: Character | null;
@@ -13,7 +13,11 @@ interface CharacterState {
   saveCharacter: () => Promise<void>;
   updateAttribute: (attr: keyof Attributes, value: number) => void;
   updateMeta: (meta: Partial<CharacterMeta>) => void;
-  updateProficiency: (type: keyof Character['proficiencies'], id: string, add: boolean) => void;
+  updateProficiency: (
+    type: keyof Character["proficiencies"],
+    id: string,
+    add: boolean,
+  ) => void;
   addModifier: (modifier: Modifier) => void;
   removeModifier: (id: string) => void;
   loadCharacterList: () => Promise<void>;
@@ -31,8 +35,8 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
   loadCharacter: async (id) => {
     set({ isLoading: true, error: null });
     try {
-      let character = await characterApi.get(id);
-      
+      const character = await characterApi.get(id);
+
       // Migration for old characters
       if (!character.proficiencies) {
         character.proficiencies = {
@@ -41,7 +45,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
           weapons: [],
           armor: [],
           tools: [],
-          languages: ['Common']
+          languages: ["Common"],
         };
       }
       if (!character.health) {
@@ -51,7 +55,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
           temp: 0,
           hit_dice_max: 1,
           hit_dice_used: 0,
-          death_saves: { successes: 0, failures: 0 }
+          death_saves: { successes: 0, failures: 0 },
         };
       }
       if (!character.inventory) character.inventory = [];
@@ -68,15 +72,15 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
 
     set({ isLoading: true, error: null });
     try {
-      const exists = characters.some(c => c.id === currentCharacter.id);
-      
+      const exists = characters.some((c) => c.id === currentCharacter.id);
+
       if (exists) {
         await characterApi.update(currentCharacter.id, currentCharacter);
       } else {
         const created = await characterApi.create(currentCharacter);
         set({ currentCharacter: created });
       }
-      
+
       set({ isLoading: false });
       await get().loadCharacterList();
     } catch (err) {
@@ -104,9 +108,9 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     if (!currentCharacter) return;
 
     const currentList = currentCharacter.proficiencies[type] as string[];
-    const newList = add 
-      ? [...currentList, id] 
-      : currentList.filter(x => x !== id);
+    const newList = add
+      ? [...currentList, id]
+      : currentList.filter((x) => x !== id);
 
     set({
       currentCharacter: {
@@ -162,13 +166,13 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const list = await characterApi.list();
-      const migratedList = list.map(character => ({
+      const migratedList = list.map((character) => ({
         ...character,
         meta: {
           ...character.meta,
           xp: character.meta.xp || 0,
           level: character.meta.level || 1,
-          use_metric: character.meta.use_metric ?? true
+          use_metric: character.meta.use_metric ?? true,
         },
         proficiencies: character.proficiencies || {
           skills: [],
@@ -176,7 +180,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
           weapons: [],
           armor: [],
           tools: [],
-          languages: ['Common']
+          languages: ["Common"],
         },
         health: character.health || {
           current: 10,
@@ -184,10 +188,10 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
           temp: 0,
           hit_dice_max: 1,
           hit_dice_used: 0,
-          death_saves: { successes: 0, failures: 0 }
+          death_saves: { successes: 0, failures: 0 },
         },
         inventory: character.inventory || [],
-        modifiers: character.modifiers || []
+        modifiers: character.modifiers || [],
       }));
       set({ characters: migratedList, isLoading: false });
     } catch (err) {

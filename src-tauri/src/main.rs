@@ -6,6 +6,7 @@ mod core;
 mod commands;
 mod menu;
 mod tools;
+mod types;
 
 use tauri::Manager;
 

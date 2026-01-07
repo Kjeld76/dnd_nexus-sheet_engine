@@ -4,7 +4,7 @@ use rusqlite::params;
 
 #[tauri::command]
 pub async fn get_setting(db: State<'_, Database>, key: String) -> Result<String, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     
     let mut stmt = conn.prepare("SELECT value FROM settings WHERE key = ?")
         .map_err(|e: rusqlite::Error| e.to_string())?;
@@ -19,7 +19,7 @@ pub async fn get_setting(db: State<'_, Database>, key: String) -> Result<String,
 
 #[tauri::command]
 pub async fn set_setting(db: State<'_, Database>, key: String, value: String) -> Result<(), String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     
     conn.execute(
         "INSERT OR REPLACE INTO settings (key, value) VALUES (?, ?)",

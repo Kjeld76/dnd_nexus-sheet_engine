@@ -1,11 +1,13 @@
 use tauri::State;
 use crate::db::Database;
-use crate::core::types::{Spell, Species, Class, Gear, Tool, Feat, Weapon, Armor, Skill};
+use crate::types::spell::Spell;
+use crate::types::compendium::{Species, Class, Gear, Tool, Feat, Armor, Skill};
+use crate::types::weapons::Weapon;
 use serde_json::from_str;
 
 #[tauri::command]
 pub async fn get_all_spells(db: State<'_, Database>) -> Result<Vec<Spell>, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let mut stmt = conn.prepare("SELECT id, name, level, school, casting_time, range, components, material_components, duration, concentration, ritual, description, higher_levels, classes, data, source FROM all_spells ORDER BY name")
         .map_err(|e: rusqlite::Error| e.to_string())?;
     
@@ -40,7 +42,7 @@ pub async fn get_all_spells(db: State<'_, Database>) -> Result<Vec<Spell>, Strin
 
 #[tauri::command]
 pub async fn get_all_species(db: State<'_, Database>) -> Result<Vec<Species>, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let mut stmt = conn.prepare("SELECT id, name, data, source FROM all_species ORDER BY name")
         .map_err(|e: rusqlite::Error| e.to_string())?;
     
@@ -63,7 +65,7 @@ pub async fn get_all_species(db: State<'_, Database>) -> Result<Vec<Species>, St
 
 #[tauri::command]
 pub async fn get_all_classes(db: State<'_, Database>) -> Result<Vec<Class>, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let mut stmt = conn.prepare("SELECT id, name, data, source FROM all_classes ORDER BY name")
         .map_err(|e: rusqlite::Error| e.to_string())?;
     
@@ -86,7 +88,7 @@ pub async fn get_all_classes(db: State<'_, Database>) -> Result<Vec<Class>, Stri
 
 #[tauri::command]
 pub async fn get_all_gear(db: State<'_, Database>) -> Result<Vec<Gear>, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let mut stmt = conn.prepare("SELECT id, name, description, cost_gp, weight_kg, data, source FROM all_gear ORDER BY name")
         .map_err(|e: rusqlite::Error| e.to_string())?;
     
@@ -112,7 +114,7 @@ pub async fn get_all_gear(db: State<'_, Database>) -> Result<Vec<Gear>, String> 
 
 #[tauri::command]
 pub async fn get_all_tools(db: State<'_, Database>) -> Result<Vec<Tool>, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let mut stmt = conn.prepare("SELECT id, name, category, cost_gp, weight_kg, data, source FROM all_tools ORDER BY name")
         .map_err(|e: rusqlite::Error| e.to_string())?;
     
@@ -138,7 +140,7 @@ pub async fn get_all_tools(db: State<'_, Database>) -> Result<Vec<Tool>, String>
 
 #[tauri::command]
 pub async fn get_all_weapons(db: State<'_, Database>) -> Result<Vec<Weapon>, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let mut stmt = conn.prepare("SELECT id, name, category, weapon_type, damage_dice, damage_type, weight_kg, cost_gp, data, source FROM all_weapons ORDER BY name")
         .map_err(|e: rusqlite::Error| e.to_string())?;
     
@@ -167,7 +169,7 @@ pub async fn get_all_weapons(db: State<'_, Database>) -> Result<Vec<Weapon>, Str
 
 #[tauri::command]
 pub async fn get_all_armor(db: State<'_, Database>) -> Result<Vec<Armor>, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let mut stmt = conn.prepare("SELECT id, name, category, base_ac, strength_requirement, stealth_disadvantage, weight_kg, cost_gp, data, source FROM all_armors ORDER BY name")
         .map_err(|e: rusqlite::Error| e.to_string())?;
     
@@ -196,7 +198,7 @@ pub async fn get_all_armor(db: State<'_, Database>) -> Result<Vec<Armor>, String
 
 #[tauri::command]
 pub async fn get_all_feats(db: State<'_, Database>) -> Result<Vec<Feat>, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let mut stmt = conn.prepare("SELECT id, name, category, data, source FROM all_feats ORDER BY name")
         .map_err(|e: rusqlite::Error| e.to_string())?;
     
@@ -220,7 +222,7 @@ pub async fn get_all_feats(db: State<'_, Database>) -> Result<Vec<Feat>, String>
 
 #[tauri::command]
 pub async fn get_all_skills(db: State<'_, Database>) -> Result<Vec<Skill>, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     let mut stmt = conn.prepare("SELECT id, name, ability, description, source FROM all_skills ORDER BY name")
         .map_err(|e: rusqlite::Error| e.to_string())?;
     

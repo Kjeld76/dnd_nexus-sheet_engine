@@ -10,7 +10,7 @@ pub async fn export_character_pdf(
 ) -> Result<String, String> {
     // 1. Charakter laden
     let db = app.state::<Database>();
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     
     let mut stmt = conn.prepare("SELECT data FROM characters WHERE id = ?")
         .map_err(|e: rusqlite::Error| e.to_string())?;

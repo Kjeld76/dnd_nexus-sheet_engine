@@ -167,7 +167,7 @@ pub fn clear_core_data(conn: &Connection) -> Result<(), String> {
 
 #[tauri::command]
 pub async fn import_phb_data(db: tauri::State<'_, crate::db::Database>) -> Result<(), String> {
-    let mut conn = db.0.lock().unwrap();
+    let mut conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     println!("Starting PHB Import from Master...");
     seed_core_data(&mut conn)?;
     println!("PHB Import finished successfully.");

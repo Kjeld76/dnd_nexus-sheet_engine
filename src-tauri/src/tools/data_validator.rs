@@ -25,12 +25,12 @@ pub fn validate_core_data(conn: &Connection) -> Result<ValidationReport, String>
     let total_classes: usize = conn.query_row("SELECT COUNT(*) FROM core_classes", [], |row| row.get(0)).unwrap_or(0);
     let total_gear: usize = conn.query_row("SELECT COUNT(*) FROM core_gear", [], |row| row.get(0)).unwrap_or(0);
     let total_weapons: usize = conn.query_row("SELECT COUNT(*) FROM core_weapons", [], |row| row.get(0)).unwrap_or(0);
-    let total_armor: usize = conn.query_row("SELECT COUNT(*) FROM core_armor", [], |row| row.get(0)).unwrap_or(0);
+    let total_armor: usize = conn.query_row("SELECT COUNT(*) FROM core_armors", [], |row| row.get(0)).unwrap_or(0);
     let total_feats: usize = conn.query_row("SELECT COUNT(*) FROM core_feats", [], |row| row.get(0)).unwrap_or(0);
 
     // 2. Encoding Errors across all tables
     let mut encoding_errors = 0;
-    let tables = ["core_spells", "core_species", "core_classes", "core_gear", "core_weapons", "core_armor", "core_feats"];
+    let tables = ["core_spells", "core_species", "core_classes", "core_gear", "core_weapons", "core_armors", "core_feats"];
     for table in tables {
         let count: usize = conn.query_row(&format!("SELECT COUNT(*) FROM {} WHERE name GLOB '*Ã*'", table), [], |row| row.get(0)).unwrap_or(0);
         if count > 0 {
@@ -41,7 +41,7 @@ pub fn validate_core_data(conn: &Connection) -> Result<ValidationReport, String>
 
     // 3. Invalid JSON (only for tables with data/JSON columns)
     let mut invalid_json = 0;
-    let json_tables = ["core_spells", "core_species", "core_classes", "core_gear", "core_weapons", "core_armor", "core_feats"];
+    let json_tables = ["core_spells", "core_species", "core_classes", "core_gear", "core_weapons", "core_armors", "core_feats"];
     for table in json_tables {
         let count: usize = conn.query_row(&format!("SELECT COUNT(*) FROM {} WHERE json_valid(data) = 0", table), [], |row| row.get(0)).unwrap_or(0);
         if count > 0 {
@@ -76,7 +76,7 @@ pub fn validate_core_data(conn: &Connection) -> Result<ValidationReport, String>
 pub async fn validate_core_compendium(
     db: tauri::State<'_, crate::db::Database>,
 ) -> Result<ValidationReport, String> {
-    let conn = db.0.lock().unwrap();
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
     validate_core_data(&conn)
 }
 
