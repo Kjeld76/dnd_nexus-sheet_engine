@@ -1,44 +1,45 @@
-# 🚀 D&D Nexus - Release Guide
+# 🚀 D&D Nexus - Release & Maintenance Guide
 
-Diese Datei beschreibt die Nutzung des automatisierten Release-Scripts, um die App-Versionen synchron zu halten und auf Git zu pushen.
+Dieser Guide beschreibt, wie du neue Versionen veröffentlichst und das Projekt sauber hältst.
 
-## 🛠️ Der Release-Befehl
+## 🛠️ Der Maintenance-Befehl (Empfohlen)
 
-Das Script hält automatisch die Versionen in `package.json`, `src-tauri/tauri.conf.json` und `src-tauri/Cargo.toml` synchron.
+Dies ist der **Haupt-Befehl** für den täglichen Workflow. Er kombiniert Qualitätssicherung, Bereinigung und Release in einem Schritt.
 
-### Befehlsstruktur
 ```powershell
-pnpm release [typ] "Deine Nachricht"
+pnpm maintenance [patch|minor|major] "Deine Nachricht"
 ```
 
-### 1. Patch (Kleine Fixes)
-Erhöht die letzte Stelle (z.B. v1.3.1 -> v1.3.2).
-```powershell
-pnpm release patch "fixed small ui bug"
-```
+### Was dieser Befehl tut:
+1.  **Check:** Führt `eslint` und `vitest` aus. Bei Fehlern wird der Prozess abgebrochen.
+2.  **Clean:** Löscht den `dist/`-Ordner und führt `cargo clean` aus, um Speicherplatz freizugeben.
+3.  **Archive:** Verschiebt alte Berichte (`AUDIT_REPORT.md`, `CHECKLIST.md`) und Debug-Logs ins Archiv.
+4.  **Release:** Erhöht die Version in allen Dateien und aktualisiert die `README.md`.
+5.  **Git:** Erstellt einen Commit, setzt einen Tag und pusht alles zu GitHub.
+6.  **CI/CD:** Löst automatisch den Build-Prozess auf GitHub Actions aus.
 
-### 2. Minor (Neue Features)
-Erhöht die mittlere Stelle (z.B. v1.3.1 -> v1.4.0).
-```powershell
-pnpm release minor "added character inventory"
-```
+---
 
-### 3. Major (Große Updates)
-Erhöht die erste Stelle (z.B. v1.3.1 -> v2.0.0).
+## 📦 Der Release-Befehl (Manuell)
+
+Falls du nur die Version bumben willst, ohne die Wartungs-Schritte (Cleaning/Archiving) durchzuführen:
+
 ```powershell
-pnpm release major "complete redesign"
+pnpm release [patch|minor|major] "Deine Nachricht"
 ```
 
 ---
 
-## 🔍 Was das Script im Hintergrund tut:
-1.  **Version auslesen:** Ermittelt die aktuelle Version aus der `package.json`.
-2.  **Bumping:** Berechnet die neue Versionsnummer basierend auf dem Typ.
-3.  **Sync:** Schreibt die neue Version in alle relevanten Dateien (Frontend, Tauri, Rust).
-4.  **Git Stage:** Führt `git add .` aus.
-5.  **Git Commit:** Erstellt einen Commit mit der Nachricht `chore: release vX.X.X - [Nachricht]`.
-6.  **Git Tag:** Setzt einen lokalen Git-Tag für die Version.
-7.  **Git Push:** Schiebt den Code und die Tags auf den Remote-Server (GitHub).
+## 🤖 CI/CD & GitHub Releases
 
-> **Hinweis:** Stelle sicher, dass du alle Änderungen gespeichert hast, bevor du den Befehl ausführst.
+Nach jedem Push via `maintenance` oder `release` startet GitHub Actions automatisch:
+1.  **Test & Lint:** Validiert den Code in einer sauberen Umgebung.
+2.  **Build & Release:** Erstellt eine Windows-App (`.msi`).
+3.  **Draft Release:** Du findest das fertige Paket unter **GitHub -> Releases** als Entwurf.
 
+---
+
+## 🔍 Versions-Logik (SemVer)
+- **Patch:** Kleine Fehlerbehebungen (z.B. v1.4.2 -> v1.4.3).
+- **Minor:** Neue Features (z.B. v1.4.2 -> v1.5.0).
+- **Major:** Große Umstrukturierungen (z.B. v1.4.2 -> v2.0.0).

@@ -85,7 +85,17 @@ async function run() {
         }
     });
 
-    // 3. Release & Push
+    // 3. Bauen (Frontend muss für Tauri-Checks existieren)
+    console.log("🏗️ Baue Frontend...");
+    try {
+        execSync('pnpm build', { stdio: 'inherit' });
+        console.log("   - Frontend erfolgreich gebaut");
+    } catch (e) {
+        console.error("❌ Frontend-Build fehlgeschlagen!");
+        process.exit(1);
+    }
+
+    // 4. Release & Push
     console.log(`📦 Starte Release-Prozess (${type})...`);
     try {
         // Ruft das bestehende Release-Script auf
