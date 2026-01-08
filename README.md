@@ -61,6 +61,16 @@ D&D Nexus ist eine Desktop-Anwendung zur Verwaltung von Charakterbögen für Dun
    git clone https://github.com/Kjeld76/dnd_nexus-sheet_engine.git
    cd dnd_nexus-sheet_engine
    ```
+   
+   **Wichtig:** Falls der `wiki/` Ordner leer ist, initialisiere die Submodule:
+   ```bash
+   git submodule update --init --recursive
+   ```
+   
+   Oder klone direkt mit Submodulen:
+   ```bash
+   git clone --recurse-submodules https://github.com/Kjeld76/dnd_nexus-sheet_engine.git
+   ```
 
 2. **Abhängigkeiten installieren**
    ```bash
