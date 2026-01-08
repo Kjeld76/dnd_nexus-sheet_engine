@@ -13,6 +13,7 @@ src-tauri/Cargo.lock
 # Database
 *.db
 !dnd5e_strict.db
+!sync.db
 
 # IDE
 .vscode
@@ -26,5 +27,14 @@ Thumbs.db
 
 # Misc
 *.log
+
+# Temporary scripts (Umlaut fixes)
+check_*.py
+find_*.py
+fix_*.py
+inspect_*.py
+list_*.py
+scan_*.py
+final_check.py
 
 

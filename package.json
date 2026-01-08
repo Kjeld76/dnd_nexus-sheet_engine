@@ -21,6 +21,8 @@
     "parse:phb": "tsx tools/parser/cli.ts",
     "release": "tsx scripts/release.ts",
     "maintenance": "tsx scripts/maintenance.ts",
+    "db:push": "node scripts/db-sync.js push",
+    "db:pull": "node scripts/db-sync.js pull",
     "prepare": "husky"
   },
   "lint-staged": {
