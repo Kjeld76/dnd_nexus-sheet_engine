@@ -62,33 +62,3 @@ export const calculateProficiencyBonus = (level: number): number => {
 export const formatModifier = (mod: number): string => {
   return mod >= 0 ? `+${mod}` : `${mod}`;
 };
-
-/**
- * Berechnet die Größenkategorie basierend auf der Körpergröße
- * PHB 2024: Kleine < 1.5m, Mittel 1.5-2.5m, Große > 2.5m
- */
-export const calculateSizeCategory = (
-  height?: string,
-  useMetric: boolean = true,
-): string => {
-  if (!height) return "Mittel";
-
-  // Extrahiere Zahl aus String (z.B. "180cm" -> 180 oder "5ft 10in" -> 70)
-  const heightMatch = height.match(/(\d+(?:\.\d+)?)/);
-  if (!heightMatch) return "Mittel";
-
-  let heightValue = parseFloat(heightMatch[1]);
-
-  // Wenn nicht metrisch, konvertiere von ft/in zu cm
-  if (!useMetric) {
-    // Angenommen Format "5ft 10in" oder "5.10" - hier vereinfacht
-    heightValue = heightValue * 30.48; // ft zu cm
-  }
-
-  // Konvertiere zu Metern
-  const heightM = heightValue / 100;
-
-  if (heightM < 1.5) return "Klein";
-  if (heightM <= 2.5) return "Mittel";
-  return "Groß";
-};

@@ -17,11 +17,7 @@ import {
   Sparkles,
   Settings,
 } from "lucide-react";
-import {
-  calculateLevelFromXP,
-  getXPForNextLevel,
-  calculateSizeCategory,
-} from "../lib/math";
+import { calculateLevelFromXP, getXPForNextLevel } from "../lib/math";
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -476,8 +472,8 @@ export function CharacterSheet() {
                 <option value="" className="bg-card">
                   —
                 </option>
-                <option value="LG" className="bg-card">
-                  LG (Rechtschaffen Gut)
+                <option value="RG" className="bg-card">
+                  RG (Rechtschaffen Gut)
                 </option>
                 <option value="NG" className="bg-card">
                   NG (Neutral Gut)
@@ -485,8 +481,8 @@ export function CharacterSheet() {
                 <option value="CG" className="bg-card">
                   CG (Chaotisch Gut)
                 </option>
-                <option value="LN" className="bg-card">
-                  LN (Rechtschaffen Neutral)
+                <option value="RN" className="bg-card">
+                  RN (Rechtschaffen Neutral)
                 </option>
                 <option value="N" className="bg-card">
                   N (Neutral)
@@ -494,14 +490,14 @@ export function CharacterSheet() {
                 <option value="CN" className="bg-card">
                   CN (Chaotisch Neutral)
                 </option>
-                <option value="LE" className="bg-card">
-                  LE (Rechtschaffen Böse)
+                <option value="RB" className="bg-card">
+                  RB (Rechtschaffen Böse)
                 </option>
-                <option value="NE" className="bg-card">
-                  NE (Neutral Böse)
+                <option value="NB" className="bg-card">
+                  NB (Neutral Böse)
                 </option>
-                <option value="CE" className="bg-card">
-                  CE (Chaotisch Böse)
+                <option value="CB" className="bg-card">
+                  CB (Chaotisch Böse)
                 </option>
               </select>
             </div>
@@ -604,10 +600,7 @@ export function CharacterSheet() {
                 Größenkat.:
               </label>
               <span className="flex-1 min-w-[80px] text-xs font-medium text-foreground/80 px-2 py-1">
-                {calculateSizeCategory(
-                  currentCharacter.appearance?.height,
-                  currentCharacter.meta.use_metric,
-                )}
+                {currentSpecies?.data?.size || "Mittel"}
               </span>
             </div>
           </div>
