@@ -442,8 +442,18 @@ export function CharacterSheet() {
               />
             </div>
 
-            {/* Center Column: Skills */}
+            {/* Center Column: Combat & Skills */}
             <div className="xl:col-span-8 flex flex-col gap-4 xl:gap-5 animate-in slide-in-from-bottom-8 duration-700">
+              <div className="bg-card p-4 rounded-2xl border border-border shadow-xl shadow-foreground/[0.02]">
+                <CombatStats
+                  character={currentCharacter}
+                  characterClass={classes.find(
+                    (c) => c.id === currentCharacter.meta.class_id,
+                  )}
+                  characterSpecies={currentSpecies}
+                  inventoryItems={[...weapons, ...armor]}
+                />
+              </div>
               <div className="bg-card p-5 rounded-xl border border-border shadow-xl shadow-foreground/[0.02]">
                 <SkillList
                   character={currentCharacter}
