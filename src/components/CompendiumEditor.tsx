@@ -18,6 +18,7 @@ import {
 } from "../lib/types";
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { Button } from "./ui/Button";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -423,19 +424,18 @@ export function CompendiumEditor({
             </button>
           )}
           <div className="flex gap-6 ml-auto">
-            <button
-              onClick={onClose}
-              className="px-10 py-4 text-muted-foreground font-black uppercase text-xs tracking-[0.2em] hover:text-foreground transition-colors"
-            >
+            <Button onClick={onClose} variant="secondary" size="lg">
               Abbrechen
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={handleSave}
-              className="flex items-center gap-4 px-12 py-5 bg-primary text-primary-foreground rounded-[1.5rem] hover:scale-105 transition-all font-black uppercase text-sm tracking-[0.2em] shadow-2xl shadow-primary/30 active:scale-95"
+              variant="primary"
+              size="lg"
+              className="flex items-center gap-4"
             >
               <Save size={24} />
               Speichern
-            </button>
+            </Button>
           </div>
         </div>
       </div>

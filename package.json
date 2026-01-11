@@ -1,6 +1,6 @@
 {
   "name": "dnd-nexus",
-  "version": "1.4.5",
+  "version": "1.5.0",
   "description": "D&D 5e 2024 Character Sheet Manager",
   "type": "module",
   "scripts": {
@@ -46,6 +46,8 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2.0.0",
+    "@tauri-apps/plugin-dialog": "^2.5.0",
+    "@tauri-apps/plugin-fs": "^2.4.5",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
     "@types/node": "^25.0.3",

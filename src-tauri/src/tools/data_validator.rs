@@ -87,8 +87,19 @@ mod tests {
 
     #[test]
     fn test_core_data_integrity() {
-        // Path adjusted for execution from src-tauri
-        let conn = Connection::open("../dnd-nexus.db").expect("Failed to open database");
+        // Try to find database in common locations
+        let possible_paths = [
+            "../sync.db",
+            "../dnd-nexus.db",
+            "sync.db",
+            "dnd-nexus.db",
+        ];
+        
+        let db_path = possible_paths.iter()
+            .find(|p| std::path::Path::new(p).exists())
+            .expect("No database found for testing");
+        
+        let conn = Connection::open(db_path).expect("Failed to open database");
         let report = validate_core_data(&conn).expect("Validation failed");
         
         println!("Validation Report: {:#?}", report);

@@ -6,12 +6,14 @@ pub fn seed_core_data(conn: &mut Connection) -> Result<(), String> {
     clear_core_data(conn)?;
 
     // Try to import from the project's master database
-    // In dev mode, it's in the project root. 
-    // In built mode, we might need other paths, but for now we focus on dev.
+    // sync.db is the git-tracked source database
+    // dnd-nexus.db is the project database (not in git)
     let master_db_paths = [
-        Path::new("C:/Users/mario/.cursor/projects/dnd_nexus/dnd-nexus.db"),
+        Path::new("sync.db"),
+        Path::new("../sync.db"),
         Path::new("dnd-nexus.db"),
         Path::new("../dnd-nexus.db"),
+        Path::new("C:/Users/mario/.cursor/projects/dnd_nexus/dnd-nexus.db"),
     ];
 
     let mut master_found = false;

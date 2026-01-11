@@ -10,9 +10,11 @@ fn main() {
     println!("Current working directory: {:?}", cwd);
 
     let possible_paths = [
-        "../dnd-nexus.db",
         "dnd-nexus.db",
+        "../dnd-nexus.db",
         "../../dnd-nexus.db",
+        "sync.db",
+        "../sync.db",
         "C:/Users/mario/.cursor/projects/dnd_nexus/dnd-nexus.db",
     ];
     

@@ -3,68 +3,64 @@
 @tailwind utilities;
 
 @layer base {
-  :root, .light {
-    /* Sophisticated Creme Light Theme */
-    --background: 35 30% 98%; /* Warm Creme White */
-    --foreground: 224 71% 4%;  /* Dark Nexus Blue (as text) */
+  :root,
+  .light {
+    /* Digital Grimoire - Nexus Light Theme */
+    --bg: 38 36% 96%; /* #F8F5F0 */
+    --surface: 41 33% 91%; /* #EFEADF */
+    --accent: 39 43% 51%; /* #B8934E (Gold) */
+    --text: 217 33% 17%; /* Dark text on light bg */
+    --border: 37 22% 77%; /* #D1C7B7 */
 
-    --card: 35 25% 96%; /* Slightly darker creme for depth */
-    --card-foreground: 224 71% 4%;
-
-    --popover: 35 30% 98%;
-    --popover-foreground: 224 71% 4%;
-
-    --primary: 230 85% 55%; 
-    --primary-foreground: 35 30% 98%; /* Creme text on primary */
-
-    --secondary: 224 71% 4% / 0.05%;
-    --secondary-foreground: 224 71% 4%;
-
-    --muted: 35 20% 92%;
-    --muted-foreground: 224 71% 4% / 60%;
-
-    --accent: 35 25% 94%;
-    --accent-foreground: 224 71% 4%;
-
+    /* Legacy compatibility - use same values */
+    --background: 38 36% 96%;
+    --foreground: 217 33% 17%;
+    --card: 41 33% 91%;
+    --card-foreground: 217 33% 17%;
+    --popover: 38 36% 96%;
+    --popover-foreground: 217 33% 17%;
+    --primary: 39 43% 51%;
+    --primary-foreground: 38 36% 96%;
+    --secondary: 37 22% 77% / 0.1;
+    --secondary-foreground: 217 33% 17%;
+    --muted: 41 33% 85%;
+    --muted-foreground: 217 33% 17% / 60%;
+    --accent-old: 39 43% 51%;
+    --accent-foreground: 217 33% 17%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 35 30% 98%;
-
-    --border: 224 71% 4% / 10%;
-    --input: 224 71% 4% / 5%;
-    --ring: 230 85% 55%;
-
+    --destructive-foreground: 38 36% 96%;
+    --input: 37 22% 77% / 0.1;
+    --ring: 39 43% 51%;
     --radius: 1rem;
   }
 
   .dark {
-    /* The Dark Blue Nexus Theme */
-    --background: 224 71% 4%; /* Dark Nexus Blue */
-    --foreground: 35 30% 98%;  /* Creme White (as text) */
+    /* Digital Grimoire - Nexus Dark Theme (Default) */
+    --bg: 208 37% 7%; /* #0B1218 */
+    --surface: 209 32% 13%; /* #16212B */
+    --accent: 191 81% 62%; /* #4FD1ED (Cyan Glow) */
+    --text: 191 81% 95%; /* Light text on dark bg */
+    --border: 217 33% 17%; /* #1E293B */
 
-    --card: 224 71% 7%;
-    --card-foreground: 35 30% 98%;
-
-    --popover: 224 71% 4%;
-    --popover-foreground: 35 30% 98%;
-
-    --primary: 230 85% 65%;
-    --primary-foreground: 224 71% 4%; /* Dark blue text on primary */
-
-    --secondary: 35 30% 98% / 10%;
-    --secondary-foreground: 35 30% 98%;
-
-    --muted: 224 71% 12%;
-    --muted-foreground: 35 30% 98% / 60%;
-
-    --accent: 224 71% 15%;
-    --accent-foreground: 35 30% 98%;
-
+    /* Legacy compatibility - use same values */
+    --background: 208 37% 7%;
+    --foreground: 191 81% 95%;
+    --card: 209 32% 13%;
+    --card-foreground: 191 81% 95%;
+    --popover: 208 37% 7%;
+    --popover-foreground: 191 81% 95%;
+    --primary: 191 81% 62%;
+    --primary-foreground: 208 37% 7%;
+    --secondary: 191 81% 62% / 0.1;
+    --secondary-foreground: 191 81% 95%;
+    --muted: 209 32% 18%;
+    --muted-foreground: 191 81% 95% / 60%;
+    --accent-old: 191 81% 62%;
+    --accent-foreground: 191 81% 95%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 35 30% 98%;
-
-    --border: 35 30% 98% / 15%;
-    --input: 35 30% 98% / 10%;
-    --ring: 230 85% 65%;
+    --destructive-foreground: 191 81% 95%;
+    --input: 191 81% 62% / 0.1;
+    --ring: 191 81% 62%;
   }
 }
 
@@ -75,18 +71,60 @@
   body {
     background-color: hsl(var(--background)) !important;
     color: hsl(var(--foreground));
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
     -webkit-font-smoothing: antialiased;
-    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  select {
+    color: hsl(var(--foreground));
+    background-color: hsl(var(--card));
+  }
+
+  select option {
+    background-color: hsl(var(--card));
+    color: hsl(var(--card-foreground));
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  .dark select {
+    color: hsl(var(--foreground));
+    background-color: hsl(var(--card));
+  }
+
+  .dark select option {
+    background-color: hsl(var(--card));
+    color: hsl(var(--card-foreground));
   }
 }
 
-/* UI Elements */
+/* UI Elements - Digital Grimoire Glassmorphism */
 .glass {
-  background-color: hsl(var(--background) / 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background-color: hsl(var(--surface) / 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid hsl(var(--border));
+  border-radius: 0.75rem;
+}
+
+.glass-panel {
+  background-color: hsl(var(--surface) / 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid hsl(var(--border));
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass-panel {
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
 .animate-reveal {
@@ -94,13 +132,24 @@
 }
 
 @keyframes reveal {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: Merriweather, Georgia, serif;
-  font-style: italic;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Cinzel", "Playfair Display", Merriweather, Georgia, serif;
+  font-style: normal;
   letter-spacing: -0.02em;
 }
 
@@ -115,4 +164,14 @@ h1, h2, h3, h4, h5, h6 {
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: hsl(var(--muted-foreground) / 0.2);
   border-radius: 10px;
+}
+
+/* Icon Glow Effects for Dark Mode */
+.dark .icon-glow {
+  filter: drop-shadow(0 0 8px hsl(var(--accent)));
+  transition: filter 0.3s ease;
+}
+
+.dark .icon-glow:hover {
+  filter: drop-shadow(0 0 12px hsl(var(--accent)));
 }

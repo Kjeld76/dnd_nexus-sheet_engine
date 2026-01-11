@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useCharacterStore } from "../lib/store";
+import { Species } from "../lib/types";
 import { AttributeBlock } from "../components/character/AttributeBlock";
 import { SkillList } from "../components/character/SkillList";
 import { CombatStats } from "../components/character/CombatStats";
 import { ModifiersList } from "../components/character/ModifiersList";
+import { SpeciesTraits } from "../components/character/SpeciesTraits";
+import { AbilityScoreChoiceDialog } from "../components/character/AbilityScoreChoiceDialog";
 import {
   Save,
   User,
@@ -31,6 +34,8 @@ export function CharacterSheet() {
     setCurrentCharacter,
     updateAttribute,
     updateMeta,
+    updateProficiency,
+    addModifier,
     removeModifier,
     saveCharacter,
     isLoading,
@@ -62,9 +67,129 @@ export function CharacterSheet() {
   // Get subclasses for current class
   const subclasses = currentClass?.data?.subclasses || [];
 
+  // Find current species
+  const currentSpecies = species.find(
+    (s) => s.id === currentCharacter?.meta.species_id,
+  );
+
   const [activeTab, setActiveTab] = useState<
     "combat" | "spells" | "inventory" | "notes"
   >("combat");
+
+  const [showAbilityChoiceDialog, setShowAbilityChoiceDialog] = useState(false);
+  const [pendingSpecies, setPendingSpecies] = useState<Species | null>(null);
+
+  // Apply species data when species_id changes
+  useEffect(() => {
+    if (!currentCharacter || !currentSpecies) return;
+
+    const speciesData = currentSpecies.data;
+    if (!speciesData) return;
+
+    // Remove old species modifiers (from previous species) - these are legacy markers
+    const oldSpeciesModifiers = currentCharacter.modifiers.filter((m) =>
+      m.id.startsWith("species_"),
+    );
+    oldSpeciesModifiers.forEach((mod) => {
+      removeModifier(mod.id);
+    });
+
+    // Apply ability score increases when species is selected
+    // Note: PHB 2024 species do NOT have ability score increases (this was removed in the 2024 rules)
+    // Only custom/homebrew species may have ability_score_increase
+    if (speciesData.ability_score_increase) {
+      const asi = speciesData.ability_score_increase;
+
+      if (
+        asi.type === "fixed" &&
+        asi.fixed &&
+        Object.keys(asi.fixed).length > 0
+      ) {
+        Object.entries(asi.fixed).forEach(([attr, value]) => {
+          const attrMap: Record<
+            string,
+            "str" | "dex" | "con" | "int" | "wis" | "cha"
+          > = {
+            str: "str",
+            strength: "str",
+            dex: "dex",
+            dexterity: "dex",
+            con: "con",
+            constitution: "con",
+            int: "int",
+            intelligence: "int",
+            wis: "wis",
+            wisdom: "wis",
+            cha: "cha",
+            charisma: "cha",
+          };
+
+          const attrKey = attrMap[attr.toLowerCase()];
+          if (attrKey && value > 0) {
+            const currentValue = currentCharacter.attributes[attrKey];
+            // Add the bonus to current value
+            updateAttribute(attrKey, currentValue + (value as number));
+          }
+        });
+      } else if (
+        asi.type === "choice" &&
+        asi.choice &&
+        asi.choice.count > 0 &&
+        asi.choice.amount > 0
+      ) {
+        // Show dialog for choice-based ability score increases
+        setPendingSpecies(currentSpecies);
+        setShowAbilityChoiceDialog(true);
+        return; // Don't apply languages yet, wait for choice
+      }
+    }
+
+    // Add languages
+    if (speciesData.languages?.known) {
+      const knownLanguages = speciesData.languages.known || [];
+      const currentLanguages = currentCharacter.proficiencies.languages || [];
+      const newLanguages = knownLanguages.filter(
+        (lang: string) => !currentLanguages.includes(lang),
+      );
+
+      newLanguages.forEach((lang: string) => {
+        updateProficiency("languages", lang, true);
+      });
+    }
+  }, [
+    currentCharacter?.meta.species_id,
+    currentSpecies,
+    updateAttribute,
+    updateProficiency,
+    removeModifier,
+  ]);
+
+  const handleAbilityChoiceConfirm = (choices: Record<string, number>) => {
+    if (!pendingSpecies || !currentCharacter) return;
+
+    Object.entries(choices).forEach(([attr, value]) => {
+      if (value > 0) {
+        const attrKey = attr as keyof typeof currentCharacter.attributes;
+        const currentValue = currentCharacter.attributes[attrKey];
+        updateAttribute(attrKey, currentValue + value);
+      }
+    });
+
+    // Apply languages after choice is made
+    if (pendingSpecies.data?.languages?.known) {
+      const knownLanguages = pendingSpecies.data.languages.known || [];
+      const currentLanguages = currentCharacter.proficiencies.languages || [];
+      const newLanguages = knownLanguages.filter(
+        (lang: string) => !currentLanguages.includes(lang),
+      );
+      newLanguages.forEach((lang: string) => {
+        updateProficiency("languages", lang, true);
+      });
+    }
+
+    setShowAbilityChoiceDialog(false);
+    setPendingSpecies(null);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -91,9 +216,9 @@ export function CharacterSheet() {
   }
 
   return (
-    <div className="h-full bg-background text-foreground p-6 pb-32 transition-colors duration-500 overflow-y-auto custom-scrollbar relative">
+    <div className="h-full bg-background text-foreground p-8 pb-32 transition-colors duration-500 overflow-y-auto custom-scrollbar relative">
       {/* Dynamic Header */}
-      <header className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between mb-12 bg-card/60 backdrop-blur-xl p-8 rounded-[3rem] border border-border shadow-2xl shadow-foreground/[0.02] gap-8">
+      <header className="w-full flex flex-col lg:flex-row items-center justify-between mb-12 glass-panel p-8 gap-8">
         <div className="flex items-center gap-8 w-full lg:w-auto">
           <button
             onClick={() => setCurrentCharacter(null)}
@@ -252,46 +377,58 @@ export function CharacterSheet() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto">
+      <main className="w-full">
         {activeTab === "combat" && (
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
             {/* Left Column: Attributes */}
             <div className="xl:col-span-2 flex flex-col gap-5 animate-in slide-in-from-left-8 duration-500">
               <AttributeBlock
                 name="Stärke"
+                attrKey="str"
                 value={currentCharacter.attributes.str}
                 onChange={(v) => updateAttribute("str", v)}
                 onBlur={saveCharacter}
+                species={currentSpecies}
               />
               <AttributeBlock
                 name="Geschick"
+                attrKey="dex"
                 value={currentCharacter.attributes.dex}
                 onChange={(v) => updateAttribute("dex", v)}
                 onBlur={saveCharacter}
+                species={currentSpecies}
               />
               <AttributeBlock
                 name="Konstitution"
+                attrKey="con"
                 value={currentCharacter.attributes.con}
                 onChange={(v) => updateAttribute("con", v)}
                 onBlur={saveCharacter}
+                species={currentSpecies}
               />
               <AttributeBlock
                 name="Intelligenz"
+                attrKey="int"
                 value={currentCharacter.attributes.int}
                 onChange={(v) => updateAttribute("int", v)}
                 onBlur={saveCharacter}
+                species={currentSpecies}
               />
               <AttributeBlock
                 name="Weisheit"
+                attrKey="wis"
                 value={currentCharacter.attributes.wis}
                 onChange={(v) => updateAttribute("wis", v)}
                 onBlur={saveCharacter}
+                species={currentSpecies}
               />
               <AttributeBlock
                 name="Charisma"
+                attrKey="cha"
                 value={currentCharacter.attributes.cha}
                 onChange={(v) => updateAttribute("cha", v)}
                 onBlur={saveCharacter}
+                species={currentSpecies}
               />
             </div>
 
@@ -303,6 +440,7 @@ export function CharacterSheet() {
                   characterClass={classes.find(
                     (c) => c.id === currentCharacter.meta.class_id,
                   )}
+                  characterSpecies={currentSpecies}
                   inventoryItems={[...weapons, ...armor]}
                 />
               </div>
@@ -310,8 +448,10 @@ export function CharacterSheet() {
                 <SkillList
                   character={currentCharacter}
                   onToggleProficiency={(s) => console.log("Toggle skill:", s)}
+                  species={currentSpecies}
                 />
               </div>
+              {currentSpecies && <SpeciesTraits species={currentSpecies} />}
             </div>
 
             {/* Right Column: Modifiers */}
@@ -395,6 +535,18 @@ export function CharacterSheet() {
           />
         </nav>
       </div>
+
+      {showAbilityChoiceDialog && pendingSpecies && currentCharacter && (
+        <AbilityScoreChoiceDialog
+          species={pendingSpecies}
+          currentAttributes={currentCharacter.attributes}
+          onConfirm={handleAbilityChoiceConfirm}
+          onCancel={() => {
+            setShowAbilityChoiceDialog(false);
+            setPendingSpecies(null);
+          }}
+        />
+      )}
     </div>
   );
 }

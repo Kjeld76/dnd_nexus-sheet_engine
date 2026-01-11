@@ -23,6 +23,7 @@ import {
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { CompendiumEditor } from "./CompendiumEditor";
+import { Button } from "./ui/Button";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -202,15 +203,17 @@ export function Compendium() {
           </div>
 
           <div className="flex items-center gap-4 shrink-0 w-full lg:w-auto">
-            <button
+            <Button
               onClick={() => {
                 setSelectedId(null);
                 setIsEditorOpen(true);
               }}
-              className="flex-1 lg:flex-none flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 text-white hover:bg-emerald-600 rounded-2xl text-xs font-black uppercase tracking-widest transition-all shadow-lg shadow-emerald-500/20 active:scale-95"
+              variant="primary"
+              size="md"
+              className="flex-1 lg:flex-none flex items-center justify-center gap-2"
             >
               <Plus size={18} /> Neu
-            </button>
+            </Button>
 
             <div className="relative flex-1 lg:w-80">
               <Search
@@ -330,7 +333,7 @@ export function Compendium() {
               </div>
             </div>
           ) : (
-            <div className="w-full p-10 lg:p-20 max-w-6xl mx-auto space-y-20 animate-reveal">
+            <div className="w-full p-10 lg:p-20 space-y-20 animate-reveal">
               {/* Header Card */}
               <div className="space-y-8">
                 <div className="flex flex-wrap items-center gap-4">
@@ -387,7 +390,7 @@ export function Compendium() {
                       <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
                     </div>
 
-                    <div className="bg-card p-12 lg:p-16 rounded-[4rem] border border-border shadow-2xl shadow-foreground/[0.03] relative group overflow-hidden">
+                    <div className="glass-panel p-12 lg:p-16 relative group overflow-hidden">
                       <div className="absolute top-0 left-0 w-2 h-full bg-primary/10 group-hover:bg-primary transition-colors duration-700" />
                       <p className="text-foreground/90 leading-relaxed text-2xl lg:text-3xl whitespace-pre-wrap font-medium italic first-letter:text-6xl first-letter:font-black first-letter:text-primary first-letter:mr-2">
                         {selectedItem.description ||
@@ -717,7 +720,7 @@ export function Compendium() {
                   {/* Property Details for Weapons */}
                   {activeTab === "weapons" &&
                     selectedItem.data.properties?.length > 0 && (
-                      <div className="bg-card p-12 rounded-[4rem] border border-border shadow-2xl space-y-8 animate-reveal">
+                      <div className="glass-panel p-12 rounded-[4rem] space-y-8 animate-reveal">
                         <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
                           <Info size={18} /> Details
                         </h4>

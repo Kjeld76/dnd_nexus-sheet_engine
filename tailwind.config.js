@@ -15,6 +15,10 @@ export default {
     },
     extend: {
       colors: {
+        'bg': 'hsl(var(--bg) / <alpha-value>)',
+        'surface': 'hsl(var(--surface) / <alpha-value>)',
+        'accent': 'hsl(var(--accent) / <alpha-value>)',
+        'text': 'hsl(var(--text) / <alpha-value>)',
         border: "hsl(var(--border) / <alpha-value>)",
         input: "hsl(var(--input) / <alpha-value>)",
         ring: "hsl(var(--ring) / <alpha-value>)",
@@ -56,7 +60,8 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['Merriweather', 'Georgia', 'serif'],
+        serif: ['Cinzel', 'Playfair Display', 'Merriweather', 'Georgia', 'serif'],
+        display: ['Cinzel', 'Playfair Display', 'Merriweather', 'Georgia', 'serif'],
       },
       keyframes: {
         "accordion-down": {

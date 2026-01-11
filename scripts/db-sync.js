@@ -27,6 +27,7 @@ if (command === 'push') {
 } else if (command === 'pull') {
   if (!existsSync(syncDb)) {
     console.error(`❌ Fehler: ${syncDb} nicht gefunden!`);
+    console.error(`   sync.db ist die Git-getrackte Quelle.`);
     console.error(`   Führe zuerst aus: git pull`);
     console.error(`   Wenn die Datei nach git pull immer noch fehlt, prüfe ob sie in Git getrackt wird:`);
     console.error(`   git ls-files sync.db`);
@@ -36,7 +37,7 @@ if (command === 'push') {
   try {
     copyFileSync(syncDb, rootDb);
     console.log(`✅ ${syncDb} → ${rootDb} kopiert`);
-    console.log(`   Die Datenbank wurde erfolgreich synchronisiert.`);
+    console.log(`   Die Projektdatenbank wurde erfolgreich aus sync.db synchronisiert.`);
   } catch (error) {
     console.error(`❌ Fehler beim Kopieren: ${error.message}`);
     process.exit(1);

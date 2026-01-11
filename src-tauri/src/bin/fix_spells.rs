@@ -13,15 +13,34 @@ mod data_validator;
 fn main() {
     println!("--- PHB 2024 Data Validator CLI ---");
     
-    let actual_path = "C:\\Users\\mario\\.cursor\\projects\\dnd_nexus\\dnd-nexus.db";
-    println!("Nutze Datenbank: {}", actual_path);
-
-    if !Path::new(actual_path).exists() {
-        println!("FEHLER: Datenbank existiert nicht!");
-        return;
+    let possible_paths = [
+        "dnd-nexus.db",
+        "../dnd-nexus.db",
+        "../../dnd-nexus.db",
+        "sync.db",
+        "../sync.db",
+        "C:/Users/mario/.cursor/projects/dnd_nexus/dnd-nexus.db",
+    ];
+    
+    let mut db_path = None;
+    for path in possible_paths {
+        if Path::new(path).exists() {
+            db_path = Some(path.to_string());
+            break;
+        }
     }
 
-    let conn = Connection::open(actual_path).expect("Konnte Datenbank nicht öffnen");
+    let db_path = match db_path {
+        Some(p) => p,
+        None => {
+            eprintln!("FEHLER: Datenbank existiert nicht!");
+            eprintln!("Gesucht in: {:?}", possible_paths);
+            return;
+        }
+    };
+
+    println!("Nutze Datenbank: {}", db_path);
+    let conn = Connection::open(db_path).expect("Konnte Datenbank nicht öffnen");
     
     match data_validator::validate_core_data(&conn) {
         Ok(report) => {

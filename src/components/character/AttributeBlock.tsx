@@ -1,24 +1,74 @@
-import React from 'react';
-import { calculateModifier, formatModifier } from '../../lib/math';
+import React from "react";
+import { calculateModifier, formatModifier } from "../../lib/math";
+import { Species } from "../../lib/types";
+import { getTraitEffectsForSpecies, TraitEffect } from "../../lib/traitParser";
+import { TrendingUp } from "lucide-react";
+import clsx, { type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 interface Props {
   name: string;
+  attrKey: "str" | "dex" | "con" | "int" | "wis" | "cha";
   value: number;
   onChange: (value: number) => void;
   onBlur?: () => void;
+  species?: Species;
 }
 
-export const AttributeBlock: React.FC<Props> = ({ name, value, onChange, onBlur }) => {
+const ATTRIBUTE_MAP: Record<string, string> = {
+  Stärke: "str",
+  Geschick: "dex",
+  Konstitution: "con",
+  Intelligenz: "int",
+  Weisheit: "wis",
+  Charisma: "cha",
+};
+
+export const AttributeBlock: React.FC<Props> = ({
+  name,
+  attrKey,
+  value,
+  onChange,
+  onBlur,
+  species,
+}) => {
   const modifier = calculateModifier(value);
   const modifierText = formatModifier(modifier);
+
+  // Find trait effects for this attribute's saving throw
+  const traitEffects: TraitEffect[] = species
+    ? getTraitEffectsForSpecies(species)
+    : [];
+  const savingThrowEffects = traitEffects.filter(
+    (effect) =>
+      effect.target === `${attrKey} saving throw` &&
+      effect.type === "advantage",
+  );
 
   return (
     <div className="flex flex-col items-center p-6 bg-card rounded-[2rem] border border-border shadow-xl shadow-foreground/[0.02] transition-all hover:border-primary/40 w-full group relative overflow-hidden active:scale-[0.98]">
       <div className="absolute top-0 left-0 w-full h-1 bg-primary/10 group-hover:bg-primary/40 transition-all duration-500" />
-      
-      <span className="text-[9px] font-black text-muted-foreground/60 uppercase tracking-[0.3em] mb-4">
-        {name}
-      </span>
+
+      <div className="flex items-center gap-2 mb-4">
+        <span className="text-[9px] font-black text-muted-foreground/60 uppercase tracking-[0.3em]">
+          {name}
+        </span>
+        {savingThrowEffects.length > 0 && (
+          <div
+            className="flex items-center gap-1 px-2 py-0.5 bg-emerald-500/20 border border-emerald-500/30 rounded-lg"
+            title={`Vorteil bei ${name} Rettungswürfen (${savingThrowEffects.map((e) => e.source).join(", ")})`}
+          >
+            <TrendingUp size={12} className="text-emerald-500" />
+            <span className="text-[8px] font-black uppercase tracking-wider text-emerald-500">
+              Vorteil
+            </span>
+          </div>
+        )}
+      </div>
 
       <div className="relative w-full">
         <input
@@ -38,4 +88,4 @@ export const AttributeBlock: React.FC<Props> = ({ name, value, onChange, onBlur 
       </div>
     </div>
   );
-}
+};

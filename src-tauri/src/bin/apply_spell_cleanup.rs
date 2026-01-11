@@ -6,19 +6,59 @@ use std::path::Path;
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("--- Spell Cleanup Importer ---");
 
-    let db_path = "C:\\Users\\mario\\.cursor\\projects\\dnd_nexus\\dnd-nexus.db";
-    let json_path = "C:\\Users\\mario\\.cursor\\projects\\dnd_nexus\\tools\\intermediate_data\\cleaned_spells.json";
+    let possible_db_paths = [
+        "dnd-nexus.db",
+        "../dnd-nexus.db",
+        "../../dnd-nexus.db",
+        "sync.db",
+        "../sync.db",
+        "C:/Users/mario/.cursor/projects/dnd_nexus/dnd-nexus.db",
+    ];
+    
+    let mut db_path = None;
+    for path in possible_db_paths {
+        if Path::new(path).exists() {
+            db_path = Some(path.to_string());
+            break;
+        }
+    }
+
+    let db_path = match db_path {
+        Some(p) => p,
+        None => {
+            return Err("Database not found in any expected location".into());
+        }
+    };
+
+    let json_path = "../tools/intermediate_data/cleaned_spells.json";
+    let alternative_json_paths = [
+        "tools/intermediate_data/cleaned_spells.json",
+        "../tools/intermediate_data/cleaned_spells.json",
+        "C:/Users/mario/.cursor/projects/dnd_nexus/tools/intermediate_data/cleaned_spells.json",
+    ];
+
+    let mut json_path_found = None;
+    if Path::new(json_path).exists() {
+        json_path_found = Some(json_path.to_string());
+    } else {
+        for path in alternative_json_paths {
+            if Path::new(path).exists() {
+                json_path_found = Some(path.to_string());
+                break;
+            }
+        }
+    }
+
+    let json_path = match json_path_found {
+        Some(p) => p,
+        None => {
+            return Err("JSON data not found in any expected location".into());
+        }
+    };
 
     println!("Current dir: {:?}", std::env::current_dir()?);
     println!("Using DB: {}", db_path);
     println!("Using JSON: {}", json_path);
-
-    if !Path::new(&db_path).exists() {
-        return Err("Database not found".into());
-    }
-    if !Path::new(&json_path).exists() {
-        return Err("JSON data not found".into());
-    }
 
     let conn = Connection::open(&db_path)?;
     let json_content = fs::read_to_string(&json_path)?;
