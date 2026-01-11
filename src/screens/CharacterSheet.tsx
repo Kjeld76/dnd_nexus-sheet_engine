@@ -217,9 +217,9 @@ export function CharacterSheet() {
   }
 
   return (
-    <div className="h-full bg-background text-foreground p-8 pb-32 transition-colors duration-500 overflow-y-auto custom-scrollbar relative">
+    <div className="h-full bg-background text-foreground p-6 pb-24 transition-colors duration-500 overflow-y-auto custom-scrollbar relative">
       {/* Dynamic Header */}
-      <header className="w-full flex flex-col lg:flex-row items-center justify-between mb-12 glass-panel p-8 gap-8">
+      <header className="w-full flex flex-col lg:flex-row items-center justify-between mb-8 glass-panel p-6 gap-6">
         <div className="flex items-center gap-8 w-full lg:w-auto">
           <button
             onClick={() => setCurrentCharacter(null)}
@@ -228,11 +228,11 @@ export function CharacterSheet() {
             <ChevronLeft className="w-8 h-8" />
           </button>
 
-          <div className="flex items-center gap-8 border-l-2 border-border pl-8 overflow-hidden">
+          <div className="flex items-center gap-6 border-l-2 border-border pl-6 overflow-hidden">
             <div className="relative group shrink-0">
               <div className="absolute -inset-2 bg-primary/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="p-6 bg-primary text-primary-foreground rounded-[2rem] shadow-2xl shadow-primary/20 relative">
-                <User className="w-10 h-10" />
+              <div className="p-4 bg-primary text-primary-foreground rounded-xl shadow-xl shadow-primary/20 relative">
+                <User className="w-8 h-8" />
                 <Sparkles
                   size={20}
                   className="absolute -top-2 -right-2 text-white animate-pulse"
@@ -434,8 +434,8 @@ export function CharacterSheet() {
             </div>
 
             {/* Center Column: Combat & Skills */}
-            <div className="xl:col-span-7 flex flex-col gap-12 xl:gap-14 animate-in slide-in-from-bottom-8 duration-700">
-              <div className="bg-card p-2 rounded-[3rem] border border-border shadow-2xl shadow-foreground/[0.02]">
+            <div className="xl:col-span-7 flex flex-col gap-6 xl:gap-8 animate-in slide-in-from-bottom-8 duration-700">
+              <div className="bg-card p-4 rounded-2xl border border-border shadow-xl shadow-foreground/[0.02]">
                 <CombatStats
                   character={currentCharacter}
                   characterClass={classes.find(
@@ -445,7 +445,7 @@ export function CharacterSheet() {
                   inventoryItems={[...weapons, ...armor]}
                 />
               </div>
-              <div className="bg-card p-4 rounded-[3.5rem] border border-border shadow-2xl shadow-foreground/[0.02]">
+              <div className="bg-card p-5 rounded-2xl border border-border shadow-xl shadow-foreground/[0.02]">
                 <SkillList
                   character={currentCharacter}
                   onToggleProficiency={(s) => console.log("Toggle skill:", s)}
@@ -457,7 +457,7 @@ export function CharacterSheet() {
 
             {/* Right Column: Modifiers */}
             <div className="xl:col-span-3 animate-in slide-in-from-right-8 duration-500">
-              <div className="sticky top-10">
+              <div className="sticky top-6">
                 <ModifiersList
                   modifiers={currentCharacter.modifiers}
                   onRemove={removeModifier}

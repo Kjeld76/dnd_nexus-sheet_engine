@@ -27,8 +27,8 @@ export const CombatStats: React.FC<Props> = ({
   const speed = characterSpecies?.data?.speed || 9; // default 9m (30ft)
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 w-full p-6">
+    <div className="flex flex-col gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 w-full p-4">
         <StatCard
           icon={Shield}
           label="Rüstungsklasse"
@@ -64,10 +64,10 @@ export const CombatStats: React.FC<Props> = ({
       </div>
 
       {stats.weapon_attacks.length > 0 && (
-        <div className="px-6 space-y-6">
-          <div className="flex items-center gap-4">
-            <Sword size={20} className="text-primary" />
-            <h3 className="text-xl font-black italic font-serif">Angriffe</h3>
+        <div className="px-4 space-y-4">
+          <div className="flex items-center gap-3">
+            <Sword size={18} className="text-primary" />
+            <h3 className="text-lg font-black italic font-serif">Angriffe</h3>
             <div className="flex-1 h-px bg-border" />
           </div>
 
@@ -77,11 +77,11 @@ export const CombatStats: React.FC<Props> = ({
                 key={atk.name + i}
                 className="bg-card p-6 rounded-[2rem] border border-border flex justify-between items-center group hover:border-primary/30 transition-all shadow-xl shadow-foreground/[0.01]"
               >
-                <div className="space-y-1">
-                  <p className="text-lg font-bold tracking-tight group-hover:text-primary transition-colors">
+                <div className="space-y-0.5">
+                  <p className="text-sm font-bold tracking-tight group-hover:text-primary transition-colors">
                     {atk.name}
                   </p>
-                  <p className="text-xs text-muted-foreground italic">
+                  <p className="text-[10px] text-muted-foreground italic">
                     {atk.properties.join(", ")}
                   </p>
                 </div>

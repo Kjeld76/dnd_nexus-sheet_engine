@@ -35,11 +35,11 @@ export const AttributeBlock: React.FC<Props> = ({
   );
 
   return (
-    <div className="flex flex-col items-center p-6 bg-card rounded-[2rem] border border-border shadow-xl shadow-foreground/[0.02] transition-all hover:border-primary/40 w-full group relative overflow-hidden active:scale-[0.98]">
+    <div className="flex flex-col items-center p-4 bg-card rounded-xl border border-border shadow-lg shadow-foreground/[0.02] transition-all hover:border-primary/40 w-full group relative overflow-hidden active:scale-[0.98]">
       <div className="absolute top-0 left-0 w-full h-1 bg-primary/10 group-hover:bg-primary/40 transition-all duration-500" />
 
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-[9px] font-black text-muted-foreground/60 uppercase tracking-[0.3em]">
+      <div className="flex items-center gap-2 mb-3">
+        <span className="text-[8px] font-black text-muted-foreground/60 uppercase tracking-[0.2em]">
           {name}
         </span>
         {savingThrowEffects.length > 0 && (
@@ -66,8 +66,8 @@ export const AttributeBlock: React.FC<Props> = ({
         <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity pointer-events-none" />
       </div>
 
-      <div className="mt-4 w-full flex justify-center">
-        <div className="text-xl font-black text-primary bg-muted/50 px-6 py-2 rounded-2xl border border-border min-w-[70px] text-center shadow-inner tracking-tight group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300">
+      <div className="mt-3 w-full flex justify-center">
+        <div className="text-lg font-black text-primary bg-muted/50 px-4 py-1.5 rounded-xl border border-border min-w-[60px] text-center shadow-inner tracking-tight group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300">
           {modifierText}
         </div>
       </div>
