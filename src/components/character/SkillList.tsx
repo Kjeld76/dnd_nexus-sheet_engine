@@ -104,51 +104,47 @@ export const SkillList: React.FC<Props> = ({ character, species }) => {
           return (
             <div
               key={skill.name}
-              className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-muted/50 transition-all group border border-transparent hover:border-border/50"
+              className="flex items-center px-3 py-2 rounded-lg hover:bg-muted/50 transition-all group border border-transparent hover:border-border/50 gap-2"
             >
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="relative flex items-center shrink-0">
-                  <input
-                    type="checkbox"
-                    checked={isProficient}
-                    onChange={(e) => {
-                      updateProficiency("skills", skill.name, e.target.checked);
-                      saveCharacter();
-                    }}
-                    className="peer w-5 h-5 rounded-md border-2 border-border text-primary focus:ring-2 focus:ring-primary/10 bg-background cursor-pointer transition-all appearance-none checked:bg-primary checked:border-primary"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity">
-                    <div className="w-2 h-2 bg-primary-foreground rounded-full" />
-                  </div>
-                </div>
-                <div className="flex flex-col -space-y-0.5 min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-base font-bold tracking-tight text-foreground group-hover:text-primary transition-colors truncate">
-                      {skill.name}
-                    </span>
-                    {skillEffects.length > 0 && (
-                      <div
-                        className="flex items-center gap-1 px-1.5 py-0.5 bg-emerald-500/20 border border-emerald-500/30 rounded shrink-0"
-                        title={`Vorteil bei ${skill.name} (${skillEffects.map((e) => e.source).join(", ")})`}
-                      >
-                        <TrendingUp size={10} className="text-emerald-500" />
-                        <span className="text-[7px] font-black uppercase tracking-wider text-emerald-500">
-                          V
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                  <span className="text-[9px] text-muted-foreground uppercase font-black tracking-wider opacity-40 group-hover:opacity-60">
-                    ({skill.attr})
-                  </span>
+              <div className="relative flex items-center shrink-0">
+                <input
+                  type="checkbox"
+                  checked={isProficient}
+                  onChange={(e) => {
+                    updateProficiency("skills", skill.name, e.target.checked);
+                    saveCharacter();
+                  }}
+                  className="peer w-5 h-5 rounded-md border-2 border-border text-primary focus:ring-2 focus:ring-primary/10 bg-background cursor-pointer transition-all appearance-none checked:bg-primary checked:border-primary"
+                />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity">
+                  <div className="w-2 h-2 bg-primary-foreground rounded-full" />
                 </div>
               </div>
-              <div className="flex items-center gap-1.5 shrink-0">
-                <div className="h-px w-4 bg-border group-hover:bg-primary/20 transition-all" />
-                <span className="font-black text-primary tracking-tight text-base min-w-[32px] text-right">
-                  {formatModifier(calculateBonus(skill))}
+              <div className="flex flex-col -space-y-0.5 min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-bold tracking-tight text-foreground group-hover:text-primary transition-colors truncate">
+                    {skill.name}
+                  </span>
+                  {skillEffects.length > 0 && (
+                    <div
+                      className="flex items-center gap-1 px-1.5 py-0.5 bg-emerald-500/20 border border-emerald-500/30 rounded shrink-0"
+                      title={`Vorteil bei ${skill.name} (${skillEffects.map((e) => e.source).join(", ")})`}
+                    >
+                      <TrendingUp size={10} className="text-emerald-500" />
+                      <span className="text-[7px] font-black uppercase tracking-wider text-emerald-500">
+                        V
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <span className="text-[9px] text-muted-foreground uppercase font-black tracking-wider opacity-40 group-hover:opacity-60">
+                  ({skill.attr})
                 </span>
               </div>
+              <div className="h-px w-3 bg-border group-hover:bg-primary/20 transition-all shrink-0" />
+              <span className="font-black text-primary tracking-tight text-base min-w-[30px] text-right shrink-0">
+                {formatModifier(calculateBonus(skill))}
+              </span>
             </div>
           );
         })}
