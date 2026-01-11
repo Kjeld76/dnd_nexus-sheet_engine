@@ -47,9 +47,11 @@ Bei jedem Push zu `main` oder einem Pull Request prüft GitHub auf einem Windows
 
 Wird ein Push mit einem Versions-Tag (z.B. `v1.5.0`) erkannt, startet der Build-Prozess:
 
-- **Kompilierung:** Die Rust-App wird für Windows gebaut.
-- **Paketierung:** Erstellung eines `.msi`-Installers.
-- **Draft Release:** GitHub erstellt automatisch einen Release-Entwurf unter "Releases" und hängt den fertigen Installer als Download an.
+- **Kompilierung:** Die Rust-App wird für Windows und Linux gebaut.
+- **Paketierung:** 
+  - Windows: Erstellung eines `.msi`-Installers
+  - Linux: Erstellung eines `.deb`-Pakets
+- **Draft Release:** GitHub erstellt automatisch einen Release-Entwurf unter "Releases" und hängt die fertigen Installer/Pakete als Downloads an.
 
 ## Zusammenfassung für Entwickler
 
