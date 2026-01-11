@@ -600,7 +600,19 @@ export function CharacterSheet() {
                 Größenkat.:
               </label>
               <span className="flex-1 min-w-[80px] text-xs font-medium text-foreground/80 px-2 py-1">
-                {currentSpecies?.data?.size || "Mittel"}
+                {(() => {
+                  const size = currentSpecies?.data?.size;
+                  if (!size) return "Mittel";
+                  const sizeMap: Record<string, string> = {
+                    Small: "Klein",
+                    Medium: "Mittel",
+                    Large: "Groß",
+                    Tiny: "Winzig",
+                    Huge: "Riesig",
+                    Gargantuan: "Gigantisch",
+                  };
+                  return sizeMap[size] || size;
+                })()}
               </span>
             </div>
           </div>

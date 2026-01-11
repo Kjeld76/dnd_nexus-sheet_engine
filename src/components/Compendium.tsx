@@ -676,7 +676,19 @@ export function Compendium() {
                         <>
                           <StatRow
                             label="Größe"
-                            value={selectedItem.data.size}
+                            value={(() => {
+                              const size = selectedItem.data.size;
+                              if (!size) return "Mittel";
+                              const sizeMap: Record<string, string> = {
+                                Small: "Klein",
+                                Medium: "Mittel",
+                                Large: "Groß",
+                                Tiny: "Winzig",
+                                Huge: "Riesig",
+                                Gargantuan: "Gigantisch",
+                              };
+                              return sizeMap[size] || size;
+                            })()}
                             icon={Users}
                           />
                           <StatRow
