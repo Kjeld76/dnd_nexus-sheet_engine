@@ -159,16 +159,16 @@ function StatCard({
         <Icon size={32} />
         {isMain && (
           <Sparkles
-            size={16}
+            size={12}
             className="absolute -top-1 -right-1 text-red-400 animate-pulse"
           />
         )}
       </div>
 
-      <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mb-2 opacity-50 text-center">
+      <span className="text-[10px] font-black text-muted-foreground/80 uppercase tracking-[0.25em] mb-2 opacity-70 text-center">
         {label}
       </span>
-      <span className="text-5xl font-black text-foreground tracking-tighter leading-none">
+      <span className="text-4xl font-black text-foreground tracking-tighter leading-none">
         {value}
       </span>
     </div>
