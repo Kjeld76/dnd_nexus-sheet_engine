@@ -17,8 +17,17 @@ import {
   ChevronLeft,
   Sparkles,
   Settings,
+  Shield,
+  Zap,
+  Wind,
+  Heart,
 } from "lucide-react";
-import { calculateLevelFromXP, getXPForNextLevel } from "../lib/math";
+import {
+  calculateLevelFromXP,
+  getXPForNextLevel,
+  formatModifier,
+} from "../lib/math";
+import { calculateDerivedStats } from "../lib/characterLogic";
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -378,7 +387,7 @@ export function CharacterSheet() {
         </div>
       </header>
 
-      <main className="w-full">
+      <main className="w-full p-4">
         {activeTab === "combat" && (
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-4">
             {/* Left Column: Attributes */}
@@ -433,19 +442,9 @@ export function CharacterSheet() {
               />
             </div>
 
-            {/* Center Column: Combat & Skills */}
+            {/* Center Column: Skills */}
             <div className="xl:col-span-8 flex flex-col gap-4 xl:gap-5 animate-in slide-in-from-bottom-8 duration-700">
-              <div className="bg-card p-4 rounded-2xl border border-border shadow-xl shadow-foreground/[0.02]">
-                <CombatStats
-                  character={currentCharacter}
-                  characterClass={classes.find(
-                    (c) => c.id === currentCharacter.meta.class_id,
-                  )}
-                  characterSpecies={currentSpecies}
-                  inventoryItems={[...weapons, ...armor]}
-                />
-              </div>
-              <div className="bg-card p-5 rounded-2xl border border-border shadow-xl shadow-foreground/[0.02]">
+              <div className="bg-card p-5 rounded-xl border border-border shadow-xl shadow-foreground/[0.02]">
                 <SkillList
                   character={currentCharacter}
                   onToggleProficiency={(s) => console.log("Toggle skill:", s)}
@@ -457,7 +456,7 @@ export function CharacterSheet() {
 
             {/* Right Column: Modifiers */}
             <div className="xl:col-span-2 animate-in slide-in-from-right-8 duration-500">
-              <div className="sticky top-6">
+              <div className="sticky top-24">
                 <ModifiersList
                   modifiers={currentCharacter.modifiers}
                   onRemove={removeModifier}
@@ -506,36 +505,6 @@ export function CharacterSheet() {
           </div>
         )}
       </main>
-
-      {/* Navigation Tabs (Floating Bottom) */}
-      <div className="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-2xl px-6 z-50">
-        <nav className="bg-card/70 backdrop-blur-2xl border border-border px-10 py-4 rounded-[3rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] flex justify-around items-center gap-4 lg:gap-8">
-          <TabItem
-            icon={<Swords className="w-6 h-6" />}
-            label="Kampf"
-            active={activeTab === "combat"}
-            onClick={() => setActiveTab("combat")}
-          />
-          <TabItem
-            icon={<Wand2 className="w-6 h-6" />}
-            label="Zauber"
-            active={activeTab === "spells"}
-            onClick={() => setActiveTab("spells")}
-          />
-          <TabItem
-            icon={<Backpack className="w-6 h-6" />}
-            label="Inventar"
-            active={activeTab === "inventory"}
-            onClick={() => setActiveTab("inventory")}
-          />
-          <TabItem
-            icon={<Book className="w-6 h-6" />}
-            label="Notizen"
-            active={activeTab === "notes"}
-            onClick={() => setActiveTab("notes")}
-          />
-        </nav>
-      </div>
 
       {showAbilityChoiceDialog && pendingSpecies && currentCharacter && (
         <AbilityScoreChoiceDialog
