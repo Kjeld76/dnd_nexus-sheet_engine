@@ -133,8 +133,8 @@ function StatCard({
   return (
     <div
       className={cn(
-        "bg-card p-8 rounded-[2.5rem] border border-border flex flex-col items-center justify-center transition-all group relative overflow-hidden active:scale-95 shadow-xl shadow-foreground/[0.02]",
-        isMain ? "border-b-8 border-b-red-500/20" : "",
+        "bg-card p-3 rounded-lg border border-border flex flex-col items-center justify-center transition-all group relative overflow-hidden active:scale-95 shadow-lg shadow-foreground/[0.02]",
+        isMain ? "border-b-2 border-b-red-500/20" : "",
       )}
     >
       <div
@@ -152,23 +152,23 @@ function StatCard({
 
       <div
         className={cn(
-          "p-4 rounded-2xl mb-4 group-hover:scale-110 transition-transform relative",
+          "p-2 rounded-md mb-2 group-hover:scale-110 transition-transform relative",
           colorMap[color],
         )}
       >
-        <Icon size={32} />
+        <Icon size={18} />
         {isMain && (
           <Sparkles
-            size={12}
-            className="absolute -top-1 -right-1 text-red-400 animate-pulse"
+            size={10}
+            className="absolute -top-0.5 -right-0.5 text-red-400 animate-pulse"
           />
         )}
       </div>
 
-      <span className="text-xs font-black text-muted-foreground/80 uppercase tracking-[0.25em] mb-2.5 opacity-80 text-center">
+      <span className="text-xs font-black text-muted-foreground/80 uppercase tracking-[0.25em] mb-1.5 opacity-80 text-center">
         {label}
       </span>
-      <span className="text-4xl font-black text-foreground tracking-tighter leading-none">
+      <span className="text-2xl font-black text-foreground tracking-tighter leading-none">
         {value}
       </span>
     </div>
