@@ -434,7 +434,7 @@ export function CharacterSheet() {
             </div>
 
             {/* Center Column: Combat & Skills */}
-            <div className="xl:col-span-7 flex flex-col gap-4 xl:gap-5 animate-in slide-in-from-bottom-8 duration-700">
+            <div className="xl:col-span-8 flex flex-col gap-4 xl:gap-5 animate-in slide-in-from-bottom-8 duration-700">
               <div className="bg-card p-4 rounded-2xl border border-border shadow-xl shadow-foreground/[0.02]">
                 <CombatStats
                   character={currentCharacter}
@@ -456,7 +456,7 @@ export function CharacterSheet() {
             </div>
 
             {/* Right Column: Modifiers */}
-            <div className="xl:col-span-3 animate-in slide-in-from-right-8 duration-500">
+            <div className="xl:col-span-2 animate-in slide-in-from-right-8 duration-500">
               <div className="sticky top-6">
                 <ModifiersList
                   modifiers={currentCharacter.modifiers}

@@ -27,8 +27,8 @@ export const CombatStats: React.FC<Props> = ({
   const speed = characterSpecies?.data?.speed || 9; // default 9m (30ft)
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 w-full p-3">
+    <div className="flex flex-col gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 lg:gap-3 w-full p-2.5">
         <StatCard
           icon={Shield}
           label="Rüstungsklasse"
