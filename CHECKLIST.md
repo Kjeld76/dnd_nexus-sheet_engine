@@ -9,14 +9,20 @@
 - [x] Traits-Modifikatoren werden in SpeciesTraits angezeigt
 - [x] PHB 2024 Konformität: Attributsmodifikatoren für Völker entfernt (2024 Regeln)
 
-### 🚧 In Arbeit
-- [ ] Rettungswürfe auf dem Charakterbogen anzeigen
 
 ### 📋 Offen
+
+**Funktionalität:**
 - [ ] AttributeBlock erweitern: Species-Trait-Modifikatoren direkt anzeigen
 - [ ] SkillList erweitern: Species-Trait-Modifikatoren direkt anzeigen
 - [ ] Traits-Parser verbessern: Robustere Erkennung von mechanischen Effekten
 - [ ] Rettungswürfe mit Vorteil/Nachteil anzeigen (z.B. durch Species Traits)
+
+**Design ("Digital Grimoire"):**
+- [ ] Spacing: Mehr Raum überall, Desktop-orientiert optimieren
+- [ ] Empty States: Hintergrund-Pattern mit Drachen/Runen-Line-Art
+- [ ] Loading Spinner: W20 Ikosaeder (optional, benötigt Framer Motion)
+- [ ] Tauri-Titlebar: Dark-Mode sicherstellen (via window.shadow)
 
 ## Nächster Fokus
 
