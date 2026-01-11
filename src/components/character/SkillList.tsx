@@ -143,9 +143,9 @@ export const SkillList: React.FC<Props> = ({ character, species }) => {
                   </span>
                 </div>
               </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <div className="h-px w-6 bg-border group-hover:bg-primary/20 transition-all" />
-                <span className="font-black text-primary tracking-tight text-base min-w-[35px] text-right">
+              <div className="flex items-center gap-1.5 shrink-0">
+                <div className="h-px w-4 bg-border group-hover:bg-primary/20 transition-all" />
+                <span className="font-black text-primary tracking-tight text-base min-w-[32px] text-right">
                   {formatModifier(calculateBonus(skill))}
                 </span>
               </div>
