@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, renameSync, readdirSync, rmSync } from 'fs';
+import { existsSync, mkdirSync, renameSync, readdirSync, rmSync, readFileSync } from 'fs';
 import { execSync } from 'child_process';
 import path from 'path';
 
@@ -64,13 +64,26 @@ async function run() {
     console.log("📂 Archiviere veraltete Dateien...");
     ensureDir(archiveDir);
     
-    const filesToArchive = ['AUDIT_REPORT.md', 'CHECKLIST.md'];
-    filesToArchive.forEach(file => {
-        if (existsSync(file)) {
-            renameSync(file, path.join(archiveDir, file));
-            console.log(`   - ${file} archiviert in ${archiveDir}`);
+    // Prüfe CHECKLIST.md auf offene Aufgaben bevor Archivierung
+    const checklistPath = 'CHECKLIST.md';
+    if (existsSync(checklistPath)) {
+        const checklistContent = readFileSync(checklistPath, 'utf-8');
+        // Prüfe auf offene Aufgaben: Zeilen die mit "- [ ]" beginnen (unchecked checkboxes)
+        const openTasks = checklistContent.match(/^- \[ \]/gm);
+        if (openTasks && openTasks.length > 0) {
+            console.log(`   ⚠️  CHECKLIST.md übersprungen (${openTasks.length} offene Aufgaben gefunden)`);
+        } else {
+            renameSync(checklistPath, path.join(archiveDir, checklistPath));
+            console.log(`   - ${checklistPath} archiviert in ${archiveDir}`);
         }
-    });
+    }
+    
+    // AUDIT_REPORT.md kann immer archiviert werden
+    const auditPath = 'AUDIT_REPORT.md';
+    if (existsSync(auditPath)) {
+        renameSync(auditPath, path.join(archiveDir, auditPath));
+        console.log(`   - ${auditPath} archiviert in ${archiveDir}`);
+    }
 
     // Temporäre Debug-Dateien
     const rootFiles = readdirSync('.');
