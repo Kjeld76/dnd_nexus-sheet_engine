@@ -106,7 +106,7 @@ export const SkillList: React.FC<Props> = ({ character, species }) => {
               key={skill.name}
               className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-muted/50 transition-all group border border-transparent hover:border-border/50"
             >
-              <div className="flex items-center gap-5 flex-1 min-w-0">
+              <div className="flex items-center gap-3 flex-1 min-w-0">
                 <div className="relative flex items-center shrink-0">
                   <input
                     type="checkbox"
