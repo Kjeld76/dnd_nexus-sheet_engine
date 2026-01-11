@@ -434,7 +434,7 @@ export function CharacterSheet() {
             </div>
 
             {/* Center Column: Combat & Skills */}
-            <div className="xl:col-span-7 flex flex-col gap-10 animate-in slide-in-from-bottom-8 duration-700">
+            <div className="xl:col-span-7 flex flex-col gap-12 xl:gap-14 animate-in slide-in-from-bottom-8 duration-700">
               <div className="bg-card p-2 rounded-[3rem] border border-border shadow-2xl shadow-foreground/[0.02]">
                 <CombatStats
                   character={currentCharacter}

@@ -19,7 +19,7 @@
 - [ ] Rettungswürfe mit Vorteil/Nachteil anzeigen (z.B. durch Species Traits)
 
 **Design ("Digital Grimoire"):**
-- [ ] Spacing: Mehr Raum überall, Desktop-orientiert optimieren
+- [x] Spacing: Mehr Raum überall, Desktop-orientiert optimieren
 - [ ] Empty States: Hintergrund-Pattern mit Drachen/Runen-Line-Art
 - [ ] Loading Spinner: W20 Ikosaeder (optional, benötigt Framer Motion)
 - [ ] Tauri-Titlebar: Dark-Mode sicherstellen (via window.shadow)
