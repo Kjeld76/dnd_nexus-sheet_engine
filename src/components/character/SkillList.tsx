@@ -65,12 +65,12 @@ export const SkillList: React.FC<Props> = ({ character, species }) => {
   );
 
   return (
-    <div className="bg-card p-6 rounded-2xl border border-border shadow-xl shadow-foreground/[0.02]">
+    <div className="bg-card p-5 rounded-xl border border-border shadow-xl shadow-foreground/[0.02]">
       {/* ... existing header code ... */}
-      <div className="flex items-center justify-between mb-6 border-b border-border pb-4">
-        <div className="flex items-center gap-4">
-          <div className="p-3 bg-primary/10 rounded-xl shadow-inner">
-            <Users className="w-6 h-6 text-primary" />
+      <div className="flex items-center justify-between mb-4 border-b border-border pb-3">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 bg-primary/10 rounded-lg shadow-inner">
+            <Users className="w-5 h-5 text-primary" />
           </div>
           <div className="space-y-0.5">
             <h2 className="text-xl font-black tracking-tighter italic font-serif">
@@ -104,7 +104,7 @@ export const SkillList: React.FC<Props> = ({ character, species }) => {
           return (
             <div
               key={skill.name}
-              className="flex items-center justify-between px-4 py-2.5 rounded-xl hover:bg-muted/50 transition-all group border border-transparent hover:border-border/50"
+              className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-muted/50 transition-all group border border-transparent hover:border-border/50"
             >
               <div className="flex items-center gap-5 flex-1 min-w-0">
                 <div className="relative flex items-center shrink-0">

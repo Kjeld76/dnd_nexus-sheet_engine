@@ -217,9 +217,9 @@ export function CharacterSheet() {
   }
 
   return (
-    <div className="h-full bg-background text-foreground p-6 pb-24 transition-colors duration-500 overflow-y-auto custom-scrollbar relative">
+    <div className="h-full bg-background text-foreground p-4 pb-20 transition-colors duration-500 overflow-y-auto custom-scrollbar relative">
       {/* Dynamic Header */}
-      <header className="w-full flex flex-col lg:flex-row items-center justify-between mb-8 glass-panel p-6 gap-6">
+      <header className="w-full flex flex-col lg:flex-row items-center justify-between mb-6 glass-panel p-5 gap-5">
         <div className="flex items-center gap-8 w-full lg:w-auto">
           <button
             onClick={() => setCurrentCharacter(null)}
@@ -434,7 +434,7 @@ export function CharacterSheet() {
             </div>
 
             {/* Center Column: Combat & Skills */}
-            <div className="xl:col-span-7 flex flex-col gap-6 xl:gap-8 animate-in slide-in-from-bottom-8 duration-700">
+            <div className="xl:col-span-7 flex flex-col gap-4 xl:gap-5 animate-in slide-in-from-bottom-8 duration-700">
               <div className="bg-card p-4 rounded-2xl border border-border shadow-xl shadow-foreground/[0.02]">
                 <CombatStats
                   character={currentCharacter}
