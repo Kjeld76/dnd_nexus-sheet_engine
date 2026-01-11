@@ -2,6 +2,52 @@
 
 Dieser Guide beschreibt, wie du neue Versionen veröffentlichst und das Projekt sauber hältst.
 
+## 🤖 CI/CD & Automatisierung
+
+D&D Nexus nutzt eine Pipeline, um die Entwicklung zu beschleunigen und die Qualität sicherzustellen. Hier ist das komplette System im Detail erklärt.
+
+### 1. Automatische Versionierung (Sync)
+
+Wenn eine neue Version veröffentlicht wird, sorgt das Script `scripts/release.ts` dafür, dass die Versionsnummer in allen relevanten Dateien identisch ist. Dies verhindert Inkonsistenzen zwischen dem Frontend, dem Rust-Core und der Dokumentation.
+
+**Synchronisierte Dateien:**
+- `package.json` (Frontend & Projekt-Basis)
+- `src-tauri/tauri.conf.json` (Tauri-Konfiguration)
+- `src-tauri/Cargo.toml` (Rust-Backend)
+- `README.md` (Versions-Marker im Header)
+- `wiki/Home.md` (Online-Dokumentation, falls vorhanden)
+
+### 2. Der Maintenance-Workflow
+
+Das Haupt-Script `scripts/maintenance.ts` ist der "Orchestrator" des Projekts. Es wird über `pnpm maintenance` aufgerufen.
+
+**Der Ablauf:**
+1. **Qualitätssicherung (QA):** Ausführung von `pnpm lint` und `pnpm test`. Bei Fehlern bricht der Prozess sofort ab.
+2. **Clean-Up:** Löschen des `dist/`-Ordners und Ausführung von `cargo clean`, um Speicherplatz zu sparen.
+3. **Archivierung:** Automatisches Verschieben von Audit-Berichten (`AUDIT_REPORT.md`, `CHECKLIST.md`) und Debug-Logs in den `archive/`-Ordner (mit Zeitstempel).
+4. **Frontend-Build:** Erstellt das Frontend, um sicherzustellen, dass alles kompiliert.
+5. **Versioning & Git:** Aufruf des Release-Scripts, Erstellen des Git-Commits und Setzen des Versions-Tags (z.B. `v1.5.0`).
+6. **Wiki-Push:** Automatisches Hochladen der aktualisierten Dokumentation in das GitHub-Wiki (falls vorhanden).
+7. **Globaler Push:** Übertragung des Codes und der Tags zu GitHub, was die Cloud-Pipeline auslöst.
+
+### 3. Cloud-Pipeline (GitHub Actions)
+
+Sobald der Code bei GitHub ankommt, übernimmt die Datei `.github/workflows/release.yml`.
+
+**Job 1: Test & Lint (CI)**
+Bei jedem Push zu `main` oder einem Pull Request prüft GitHub auf einem Windows-Server:
+- Werden alle Abhängigkeiten korrekt installiert?
+- Gibt es Linter-Fehler?
+- Bestehen alle automatisierten Tests?
+
+**Job 2: Build & Release (CD)**
+Wird ein Push mit einem Versions-Tag (z.B. `v1.5.0`) erkannt, startet der Build-Prozess:
+- **Kompilierung:** Die Rust-App wird für Windows gebaut.
+- **Paketierung:** Erstellung eines `.msi`-Installers.
+- **Draft Release:** GitHub erstellt automatisch einen Release-Entwurf unter "Releases" und hängt den fertigen Installer als Download an.
+
+---
+
 ## 🛠️ Der Maintenance-Befehl (Empfohlen)
 
 Dies ist der **Haupt-Befehl** für den täglichen Workflow. Er kombiniert Qualitätssicherung, Bereinigung und Release in einem Schritt.
@@ -10,13 +56,7 @@ Dies ist der **Haupt-Befehl** für den täglichen Workflow. Er kombiniert Qualit
 pnpm maintenance [patch|minor|major] "Deine Nachricht"
 ```
 
-### Was dieser Befehl tut:
-1.  **Check:** Führt `eslint` und `vitest` aus. Bei Fehlern wird der Prozess abgebrochen.
-2.  **Clean:** Löscht den `dist/`-Ordner und führt `cargo clean` aus, um Speicherplatz freizugeben.
-3.  **Archive:** Verschiebt alte Berichte (`AUDIT_REPORT.md`, `CHECKLIST.md`) und Debug-Logs ins Archiv.
-4.  **Release:** Erhöht die Version in allen Dateien (package.json, tauri.conf.json) und aktualisiert die `README.md`.
-5.  **Git:** Erstellt einen Commit, setzt einen Tag (Format: `v{VERSION}`) und pusht alles zu GitHub.
-6.  **CI/CD:** Löst automatisch den Build-Prozess auf GitHub Actions aus (bei Tag-Push).
+**Zusammenfassung für Entwickler:** Dein einziger Job ist das Ausführen dieses Befehls. Alles andere – vom Testen über das Aufräumen bis hin zum fertigen Installer in der Cloud – passiert vollautomatisch.
 
 ---
 
@@ -29,43 +69,12 @@ pnpm release [patch|minor|major] "Deine Nachricht"
 ```
 
 ### Was dieser Befehl tut:
-1.  **Release:** Erhöht die Version in allen Dateien (package.json, tauri.conf.json).
+1.  **Versionierung:** Erhöht die Version in allen synchronisierten Dateien (package.json, tauri.conf.json, Cargo.toml, README.md, wiki/Home.md).
 2.  **Git:** Erstellt einen Commit, setzt einen Tag (Format: `v{VERSION}`) und pusht alles zu GitHub.
 3.  **CI/CD:** Löst automatisch den Build-Prozess auf GitHub Actions aus (bei Tag-Push).
 
 ---
 
-## 🤖 CI/CD & GitHub Releases
-
-### Automatische Pipeline
-
-Die CI/CD-Pipeline wird in folgenden Fällen ausgelöst:
-- **Bei jedem Push auf `main`:** Führt Tests und Linting aus
-- **Bei jedem Tag im Format `v*`:** Führt vollständigen Build & Release durch
-
-### Release-Prozess
-
-Nach dem Pushen eines Tags (z.B. via `maintenance` oder `release` Befehl) startet GitHub Actions automatisch:
-
-1.  **Test & Lint Job:**
-    - Installiert Dependencies
-    - Führt `pnpm lint` aus
-    - Führt `pnpm typecheck` aus
-    - Führt `pnpm test run` aus
-
-2.  **Build & Release Job (nur bei Tags):**
-    - Installiert Dependencies (Frontend & Rust)
-    - Baut das Frontend (`pnpm build`)
-    - Baut die Tauri-App mit `tauri-action`
-    - Erstellt ein Windows-Installer (`.msi`)
-    - Erstellt einen Draft Release auf GitHub
-
-3.  **GitHub Release:**
-    - Das fertige Paket findest du unter **GitHub -> Releases** als Entwurf
-    - Der Release-Name ist `D&D Nexus v{VERSION}`
-    - Du kannst den Draft-Release manuell veröffentlichen, wenn alles passt
-
----
 
 ## 🔍 Versions-Logik (SemVer)
 - **Patch:** Kleine Fehlerbehebungen (z.B. v1.4.2 -> v1.4.3).
