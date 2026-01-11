@@ -39,7 +39,7 @@ export const AttributeBlock: React.FC<Props> = ({
       <div className="absolute top-0 left-0 w-full h-1 bg-primary/10 group-hover:bg-primary/40 transition-all duration-500" />
 
       <div className="flex items-center gap-2 mb-2.5">
-        <span className="text-[9px] font-black text-muted-foreground/70 uppercase tracking-[0.25em]">
+        <span className="text-xs font-black text-muted-foreground/80 uppercase tracking-[0.25em]">
           {name}
         </span>
         {savingThrowEffects.length > 0 && (
