@@ -8,7 +8,6 @@ export interface TraitEffect {
 export function parseTraitEffects(trait: any): TraitEffect[] {
   const effects: TraitEffect[] = [];
   const desc = (trait.description || "").toLowerCase();
-  const name = (trait.name || "").toLowerCase();
 
   // Vorteil bei Rettungswürfen
   if (desc.includes("vorteil") && desc.includes("rettungswurf")) {

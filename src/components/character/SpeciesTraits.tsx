@@ -1,13 +1,7 @@
 import React from "react";
 import { Species } from "../../lib/types";
 import { Zap, TrendingUp, Shield } from "lucide-react";
-import clsx, { type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
 import { parseTraitEffects, TraitEffect } from "../../lib/traitParser";
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 interface Props {
   species?: Species;

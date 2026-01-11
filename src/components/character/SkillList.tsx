@@ -5,12 +5,6 @@ import { formatModifier } from "../../lib/math";
 import { calculateDerivedStats } from "../../lib/characterLogic";
 import { useCharacterStore } from "../../lib/store";
 import { getTraitEffectsForSpecies, TraitEffect } from "../../lib/traitParser";
-import clsx, { type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 interface Props {
   character: Character;

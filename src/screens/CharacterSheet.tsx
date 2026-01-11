@@ -35,7 +35,6 @@ export function CharacterSheet() {
     updateAttribute,
     updateMeta,
     updateProficiency,
-    addModifier,
     removeModifier,
     saveCharacter,
     isLoading,
@@ -125,10 +124,12 @@ export function CharacterSheet() {
           };
 
           const attrKey = attrMap[attr.toLowerCase()];
-          if (attrKey && value > 0) {
+          const numValue =
+            typeof value === "number" ? value : Number(value) || 0;
+          if (attrKey && numValue > 0) {
             const currentValue = currentCharacter.attributes[attrKey];
             // Add the bonus to current value
-            updateAttribute(attrKey, currentValue + (value as number));
+            updateAttribute(attrKey, currentValue + numValue);
           }
         });
       } else if (

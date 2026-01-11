@@ -3,12 +3,6 @@ import { calculateModifier, formatModifier } from "../../lib/math";
 import { Species } from "../../lib/types";
 import { getTraitEffectsForSpecies, TraitEffect } from "../../lib/traitParser";
 import { TrendingUp } from "lucide-react";
-import clsx, { type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
 
 interface Props {
   name: string;
@@ -18,15 +12,6 @@ interface Props {
   onBlur?: () => void;
   species?: Species;
 }
-
-const ATTRIBUTE_MAP: Record<string, string> = {
-  Stärke: "str",
-  Geschick: "dex",
-  Konstitution: "con",
-  Intelligenz: "int",
-  Weisheit: "wis",
-  Charisma: "cha",
-};
 
 export const AttributeBlock: React.FC<Props> = ({
   name,
