@@ -382,7 +382,7 @@ export function CharacterSheet() {
         {activeTab === "combat" && (
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-10">
             {/* Left Column: Attributes */}
-            <div className="xl:col-span-2 flex flex-col gap-5 animate-in slide-in-from-left-8 duration-500">
+            <div className="xl:col-span-2 flex flex-col gap-4 animate-in slide-in-from-left-8 duration-500 max-w-[140px]">
               <AttributeBlock
                 name="Stärke"
                 attrKey="str"
