@@ -18,13 +18,6 @@ import {
   Settings,
 } from "lucide-react";
 import { calculateLevelFromXP, getXPForNextLevel } from "../lib/math";
-import clsx, { type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
 import { useCompendiumStore } from "../lib/compendiumStore";
 
 export function CharacterSheet() {
@@ -71,9 +64,9 @@ export function CharacterSheet() {
     (s) => s.id === currentCharacter?.meta.species_id,
   );
 
-  const [activeTab, setActiveTab] = useState<
-    "combat" | "spells" | "inventory" | "notes"
-  >("combat");
+  const [activeTab] = useState<"combat" | "spells" | "inventory" | "notes">(
+    "combat",
+  );
 
   const [showAbilityChoiceDialog, setShowAbilityChoiceDialog] = useState(false);
   const [pendingSpecies, setPendingSpecies] = useState<Species | null>(null);
@@ -760,51 +753,5 @@ export function CharacterSheet() {
         />
       )}
     </div>
-  );
-}
-
-function TabItem({
-  icon,
-  label,
-  active = false,
-  onClick,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  active?: boolean;
-  onClick?: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex flex-col items-center gap-2 group transition-all relative px-4"
-    >
-      <div
-        className={cn(
-          "p-4 rounded-2xl transition-all duration-300 relative overflow-hidden",
-          active
-            ? "bg-primary text-primary-foreground shadow-xl shadow-primary/30 scale-110 -translate-y-2"
-            : "text-muted-foreground hover:text-foreground hover:bg-muted",
-        )}
-      >
-        {icon}
-        {active && (
-          <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20" />
-        )}
-      </div>
-      <span
-        className={cn(
-          "text-[10px] uppercase font-black tracking-[0.2em] transition-all",
-          active
-            ? "text-primary opacity-100 translate-y-[-4px]"
-            : "text-muted-foreground opacity-40 group-hover:opacity-100",
-        )}
-      >
-        {label}
-      </span>
-      {active && (
-        <div className="absolute -bottom-1 w-1 h-1 bg-primary rounded-full shadow-[0_0_10px_rgba(var(--primary),0.5)]" />
-      )}
-    </button>
   );
 }

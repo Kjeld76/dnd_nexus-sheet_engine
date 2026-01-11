@@ -149,6 +149,15 @@ fn import_all_from_master(target_conn: &mut Connection, master_path: &Path) -> R
         tx.execute("INSERT INTO core_tools (id, name, category, cost_gp, weight_kg, data) VALUES (?, ?, ?, ?, ?, ?)", params![id, name, cat, cost, weight, data]).map_err(|e| e.to_string())?;
     }
 
+    // 10. Backgrounds
+    println!("Importing Backgrounds...");
+    let mut stmt = source_conn.prepare("SELECT id, name, data FROM core_backgrounds").map_err(|e| e.to_string())?;
+    let rows = stmt.query_map([], |row| Ok((row.get::<_, String>(0)?, row.get::<_, String>(1)?, row.get::<_, String>(2)?))).map_err(|e| e.to_string())?;
+    for r in rows {
+        let (id, name, data) = r.map_err(|e| e.to_string())?;
+        tx.execute("INSERT INTO core_backgrounds (id, name, data) VALUES (?, ?, ?)", params![id, name, data]).map_err(|e| e.to_string())?;
+    }
+
     tx.commit().map_err(|e| e.to_string())?;
     println!("Transaction committed successfully.");
     Ok(())
@@ -164,6 +173,7 @@ pub fn clear_core_data(conn: &Connection) -> Result<(), String> {
     conn.execute("DELETE FROM core_feats", []).map_err(|e| e.to_string())?;
     conn.execute("DELETE FROM core_skills", []).map_err(|e| e.to_string())?;
     conn.execute("DELETE FROM core_tools", []).map_err(|e| e.to_string())?;
+    conn.execute("DELETE FROM core_backgrounds", []).map_err(|e| e.to_string())?;
     Ok(())
 }
 

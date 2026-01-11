@@ -38,7 +38,8 @@ type Tab =
   | "tools"
   | "gear"
   | "feats"
-  | "skills";
+  | "skills"
+  | "backgrounds";
 
 export function Compendium() {
   const [activeTab, setActiveTab] = useState<Tab>("spells");
@@ -57,6 +58,7 @@ export function Compendium() {
     gear,
     feats,
     skills,
+    backgrounds,
     isLoading,
     fetchSpells,
     fetchSpecies,
@@ -67,6 +69,7 @@ export function Compendium() {
     fetchGear,
     fetchFeats,
     fetchSkills,
+    fetchBackgrounds,
   } = useCompendiumStore();
 
   useEffect(() => {
@@ -104,6 +107,9 @@ export function Compendium() {
       case "skills":
         fetchSkills();
         break;
+      case "backgrounds":
+        fetchBackgrounds();
+        break;
     }
   };
 
@@ -137,6 +143,9 @@ export function Compendium() {
         break;
       case "skills":
         baseData = skills;
+        break;
+      case "backgrounds":
+        baseData = backgrounds;
         break;
     }
     return baseData.filter((x) => x.name.toLowerCase().includes(s));
@@ -200,6 +209,7 @@ export function Compendium() {
             {renderTabButton("gear", "Ausrüstung", Package)}
             {renderTabButton("feats", "Talente", Award)}
             {renderTabButton("skills", "Fertigkeiten", Brain)}
+            {renderTabButton("backgrounds", "Hintergründe", ScrollText)}
           </div>
 
           <div className="flex items-center gap-4 shrink-0 w-full lg:w-auto">
@@ -299,7 +309,9 @@ export function Compendium() {
                             ? item.damage_dice
                             : activeTab === "armor"
                               ? `RK ${item.base_ac}`
-                              : item.category || "PHB"}
+                              : activeTab === "backgrounds"
+                                ? item.data?.feature_name || "PHB"
+                                : item.category || "PHB"}
                     </span>
                     <div className="flex-1 h-px bg-border/50" />
                     <ChevronRight
@@ -333,7 +345,7 @@ export function Compendium() {
               </div>
             </div>
           ) : (
-            <div className="w-full p-10 lg:p-20 space-y-20 animate-reveal">
+            <div className="w-full p-6 lg:p-10 space-y-10 animate-reveal">
               {/* Header Card */}
               <div className="space-y-8">
                 <div className="flex flex-wrap items-center gap-4">
@@ -348,7 +360,7 @@ export function Compendium() {
                 </div>
 
                 <div className="space-y-4">
-                  <h1 className="text-7xl lg:text-9xl font-black text-foreground tracking-tighter leading-[0.8] font-serif italic selection:bg-primary/20">
+                  <h1 className="text-4xl lg:text-5xl font-black text-foreground tracking-tighter leading-[0.9] font-serif italic selection:bg-primary/20">
                     {selectedSubclass
                       ? selectedSubclass.name
                       : selectedItem.name}
@@ -378,9 +390,9 @@ export function Compendium() {
               </div>
 
               {/* Layout Grid */}
-              <div className="grid grid-cols-1 xl:grid-cols-12 gap-20 items-start">
+              <div className="grid grid-cols-1 xl:grid-cols-12 gap-10 items-start">
                 {/* Left Column (Details) */}
-                <div className="xl:col-span-8 space-y-16">
+                <div className="xl:col-span-8 space-y-10">
                   {/* Knowledge Block */}
                   <div className="space-y-8">
                     <div className="flex items-center gap-6">
@@ -390,9 +402,9 @@ export function Compendium() {
                       <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" />
                     </div>
 
-                    <div className="glass-panel p-12 lg:p-16 relative group overflow-hidden">
+                    <div className="glass-panel p-6 lg:p-8 relative group overflow-hidden">
                       <div className="absolute top-0 left-0 w-2 h-full bg-primary/10 group-hover:bg-primary transition-colors duration-700" />
-                      <p className="text-foreground/90 leading-relaxed text-2xl lg:text-3xl whitespace-pre-wrap font-medium italic first-letter:text-6xl first-letter:font-black first-letter:text-primary first-letter:mr-2">
+                      <p className="text-foreground/90 leading-relaxed text-lg lg:text-xl whitespace-pre-wrap font-medium italic first-letter:text-3xl first-letter:font-black first-letter:text-primary first-letter:mr-2">
                         {selectedItem.description ||
                           selectedItem.data?.description ||
                           "Keine Beschreibung im Archiv gefunden."}
@@ -400,12 +412,12 @@ export function Compendium() {
                     </div>
 
                     {activeTab === "spells" && selectedItem.higher_levels && (
-                      <div className="p-12 bg-primary/[0.02] rounded-[3rem] border-2 border-dashed border-primary/10 relative group">
-                        <Sparkles className="absolute top-8 right-8 text-primary/20 group-hover:rotate-12 group-hover:scale-125 transition-all duration-500" />
-                        <h4 className="text-xs font-black text-primary uppercase tracking-[0.4em] mb-8 flex items-center gap-4">
+                      <div className="p-6 bg-primary/[0.02] rounded-2xl border-2 border-dashed border-primary/10 relative group">
+                        <Sparkles className="absolute top-4 right-4 text-primary/20 group-hover:rotate-12 group-hover:scale-125 transition-all duration-500" />
+                        <h4 className="text-xs font-black text-primary uppercase tracking-[0.4em] mb-4 flex items-center gap-4">
                           <Zap size={18} /> Verstärkung
                         </h4>
-                        <p className="text-xl text-muted-foreground/80 leading-relaxed italic border-l-4 border-primary/20 pl-10">
+                        <p className="text-base text-muted-foreground/80 leading-relaxed italic border-l-4 border-primary/20 pl-6">
                           {selectedItem.higher_levels}
                         </p>
                       </div>
@@ -414,20 +426,20 @@ export function Compendium() {
 
                   {/* Species Specifics */}
                   {activeTab === "species" && (
-                    <div className="grid grid-cols-1 gap-10">
+                    <div className="grid grid-cols-1 gap-6">
                       {selectedItem.data.traits?.map((trait: any) => (
                         <div
                           key={trait.name}
-                          className="bg-card p-12 rounded-[3.5rem] border border-border shadow-xl hover:border-primary/40 transition-all group relative overflow-hidden"
+                          className="bg-card p-6 rounded-[2rem] border border-border shadow-xl hover:border-primary/40 transition-all group relative overflow-hidden"
                         >
                           <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/5 rounded-full group-hover:scale-150 transition-transform duration-1000" />
-                          <h4 className="text-3xl font-black text-foreground mb-8 flex items-center gap-6">
-                            <div className="w-16 h-16 rounded-[1.5rem] bg-primary/10 flex items-center justify-center shadow-inner group-hover:rotate-12 transition-transform">
-                              <Zap size={32} className="text-primary" />
+                          <h4 className="text-xl font-black text-foreground mb-4 flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shadow-inner group-hover:rotate-12 transition-transform">
+                              <Zap size={20} className="text-primary" />
                             </div>
                             {trait.name}
                           </h4>
-                          <p className="text-xl text-muted-foreground leading-relaxed italic border-l-4 border-border/50 pl-10 group-hover:border-primary/30 transition-colors">
+                          <p className="text-base text-muted-foreground leading-relaxed italic border-l-4 border-border/50 pl-6 group-hover:border-primary/30 transition-colors">
                             {trait.description}
                           </p>
                         </div>
@@ -466,17 +478,17 @@ export function Compendium() {
                         ))}
                       </div>
 
-                      <div className="space-y-16">
-                        <h3 className="text-5xl font-black text-foreground tracking-tighter flex items-center gap-8">
-                          <div className="w-20 h-20 rounded-[2.5rem] bg-primary/10 flex items-center justify-center shadow-lg">
-                            <Award size={40} className="text-primary" />
+                      <div className="space-y-10">
+                        <h3 className="text-2xl font-black text-foreground tracking-tighter flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shadow-lg">
+                            <Award size={24} className="text-primary" />
                           </div>
                           {selectedSubclass
                             ? "Spezialisierung"
                             : "Pfad der Klasse"}
                         </h3>
 
-                        <div className="space-y-16 relative pl-10 lg:pl-16">
+                        <div className="space-y-10 relative pl-8 lg:pl-12">
                           <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary via-border to-transparent rounded-full" />
                           {Object.entries(
                             (selectedSubclass
@@ -489,20 +501,20 @@ export function Compendium() {
                                   key={level}
                                   className="relative pl-16 group"
                                 >
-                                  <div className="absolute left-[-52px] lg:left-[-76px] top-4 w-10 h-10 rounded-full bg-background border-[6px] border-primary shadow-2xl group-hover:scale-125 transition-transform z-10" />
-                                  <span className="text-lg font-black text-primary/30 uppercase tracking-[0.5em] mb-10 block">
+                                  <div className="absolute left-[-40px] lg:left-[-56px] top-4 w-8 h-8 rounded-full bg-background border-4 border-primary shadow-2xl group-hover:scale-125 transition-transform z-10" />
+                                  <span className="text-base font-black text-primary/30 uppercase tracking-[0.5em] mb-6 block">
                                     Grad {level}
                                   </span>
                                   <div className="grid gap-10">
                                     {features.map((f: any) => (
                                       <div
                                         key={f.name}
-                                        className="bg-card p-12 lg:p-16 rounded-[4rem] border border-border shadow-2xl shadow-foreground/[0.02] hover:border-primary/20 transition-all group/feat"
+                                        className="bg-card p-6 lg:p-8 rounded-[2.5rem] border border-border shadow-2xl shadow-foreground/[0.02] hover:border-primary/20 transition-all group/feat"
                                       >
-                                        <h5 className="text-3xl font-black text-foreground mb-8 group-hover/feat:text-primary transition-colors italic font-serif">
+                                        <h5 className="text-xl font-black text-foreground mb-4 group-hover/feat:text-primary transition-colors italic font-serif">
                                           {f.name}
                                         </h5>
-                                        <p className="text-xl text-muted-foreground italic leading-relaxed border-l-4 border-border pl-10 group-hover/feat:border-primary transition-colors">
+                                        <p className="text-base text-muted-foreground italic leading-relaxed border-l-4 border-border pl-6 group-hover/feat:border-primary transition-colors">
                                           {f.description}
                                         </p>
                                       </div>
@@ -519,14 +531,14 @@ export function Compendium() {
 
                 {/* Right Column (Stats) */}
                 <aside className="xl:col-span-4 space-y-10 sticky top-36">
-                  <div className="bg-card p-12 rounded-[4.5rem] border border-border shadow-2xl shadow-foreground/[0.04] relative overflow-hidden group">
+                  <div className="bg-card p-6 rounded-[3rem] border border-border shadow-2xl shadow-foreground/[0.04] relative overflow-hidden group">
                     <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-primary to-transparent opacity-30 group-hover:opacity-100 transition-opacity duration-1000" />
 
-                    <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.6em] mb-16 border-b border-border pb-8 text-center">
+                    <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.6em] mb-8 border-b border-border pb-4 text-center">
                       Eigenschaften
                     </h4>
 
-                    <div className="space-y-12">
+                    <div className="space-y-6">
                       {activeTab === "spells" && (
                         <>
                           <StatRow
@@ -726,13 +738,54 @@ export function Compendium() {
                           )}
                         </>
                       )}
+
+                      {activeTab === "backgrounds" && (
+                        <>
+                          {selectedItem.data?.skill_proficiencies?.length >
+                            0 && (
+                            <StatRow
+                              label="Fertigkeits-Übung"
+                              value={selectedItem.data.skill_proficiencies.join(
+                                ", ",
+                              )}
+                              highlight
+                              icon={Brain}
+                            />
+                          )}
+                          {selectedItem.data?.tool_proficiencies?.length >
+                            0 && (
+                            <StatRow
+                              label="Werkzeug-Übung"
+                              value={selectedItem.data.tool_proficiencies.join(
+                                ", ",
+                              )}
+                              icon={Package}
+                            />
+                          )}
+                          {selectedItem.data?.languages?.length > 0 && (
+                            <StatRow
+                              label="Sprachen"
+                              value={selectedItem.data.languages.join(", ")}
+                              icon={ScrollText}
+                            />
+                          )}
+                          {selectedItem.data?.feature_name && (
+                            <StatRow
+                              label="Merkmalsname"
+                              value={selectedItem.data.feature_name}
+                              highlight
+                              icon={Award}
+                            />
+                          )}
+                        </>
+                      )}
                     </div>
                   </div>
 
                   {/* Property Details for Weapons */}
                   {activeTab === "weapons" &&
                     selectedItem.data.properties?.length > 0 && (
-                      <div className="glass-panel p-12 rounded-[4rem] space-y-8 animate-reveal">
+                      <div className="glass-panel p-6 rounded-[2.5rem] space-y-6 animate-reveal">
                         <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
                           <Info size={18} /> Details
                         </h4>
@@ -805,7 +858,7 @@ function StatRow({
       </div>
       <span
         className={cn(
-          "text-2xl font-bold tracking-tighter transition-all leading-none",
+          "text-lg font-bold tracking-tighter transition-all leading-none",
           highlight
             ? "text-primary selection:bg-primary/20"
             : "text-foreground opacity-90",

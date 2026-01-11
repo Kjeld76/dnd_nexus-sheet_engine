@@ -7,6 +7,7 @@ export interface Character {
   spellcasting?: CharacterSpellcasting;
   appearance?: CharacterAppearance;
   modifiers: Modifier[];
+  feats: string[]; // List of feat IDs
   inventory: CharacterItem[];
 }
 
@@ -137,6 +138,13 @@ export interface Skill {
   ability: string;
   description: string;
   source: "core";
+}
+
+export interface Background {
+  id: string;
+  name: string;
+  data: any;
+  source: "core" | "override" | "homebrew";
 }
 
 export interface Gear {

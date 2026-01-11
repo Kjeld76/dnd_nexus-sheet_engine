@@ -17,6 +17,8 @@ pub struct Character {
     #[serde(default)]
     pub modifiers: Vec<Modifier>,
     #[serde(default)]
+    pub feats: Vec<String>,
+    #[serde(default)]
     pub inventory: Vec<CharacterItem>,
 }
 

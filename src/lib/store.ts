@@ -27,6 +27,8 @@ interface CharacterState {
   ) => void;
   addModifier: (modifier: Modifier) => void;
   removeModifier: (id: string) => void;
+  addFeat: (featId: string) => void;
+  removeFeat: (featId: string) => void;
   loadCharacterList: () => Promise<void>;
   setCurrentCharacter: (character: Character | null) => void;
 }
@@ -67,6 +69,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
       }
       if (!character.inventory) character.inventory = [];
       if (!character.appearance) character.appearance = {};
+      if (!character.feats) character.feats = [];
 
       set({ currentCharacter: character, isLoading: false });
     } catch (err) {
@@ -185,6 +188,32 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
     });
   },
 
+  addFeat: (featId) => {
+    const { currentCharacter } = get();
+    if (!currentCharacter) return;
+
+    if (!currentCharacter.feats.includes(featId)) {
+      set({
+        currentCharacter: {
+          ...currentCharacter,
+          feats: [...currentCharacter.feats, featId],
+        },
+      });
+    }
+  },
+
+  removeFeat: (featId) => {
+    const { currentCharacter } = get();
+    if (!currentCharacter) return;
+
+    set({
+      currentCharacter: {
+        ...currentCharacter,
+        feats: currentCharacter.feats.filter((f) => f !== featId),
+      },
+    });
+  },
+
   loadCharacterList: async () => {
     set({ isLoading: true, error: null });
     try {
@@ -215,6 +244,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
         },
         inventory: character.inventory || [],
         modifiers: character.modifiers || [],
+        feats: character.feats || [],
       }));
       set({ characters: migratedList, isLoading: false });
     } catch (err) {

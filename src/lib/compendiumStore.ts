@@ -1,6 +1,17 @@
-import { create } from 'zustand';
-import { Spell, Species, Class, Gear, Tool, Feat, Weapon, Armor, Skill } from './types';
-import { compendiumApi } from './api';
+import { create } from "zustand";
+import {
+  Spell,
+  Species,
+  Class,
+  Gear,
+  Tool,
+  Feat,
+  Weapon,
+  Armor,
+  Skill,
+  Background,
+} from "./types";
+import { compendiumApi } from "./api";
 
 interface CompendiumState {
   spells: Spell[];
@@ -12,6 +23,7 @@ interface CompendiumState {
   armor: Armor[];
   feats: Feat[];
   skills: Skill[];
+  backgrounds: Background[];
   isLoading: boolean;
   error: string | null;
 
@@ -25,6 +37,7 @@ interface CompendiumState {
   fetchArmor: () => Promise<void>;
   fetchFeats: () => Promise<void>;
   fetchSkills: () => Promise<void>;
+  fetchBackgrounds: () => Promise<void>;
 }
 
 export const useCompendiumStore = create<CompendiumState>((set) => ({
@@ -37,6 +50,7 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   armor: [],
   feats: [],
   skills: [],
+  backgrounds: [],
   isLoading: false,
   error: null,
 
@@ -126,6 +140,18 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
       const skills = await compendiumApi.getSkills();
       set({ skills, isLoading: false });
     } catch (err) {
+      set({ error: (err as Error).message, isLoading: false });
+    }
+  },
+
+  fetchBackgrounds: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const backgrounds = await compendiumApi.getBackgrounds();
+      console.log("Fetched backgrounds:", backgrounds.length);
+      set({ backgrounds, isLoading: false, error: null });
+    } catch (err) {
+      console.error("Error fetching backgrounds:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },

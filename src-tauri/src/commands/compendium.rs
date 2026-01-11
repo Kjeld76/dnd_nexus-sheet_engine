@@ -1,7 +1,7 @@
 use tauri::State;
 use crate::db::Database;
 use crate::types::spell::Spell;
-use crate::types::compendium::{Species, Class, Gear, Tool, Feat, Armor, Skill};
+use crate::types::compendium::{Species, Class, Gear, Tool, Feat, Armor, Skill, Background};
 use crate::types::weapons::Weapon;
 use serde_json::from_str;
 
@@ -240,5 +240,44 @@ pub async fn get_all_skills(db: State<'_, Database>) -> Result<Vec<Skill>, Strin
     for item in iter {
         results.push(item.map_err(|e: rusqlite::Error| e.to_string())?);
     }
+    Ok(results)
+}
+
+#[tauri::command]
+pub async fn get_all_backgrounds(db: State<'_, Database>) -> Result<Vec<Background>, String> {
+    println!("[DEBUG] get_all_backgrounds called");
+    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
+    let mut stmt = conn.prepare("SELECT id, name, data, source FROM all_backgrounds ORDER BY name")
+        .map_err(|e: rusqlite::Error| {
+            println!("[DEBUG] SQL prepare error: {}", e);
+            e.to_string()
+        })?;
+    
+    let iter = stmt.query_map([], |row: &rusqlite::Row| {
+        let data_str: String = row.get(2)?;
+        Ok(Background {
+            id: row.get(0)?,
+            name: row.get(1)?,
+            data: from_str(&data_str).unwrap_or_default(),
+            source: row.get(3)?,
+        })
+    }).map_err(|e: rusqlite::Error| {
+        println!("[DEBUG] SQL query_map error: {}", e);
+        e.to_string()
+    })?;
+
+    let mut results = Vec::new();
+    for item in iter {
+        match item {
+            Ok(bg) => {
+                results.push(bg);
+            }
+            Err(e) => {
+                println!("[DEBUG] Error processing background row: {}", e);
+                return Err(e.to_string());
+            }
+        }
+    }
+    println!("[DEBUG] get_all_backgrounds returning {} backgrounds", results.len());
     Ok(results)
 }

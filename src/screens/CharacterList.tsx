@@ -53,6 +53,7 @@ export function CharacterList() {
       },
       inventory: [],
       modifiers: [],
+      feats: [],
     };
 
     // Set as current AND save to DB immediately so it appears in the list

@@ -58,6 +58,14 @@ pub struct Skill {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Background {
+    pub id: String,
+    pub name: String,
+    pub data: Value,
+    pub source: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Armor {
     pub id: String,
     pub name: String,

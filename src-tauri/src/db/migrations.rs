@@ -14,6 +14,7 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         DROP VIEW IF EXISTS all_armors;
         DROP VIEW IF EXISTS all_feats;
         DROP VIEW IF EXISTS all_skills;
+        DROP VIEW IF EXISTS all_backgrounds;
 
         -- Core Spells
         CREATE TABLE IF NOT EXISTS core_spells (
@@ -240,6 +241,25 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
             created_at INTEGER DEFAULT (unixepoch())
         );
 
+        -- Backgrounds
+        CREATE TABLE IF NOT EXISTS core_backgrounds (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            data TEXT NOT NULL,
+            created_at INTEGER DEFAULT (unixepoch())
+        );
+
+        CREATE TABLE IF NOT EXISTS custom_backgrounds (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            data TEXT NOT NULL,
+            parent_id TEXT,
+            is_homebrew BOOLEAN DEFAULT 1,
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (parent_id) REFERENCES core_backgrounds(id)
+        );
+
         -- Other Tables
         CREATE TABLE IF NOT EXISTS weapon_properties (
             id TEXT PRIMARY KEY,
@@ -353,6 +373,14 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         SELECT id, name, category, data, CASE WHEN is_homebrew = 1 THEN 'homebrew' ELSE 'core' END as source 
         FROM custom_feats WHERE parent_id IS NULL;
         CREATE VIEW all_skills AS SELECT id, name, ability, description, 'core' as source FROM core_skills;
+
+        CREATE VIEW all_backgrounds AS 
+        SELECT COALESCE(c.id, core.id) as id, COALESCE(c.name, core.name) as name, COALESCE(c.data, core.data) as data, 
+               CASE WHEN c.parent_id IS NOT NULL THEN 'override' WHEN c.is_homebrew = 1 THEN 'homebrew' ELSE 'core' END as source 
+        FROM core_backgrounds core LEFT JOIN custom_backgrounds c ON c.parent_id = core.id 
+        UNION 
+        SELECT id, name, data, CASE WHEN is_homebrew = 1 THEN 'homebrew' ELSE 'core' END as source 
+        FROM custom_backgrounds WHERE parent_id IS NULL;
 
         -- Indizes für Performance (Checklist 6: < 10ms Lookups)
         CREATE INDEX IF NOT EXISTS idx_core_spells_name ON core_spells(name);
