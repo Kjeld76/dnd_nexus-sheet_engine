@@ -1,5 +1,11 @@
 import { create } from "zustand";
-import { Character, Attributes, Modifier, CharacterMeta } from "./types";
+import {
+  Character,
+  Attributes,
+  Modifier,
+  CharacterMeta,
+  CharacterAppearance,
+} from "./types";
 import { characterApi } from "./api";
 
 interface CharacterState {
@@ -13,6 +19,7 @@ interface CharacterState {
   saveCharacter: () => Promise<void>;
   updateAttribute: (attr: keyof Attributes, value: number) => void;
   updateMeta: (meta: Partial<CharacterMeta>) => void;
+  updateAppearance: (appearance: Partial<CharacterAppearance>) => void;
   updateProficiency: (
     type: keyof Character["proficiencies"],
     id: string,
@@ -59,6 +66,7 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
         };
       }
       if (!character.inventory) character.inventory = [];
+      if (!character.appearance) character.appearance = {};
 
       set({ currentCharacter: character, isLoading: false });
     } catch (err) {
@@ -98,6 +106,21 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
         meta: {
           ...currentCharacter.meta,
           ...meta,
+        },
+      },
+    });
+  },
+
+  updateAppearance: (appearance) => {
+    const { currentCharacter } = get();
+    if (!currentCharacter) return;
+
+    set({
+      currentCharacter: {
+        ...currentCharacter,
+        appearance: {
+          ...currentCharacter.appearance,
+          ...appearance,
         },
       },
     });

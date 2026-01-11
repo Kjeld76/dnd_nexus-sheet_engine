@@ -14,7 +14,7 @@ export const calculateLevelFromXP = (xp: number): number => {
   if (xp >= 515000) return 23;
   if (xp >= 455000) return 22;
   if (xp >= 405000) return 21;
-  
+
   // Core Tier (1-20)
   if (xp >= 355000) return 20;
   if (xp >= 305000) return 19;
@@ -40,9 +40,9 @@ export const calculateLevelFromXP = (xp: number): number => {
 
 export const getXPForNextLevel = (level: number): number | null => {
   const xpTable = [
-    300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000,
-    100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000,
-    405000, 455000, 515000, 575000, 645000, 715000, 795000, 875000, 965000, 1055000
+    300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000,
+    120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000, 405000,
+    455000, 515000, 575000, 645000, 715000, 795000, 875000, 965000, 1055000,
   ];
   if (level >= 30) return null;
   return xpTable[level - 1];
@@ -61,4 +61,34 @@ export const calculateProficiencyBonus = (level: number): number => {
 
 export const formatModifier = (mod: number): string => {
   return mod >= 0 ? `+${mod}` : `${mod}`;
+};
+
+/**
+ * Berechnet die Größenkategorie basierend auf der Körpergröße
+ * PHB 2024: Kleine < 1.5m, Mittel 1.5-2.5m, Große > 2.5m
+ */
+export const calculateSizeCategory = (
+  height?: string,
+  useMetric: boolean = true,
+): string => {
+  if (!height) return "Mittel";
+
+  // Extrahiere Zahl aus String (z.B. "180cm" -> 180 oder "5ft 10in" -> 70)
+  const heightMatch = height.match(/(\d+(?:\.\d+)?)/);
+  if (!heightMatch) return "Mittel";
+
+  let heightValue = parseFloat(heightMatch[1]);
+
+  // Wenn nicht metrisch, konvertiere von ft/in zu cm
+  if (!useMetric) {
+    // Angenommen Format "5ft 10in" oder "5.10" - hier vereinfacht
+    heightValue = heightValue * 30.48; // ft zu cm
+  }
+
+  // Konvertiere zu Metern
+  const heightM = heightValue / 100;
+
+  if (heightM < 1.5) return "Klein";
+  if (heightM <= 2.5) return "Mittel";
+  return "Groß";
 };

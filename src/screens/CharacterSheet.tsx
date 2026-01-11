@@ -10,24 +10,18 @@ import { AbilityScoreChoiceDialog } from "../components/character/AbilityScoreCh
 import {
   Save,
   User,
-  Swords,
   Wand2,
   Backpack,
   Book,
   ChevronLeft,
   Sparkles,
   Settings,
-  Shield,
-  Zap,
-  Wind,
-  Heart,
 } from "lucide-react";
 import {
   calculateLevelFromXP,
   getXPForNextLevel,
-  formatModifier,
+  calculateSizeCategory,
 } from "../lib/math";
-import { calculateDerivedStats } from "../lib/characterLogic";
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -43,6 +37,7 @@ export function CharacterSheet() {
     setCurrentCharacter,
     updateAttribute,
     updateMeta,
+    updateAppearance,
     updateProficiency,
     removeModifier,
     saveCharacter,
@@ -228,162 +223,394 @@ export function CharacterSheet() {
   return (
     <div className="h-full bg-background text-foreground p-4 pb-20 transition-colors duration-500 overflow-y-auto custom-scrollbar relative">
       {/* Dynamic Header */}
-      <header className="w-full flex flex-col lg:flex-row items-center justify-between mb-6 glass-panel p-5 gap-5">
-        <div className="flex items-center gap-8 w-full lg:w-auto">
-          <button
-            onClick={() => setCurrentCharacter(null)}
-            className="p-5 bg-muted rounded-3xl transition-all text-muted-foreground hover:text-foreground hover:bg-background border border-transparent hover:border-border active:scale-90"
-          >
-            <ChevronLeft className="w-8 h-8" />
-          </button>
+      <header className="w-full mb-6 glass-panel border-b border-border/50">
+        <div className="flex flex-col lg:flex-row items-center justify-between p-5 gap-5">
+          <div className="flex items-center gap-8 w-full lg:w-auto">
+            <button
+              onClick={() => setCurrentCharacter(null)}
+              className="p-5 bg-muted rounded-3xl transition-all text-muted-foreground hover:text-foreground hover:bg-background border border-transparent hover:border-border active:scale-90"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
 
-          <div className="flex items-center gap-6 border-l-2 border-border pl-6 overflow-hidden">
-            <div className="relative group shrink-0">
-              <div className="absolute -inset-2 bg-primary/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="p-4 bg-primary text-primary-foreground rounded-xl shadow-xl shadow-primary/20 relative">
-                <User className="w-8 h-8" />
-                <Sparkles
-                  size={20}
-                  className="absolute -top-2 -right-2 text-white animate-pulse"
-                />
-              </div>
-            </div>
-            <div className="overflow-hidden flex-1">
-              <input
-                type="text"
-                value={currentCharacter.meta.name}
-                onChange={(e) => updateMeta({ name: e.target.value })}
-                onBlur={() => saveCharacter()}
-                className="w-full text-5xl font-black tracking-tighter truncate font-serif italic text-foreground leading-none mb-2 bg-transparent border-none outline-none focus:ring-2 focus:ring-primary/20 rounded-lg px-2 -ml-2 transition-all"
-              />
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="flex items-center gap-2 bg-primary/10 px-4 py-1 rounded-lg">
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
-                    Stufe {calculateLevelFromXP(currentCharacter.meta.xp)}
-                  </span>
-                  <div className="h-4 w-px bg-primary/20 mx-2" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">
-                    XP
-                  </span>
-                  <input
-                    type="number"
-                    min="0"
-                    value={currentCharacter.meta.xp}
-                    onChange={(e) => {
-                      const newXp = parseInt(e.target.value) || 0;
-                      const newLevel = calculateLevelFromXP(newXp);
-                      updateMeta({ xp: newXp, level: newLevel });
-                    }}
-                    onBlur={() => saveCharacter()}
-                    className="bg-transparent text-primary font-black text-sm w-20 border-none outline-none focus:ring-0"
+            <div className="flex items-center gap-6 border-l-2 border-border pl-6 overflow-hidden">
+              <div className="relative group shrink-0">
+                <div className="absolute -inset-2 bg-primary/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="p-4 bg-primary text-primary-foreground rounded-xl shadow-xl shadow-primary/20 relative">
+                  <User className="w-8 h-8" />
+                  <Sparkles
+                    size={20}
+                    className="absolute -top-2 -right-2 text-white animate-pulse"
                   />
-                  {getXPForNextLevel(
-                    calculateLevelFromXP(currentCharacter.meta.xp),
-                  ) && (
-                    <span className="text-[9px] font-bold text-primary/30 ml-1">
-                      /{" "}
-                      {getXPForNextLevel(
-                        calculateLevelFromXP(currentCharacter.meta.xp),
-                      )}{" "}
-                      bis Level Up
-                    </span>
-                  )}
                 </div>
+              </div>
+              <div className="overflow-hidden flex-1">
+                <input
+                  type="text"
+                  value={currentCharacter.meta.name}
+                  onChange={(e) => updateMeta({ name: e.target.value })}
+                  onBlur={() => saveCharacter()}
+                  className="w-full text-5xl font-black tracking-tighter truncate font-serif italic text-foreground leading-none mb-2 bg-transparent border-none outline-none focus:ring-2 focus:ring-primary/20 rounded-lg px-2 -ml-2 transition-all"
+                />
+                <div className="flex flex-wrap items-center gap-3">
+                  <div className="flex items-center gap-2 bg-primary/10 px-4 py-1 rounded-lg">
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+                      Stufe {calculateLevelFromXP(currentCharacter.meta.xp)}
+                    </span>
+                    <div className="h-4 w-px bg-primary/20 mx-2" />
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60">
+                      XP
+                    </span>
+                    <input
+                      type="number"
+                      min="0"
+                      value={currentCharacter.meta.xp}
+                      onChange={(e) => {
+                        const newXp = parseInt(e.target.value) || 0;
+                        const newLevel = calculateLevelFromXP(newXp);
+                        updateMeta({ xp: newXp, level: newLevel });
+                      }}
+                      onBlur={() => saveCharacter()}
+                      className="bg-transparent text-primary font-black text-sm w-20 border-none outline-none focus:ring-0"
+                    />
+                    {getXPForNextLevel(
+                      calculateLevelFromXP(currentCharacter.meta.xp),
+                    ) && (
+                      <span className="text-[9px] font-bold text-primary/30 ml-1">
+                        /{" "}
+                        {getXPForNextLevel(
+                          calculateLevelFromXP(currentCharacter.meta.xp),
+                        )}{" "}
+                        bis Level Up
+                      </span>
+                    )}
+                  </div>
 
-                <div className="flex items-center gap-2 bg-muted/30 px-3 py-1 rounded-lg border border-border/50">
-                  <select
-                    value={currentCharacter.meta.class_id || ""}
-                    onChange={(e) => {
-                      updateMeta({
-                        class_id: e.target.value,
-                        subclass_id: undefined,
-                      });
-                      setTimeout(saveCharacter, 100);
-                    }}
-                    className="bg-transparent text-[10px] font-bold uppercase tracking-wider text-foreground/70 outline-none border-none cursor-pointer hover:text-primary transition-colors"
-                  >
-                    <option value="" disabled className="bg-card">
-                      Klasse wählen
-                    </option>
-                    {classes.map((c) => (
-                      <option
-                        key={c.id}
-                        value={c.id}
-                        className="bg-card text-foreground"
-                      >
-                        {c.name}
+                  <div className="flex items-center gap-2 bg-muted/30 px-3 py-1 rounded-lg border border-border/50">
+                    <select
+                      value={currentCharacter.meta.class_id || ""}
+                      onChange={(e) => {
+                        updateMeta({
+                          class_id: e.target.value,
+                          subclass_id: undefined,
+                        });
+                        setTimeout(saveCharacter, 100);
+                      }}
+                      className="bg-transparent text-[10px] font-bold uppercase tracking-wider text-foreground/70 outline-none border-none cursor-pointer hover:text-primary transition-colors"
+                    >
+                      <option value="" disabled className="bg-card">
+                        Klasse wählen
                       </option>
-                    ))}
-                  </select>
-
-                  {currentClass && subclasses.length > 0 && (
-                    <>
-                      <div className="w-1 h-1 bg-foreground/20 rounded-full" />
-                      <select
-                        value={currentCharacter.meta.subclass_id || ""}
-                        onChange={(e) => {
-                          updateMeta({ subclass_id: e.target.value });
-                          setTimeout(saveCharacter, 100);
-                        }}
-                        className="bg-transparent text-[10px] font-bold uppercase tracking-wider text-foreground/70 outline-none border-none cursor-pointer hover:text-primary transition-colors"
-                      >
-                        <option value="" className="bg-card">
-                          Unterklasse wählen
+                      {classes.map((c) => (
+                        <option
+                          key={c.id}
+                          value={c.id}
+                          className="bg-card text-foreground"
+                        >
+                          {c.name}
                         </option>
-                        {subclasses.map((s: any) => (
-                          <option
-                            key={s.id}
-                            value={s.id}
-                            className="bg-card text-foreground"
-                          >
-                            {s.name}
+                      ))}
+                    </select>
+
+                    {currentClass && subclasses.length > 0 && (
+                      <>
+                        <div className="w-1 h-1 bg-foreground/20 rounded-full" />
+                        <select
+                          value={currentCharacter.meta.subclass_id || ""}
+                          onChange={(e) => {
+                            updateMeta({ subclass_id: e.target.value });
+                            setTimeout(saveCharacter, 100);
+                          }}
+                          className="bg-transparent text-[10px] font-bold uppercase tracking-wider text-foreground/70 outline-none border-none cursor-pointer hover:text-primary transition-colors"
+                        >
+                          <option value="" className="bg-card">
+                            Unterklasse wählen
                           </option>
-                        ))}
-                      </select>
-                    </>
-                  )}
+                          {subclasses.map((s: any) => (
+                            <option
+                              key={s.id}
+                              value={s.id}
+                              className="bg-card text-foreground"
+                            >
+                              {s.name}
+                            </option>
+                          ))}
+                        </select>
+                      </>
+                    )}
 
-                  <div className="w-1 h-1 bg-foreground/20 rounded-full" />
+                    <div className="w-1 h-1 bg-foreground/20 rounded-full" />
 
-                  <select
-                    value={currentCharacter.meta.species_id || ""}
-                    onChange={(e) => {
-                      updateMeta({ species_id: e.target.value });
-                      setTimeout(saveCharacter, 100);
-                    }}
-                    className="bg-transparent text-[10px] font-bold uppercase tracking-wider text-foreground/70 outline-none border-none cursor-pointer hover:text-primary transition-colors"
-                  >
-                    <option value="" disabled className="bg-card">
-                      Volk wählen
-                    </option>
-                    {species.map((s) => (
-                      <option
-                        key={s.id}
-                        value={s.id}
-                        className="bg-card text-foreground"
-                      >
-                        {s.name}
+                    <select
+                      value={currentCharacter.meta.species_id || ""}
+                      onChange={(e) => {
+                        updateMeta({ species_id: e.target.value });
+                        setTimeout(saveCharacter, 100);
+                      }}
+                      className="bg-transparent text-[10px] font-bold uppercase tracking-wider text-foreground/70 outline-none border-none cursor-pointer hover:text-primary transition-colors"
+                    >
+                      <option value="" disabled className="bg-card">
+                        Volk wählen
                       </option>
-                    ))}
-                  </select>
+                      {species.map((s) => (
+                        <option
+                          key={s.id}
+                          value={s.id}
+                          className="bg-card text-foreground"
+                        >
+                          {s.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <div className="flex items-center gap-4 w-full lg:w-auto">
+            <button className="p-4 rounded-2xl bg-muted/50 text-muted-foreground hover:text-foreground hover:bg-muted border border-transparent hover:border-border transition-all">
+              <Settings size={24} />
+            </button>
+            <button
+              onClick={() => saveCharacter()}
+              disabled={isLoading}
+              className="flex-1 lg:flex-none flex items-center justify-center gap-4 bg-primary text-primary-foreground px-10 py-5 rounded-[2rem] font-black uppercase text-sm tracking-[0.1em] transition-all shadow-2xl shadow-primary/20 active:scale-95 disabled:opacity-50"
+            >
+              <Save className="w-6 h-6" />
+              <span>{isLoading ? "Speichert..." : "Sichern"}</span>
+            </button>
+          </div>
         </div>
 
-        <div className="flex items-center gap-4 w-full lg:w-auto">
-          <button className="p-4 rounded-2xl bg-muted/50 text-muted-foreground hover:text-foreground hover:bg-muted border border-transparent hover:border-border transition-all">
-            <Settings size={24} />
-          </button>
-          <button
-            onClick={() => saveCharacter()}
-            disabled={isLoading}
-            className="flex-1 lg:flex-none flex items-center justify-center gap-4 bg-primary text-primary-foreground px-10 py-5 rounded-[2rem] font-black uppercase text-sm tracking-[0.1em] transition-all shadow-2xl shadow-primary/20 active:scale-95 disabled:opacity-50"
-          >
-            <Save className="w-6 h-6" />
-            <span>{isLoading ? "Speichert..." : "Sichern"}</span>
-          </button>
+        {/* Erweiterte Charakterinformationen */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-3 px-4 pb-4 border-t border-border/30 pt-4">
+          {/* Persönlichkeitsinfo */}
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                Spieler:
+              </label>
+              <input
+                type="text"
+                value={currentCharacter.meta.player_name || ""}
+                onChange={(e) => updateMeta({ player_name: e.target.value })}
+                onBlur={() => saveCharacter()}
+                placeholder="Spielername"
+                className="flex-1 min-w-[120px] bg-transparent border-none outline-none text-xs font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                Alter:
+              </label>
+              <input
+                type="text"
+                value={currentCharacter.appearance?.age || ""}
+                onChange={(e) => updateAppearance({ age: e.target.value })}
+                onBlur={() => saveCharacter()}
+                placeholder="Alter"
+                className="flex-1 min-w-[80px] bg-transparent border-none outline-none text-xs font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                Geschlecht:
+              </label>
+              <select
+                value={currentCharacter.meta.gender || ""}
+                onChange={(e) => updateMeta({ gender: e.target.value })}
+                onBlur={() => saveCharacter()}
+                className="flex-1 min-w-[100px] bg-transparent border-none outline-none text-xs font-medium text-foreground/80 cursor-pointer hover:text-primary transition-colors focus:ring-1 focus:ring-primary/30 rounded px-2 py-1"
+              >
+                <option value="" className="bg-card">
+                  —
+                </option>
+                <option value="männlich" className="bg-card">
+                  Männlich
+                </option>
+                <option value="weiblich" className="bg-card">
+                  Weiblich
+                </option>
+                <option value="divers" className="bg-card">
+                  Divers
+                </option>
+              </select>
+            </div>
+          </div>
+
+          {/* Herkunft & Glaube */}
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                Herkunft:
+              </label>
+              <input
+                type="text"
+                value={
+                  currentCharacter.meta.origin_id ||
+                  currentCharacter.meta.background_id ||
+                  ""
+                }
+                onChange={(e) =>
+                  updateMeta({
+                    origin_id: e.target.value,
+                    background_id: e.target.value,
+                  })
+                }
+                onBlur={() => saveCharacter()}
+                placeholder="Herkunft"
+                className="flex-1 min-w-[120px] bg-transparent border-none outline-none text-xs font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                Gesinnung:
+              </label>
+              <select
+                value={currentCharacter.meta.alignment || ""}
+                onChange={(e) => updateMeta({ alignment: e.target.value })}
+                onBlur={() => saveCharacter()}
+                className="flex-1 min-w-[140px] bg-transparent border-none outline-none text-xs font-medium text-foreground/80 cursor-pointer hover:text-primary transition-colors focus:ring-1 focus:ring-primary/30 rounded px-2 py-1"
+              >
+                <option value="" className="bg-card">
+                  —
+                </option>
+                <option value="LG" className="bg-card">
+                  LG (Rechtschaffen Gut)
+                </option>
+                <option value="NG" className="bg-card">
+                  NG (Neutral Gut)
+                </option>
+                <option value="CG" className="bg-card">
+                  CG (Chaotisch Gut)
+                </option>
+                <option value="LN" className="bg-card">
+                  LN (Rechtschaffen Neutral)
+                </option>
+                <option value="N" className="bg-card">
+                  N (Neutral)
+                </option>
+                <option value="CN" className="bg-card">
+                  CN (Chaotisch Neutral)
+                </option>
+                <option value="LE" className="bg-card">
+                  LE (Rechtschaffen Böse)
+                </option>
+                <option value="NE" className="bg-card">
+                  NE (Neutral Böse)
+                </option>
+                <option value="CE" className="bg-card">
+                  CE (Chaotisch Böse)
+                </option>
+              </select>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                Glaube:
+              </label>
+              <input
+                type="text"
+                value={currentCharacter.meta.faith || ""}
+                onChange={(e) => updateMeta({ faith: e.target.value })}
+                onBlur={() => saveCharacter()}
+                placeholder="Glaube/Religion"
+                className="flex-1 min-w-[120px] bg-transparent border-none outline-none text-xs font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
+              />
+            </div>
+          </div>
+
+          {/* Körperliche Merkmale */}
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                Augen:
+              </label>
+              <input
+                type="text"
+                value={currentCharacter.appearance?.eyes || ""}
+                onChange={(e) => updateAppearance({ eyes: e.target.value })}
+                onBlur={() => saveCharacter()}
+                placeholder="Augenfarbe"
+                className="flex-1 min-w-[100px] bg-transparent border-none outline-none text-xs font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                Haare:
+              </label>
+              <input
+                type="text"
+                value={currentCharacter.appearance?.hair || ""}
+                onChange={(e) => updateAppearance({ hair: e.target.value })}
+                onBlur={() => saveCharacter()}
+                placeholder="Haarfarbe"
+                className="flex-1 min-w-[100px] bg-transparent border-none outline-none text-xs font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                Haut:
+              </label>
+              <input
+                type="text"
+                value={currentCharacter.appearance?.skin || ""}
+                onChange={(e) => updateAppearance({ skin: e.target.value })}
+                onBlur={() => saveCharacter()}
+                placeholder="Hautfarbe"
+                className="flex-1 min-w-[100px] bg-transparent border-none outline-none text-xs font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
+              />
+            </div>
+          </div>
+
+          {/* Größe & Gewicht */}
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                Größe:
+              </label>
+              <input
+                type="text"
+                value={currentCharacter.appearance?.height || ""}
+                onChange={(e) => updateAppearance({ height: e.target.value })}
+                onBlur={() => saveCharacter()}
+                placeholder={
+                  currentCharacter.meta.use_metric
+                    ? "Größe (cm)"
+                    : "Größe (ft/in)"
+                }
+                className="flex-1 min-w-[100px] bg-transparent border-none outline-none text-xs font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                Gewicht:
+              </label>
+              <input
+                type="text"
+                value={currentCharacter.appearance?.weight || ""}
+                onChange={(e) => updateAppearance({ weight: e.target.value })}
+                onBlur={() => saveCharacter()}
+                placeholder={
+                  currentCharacter.meta.use_metric
+                    ? "Gewicht (kg)"
+                    : "Gewicht (lbs)"
+                }
+                className="flex-1 min-w-[100px] bg-transparent border-none outline-none text-xs font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+                Größenkat.:
+              </label>
+              <span className="flex-1 min-w-[80px] text-xs font-medium text-foreground/80 px-2 py-1">
+                {calculateSizeCategory(
+                  currentCharacter.appearance?.height,
+                  currentCharacter.meta.use_metric,
+                )}
+              </span>
+            </div>
+          </div>
         </div>
       </header>
 

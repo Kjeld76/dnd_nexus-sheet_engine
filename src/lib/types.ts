@@ -12,12 +12,16 @@ export interface Character {
 
 export interface CharacterMeta {
   name: string;
+  player_name?: string;
   level: number;
   species_id?: string;
   class_id?: string;
   subclass_id?: string;
   background_id?: string;
+  origin_id?: string;
   alignment?: string;
+  faith?: string;
+  gender?: string;
   xp: number;
   use_metric: boolean;
 }
@@ -81,7 +85,7 @@ export interface Modifier {
   id: string;
   source: string;
   target: string;
-  modifier_type: 'Override' | 'Add' | 'Multiply';
+  modifier_type: "Override" | "Add" | "Multiply";
   value: number;
   condition?: string;
 }
@@ -102,21 +106,21 @@ export interface Spell {
   higher_levels?: string;
   classes: string;
   data: any;
-  source: 'core' | 'override' | 'homebrew';
+  source: "core" | "override" | "homebrew";
 }
 
 export interface Species {
   id: string;
   name: string;
   data: any;
-  source: 'core' | 'override' | 'homebrew';
+  source: "core" | "override" | "homebrew";
 }
 
 export interface Class {
   id: string;
   name: string;
   data: any;
-  source: 'core' | 'override' | 'homebrew';
+  source: "core" | "override" | "homebrew";
 }
 
 export interface Feat {
@@ -124,7 +128,7 @@ export interface Feat {
   name: string;
   category: string;
   data: any;
-  source: 'core' | 'override' | 'homebrew';
+  source: "core" | "override" | "homebrew";
 }
 
 export interface Skill {
@@ -132,7 +136,7 @@ export interface Skill {
   name: string;
   ability: string;
   description: string;
-  source: 'core';
+  source: "core";
 }
 
 export interface Gear {
@@ -142,7 +146,7 @@ export interface Gear {
   cost_gp: number;
   weight_kg: number;
   data: any;
-  source: 'core' | 'override' | 'homebrew';
+  source: "core" | "override" | "homebrew";
 }
 
 export interface Tool {
@@ -152,7 +156,7 @@ export interface Tool {
   cost_gp: number;
   weight_kg: number;
   data: any;
-  source: 'core' | 'override' | 'homebrew';
+  source: "core" | "override" | "homebrew";
 }
 
 export interface Weapon {
@@ -165,7 +169,7 @@ export interface Weapon {
   weight_kg: number;
   cost_gp: number;
   data: any;
-  source: 'core' | 'override' | 'homebrew';
+  source: "core" | "override" | "homebrew";
 }
 
 export interface Armor {
@@ -178,7 +182,7 @@ export interface Armor {
   weight_kg: number;
   cost_gp: number;
   data: any;
-  source: 'core' | 'override' | 'homebrew';
+  source: "core" | "override" | "homebrew";
 }
 
 export interface CustomSpell {
@@ -237,6 +241,6 @@ export interface CustomItem {
   weight_kg: number;
   data: any;
   parent_id?: string;
-  item_type: 'gear' | 'tool';
+  item_type: "gear" | "tool";
   is_homebrew?: boolean;
 }
