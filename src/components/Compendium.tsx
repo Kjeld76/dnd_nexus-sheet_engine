@@ -39,7 +39,9 @@ type Tab =
   | "gear"
   | "feats"
   | "skills"
-  | "backgrounds";
+  | "backgrounds"
+  | "items"
+  | "equipment";
 
 export function Compendium() {
   const [activeTab, setActiveTab] = useState<Tab>("spells");
@@ -55,10 +57,11 @@ export function Compendium() {
     weapons,
     armor,
     tools,
-    gear,
     feats,
     skills,
     backgrounds,
+    items,
+    equipment,
     isLoading,
     fetchSpells,
     fetchSpecies,
@@ -66,10 +69,11 @@ export function Compendium() {
     fetchWeapons,
     fetchArmor,
     fetchTools,
-    fetchGear,
     fetchFeats,
     fetchSkills,
     fetchBackgrounds,
+    fetchItems,
+    fetchEquipment,
   } = useCompendiumStore();
 
   useEffect(() => {
@@ -98,9 +102,6 @@ export function Compendium() {
       case "tools":
         fetchTools();
         break;
-      case "gear":
-        fetchGear();
-        break;
       case "feats":
         fetchFeats();
         break;
@@ -109,6 +110,12 @@ export function Compendium() {
         break;
       case "backgrounds":
         fetchBackgrounds();
+        break;
+      case "items":
+        fetchItems();
+        break;
+      case "equipment":
+        fetchEquipment();
         break;
     }
   };
@@ -135,9 +142,6 @@ export function Compendium() {
       case "tools":
         baseData = tools;
         break;
-      case "gear":
-        baseData = gear;
-        break;
       case "feats":
         baseData = feats;
         break;
@@ -146,6 +150,12 @@ export function Compendium() {
         break;
       case "backgrounds":
         baseData = backgrounds;
+        break;
+      case "items":
+        baseData = items;
+        break;
+      case "equipment":
+        baseData = equipment;
         break;
     }
     return baseData.filter((x) => x.name.toLowerCase().includes(s));
@@ -206,7 +216,8 @@ export function Compendium() {
             {renderTabButton("weapons", "Waffen", Sword)}
             {renderTabButton("armor", "Rüstungen", Shield)}
             {renderTabButton("tools", "Werkzeuge", Package)}
-            {renderTabButton("gear", "Ausrüstung", Package)}
+            {renderTabButton("items", "Gegenstände", Book)}
+            {renderTabButton("equipment", "Ausrüstungspakete", Package)}
             {renderTabButton("feats", "Talente", Award)}
             {renderTabButton("skills", "Fertigkeiten", Brain)}
             {renderTabButton("backgrounds", "Hintergründe", ScrollText)}
@@ -311,7 +322,13 @@ export function Compendium() {
                               ? `RK ${item.base_ac}`
                               : activeTab === "backgrounds"
                                 ? item.data?.feature_name || "PHB"
-                                : item.category || "PHB"}
+                                : activeTab === "items"
+                                  ? item.category || "PHB"
+                                  : activeTab === "equipment"
+                                    ? item.total_cost_gp !== undefined
+                                      ? `${item.total_cost_gp} GM`
+                                      : "PHB"
+                                    : item.category || "PHB"}
                     </span>
                     <div className="flex-1 h-px bg-border/50" />
                     <ChevronRight
@@ -718,7 +735,7 @@ export function Compendium() {
                         </>
                       )}
 
-                      {(activeTab === "gear" || activeTab === "tools") && (
+                      {(activeTab === "tools" || activeTab === "items") && (
                         <>
                           <StatRow
                             label="Preis"
@@ -736,45 +753,147 @@ export function Compendium() {
                               icon={Brain}
                             />
                           )}
+                          {activeTab === "items" && selectedItem.category && (
+                            <StatRow
+                              label="Kategorie"
+                              value={selectedItem.category}
+                            />
+                          )}
+                        </>
+                      )}
+
+                      {activeTab === "equipment" && (
+                        <>
+                          {selectedItem.total_cost_gp !== undefined && (
+                            <StatRow
+                              label="Gesamtkosten"
+                              value={`${selectedItem.total_cost_gp} GM`}
+                              highlight
+                            />
+                          )}
+                          {selectedItem.total_weight_kg !== undefined && (
+                            <StatRow
+                              label="Gesamtgewicht"
+                              value={`${selectedItem.total_weight_kg} kg`}
+                            />
+                          )}
+                          {Array.isArray(selectedItem.items) &&
+                            selectedItem.items.length > 0 && (
+                              <ClickableStatRow
+                                label="Enthält Gegenstände"
+                                items={selectedItem.items.map((i: any) => {
+                                  const item = items.find(
+                                    (item: any) => item.id === i.item_id,
+                                  );
+                                  return item
+                                    ? `${i.quantity > 1 ? `${i.quantity}x ` : ""}${item.name}`
+                                    : `${i.quantity > 1 ? `${i.quantity}x ` : ""}${i.item_id}`;
+                                })}
+                                itemsData={items}
+                                onItemClick={(id) => {
+                                  setActiveTab("items");
+                                  setSelectedId(id);
+                                }}
+                                highlight
+                                icon={Book}
+                              />
+                            )}
+                          {Array.isArray(selectedItem.tools) &&
+                            selectedItem.tools.length > 0 && (
+                              <ClickableStatRow
+                                label="Enthält Werkzeuge"
+                                items={selectedItem.tools.map((t: any) => {
+                                  const tool = tools.find(
+                                    (tool: any) => tool.id === t.tool_id,
+                                  );
+                                  return tool
+                                    ? `${t.quantity > 1 ? `${t.quantity}x ` : ""}${tool.name}`
+                                    : `${t.quantity > 1 ? `${t.quantity}x ` : ""}${t.tool_id}`;
+                                })}
+                                itemsData={tools}
+                                onItemClick={(id) => {
+                                  setActiveTab("tools");
+                                  setSelectedId(id);
+                                }}
+                                icon={Package}
+                              />
+                            )}
                         </>
                       )}
 
                       {activeTab === "backgrounds" && (
                         <>
-                          {selectedItem.data?.skill_proficiencies?.length >
-                            0 && (
-                            <StatRow
-                              label="Fertigkeits-Übung"
-                              value={selectedItem.data.skill_proficiencies.join(
-                                ", ",
-                              )}
+                          {selectedItem.data?.skills?.length > 0 && (
+                            <ClickableStatRow
+                              label="Fertigkeiten"
+                              items={selectedItem.data.skills}
+                              itemsData={skills}
+                              onItemClick={(id) => {
+                                setActiveTab("skills");
+                                setSelectedId(id);
+                              }}
                               highlight
                               icon={Brain}
                             />
                           )}
-                          {selectedItem.data?.tool_proficiencies?.length >
-                            0 && (
-                            <StatRow
-                              label="Werkzeug-Übung"
-                              value={selectedItem.data.tool_proficiencies.join(
-                                ", ",
-                              )}
+                          {selectedItem.data?.tool && (
+                            <ClickableStatRow
+                              label="Werkzeug"
+                              items={[selectedItem.data.tool]}
+                              itemsData={tools}
+                              onItemClick={(id: string) => {
+                                setActiveTab("tools");
+                                setSelectedId(id);
+                              }}
                               icon={Package}
                             />
                           )}
-                          {selectedItem.data?.languages?.length > 0 && (
-                            <StatRow
-                              label="Sprachen"
-                              value={selectedItem.data.languages.join(", ")}
-                              icon={ScrollText}
-                            />
-                          )}
-                          {selectedItem.data?.feature_name && (
-                            <StatRow
-                              label="Merkmalsname"
-                              value={selectedItem.data.feature_name}
+                          {selectedItem.data?.feat && (
+                            <ClickableStatRow
+                              label="Herkunftstalent"
+                              items={[selectedItem.data.feat]}
+                              itemsData={feats}
+                              onItemClick={(id: string) => {
+                                setActiveTab("feats");
+                                setSelectedId(id);
+                              }}
                               highlight
                               icon={Award}
+                            />
+                          )}
+                          {selectedItem.data?.ability_scores?.length > 0 && (
+                            <StatRow
+                              label="Attributs-Boni"
+                              value={selectedItem.data.ability_scores.join(
+                                ", ",
+                              )}
+                              icon={Zap}
+                            />
+                          )}
+                          {selectedItem.data?.equipment_id && (
+                            <ClickableStatRow
+                              label="Ausrüstung"
+                              items={[
+                                equipment.find(
+                                  (eq: any) =>
+                                    eq.id === selectedItem.data.equipment_id,
+                                )?.name || selectedItem.data.equipment_id,
+                              ]}
+                              itemsData={equipment}
+                              onItemClick={(id) => {
+                                setActiveTab("equipment");
+                                setSelectedId(id);
+                              }}
+                              highlight
+                              icon={Package}
+                            />
+                          )}
+                          {selectedItem.data?.gold && (
+                            <StatRow
+                              label="Startgold"
+                              value={`${selectedItem.data.gold} GM`}
+                              highlight
+                              icon={Package}
                             />
                           )}
                         </>
@@ -866,6 +985,79 @@ function StatRow({
       >
         {value || "—"}
       </span>
+      <div
+        className={cn(
+          "h-px w-full bg-gradient-to-r from-border/50 to-transparent",
+          highlight && "from-primary/20",
+        )}
+      />
+    </div>
+  );
+}
+
+function ClickableStatRow({
+  label,
+  items,
+  itemsData,
+  onItemClick,
+  highlight = false,
+  icon: Icon,
+}: {
+  label: string;
+  items: string[];
+  itemsData: any[];
+  onItemClick: (id: string) => void;
+  highlight?: boolean;
+  icon?: any;
+}) {
+  const findItemId = (itemName: string): string | null => {
+    const found = itemsData.find((item) => item.name === itemName);
+    return found?.id || null;
+  };
+
+  return (
+    <div className="flex flex-col gap-4 group">
+      <div className="flex items-center gap-3">
+        {Icon && (
+          <Icon
+            size={16}
+            className="text-primary/30 group-hover:text-primary transition-all group-hover:scale-110"
+          />
+        )}
+        <span className="text-[10px] font-black text-muted-foreground/40 uppercase tracking-[0.4em] leading-none">
+          {label}
+        </span>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {items.map((itemName, idx) => {
+          const itemId = findItemId(itemName);
+          const isClickable = itemId !== null;
+
+          return (
+            <span
+              key={idx}
+              onClick={() => {
+                if (isClickable) {
+                  onItemClick(itemId);
+                }
+              }}
+              className={cn(
+                "text-lg font-bold tracking-tighter transition-all leading-none",
+                highlight
+                  ? "text-primary selection:bg-primary/20"
+                  : "text-foreground opacity-90",
+                isClickable &&
+                  "cursor-pointer hover:text-primary hover:underline decoration-primary/50 decoration-2 underline-offset-2",
+              )}
+            >
+              {itemName}
+              {idx < items.length - 1 && (
+                <span className="text-muted-foreground/40 mx-1">,</span>
+              )}
+            </span>
+          );
+        })}
+      </div>
       <div
         className={cn(
           "h-px w-full bg-gradient-to-r from-border/50 to-transparent",

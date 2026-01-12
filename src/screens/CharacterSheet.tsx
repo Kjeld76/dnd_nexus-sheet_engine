@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useCharacterStore } from "../lib/store";
 import { Species } from "../lib/types";
 import { AttributeBlock } from "../components/character/AttributeBlock";
 import { SkillList } from "../components/character/SkillList";
 import { CombatStats } from "../components/character/CombatStats";
 import { ModifiersList } from "../components/character/ModifiersList";
+import { FeatsList } from "../components/character/FeatsList";
 import { SpeciesTraits } from "../components/character/SpeciesTraits";
 import { AbilityScoreChoiceDialog } from "../components/character/AbilityScoreChoiceDialog";
+import { BackgroundAbilityScoreDialog } from "../components/character/BackgroundAbilityScoreDialog";
 import {
   Save,
   User,
@@ -16,6 +18,7 @@ import {
   ChevronLeft,
   Sparkles,
   Settings,
+  Shield,
 } from "lucide-react";
 import { calculateLevelFromXP, getXPForNextLevel } from "../lib/math";
 import { useCompendiumStore } from "../lib/compendiumStore";
@@ -29,6 +32,8 @@ export function CharacterSheet() {
     updateAppearance,
     updateProficiency,
     removeModifier,
+    addFeat,
+    removeFeat,
     saveCharacter,
     isLoading,
   } = useCharacterStore();
@@ -38,10 +43,14 @@ export function CharacterSheet() {
     armor = [],
     species = [],
     classes = [],
+    backgrounds = [],
+    feats = [],
     fetchClasses,
     fetchSpecies,
     fetchWeapons,
     fetchArmor,
+    fetchBackgrounds,
+    fetchFeats,
   } = useCompendiumStore();
 
   useEffect(() => {
@@ -49,7 +58,16 @@ export function CharacterSheet() {
     fetchSpecies();
     fetchWeapons();
     fetchArmor();
-  }, [fetchClasses, fetchSpecies, fetchWeapons, fetchArmor]);
+    fetchBackgrounds();
+    fetchFeats();
+  }, [
+    fetchClasses,
+    fetchSpecies,
+    fetchWeapons,
+    fetchArmor,
+    fetchBackgrounds,
+    fetchFeats,
+  ]);
 
   // Find current class name
   const currentClass = classes.find(
@@ -64,12 +82,25 @@ export function CharacterSheet() {
     (s) => s.id === currentCharacter?.meta.species_id,
   );
 
-  const [activeTab] = useState<"combat" | "spells" | "inventory" | "notes">(
-    "combat",
+  // Find current background
+  const currentBackground = backgrounds.find(
+    (bg) => bg.id === currentCharacter?.meta.background_id,
   );
+
+  // Track previous background_id to detect changes
+  const prevBackgroundIdRef = useRef<string | undefined>(
+    currentCharacter?.meta.background_id,
+  );
+
+  const [activeTab, setActiveTab] = useState<
+    "combat" | "spells" | "inventory" | "notes"
+  >("combat");
 
   const [showAbilityChoiceDialog, setShowAbilityChoiceDialog] = useState(false);
   const [pendingSpecies, setPendingSpecies] = useState<Species | null>(null);
+  const [showBackgroundAbilityDialog, setShowBackgroundAbilityDialog] =
+    useState(false);
+  const [pendingBackground, setPendingBackground] = useState<any>(null);
 
   // Apply species data when species_id changes
   useEffect(() => {
@@ -184,6 +215,158 @@ export function CharacterSheet() {
     setShowAbilityChoiceDialog(false);
     setPendingSpecies(null);
   };
+
+  const handleBackgroundAbilityConfirm = (choices: Record<string, number>) => {
+    if (!pendingBackground || !currentCharacter) return;
+
+    // Apply ability score increases (all at once to avoid race conditions)
+    const updatedAttributes = { ...currentCharacter.attributes };
+    Object.entries(choices).forEach(([attr, value]) => {
+      if (value > 0) {
+        const attrKey = attr as keyof typeof currentCharacter.attributes;
+        const currentValue = currentCharacter.attributes[attrKey];
+        const newValue = Math.min(currentValue + value, 20); // Max 20
+        updatedAttributes[attrKey] = newValue;
+      }
+    });
+
+    // Update all attributes at once
+    Object.entries(updatedAttributes).forEach(([attr, value]) => {
+      updateAttribute(attr as keyof typeof currentCharacter.attributes, value);
+    });
+
+    // Store which ability scores were applied from this background
+    updateMeta({ background_ability_scores: choices });
+    saveCharacter();
+
+    setShowBackgroundAbilityDialog(false);
+    setPendingBackground(null);
+  };
+
+  // Apply background data when background_id changes
+  useEffect(() => {
+    if (!currentCharacter) return;
+
+    const currentBackgroundId = currentCharacter.meta.background_id;
+    const previousBackgroundId = prevBackgroundIdRef.current;
+
+    // If background changed, remove the old background's bonuses
+    if (previousBackgroundId && previousBackgroundId !== currentBackgroundId) {
+      const previousBackground = backgrounds.find(
+        (bg) => bg.id === previousBackgroundId,
+      );
+      if (previousBackground?.data) {
+        // Remove old background's ability score bonuses
+        if (currentCharacter.meta.background_ability_scores) {
+          const oldBonuses = currentCharacter.meta.background_ability_scores;
+          Object.entries(oldBonuses).forEach(([attr, value]) => {
+            if (value > 0) {
+              const attrKey = attr as keyof typeof currentCharacter.attributes;
+              const currentValue = currentCharacter.attributes[attrKey];
+              updateAttribute(attrKey, Math.max(currentValue - value, 1)); // Min 1
+            }
+          });
+          updateMeta({ background_ability_scores: undefined });
+        }
+
+        // Remove old background's feat
+        if (previousBackground.data.feat) {
+          const previousFeatName = previousBackground.data.feat;
+          const previousFeat = feats.find(
+            (f) => f.name.toUpperCase() === previousFeatName.toUpperCase(),
+          );
+          if (
+            previousFeat &&
+            currentCharacter.feats.includes(previousFeat.id)
+          ) {
+            removeFeat(previousFeat.id);
+          }
+        }
+
+        // Remove old background's skills
+        if (
+          previousBackground.data.skills &&
+          Array.isArray(previousBackground.data.skills)
+        ) {
+          const oldSkills = previousBackground.data.skills || [];
+          oldSkills.forEach((skill: string) => {
+            if (currentCharacter.proficiencies.skills.includes(skill)) {
+              updateProficiency("skills", skill, false);
+            }
+          });
+        }
+
+        // Remove old background's tool
+        if (previousBackground.data.tool) {
+          const oldTool = previousBackground.data.tool;
+          if (currentCharacter.proficiencies.tools.includes(oldTool)) {
+            updateProficiency("tools", oldTool, false);
+          }
+        }
+      }
+    }
+
+    // Update the ref to the current background_id
+    prevBackgroundIdRef.current = currentBackgroundId;
+
+    // Now apply the new background's data
+    if (!currentBackground) return;
+
+    const backgroundData = currentBackground.data;
+    if (!backgroundData) return;
+
+    // Add skills from background
+    if (backgroundData.skills && Array.isArray(backgroundData.skills)) {
+      const backgroundSkills = backgroundData.skills || [];
+      backgroundSkills.forEach((skill: string) => {
+        if (!currentCharacter.proficiencies.skills.includes(skill)) {
+          updateProficiency("skills", skill, true);
+        }
+      });
+    }
+
+    // Add tool proficiency from background
+    if (backgroundData.tool) {
+      const toolName = backgroundData.tool;
+      if (!currentCharacter.proficiencies.tools.includes(toolName)) {
+        updateProficiency("tools", toolName, true);
+      }
+    }
+
+    // Add feat from background
+    if (backgroundData.feat) {
+      const featName = backgroundData.feat;
+      // Find feat by name (case-insensitive)
+      const matchingFeat = feats.find(
+        (f) => f.name.toUpperCase() === featName.toUpperCase(),
+      );
+      if (matchingFeat && !currentCharacter.feats.includes(matchingFeat.id)) {
+        addFeat(matchingFeat.id);
+      }
+    }
+
+    // Check if ability scores need to be applied (show dialog if not already applied)
+    // Only check if background changed (not on every render)
+    if (
+      backgroundData.ability_scores &&
+      Array.isArray(backgroundData.ability_scores) &&
+      previousBackgroundId !== currentBackgroundId &&
+      backgroundData.ability_scores.length === 3 &&
+      !currentCharacter.meta.background_ability_scores
+    ) {
+      setPendingBackground(currentBackground);
+      setShowBackgroundAbilityDialog(true);
+      return; // Wait for user choice
+    }
+  }, [
+    currentCharacter?.meta.background_id,
+    currentBackground,
+    backgrounds,
+    feats,
+    updateProficiency,
+    addFeat,
+    removeFeat,
+  ]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -434,23 +617,27 @@ export function CharacterSheet() {
               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
                 Herkunft:
               </label>
-              <input
-                type="text"
-                value={
-                  currentCharacter.meta.origin_id ||
-                  currentCharacter.meta.background_id ||
-                  ""
-                }
-                onChange={(e) =>
-                  updateMeta({
-                    origin_id: e.target.value,
-                    background_id: e.target.value,
-                  })
-                }
-                onBlur={() => saveCharacter()}
-                placeholder="Herkunft"
-                className="flex-1 min-w-[120px] bg-transparent border-none outline-none text-xs font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
-              />
+              <select
+                value={currentCharacter.meta.background_id || ""}
+                onChange={(e) => {
+                  updateMeta({ background_id: e.target.value });
+                  setTimeout(saveCharacter, 100);
+                }}
+                className="flex-1 min-w-[120px] bg-transparent text-xs font-medium text-foreground/80 outline-none border-none cursor-pointer hover:text-primary transition-colors"
+              >
+                <option value="" disabled className="bg-card">
+                  Hintergrund wählen
+                </option>
+                {backgrounds.map((bg) => (
+                  <option
+                    key={bg.id}
+                    value={bg.id}
+                    className="bg-card text-foreground"
+                  >
+                    {bg.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <label className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground/70">
@@ -612,6 +799,54 @@ export function CharacterSheet() {
         </div>
       </header>
 
+      {/* Navigation Tabs */}
+      <div className="w-full mb-6 flex items-center gap-3 overflow-x-auto no-scrollbar">
+        <button
+          onClick={() => setActiveTab("combat")}
+          className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-black uppercase text-sm tracking-wider transition-all whitespace-nowrap ${
+            activeTab === "combat"
+              ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+              : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground border border-border/50"
+          }`}
+        >
+          <Shield className="w-5 h-5" />
+          Kampf
+        </button>
+        <button
+          onClick={() => setActiveTab("spells")}
+          className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-black uppercase text-sm tracking-wider transition-all whitespace-nowrap ${
+            activeTab === "spells"
+              ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+              : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground border border-border/50"
+          }`}
+        >
+          <Wand2 className="w-5 h-5" />
+          Zauber
+        </button>
+        <button
+          onClick={() => setActiveTab("inventory")}
+          className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-black uppercase text-sm tracking-wider transition-all whitespace-nowrap ${
+            activeTab === "inventory"
+              ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+              : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground border border-border/50"
+          }`}
+        >
+          <Backpack className="w-5 h-5" />
+          Inventar
+        </button>
+        <button
+          onClick={() => setActiveTab("notes")}
+          className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-black uppercase text-sm tracking-wider transition-all whitespace-nowrap ${
+            activeTab === "notes"
+              ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+              : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground border border-border/50"
+          }`}
+        >
+          <Book className="w-5 h-5" />
+          Notizen
+        </button>
+      </div>
+
       <main className="w-full p-4">
         {activeTab === "combat" && (
           <div className="grid grid-cols-1 xl:grid-cols-12 gap-4">
@@ -689,9 +924,14 @@ export function CharacterSheet() {
               {currentSpecies && <SpeciesTraits species={currentSpecies} />}
             </div>
 
-            {/* Right Column: Modifiers */}
+            {/* Right Column: Feats & Modifiers */}
             <div className="xl:col-span-2 animate-in slide-in-from-right-8 duration-500">
-              <div className="sticky top-24">
+              <div className="sticky top-24 space-y-6">
+                <FeatsList
+                  feats={feats}
+                  characterFeats={currentCharacter.feats || []}
+                  onRemove={removeFeat}
+                />
                 <ModifiersList
                   modifiers={currentCharacter.modifiers}
                   onRemove={removeModifier}
@@ -752,6 +992,22 @@ export function CharacterSheet() {
           }}
         />
       )}
+
+      {showBackgroundAbilityDialog &&
+        pendingBackground &&
+        currentCharacter &&
+        pendingBackground.data?.ability_scores && (
+          <BackgroundAbilityScoreDialog
+            backgroundName={pendingBackground.name}
+            abilityScores={pendingBackground.data.ability_scores}
+            currentAttributes={currentCharacter.attributes}
+            onConfirm={handleBackgroundAbilityConfirm}
+            onCancel={() => {
+              setShowBackgroundAbilityDialog(false);
+              setPendingBackground(null);
+            }}
+          />
+        )}
     </div>
   );
 }

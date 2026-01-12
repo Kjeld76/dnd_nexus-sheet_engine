@@ -31,6 +31,7 @@ interface CharacterState {
   removeFeat: (featId: string) => void;
   loadCharacterList: () => Promise<void>;
   setCurrentCharacter: (character: Character | null) => void;
+  deleteCharacter: (id: string) => Promise<void>;
 }
 
 export const useCharacterStore = create<CharacterState>((set, get) => ({
@@ -247,6 +248,21 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
         feats: character.feats || [],
       }));
       set({ characters: migratedList, isLoading: false });
+    } catch (err) {
+      set({ error: (err as Error).message, isLoading: false });
+    }
+  },
+
+  deleteCharacter: async (id) => {
+    set({ isLoading: true, error: null });
+    try {
+      await characterApi.delete(id);
+      const { currentCharacter } = get();
+      if (currentCharacter?.id === id) {
+        set({ currentCharacter: null });
+      }
+      await get().loadCharacterList();
+      set({ isLoading: false });
     } catch (err) {
       set({ error: (err as Error).message, isLoading: false });
     }

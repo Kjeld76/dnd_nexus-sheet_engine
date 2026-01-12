@@ -15,6 +15,8 @@ import {
   CustomWeapon,
   CustomArmor,
   CustomItem,
+  Item,
+  Equipment,
 } from "./types";
 
 export const characterApi = {
@@ -65,6 +67,12 @@ export const compendiumApi = {
   },
   async getBackgrounds(): Promise<Background[]> {
     return await invoke("get_all_backgrounds");
+  },
+  async getAllItems(): Promise<Item[]> {
+    return await invoke("get_all_items");
+  },
+  async getAllEquipment(): Promise<Equipment[]> {
+    return await invoke("get_all_equipment");
   },
   async importPhbData(): Promise<void> {
     return await invoke("import_phb_data");

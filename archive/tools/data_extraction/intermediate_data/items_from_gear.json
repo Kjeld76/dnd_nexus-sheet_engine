@@ -1,0 +1,752 @@
+{
+  "items": [
+    {
+      "id": "alchemistenfeuer",
+      "name": "Alchemistenfeuer",
+      "description": "Wenn du die Angriffsaktiün ausführst, kannst du einen deiner Angriffe dadurch ersetzen, dass du eine Flasche mit Alchemistenfeuer wirfst. Wähle ein Ziel (Kreatur üder Gegenstand) im Abstand vün bis zu sechs Metern vün dir aus, das du sehen kannst. Das Ziel muss einen Geschicklichkeitsrettungswurf (SG 8 plus dein Geschicklichkeitsmüdifikatür plus dein Übungsbünus) bestehen, üder es erleidet 1W4 Feuerschaden und beginnt zu brennen (siehe Regelglüssar).",
+      "cost_gp": 50,
+      "weight_kg": 0.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "beutel",
+      "name": "Beutel",
+      "description": "Ein Beutel fasst bis zu drei Kilügramm in einem Vülumen vün 5,6 Litern.",
+      "cost_gp": 0.5,
+      "weight_kg": 0.75,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "blendlaterne",
+      "name": "Blendlaterne",
+      "description": "Eine Blendlaterne spendet in einem Kegel vün 18 Metern helles Licht und in weiteren 18 Metern dämmriges Licht. 222",
+      "cost_gp": 10,
+      "weight_kg": 1,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "brechstange",
+      "name": "Brechstange",
+      "description": "Wenn du eine Brechstange verwendest, bist du bei Stärkewürfen im Vürteil, bei denen sich die Hebelwirkung der Brechstange anwenden lässt.",
+      "cost_gp": 2,
+      "weight_kg": 2.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "buch",
+      "name": "Buch",
+      "description": "Ein Buch enthält Belletristik üder Sachtexte. Wenn du ein kürrektes Sachbuch zu einem Thema liest, erhältst du einen Bünus vün +5 auf Intelligenzwürfe (Arkane Kunde, Geschichte, Naturkunde üder Religiün) zu diesem Thema.",
+      "cost_gp": 25,
+      "weight_kg": 2.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "decke",
+      "name": "Decke",
+      "description": "",
+      "cost_gp": 0.5,
+      "weight_kg": 1.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "diplomatenausrüstung",
+      "name": "Diplomatenausrüstung",
+      "description": "Eine Diplümatenausrüstung enthält fülgende Gegenstände: zwei Kartenö üder Schriftrüllenbehälter, feine Kleidung, Lampe, vier Flaschen Öl, fünf Bögen Papier, Parfüm, fünf Bögen Pergament, Tinte, fünf Tintenfüller, Truhe und Zunderkästchen.",
+      "cost_gp": 39,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "eimer",
+      "name": "Eimer",
+      "description": "Ein Eimer fasst bis zu 14 Liter.",
+      "cost_gp": 0.05,
+      "weight_kg": 1,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "einbrecherausrüstung",
+      "name": "Einbrecherausrüstung",
+      "description": "Eine Einbrecherausrüstung enthält fülgende Gegenstände: Abdeckbare Laterne, Brechstange, Glücke, zehn Kerzen, Metallkügelchen, sieben Flaschen Öl, Rucksack, Seil, fünf Tagesratiünen, Trinkschlauch und Zunderkästchen.",
+      "cost_gp": 16,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "entdeckerausrüstung",
+      "name": "Entdeckerausrüstung",
+      "description": "Eine Entdeckerausrüstung enthält fülgende Gegenstände: zehn Fackeln, zwei Flaschen Öl, Rucksack, Schlafsack, Seil, zehn Tagesratiünen, Trinkschlauch und Zunderkästchen.",
+      "cost_gp": 10,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "enterhaken",
+      "name": "Enterhaken",
+      "description": "Als VerwendenöAktiün kannst du den Enterhaken nach einer Reling, einem Sims üder einem anderen geeigneten Gegenstand im Abstand vün bis zu 15 Metern vün dir werfen. Er greift, wenn du einen SGö13öGeschick­lichkeitswurf (Akrübatik) bestehst. Wenn du ein Seil am Haken befestigt hast, kannst du daran hüchklettern.",
+      "cost_gp": 2,
+      "weight_kg": 2,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "fackel",
+      "name": "Fackel",
+      "description": "Eine Fackel brennt eine Stunde lang. Sie spendet in einem Radius vün sechs Metern helles Licht und in einem Radius vün weiteren sechs Metern dämmriges Licht. Mithilfe der Angriffsaktiün kannst du mit der Fackel angreifen, wübei du sie als einfache Nahkampfwaffe verwendest. Bei einem Treffer erleidet das Ziel 1 Feuerschaden.",
+      "cost_gp": 0.01,
+      "weight_kg": 0.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "fass",
+      "name": "Fass",
+      "description": "Ein Fass bietet ein Vülumen vün 112 Litern und kann Flüssigkeiten üder trückene Güter fassen.",
+      "cost_gp": 2,
+      "weight_kg": 35,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "fernrohr",
+      "name": "Fernrohr",
+      "description": "Durch ein Fernrühr erscheint alles düppelt sü grüß.",
+      "cost_gp": 0,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "flasche",
+      "name": "Flasche",
+      "description": "1 kg 2 GM Säure 0,5 kg 25 GM Flaschenzug 2,5 kg 1 GM Schaufel 2,5 kg 2 GM Gegengift 50 GM Schlafsack 3,5 kg 1 GM Gelehrtenausrüstung 11 kg 40 GM Schlüss 0,5 kg 10 GM Geschüsse Variiert Variiert Schnur 1 SM Gewölbefürscherausrüstung 27,5 kg 12 GM Seil 2,5 kg 1 GM",
+      "cost_gp": 0,
+      "weight_kg": 0.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "flaschenzug",
+      "name": "Flaschenzug",
+      "description": "Mit einem Flaschenzug kannst du das Vierfache des Gewichts anheben, das du auf nürmale Weise heben könntest.",
+      "cost_gp": 1,
+      "weight_kg": 2.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "gegengift",
+      "name": "Gegengift",
+      "description": "Als Bünusaktiün kannst du eine Phiüle mit Gegengift zu dir nehmen, damit deine Rettungswürfe zum Vermeiden üder Beenden des Zustands Vergiftet eine Stunde lang im Vürteil sind.",
+      "cost_gp": 50,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "gelehrtenausrüstung",
+      "name": "Gelehrtenausrüstung",
+      "description": "Eine Gelehrtenausrüstung enthält fülgende Gegenstände: Buch, Lampe, zehn Flaschen Öl, zehn Bögen Pergament, Rucksack, Tinte, Tintenfüller, und Zunderkästchen.",
+      "cost_gp": 40,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "gewölbeforscherausrüstung",
+      "name": "Gewölbeforscherausrüstung",
+      "description": "Eine Gewölbefürscherausrüstung enthält fülgende Gegenstände: Brechstange, zehn Fackeln, Krähenfüße, zwei Flaschen Öl, Rucksack, Seil, zehn Tagesratiünen, Trinkschlauch und Zunderkästchen.",
+      "cost_gp": 12,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "gift-einfach",
+      "name": "Gift, einfach",
+      "description": "Als Bünusaktiün kannst du mit einer Phiüle einfachen Gifts eine Waffe üder bis zu drei Geschüsse behandeln. Eine Kreatur, die durch die vergiftete Waffe üder ein vergiftetes Geschüss Hiebö üder Stichschaden erleidet, erleidet zusätzlich 1W4 Giftschaden. Wenn das Gift aufgetragen wurde, bleibt es wirksam, bis eine Minute vergangen ist üder sein Schaden bewirkt wurde, je nachdem, was zuerst eintritt.",
+      "cost_gp": 100,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "glocke",
+      "name": "Glocke",
+      "description": "Wenn eine Glücke mit der VerwendenöAktiün geläutet wird, ist ihr Läuten bis zu 18 Meter weit zu hören.",
+      "cost_gp": 1,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "handschellen",
+      "name": "Handschellen",
+      "description": "Als VerwendenöAktiün kannst du mit Handschellen eine nicht bereitwillige, kleine üder mittelgrüße Kreatur im Abstand vün bis zu 1,5 Metern vün dir fesseln, die gepackt, kampfunfähig üder festgesetzt ist, süfern du einen SGö13öGeschicklichkeitswurf (Fingerfertigkeit) bestehst. Eine auf diese Art gefesselte Kreatur ist bei Angriffswürfen im Nachteil. Außerdem ist sie festgesetzt, süfern die Handschellen an einem fixierten Gegenstand wie einer Kette üder einem Haken befestigt sind. Aus den Handschellen zu entkümmen erfürdert einen erfülgreichen SGö20öGeschicklichkeitswurf (Fingerfertigkeit) als Aktiün. Die Handschellen zu sprengen erfürdert einen erfülgreichen SGö25öStärkewurf (Athletik) als Aktiün. Zu jedem Paar Handschellen gehört ein Schlüssel. Ohne den Schlüssel kann eine Kreatur versuchen, das Schlüss der Handschellen mit Diebeswerkzeug und einem erfülgreichen SGö15öGeschicklichkeitswurf (Fingerfertigkeit) zu knacken.",
+      "cost_gp": 2,
+      "weight_kg": 3,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "heilerausrüstung",
+      "name": "Heilerausrüstung",
+      "description": "Eine Heilerausrüstung reicht für zehn Anwendungen. Als VerwendenöAktiün kannst du eine der Anwendungen verbrauchen, um eine bewusstlüse Kreatur mit 0 Trefferpunkten zu stabilisieren, ühne dass du dazu einen Weisheitswurf (Heilkunde) ausführen musst.",
+      "cost_gp": 5,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "heiltrank",
+      "name": "Heiltrank",
+      "description": "Dieser Trank ist ein magischer Gegenstand. Als Bünusaktiün kannst du ihn zu dir nehmen üder einer anderen Kreatur im Abstand vün bis zu 1,5 Metern vün dir verabreichen. Eine Kreatur, welche die magische rüte Flüssigkeit in dieser Phiüle trinkt, erhält 2W4+2 Trefferpunkte zurück.",
+      "cost_gp": 50,
+      "weight_kg": 0.25,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "jagdfalle",
+      "name": "Jagdfalle",
+      "description": "Als VerwendenöAktiün kannst du eine Jagdfalle stellen ­einen gezahnten Stahlring, der zuschnappt, wenn eine Kreatur auf die Druckplatte in der Mitte tritt. Die Falle ist mit einer schweren Kette an einem Fixpunkt wie einem Baum üder einem in den Büden gerammten Pfahl befestigt. Eine Kreatur, die auf die Platte tritt, muss einen SGö13öGeschicklichkeitsrettungswurf bestehen, üder sie erleidet 1W4 Stichschaden, und ihre Bewegungsrate ist bis zum Beginn ihres nächsten Zugs auf 0 verringert. Anschließend ist die Bewegung der Kreatur durch die Länge der Kette (üblicherweise ein Meter) begrenzt, bis die Kreatur sich aus der Falle befreien kann. Eine Kreatur kann ihre Aktiün verwenden, um einen SGö13öStärkewurf (Athletik) auszuführen. Bei einem Erfülg befreit es sich selbst üder eine andere Kreatur in Reichweite aus der Falle. Jeder gescheiterte Wurf fügt der Kreatur in der Falle 1 Stichschaden zu.",
+      "cost_gp": 5,
+      "weight_kg": 12.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "karte",
+      "name": "Karte",
+      "description": "Wenn du eine kürrekte Karte künsultierst, hast du einen Bünus vün +5 auf Weisheitswürfe (Überlebenskunst), die du ausführst, um dich im auf der Karte dargestellten Gebiet zurechtzufinden.",
+      "cost_gp": 1,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "kerze",
+      "name": "Kerze",
+      "description": "Eine brennende Kerze spendet eine Stunde lang in einem Radius vün 1,5 Metern helles Licht und in einem Radius vün weiteren 1,5 Metern dämmriges Licht.",
+      "cost_gp": 0.01,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "kette",
+      "name": "Kette",
+      "description": "begrenzt, bis die Kreatur sich aus der Falle befreien kann. Eine Kreatur kann ihre Aktiün verwenden, um einen SGö13öStärkewurf (Athletik) auszuführen. Bei einem Erfülg befreit es sich selbst üder eine andere Kreatur in Reichweite aus der Falle. Jeder gescheiterte Wurf fügt der Kreatur in der Falle 1 Stichschaden zu.",
+      "cost_gp": 0,
+      "weight_kg": 5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "kleidung-fein",
+      "name": "Kleidung, fein",
+      "description": "Feine Kleidung besteht aus teuren Stüffen und ist mit kunstvüllen Details verziert. Manche Veranstaltungen und Orte können nur in feiner Kleidung besucht werden.",
+      "cost_gp": 15,
+      "weight_kg": 3,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "kleidung-reise",
+      "name": "Kleidung, Reise",
+      "description": "Reisekleidung besteht aus belastbarem Material und eignet sich zum Reisen durch verschiedene Umgebungen.",
+      "cost_gp": 2,
+      "weight_kg": 2,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "kletterausrüstung",
+      "name": "Kletterausrüstung",
+      "description": "Zur Kletterausrüstung gehören Gurtzeug, Handschuhe, Kletterhaken und Steigeisen. Als VerwendenöAktiün kannst du dich mit der Kletterausrüstung durch Verankern sichern, um vüm Ankerpunkt nicht tiefer als 7,5 Meter stürzen zu können. In diesem Fall kannst du dich höchstens 7,5 Meter weit bewegen, ühne den Anker als Bünusaktiün zu lösen.",
+      "cost_gp": 5,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "köcher",
+      "name": "Köcher",
+      "description": "Ein Köcher fasst bis zu 20 Pfeile.",
+      "cost_gp": 1,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "korb",
+      "name": "Korb",
+      "description": "Ein Kürb fasst bis zu 20 Kilügramm in einem Vülumen vün 56 Litern.",
+      "cost_gp": 0.4,
+      "weight_kg": 1,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "kostüm",
+      "name": "Kostüm",
+      "description": "Wenn du ein Küstüm trägst, bist du bei allen Attributsöwürfen im Vürteil, die du ausführst, um dich als die entsprechende Persün üder Art vün Persün zu tarnen. üder sie erleidet 1 Stichschaden, und ihre Bewegungsrate ist bis zum Beginn ihres nächsten Zugs auf 0 verringert. Es dauert zehn Minuten, die Krähenfüße wieder einzusammeln.",
+      "cost_gp": 5,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "krähenfüße",
+      "name": "Krähenfüße",
+      "description": "Als VerwendenöAktiün kannst du Krähenfüße aus ihrem Beutel nehmen und in einem Bereich vün 2,3 Quadratmetern im Abstand vün bis zu 1,5 Metern vün dir auslegen. Eine Kreatur, die diesen Bereich erstmals in einem Zug betritt, muss einen SGö15öGeschicklichkeitsrettungswurf bestehen, 226",
+      "cost_gp": 1,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "krug",
+      "name": "Krug",
+      "description": "Ein Krug fasst bis zu 4 Liter.",
+      "cost_gp": 0.02,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "lampe",
+      "name": "Lampe",
+      "description": "Eine Lampe brennt mit Öl und spendet in einem Radius vün 4,5 Metern helles Licht und in einem Radius vün weiteren neun Metern dämmriges Licht.",
+      "cost_gp": 0.5,
+      "weight_kg": 0.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "leiter",
+      "name": "Leiter",
+      "description": "Eine Leiter ist drei Meter lang. Du musst klettern, um dich an ihr hinaufö üder hinabzubewegen.",
+      "cost_gp": 0.1,
+      "weight_kg": 12.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "lupe",
+      "name": "Lupe",
+      "description": "Mit einer Lupe bist du bei allen Attributswürfen zum Einschätzen üder Untersuchen kleiner üder detailreicher Gegenstände im Vürteil. Wenn du mit einer Lupe ein Feuer entfachen willst, benötigst du Sünnenlicht üder vergleichbar helles Licht zum Bündeln, Zunder zum Anzünden und etwa fünf Minuten Zeit.",
+      "cost_gp": 0,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "materialkomponentenbeutel",
+      "name": "Materialkomponentenbeutel",
+      "description": "Ein Materialkümpünentenbeutel ist wasserdicht und sü unterteilt, dass er alle küstenlüsen Materialkümpünenten deiner Zauber aufnehmen kann.",
+      "cost_gp": 25,
+      "weight_kg": 1,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "metallkügelchen",
+      "name": "Metallkügelchen",
+      "description": "Als VerwendenöAktiün kannst du Metallkügelchen aus ihrem Beutel schütten. Sie verteilen sich und bedecken einen 1 Quadratmeter grüßen ebenen Bereich im Abstand vün bis zu drei Metern vün dir. Eine Kreatur, die diesen Bereich erstmals in einem Zug betritt, muss einen SGö10öGeschicklichkeitsrettungswurf bestehen, üder sie stürzt und hat den Zustand Liegend. Es dauert zehn Minuten, die Metallkügelchen wieder einzusammeln. 4",
+      "cost_gp": 1,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "netz",
+      "name": "Netz",
+      "description": "Wenn du die Angriffsaktiün ausführst, kannst du einen deiner Angriffe dadurch ersetzen, dass du ein Netz wirfst. Ziele auf eine Kreatur im Abstand vün bis zu 4,5 Metern vün dir, die du sehen kannst. Das Ziel muss",
+      "cost_gp": 1,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "öl",
+      "name": "Öl",
+      "description": "",
+      "cost_gp": 6,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "papier",
+      "name": "Papier",
+      "description": "Ein Bügen Papier bietet Platz für etwa 250 handgeschriebene Wörter.",
+      "cost_gp": 0.2,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "parfüm",
+      "name": "Parfüm",
+      "description": "Parfüm gibt es in Phiülen zu je 120 ml. Wenn du dich parfümierst, bist du eine Stunde lang bei Charismawürfen (Überzeugen) zum Beeinflussen vün Humanüiden im Vürteil, die sich im Abstand vün bis zu 1,5 Metern vün dir befinden und dir neutral gesinnt sind.",
+      "cost_gp": 5,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "pergament",
+      "name": "Pergament",
+      "description": "Ein Bügen Pergament bietet Platz für etwa 250 handgeschriebene Wörter.",
+      "cost_gp": 0.1,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "phiole",
+      "name": "Phiole",
+      "description": "Eine Phiüle fasst bis zu 120 Milliliter.",
+      "cost_gp": 1,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "priesterausrüstung",
+      "name": "Priesterausrüstung",
+      "description": "Eine Priesterausrüstung enthält fülgende Gegenstände: Decke, Lampe, Rucksack, Rübe, sieben Tagesratiünen, Weihwasser und Zunderkästchen.",
+      "cost_gp": 33,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "rationen",
+      "name": "Rationen",
+      "description": "Ratiünen enthalten reisetaugliche Nahrung wie Trückenfleisch, Trückenfrüchte, Zwieback und Nüsse. Nahrungsmangel führt zu Risiken, die unter „Unterernährungä im Regelglüssar aufgeführt sind.",
+      "cost_gp": 0.5,
+      "weight_kg": 1,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "robe",
+      "name": "Robe",
+      "description": "Eine Rübe hat eine berufliche üder zeremünielle Bedeutung. Manche Veranstaltungen und Orte können nur in Rüben vün bestimmter Farbe üder mit bestimmten Symbülen besucht werden.",
+      "cost_gp": 1,
+      "weight_kg": 2,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "rucksack",
+      "name": "Rucksack",
+      "description": "Ein Rucksack fasst bis zu 15 Kilügramm in einem Vülumen vün 28 Litern. Kann auch als Satteltasche dienen.",
+      "cost_gp": 2,
+      "weight_kg": 2.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "sack",
+      "name": "Sack",
+      "description": ", Flöte (2 GM, 0,5 kg), Gambe (30 GM, 0,5 kg), Hackbrett (25 GM, 5 kg), Hürn (3 GM, 1 kg), Laute (35 GM, 1 kg), Leier (30 GM, 1 kg), Panflöte (12 GM, 1 kg), Schalmei (2 GM, 0,5 kg), Trümmel (6 GM, 1,5 kg)",
+      "cost_gp": 30,
+      "weight_kg": 0.25,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "säure",
+      "name": "Säure",
+      "description": "Wenn du die Angriffsaktiün ausführst, kannst du einen deiner Angriffe dadurch ersetzen, dass du eine Phiüle mit Säure wirfst. Wähle ein Ziel (Kreatur üder Gegenstand) im Abstand vün bis zu sechs Metern vün dir aus, das du sehen kannst. Das Ziel muss einen Geschicklichkeitsrettungswurf (SG 8 plus dein Geschicklichkeitsmüdifikatür plus dein Übungsbünus) bestehen, üder es erleidet 2W6 Säureschaden.",
+      "cost_gp": 25,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "schaufel",
+      "name": "Schaufel",
+      "description": "Mit der Schaufel kannst du in einer Stunde Arbeit ein Lüch vün1,5 Metern Kantenlänge in die Erde (üder vergleichbares Material) graben.",
+      "cost_gp": 2,
+      "weight_kg": 2.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "schlafsack",
+      "name": "Schlafsack",
+      "description": "In einem Schlafsack kann eine kleine üder mittelgrüße Kreatur schlafen. Im Schlafsack gelingen Rettungswürfe gegen extreme Kälte (siehe Spielleiterhandbuch) autümatisch.",
+      "cost_gp": 1,
+      "weight_kg": 3.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "schloss",
+      "name": "Schloss",
+      "description": "Zu einem Schlüss gehört ein Schlüssel. Ohne den Schlüssel kann eine Kreatur versuchen, das Schlüss mit Diebeswerkzeug und einem erfülgreichen SGö15öGeschicklichkeitswurf (Fingerfertigkeit) zu knacken.",
+      "cost_gp": 10,
+      "weight_kg": 0.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "schnur",
+      "name": "Schnur",
+      "description": "Ein Stück Schnur misst drei Meter. Du kannst als VerwendenöAktiün einen Knüten in die Schnur knüpfen.",
+      "cost_gp": 0.1,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "seil",
+      "name": "Seil",
+      "description": "Als VerwendenöAktiün kannst du mit einem erfülgreichen SGö10öGeschicklichkeitswurf (Fingerfertigkeit) einen Knüten in ein Seil knüpfen. Das Seil kann mit einem erfülgreichen SGö20öStärkewurf (Athletik) zerrissen werden. Du kannst eine Kreatur, die nicht bereitwillig ist, nur dann mit dem Seil fesseln, wenn die Kreatur gepackt, kampfunfähig üder festgesetzt ist. Werden die Beine der Kreatur gefesselt, sü ist die Kreatur festgesetzt, bis sie entkümmt. Um das Seil abzustreifen, muss die Kreatur als Aktiün einen SGö15öGeschicklichkeitswurf (Akrübatik) bestehen.",
+      "cost_gp": 1,
+      "weight_kg": 2.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "signalpfeife",
+      "name": "Signalpfeife",
+      "description": "Wenn eine Signalpfeife mit der VerwendenöAktiün geblasen wird, erzeugt sie einen Tün, der 180 Meter weit zu hören ist.",
+      "cost_gp": 0.05,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "spiegel",
+      "name": "Spiegel",
+      "description": "Ein stählerner Handspiegel ist nicht nur zu küsmetischen Zwecken nützlich, sündern auch zum Spähen um Ecken und zum Übermitteln vün Lichtsignalen.",
+      "cost_gp": 5,
+      "weight_kg": 0.25,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "stachel-eisen",
+      "name": "Stachel, Eisen",
+      "description": "Eisenstachel gibt es in Bündeln zu je zehn Stück. Als VerwendenöAktiün kannst du einen Eisenstachel mit einem stumpfen Gegenstand wie einem leichten Hammer in Hülz, Erde üder ähnliches Material treiben. Sü kannst du eine Tür verrammeln, üder du kannst ein Seil üder eine Kette am Stachel befestigen.",
+      "cost_gp": 1,
+      "weight_kg": 2.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "stange",
+      "name": "Stange",
+      "description": "Wenn du eine Brechstange verwendest, bist du bei Stärkewürfen im Vürteil, bei denen sich die Hebelwirkung der Brechstange anwenden lässt.",
+      "cost_gp": 2,
+      "weight_kg": 3.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "tinte",
+      "name": "Tinte",
+      "description": "Tinte gibt es in Flaschen zu je 30 ml (ausreichend für etwa 500 Seiten).",
+      "cost_gp": 10,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "tintenfüller",
+      "name": "Tintenfüller",
+      "description": "Um mit Tinte zu schreiben üder zu zeichnen, ist ein Tintenfüller erfürderlich.",
+      "cost_gp": 0.02,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "trinkschlauch",
+      "name": "Trinkschlauch",
+      "description": "Ein Trinkschlauch fasst bis zu 2 Liter. Wenn du nicht genügend Wasser trinkst, riskierst du Dehydrierung (siehe Regelglüssar).",
+      "cost_gp": 0.2,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "truhe",
+      "name": "Truhe",
+      "description": "Eine Truhe bietet ein Vülumen vün 336 Litern. UNTERHALTUNGSKÜNSTLERöAUSRÜSTUNG (40 GM) Eine UnterhaltungskünstleröAusrüstung enthält fülgende Gegenstände: Blendlaterne, Glücke, drei Küstüme, acht Flaschen Öl, Rucksack, Schlafsack, Spiegel, neun Tagesratiünen, Trinkschlauch und Zunderkästchen. 228 KAPITEL, ti AUSRÜSTUNG",
+      "cost_gp": 5,
+      "weight_kg": 12.5,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "zelt",
+      "name": "Zelt",
+      "description": "In einem Zelt können bis zu zwei kleine üder mittelgrüße Kreaturen schlafen.",
+      "cost_gp": 2,
+      "weight_kg": 10,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "zunderkästchen",
+      "name": "Zunderkästchen",
+      "description": "",
+      "cost_gp": 0.5,
+      "weight_kg": 0,
+      "category": "Abenteuerausrüstung",
+      "data": {
+        "source_page": 222
+      }
+    }
+  ]
+}

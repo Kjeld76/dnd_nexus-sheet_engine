@@ -10,6 +10,8 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         DROP VIEW IF EXISTS all_classes;
         DROP VIEW IF EXISTS all_gear;
         DROP VIEW IF EXISTS all_tools;
+        DROP VIEW IF EXISTS all_items;
+        DROP VIEW IF EXISTS all_equipment;
         DROP VIEW IF EXISTS all_weapons;
         DROP VIEW IF EXISTS all_armors;
         DROP VIEW IF EXISTS all_feats;
@@ -287,6 +289,62 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
             value TEXT NOT NULL
         );
 
+        -- Items
+        CREATE TABLE IF NOT EXISTS core_items (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            description TEXT NOT NULL,
+            cost_gp REAL NOT NULL,
+            weight_kg REAL NOT NULL,
+            category TEXT NOT NULL,
+            data JSON NOT NULL,
+            created_at INTEGER DEFAULT (unixepoch())
+        );
+
+        CREATE TABLE IF NOT EXISTS custom_items (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            description TEXT NOT NULL,
+            cost_gp REAL NOT NULL,
+            weight_kg REAL NOT NULL,
+            category TEXT NOT NULL,
+            data JSON NOT NULL,
+            parent_id TEXT,
+            is_homebrew BOOLEAN DEFAULT 1,
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (parent_id) REFERENCES core_items(id) ON DELETE CASCADE
+        );
+
+        -- Equipment Packages
+        CREATE TABLE IF NOT EXISTS core_equipment (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            description TEXT NOT NULL,
+            total_cost_gp REAL NOT NULL,
+            total_weight_kg REAL NOT NULL,
+            items JSON NOT NULL,
+            tools JSON NOT NULL,
+            data JSON NOT NULL,
+            created_at INTEGER DEFAULT (unixepoch())
+        );
+
+        CREATE TABLE IF NOT EXISTS custom_equipment (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            description TEXT NOT NULL,
+            total_cost_gp REAL NOT NULL,
+            total_weight_kg REAL NOT NULL,
+            items JSON NOT NULL,
+            tools JSON NOT NULL,
+            data JSON NOT NULL,
+            parent_id TEXT,
+            is_homebrew BOOLEAN DEFAULT 1,
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (parent_id) REFERENCES core_equipment(id) ON DELETE CASCADE
+        );
+
         -- Views
         CREATE VIEW all_spells AS 
         SELECT 
@@ -381,6 +439,26 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         UNION 
         SELECT id, name, data, CASE WHEN is_homebrew = 1 THEN 'homebrew' ELSE 'core' END as source 
         FROM custom_backgrounds WHERE parent_id IS NULL;
+
+        CREATE VIEW all_items AS 
+        SELECT COALESCE(c.id, core.id) as id, COALESCE(c.name, core.name) as name, COALESCE(c.description, core.description) as description, 
+               COALESCE(c.cost_gp, core.cost_gp) as cost_gp, COALESCE(c.weight_kg, core.weight_kg) as weight_kg, 
+               COALESCE(c.category, core.category) as category, COALESCE(c.data, core.data) as data, 
+               CASE WHEN c.parent_id IS NOT NULL THEN 'override' WHEN c.is_homebrew = 1 THEN 'homebrew' ELSE 'core' END as source 
+        FROM core_items core LEFT JOIN custom_items c ON c.parent_id = core.id 
+        UNION 
+        SELECT id, name, description, cost_gp, weight_kg, category, data, CASE WHEN is_homebrew = 1 THEN 'homebrew' ELSE 'core' END as source 
+        FROM custom_items WHERE parent_id IS NULL;
+
+        CREATE VIEW all_equipment AS 
+        SELECT COALESCE(c.id, core.id) as id, COALESCE(c.name, core.name) as name, COALESCE(c.description, core.description) as description, 
+               COALESCE(c.total_cost_gp, core.total_cost_gp) as total_cost_gp, COALESCE(c.total_weight_kg, core.total_weight_kg) as total_weight_kg, 
+               COALESCE(c.items, core.items) as items, COALESCE(c.tools, core.tools) as tools, COALESCE(c.data, core.data) as data, 
+               CASE WHEN c.parent_id IS NOT NULL THEN 'override' WHEN c.is_homebrew = 1 THEN 'homebrew' ELSE 'core' END as source 
+        FROM core_equipment core LEFT JOIN custom_equipment c ON c.parent_id = core.id 
+        UNION 
+        SELECT id, name, description, total_cost_gp, total_weight_kg, items, tools, data, CASE WHEN is_homebrew = 1 THEN 'homebrew' ELSE 'core' END as source 
+        FROM custom_equipment WHERE parent_id IS NULL;
 
         -- Indizes für Performance (Checklist 6: < 10ms Lookups)
         CREATE INDEX IF NOT EXISTS idx_core_spells_name ON core_spells(name);

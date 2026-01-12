@@ -10,6 +10,7 @@ export default defineConfig({
     },
   },
   clearScreen: false,
+  logLevel: 'error',
   server: {
     port: 5173,
     strictPort: true,

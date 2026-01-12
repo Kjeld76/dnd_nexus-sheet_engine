@@ -8,6 +8,10 @@
 - [x] Ability Score Choice Dialog für wählbare Attributsmodifikatoren
 - [x] Traits-Modifikatoren werden in SpeciesTraits angezeigt
 - [x] PHB 2024 Konformität: Attributsmodifikatoren für Völker entfernt (2024 Regeln)
+- [x] Navigationsmenü im Charakterblatt hinzugefügt (Kampf, Zauber, Inventar, Notizen)
+- [x] Equipment-Daten werden korrekt angezeigt (NULL-Handling implementiert)
+- [x] Alle Compendium-Daten sind vollständig sichtbar (Spells, Items, Equipment, etc.)
+- [x] Datenbank-Architektur: Übergang zu einer einzigen Datenbank (dnd-nexus.db)
 
 
 ### 📋 Offen

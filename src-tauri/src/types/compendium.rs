@@ -107,3 +107,28 @@ pub struct CustomArmor {
     pub is_homebrew: Option<bool>,
 }
 
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Item {
+    pub id: String,
+    pub name: String,
+    pub description: String,
+    pub cost_gp: f64,
+    pub weight_kg: f64,
+    pub category: String,
+    pub data: Value,
+    pub source: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Equipment {
+    pub id: String,
+    pub name: String,
+    pub description: String,
+    pub total_cost_gp: Option<f64>,
+    pub total_weight_kg: Option<f64>,
+    pub items: Value,
+    pub tools: Value,
+    pub data: Value,
+    pub source: String,
+}
+

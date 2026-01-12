@@ -10,6 +10,8 @@ import {
   Armor,
   Skill,
   Background,
+  Item,
+  Equipment,
 } from "./types";
 import { compendiumApi } from "./api";
 
@@ -24,6 +26,8 @@ interface CompendiumState {
   feats: Feat[];
   skills: Skill[];
   backgrounds: Background[];
+  items: Item[];
+  equipment: Equipment[];
   isLoading: boolean;
   error: string | null;
 
@@ -38,6 +42,8 @@ interface CompendiumState {
   fetchFeats: () => Promise<void>;
   fetchSkills: () => Promise<void>;
   fetchBackgrounds: () => Promise<void>;
+  fetchItems: () => Promise<void>;
+  fetchEquipment: () => Promise<void>;
 }
 
 export const useCompendiumStore = create<CompendiumState>((set) => ({
@@ -51,6 +57,8 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   feats: [],
   skills: [],
   backgrounds: [],
+  items: [],
+  equipment: [],
   isLoading: false,
   error: null,
 
@@ -152,6 +160,30 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
       set({ backgrounds, isLoading: false, error: null });
     } catch (err) {
       console.error("Error fetching backgrounds:", err);
+      set({ error: (err as Error).message, isLoading: false });
+    }
+  },
+
+  fetchItems: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const items = await compendiumApi.getAllItems();
+      console.log("Fetched items:", items.length);
+      set({ items, isLoading: false, error: null });
+    } catch (err) {
+      console.error("Error fetching items:", err);
+      set({ error: (err as Error).message, isLoading: false });
+    }
+  },
+
+  fetchEquipment: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const equipment = await compendiumApi.getAllEquipment();
+      console.log("Fetched equipment:", equipment.length);
+      set({ equipment, isLoading: false, error: null });
+    } catch (err) {
+      console.error("Error fetching equipment:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },

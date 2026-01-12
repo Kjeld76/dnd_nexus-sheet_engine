@@ -1,0 +1,354 @@
+[
+  {
+    "id": "adeliger",
+    "name": "Adeliger",
+    "current": {
+      "description": "Du stammst aus einer wohlhabenden Familie mit Titeln und Privilegien.",
+      "feat": "Begabt",
+      "skills": [
+        "Geschichte",
+        "Überzeugen"
+      ],
+      "tool": "Spielset"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Begabt",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "akolyth",
+    "name": "Akolyth",
+    "current": {
+      "description": "Du hast dein Leben dem Dienst in einem Tempel gewidmet.",
+      "feat": "Eingeweihter der Magie",
+      "skills": [
+        "Motiv erkennen",
+        "Religion"
+      ],
+      "tool": "Kalligrafenwerkzeug"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Eingeweihter der Magie",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "bauer",
+    "name": "Bauer",
+    "current": {
+      "description": "Du bist auf dem Land aufgewachsen und kennst die harte Arbeit.",
+      "feat": "Zäh",
+      "skills": [
+        "Mit Tieren umgehen",
+        "Naturkunde"
+      ],
+      "tool": "Schreinerwerkzeug"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Zäh",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "einsiedler",
+    "name": "Einsiedler",
+    "current": {
+      "description": "Du hast lange Zeit in Abgeschiedenheit gelebt.",
+      "feat": "Heiler",
+      "skills": [
+        "Heilkunde",
+        "Religion"
+      ],
+      "tool": "Kräuterkundeausrüstung"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Heiler",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "handwerker",
+    "name": "Handwerker",
+    "current": {
+      "description": "Du bist ein Meister deines Fachs.",
+      "feat": "Handwerker",
+      "skills": [
+        "Nachforschungen",
+        "Überzeugen"
+      ],
+      "tool": "Handwerkszeug"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Handwerker",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "haendler",
+    "name": "Händler",
+    "current": {
+      "description": "Du hast Waren über weite Strecken transportiert und verkauft.",
+      "feat": "Glückspilz",
+      "skills": [
+        "Mit Tieren umgehen",
+        "Überzeugen"
+      ],
+      "tool": "Navigationswerkzeug"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Glückspilz",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "krimineller",
+    "name": "Krimineller",
+    "current": {
+      "description": "Du hast deine Brötchen auf der falschen Seite des Gesetzes verdient.",
+      "feat": "Wachsam",
+      "skills": [
+        "Fingerfertigkeit",
+        "Heimlichkeit"
+      ],
+      "tool": "Diebeswerkzeug"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Wachsam",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "reisender",
+    "name": "Reisender",
+    "current": {
+      "description": "Du bist schon überall gewesen.",
+      "feat": "Glückspilz",
+      "skills": [
+        "Motiv erkennen",
+        "Heimlichkeit"
+      ],
+      "tool": "Musikinstrument"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Glückspilz",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "scharlatan",
+    "name": "Scharlatan",
+    "current": {
+      "description": "Du weißt, wie man Leute um ihr Gold bringt.",
+      "feat": "Schauspieler",
+      "skills": [
+        "Täuschen",
+        "Fingerfertigkeit"
+      ],
+      "tool": "Fälscherwerkzeug"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Schauspieler",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "schreiber",
+    "name": "Schreiber",
+    "current": {
+      "description": "Du hast dein Leben den Büchern und dem Schreiben gewidmet.",
+      "feat": "Begabt",
+      "skills": [
+        "Geschichte",
+        "Nachforschungen"
+      ],
+      "tool": "Kalligrafenwerkzeug"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Begabt",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "seemann",
+    "name": "Seemann",
+    "current": {
+      "description": "Das Meer ist dein Zuhause.",
+      "feat": "Zäh",
+      "skills": [
+        "Athletik",
+        "Wahrnehmung"
+      ],
+      "tool": "Navigationswerkzeug"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Zäh",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "soldat",
+    "name": "Soldat",
+    "current": {
+      "description": "Du hast in einer Armee gedient.",
+      "feat": "Zäh",
+      "skills": [
+        "Athletik",
+        "Einschüchtern"
+      ],
+      "tool": "Spielset"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Zäh",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "unterhaltungskuenstler",
+    "name": "Unterhaltungskünstler",
+    "current": {
+      "description": "Du lebst für den Applaus des Publikums.",
+      "feat": "Schauspieler",
+      "skills": [
+        "Akrobatik",
+        "Auftreten"
+      ],
+      "tool": "Musikinstrument"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Schauspieler",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "wache",
+    "name": "Wache",
+    "current": {
+      "description": "Du hast die Tore deiner Stadt bewacht.",
+      "feat": "Zäh",
+      "skills": [
+        "Athletik",
+        "Wahrnehmung"
+      ],
+      "tool": "Spielset"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Zäh",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "wegfinder",
+    "name": "Wegfinder",
+    "current": {
+      "description": "Du kennst die Wildnis wie deine Westentasche.",
+      "feat": "Wachsam",
+      "skills": [
+        "Athletik",
+        "Überleben"
+      ],
+      "tool": "Navigationswerkzeug"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Wachsam",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  },
+  {
+    "id": "weiser",
+    "name": "Weiser",
+    "current": {
+      "description": "Du hast dein Leben dem Studium der Welt gewidmet.",
+      "feat": "Eingeweihter der Magie",
+      "skills": [
+        "Arcana",
+        "Geschichte"
+      ],
+      "tool": "Kalligrafenwerkzeug"
+    },
+    "needed": {
+      "full_description": "TODO: Vollständige Beschreibung aus Regelwerk (min. 500 Zeichen)",
+      "feature_name": "Eingeweihter der Magie",
+      "feature_description": "TODO: Feature-Beschreibung aus Regelwerk",
+      "personality_traits": "TODO: Persönlichkeitsmerkmale (optional)",
+      "ideals": "TODO: Ideale (optional)",
+      "bonds": "TODO: Bindungen (optional)",
+      "flaws": "TODO: Schwächen (optional)"
+    }
+  }
+]

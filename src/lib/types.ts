@@ -25,6 +25,7 @@ export interface CharacterMeta {
   gender?: string;
   xp: number;
   use_metric: boolean;
+  background_ability_scores?: Record<string, number>; // Tracks ability score bonuses from background
 }
 
 export interface CharacterAppearance {
@@ -163,6 +164,29 @@ export interface Tool {
   category: string;
   cost_gp: number;
   weight_kg: number;
+  data: any;
+  source: "core" | "override" | "homebrew";
+}
+
+export interface Item {
+  id: string;
+  name: string;
+  description: string;
+  cost_gp: number;
+  weight_kg: number;
+  category?: string;
+  data: any;
+  source: "core" | "override" | "homebrew";
+}
+
+export interface Equipment {
+  id: string;
+  name: string;
+  description: string;
+  total_cost_gp?: number;
+  total_weight_kg?: number;
+  items: Array<{ item_id: string; quantity: number }>;
+  tools?: Array<{ tool_id: string; quantity: number }>;
   data: any;
   source: "core" | "override" | "homebrew";
 }

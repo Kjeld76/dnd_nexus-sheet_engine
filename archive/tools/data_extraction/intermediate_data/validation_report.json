@@ -1,0 +1,14 @@
+{
+  "valid": true,
+  "errors": [],
+  "warnings": [
+    "40 Items werden nicht in Equipment-Paketen verwendet"
+  ],
+  "stats": {
+    "totalItems": 70,
+    "totalEquipment": 7,
+    "totalReferences": 64,
+    "validReferences": 64,
+    "invalidReferences": 0
+  }
+}

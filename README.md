@@ -14,6 +14,7 @@ D&D Nexus ist eine moderne Desktop-Anwendung zur Verwaltung von D&D 5e Charakter
 - **Charakter-Erstellung**: Schnelle Erstellung neuer Charaktere mit Vorlagen
 - **Charakter-Listen**: Übersicht aller erstellten Charaktere
 - **Charakter-Details**: Vollständige Charakterbögen mit allen relevanten Informationen
+- **Tab-Navigation**: Einfaches Wechseln zwischen Kampf, Zauber, Inventar und Notizen
 - **Charakter-Speicherung**: Automatische Speicherung aller Charakterdaten in lokaler Datenbank
 
 #### Attribute und Rettungswürfe
@@ -49,6 +50,18 @@ D&D Nexus ist eine moderne Desktop-Anwendung zur Verwaltung von D&D 5e Charakter
 #### Klassen (Classes)
 - **Klassen-Auswahl**: Auswahl aus verfügbaren Klassen
 - **Unterklassen**: Unterstützung für Klassen mit Unterklassen
+
+#### Hintergründe (Backgrounds)
+- **Hintergrund-Auswahl**: Auswahl aus verfügbaren Hintergründen (PHB 2024)
+- **Automatische Anwendung**:
+  - Attributswerte: Dialog zur Auswahl zwischen +2/+1 oder alle +1 (bei "Alle +1" automatische Auswahl)
+  - Herkunftstalent (Feat): Automatisches Hinzufügen des Hintergrund-Feats
+  - Fertigkeiten: Automatisches Hinzufügen von zwei Fertigkeiten zur Proficiencies-Liste
+  - Werkzeug: Automatisches Hinzufügen eines Werkzeugs zur Proficiencies-Liste
+- **Hintergrund-Wechsel**: 
+  - Automatisches Entfernen alter Hintergrund-Boni beim Wechsel
+  - Entfernen von Attributswerten, Feats, Fertigkeiten und Werkzeugen des vorherigen Hintergrunds
+- **Herkunftstalent-Anzeige**: Dedizierte Anzeige aller aktiven Talente (inkl. Hintergrund-Talent) im Charakterbogen
 
 #### Kampf-Statistiken
 - **Rüstungsklasse (AC)**: Automatische Berechnung basierend auf Rüstung
@@ -91,9 +104,11 @@ D&D Nexus ist eine moderne Desktop-Anwendung zur Verwaltung von D&D 5e Charakter
 - **Waffen (Weapons)**: Waffenstatistiken und Eigenschaften
 - **Rüstungen (Armor)**: Rüstungsstatistiken und Eigenschaften
 - **Werkzeuge (Tools)**: Werkzeuginformationen
-- **Ausrüstung (Gear)**: Verschiedene Ausrüstungsgegenstände
+- **Gegenstände (Items)**: Verschiedene Gegenstände und Ausrüstung
+- **Ausrüstungspakete (Equipment)**: Vorgefertigte Ausrüstungspakete (z.B. Entdeckerausrüstung)
 - **Talente (Feats)**: Alle verfügbaren Talente
 - **Fertigkeiten (Skills)**: Fertigkeitsinformationen
+- **Hintergründe (Backgrounds)**: Vollständige Hintergrund-Informationen
 
 #### Kompendium-Features
 - **Suche**: Durchsuchbares Kompendium mit Echtzeit-Filterung über alle Kategorien
@@ -115,6 +130,7 @@ D&D Nexus ist eine moderne Desktop-Anwendung zur Verwaltung von D&D 5e Charakter
   - Ausrüstung: Verschiedene Ausrüstungsgegenstände
   - Talente: Alle verfügbaren Talente mit Beschreibungen
   - Fertigkeiten: Fertigkeitsinformationen und zugehörige Attribute
+  - Hintergründe: Vollständige Hintergrund-Informationen mit Attributswerten, Talenten, Fertigkeiten, Werkzeugen und Beschreibungen
 
 ### Homebrew & Custom Content
 

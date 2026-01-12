@@ -6,11 +6,9 @@ pub fn seed_core_data(conn: &mut Connection) -> Result<(), String> {
     clear_core_data(conn)?;
 
     // Try to import from the project's master database
-    // sync.db is the git-tracked source database
-    // dnd-nexus.db is the project database (not in git)
+    // dnd-nexus.db is the project database (not in git) - has all data including Items/Equipment
+    // sync.db is NOT used - it's only for transferring DB between machines
     let master_db_paths = [
-        Path::new("sync.db"),
-        Path::new("../sync.db"),
         Path::new("dnd-nexus.db"),
         Path::new("../dnd-nexus.db"),
         Path::new("C:/Users/mario/.cursor/projects/dnd_nexus/dnd-nexus.db"),
@@ -158,6 +156,38 @@ fn import_all_from_master(target_conn: &mut Connection, master_path: &Path) -> R
         tx.execute("INSERT INTO core_backgrounds (id, name, data) VALUES (?, ?, ?)", params![id, name, data]).map_err(|e| e.to_string())?;
     }
 
+    // 11. Items
+    println!("Importing Items...");
+    let mut stmt = source_conn.prepare("SELECT id, name, description, cost_gp, weight_kg, category, data FROM core_items").map_err(|e| e.to_string())?;
+    let rows = stmt.query_map([], |row| Ok((row.get::<_, String>(0)?, row.get::<_, String>(1)?, row.get::<_, String>(2)?, row.get::<_, f64>(3)?, row.get::<_, f64>(4)?, row.get::<_, String>(5)?, row.get::<_, String>(6)?))).map_err(|e| e.to_string())?;
+    for r in rows {
+        let (id, name, desc, cost, weight, cat, data) = r.map_err(|e| e.to_string())?;
+        tx.execute("INSERT INTO core_items (id, name, description, cost_gp, weight_kg, category, data) VALUES (?, ?, ?, ?, ?, ?, ?)", params![id, name, desc, cost, weight, cat, data]).map_err(|e| e.to_string())?;
+    }
+
+    // 12. Equipment
+    println!("Importing Equipment...");
+    let mut stmt = source_conn.prepare("SELECT id, name, description, total_cost_gp, total_weight_kg, items, tools, data FROM core_equipment").map_err(|e| e.to_string())?;
+    let rows = stmt.query_map([], |row| Ok((
+        row.get::<_, String>(0)?, 
+        row.get::<_, String>(1)?, 
+        row.get::<_, String>(2)?, 
+        row.get::<_, Option<f64>>(3)?, 
+        row.get::<_, Option<f64>>(4)?, 
+        row.get::<_, Option<String>>(5)?, 
+        row.get::<_, Option<String>>(6)?, 
+        row.get::<_, Option<String>>(7)?
+    ))).map_err(|e| e.to_string())?;
+    for r in rows {
+        let (id, name, desc, total_cost_opt, total_weight_opt, items_opt, tools_opt, data_opt) = r.map_err(|e| e.to_string())?;
+        let total_cost = total_cost_opt.unwrap_or(0.0);
+        let total_weight = total_weight_opt.unwrap_or(0.0);
+        let items = items_opt.unwrap_or_else(|| "[]".to_string());
+        let tools = tools_opt.unwrap_or_else(|| "[]".to_string());
+        let data = data_opt.unwrap_or_else(|| "{}".to_string());
+        tx.execute("INSERT INTO core_equipment (id, name, description, total_cost_gp, total_weight_kg, items, tools, data) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", params![id, name, desc, total_cost, total_weight, items, tools, data]).map_err(|e| e.to_string())?;
+    }
+
     tx.commit().map_err(|e| e.to_string())?;
     println!("Transaction committed successfully.");
     Ok(())
@@ -174,6 +204,8 @@ pub fn clear_core_data(conn: &Connection) -> Result<(), String> {
     conn.execute("DELETE FROM core_skills", []).map_err(|e| e.to_string())?;
     conn.execute("DELETE FROM core_tools", []).map_err(|e| e.to_string())?;
     conn.execute("DELETE FROM core_backgrounds", []).map_err(|e| e.to_string())?;
+    conn.execute("DELETE FROM core_items", []).map_err(|e| e.to_string())?;
+    conn.execute("DELETE FROM core_equipment", []).map_err(|e| e.to_string())?;
     Ok(())
 }
 

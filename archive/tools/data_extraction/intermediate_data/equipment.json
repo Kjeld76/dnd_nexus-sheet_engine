@@ -1,0 +1,344 @@
+{
+  "equipment": [
+    {
+      "id": "gelehrtenausruestung",
+      "name": "GELEHRTENAUSRÜSTUNG",
+      "description": "Eine gelehrtenausrüstung enthält verschiedene Gegenstände.",
+      "total_cost_gp": 40,
+      "items": [
+        {
+          "item_id": "buch",
+          "quantity": 1
+        },
+        {
+          "item_id": "lampe",
+          "quantity": 1
+        },
+        {
+          "item_id": "flaschen-oel",
+          "quantity": 10
+        },
+        {
+          "item_id": "boegen-pergament",
+          "quantity": 10
+        },
+        {
+          "item_id": "rucksack",
+          "quantity": 1
+        },
+        {
+          "item_id": "tinte",
+          "quantity": 1
+        },
+        {
+          "item_id": "tintenfueller",
+          "quantity": 1
+        },
+        {
+          "item_id": "zunderkaestchen",
+          "quantity": 1
+        }
+      ],
+      "tools": [],
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "gewoelbeforscherausruestung",
+      "name": "GEWÖLBEFORSCHERAUSRÜSTUNG",
+      "description": "Eine gewölbeforscherausrüstung enthält verschiedene Gegenstände.",
+      "total_cost_gp": 12,
+      "items": [
+        {
+          "item_id": "brechstange",
+          "quantity": 1
+        },
+        {
+          "item_id": "fackeln",
+          "quantity": 10
+        },
+        {
+          "item_id": "kraehenfuesse",
+          "quantity": 1
+        },
+        {
+          "item_id": "flaschen-oel",
+          "quantity": 2
+        },
+        {
+          "item_id": "rucksack",
+          "quantity": 1
+        },
+        {
+          "item_id": "seil",
+          "quantity": 1
+        },
+        {
+          "item_id": "tagesrationen",
+          "quantity": 10
+        },
+        {
+          "item_id": "trinkschlauch",
+          "quantity": 1
+        },
+        {
+          "item_id": "zunderkaestchen",
+          "quantity": 1
+        }
+      ],
+      "tools": [],
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "einbrecherausruestung",
+      "name": "EINBRECHERAUSRÜSTUNG",
+      "description": "Eine einbrecherausrüstung enthält verschiedene Gegenstände.",
+      "total_cost_gp": 16,
+      "items": [
+        {
+          "item_id": "abdeckbare-laterne",
+          "quantity": 1
+        },
+        {
+          "item_id": "brechstange",
+          "quantity": 1
+        },
+        {
+          "item_id": "glocke",
+          "quantity": 1
+        },
+        {
+          "item_id": "kerzen",
+          "quantity": 10
+        },
+        {
+          "item_id": "metallkuegelchen",
+          "quantity": 1
+        },
+        {
+          "item_id": "flaschen-oel",
+          "quantity": 7
+        },
+        {
+          "item_id": "rucksack",
+          "quantity": 1
+        },
+        {
+          "item_id": "seil",
+          "quantity": 1
+        },
+        {
+          "item_id": "tagesrationen",
+          "quantity": 5
+        },
+        {
+          "item_id": "trinkschlauch",
+          "quantity": 1
+        },
+        {
+          "item_id": "zunderkaestchen",
+          "quantity": 1
+        }
+      ],
+      "tools": [],
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "entdeckerausruestung",
+      "name": "ENTDECKERAUSRÜSTUNG",
+      "description": "Eine entdeckerausrüstung enthält verschiedene Gegenstände.",
+      "total_cost_gp": 10,
+      "items": [
+        {
+          "item_id": "fackeln",
+          "quantity": 10
+        },
+        {
+          "item_id": "flaschen-oel",
+          "quantity": 2
+        },
+        {
+          "item_id": "rucksack",
+          "quantity": 1
+        },
+        {
+          "item_id": "schlafsack",
+          "quantity": 1
+        },
+        {
+          "item_id": "seil",
+          "quantity": 1
+        },
+        {
+          "item_id": "tagesrationen",
+          "quantity": 10
+        },
+        {
+          "item_id": "trinkschlauch",
+          "quantity": 1
+        },
+        {
+          "item_id": "zunderkaestchen",
+          "quantity": 1
+        }
+      ],
+      "tools": [],
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "priesterausruestung",
+      "name": "PRIESTERAUSRÜSTUNG",
+      "description": "Eine priesterausrüstung enthält verschiedene Gegenstände.",
+      "total_cost_gp": 33,
+      "items": [
+        {
+          "item_id": "decke",
+          "quantity": 1
+        },
+        {
+          "item_id": "lampe",
+          "quantity": 1
+        },
+        {
+          "item_id": "rucksack",
+          "quantity": 1
+        },
+        {
+          "item_id": "robe",
+          "quantity": 1
+        },
+        {
+          "item_id": "tagesrationen",
+          "quantity": 7
+        },
+        {
+          "item_id": "weihwasser",
+          "quantity": 1
+        },
+        {
+          "item_id": "zunderkaestchen",
+          "quantity": 1
+        }
+      ],
+      "tools": [],
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "diplomatenausruestung",
+      "name": "DIPLOMATENAUSRÜSTUNG",
+      "description": "Eine diplomatenausrüstung enthält verschiedene Gegenstände.",
+      "total_cost_gp": 39,
+      "items": [
+        {
+          "item_id": "karten-oder-schriftrollenbehaelter",
+          "quantity": 2
+        },
+        {
+          "item_id": "feine-kleidung",
+          "quantity": 1
+        },
+        {
+          "item_id": "lampe",
+          "quantity": 1
+        },
+        {
+          "item_id": "flaschen-oel",
+          "quantity": 4
+        },
+        {
+          "item_id": "boegen-papier",
+          "quantity": 5
+        },
+        {
+          "item_id": "parfuem",
+          "quantity": 1
+        },
+        {
+          "item_id": "boegen-pergament",
+          "quantity": 5
+        },
+        {
+          "item_id": "tinte",
+          "quantity": 1
+        },
+        {
+          "item_id": "tintenfueller",
+          "quantity": 5
+        },
+        {
+          "item_id": "truhe",
+          "quantity": 1
+        },
+        {
+          "item_id": "zunderkaestchen",
+          "quantity": 1
+        }
+      ],
+      "tools": [],
+      "data": {
+        "source_page": 222
+      }
+    },
+    {
+      "id": "unterhaltungskuenstler-ausruestung",
+      "name": "UNTERHALTUNGSKÜNSTLER-AUSRÜSTUNG",
+      "description": "Eine unterhaltungskünstler-ausrüstung enthält verschiedene Gegenstände.",
+      "total_cost_gp": 40,
+      "items": [
+        {
+          "item_id": "blendlaterne",
+          "quantity": 1
+        },
+        {
+          "item_id": "glocke",
+          "quantity": 1
+        },
+        {
+          "item_id": "kostueme",
+          "quantity": 3
+        },
+        {
+          "item_id": "flaschen-oel",
+          "quantity": 8
+        },
+        {
+          "item_id": "rucksack",
+          "quantity": 1
+        },
+        {
+          "item_id": "schlafsack",
+          "quantity": 1
+        },
+        {
+          "item_id": "spiegel",
+          "quantity": 1
+        },
+        {
+          "item_id": "tagesrationen",
+          "quantity": 9
+        },
+        {
+          "item_id": "trinkschlauch",
+          "quantity": 1
+        },
+        {
+          "item_id": "zunderkaestchen",
+          "quantity": 1
+        }
+      ],
+      "tools": [],
+      "data": {
+        "source_page": 222
+      }
+    }
+  ]
+}

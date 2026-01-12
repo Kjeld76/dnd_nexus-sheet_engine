@@ -56,6 +56,8 @@ fn main() {
             commands::compendium::get_all_feats,
             commands::compendium::get_all_skills,
             commands::compendium::get_all_backgrounds,
+            commands::compendium::get_all_items,
+            commands::compendium::get_all_equipment,
             db::seed::import_phb_data,
             tools::data_validator::validate_core_compendium,
         ])

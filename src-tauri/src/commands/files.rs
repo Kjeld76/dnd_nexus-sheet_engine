@@ -5,9 +5,8 @@ use std::fs;
 
 #[tauri::command]
 pub async fn backup_database(app: AppHandle) -> Result<String, String> {
-    let db_path = app.path().app_data_dir()
-        .map_err(|e| e.to_string())?
-        .join("dnd-nexus.db");
+    // Verwende die Projekt-DB direkt
+    let db_path = std::path::Path::new("dnd-nexus.db");
     
     let file_path = app.dialog()
         .file()
