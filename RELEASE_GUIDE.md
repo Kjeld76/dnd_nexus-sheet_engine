@@ -2,6 +2,15 @@
 
 Dieser Guide beschreibt, wie du neue Versionen veröffentlichtst und das Projekt sauber hältst.
 
+## Voraussetzungen (lokal)
+
+- Node.js (empfohlen: 20)
+- pnpm (CI nutzt pnpm 10)
+- Rust stable (Tauri 2)
+
+Optional, aber praktisch:
+- GitHub SSH-Key oder GitHub CLI (`gh`) für `git push`
+
 ## 🤖 CI/CD & Automatisierung
 
 D&D Nexus nutzt eine Pipeline, um die Entwicklung zu beschleunigen und die Qualität sicherzustellen. Hier ist das komplette System im Detail erklärt.
@@ -17,6 +26,11 @@ Wenn eine neue Version veröffentlicht wird, sorgt das Script `scripts/release.t
 - `src-tauri/Cargo.toml` (Rust-Backend)
 - `README.md` (Versions-Marker im Header)
 - `wiki/Home.md` (Online-Dokumentation)
+
+**Wichtig zur Wiki:**
+- Die Web-Wiki ist unter `.../wiki` erreichbar (z.B. `https://github.com/Kjeld76/dnd_nexus-sheet_engine/wiki`).
+- Das Git-Repo zum Klonen/Pushen ist `... .wiki.git` (z.B. `https://github.com/Kjeld76/dnd_nexus-sheet_engine.wiki.git`).
+- Wenn das Wiki lokal unter `wiki/` vorhanden ist, versucht `scripts/release.ts` dort zu committen und zu pushen.
 
 ### 2. Der Maintenance-Workflow
 
@@ -48,9 +62,7 @@ Bei jedem Push zu `main` oder einem Pull Request prüft GitHub auf einem Windows
 Wird ein Push mit einem Versions-Tag (z.B. `v1.5.0`) erkannt, startet der Build-Prozess:
 
 - **Kompilierung:** Die Rust-App wird für Windows und Linux gebaut.
-- **Paketierung:** 
-  - Windows: Erstellung eines `.msi`-Installers
-  - Linux: Erstellung eines `.deb`-Pakets
+- **Paketierung:** hängt von Plattform und Tauri-Bundle-Konfiguration ab (Tauri Action baut auf `windows-latest` und `ubuntu-latest`).
 - **Draft Release:** GitHub erstellt automatisch einen Release-Entwurf unter "Releases" und hängt die fertigen Installer/Pakete als Downloads an.
 
 ## Zusammenfassung für Entwickler
@@ -62,6 +74,26 @@ pnpm maintenance [patch|minor|major] "Deine Nachricht"
 ```
 
 Alles andere – vom Testen über das Aufräumen bis hin zum fertigen Installer in der Cloud – passiert vollautomatisch.
+
+---
+
+## 🔐 Credentials für `git push` (Wiki + Repo)
+
+Wenn `git push` mit `could not read Username for 'https://github.com'` fehlschlägt, fehlt die Auth.
+
+Empfohlen: SSH
+
+```bash
+git remote set-url origin git@github.com:Kjeld76/dnd_nexus-sheet_engine.git
+cd wiki && git remote set-url origin git@github.com:Kjeld76/dnd_nexus-sheet_engine.wiki.git
+```
+
+Alternativ: GitHub CLI
+
+```bash
+gh auth login
+gh auth setup-git
+```
 
 ---
 
