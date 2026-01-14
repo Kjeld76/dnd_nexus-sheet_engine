@@ -37,7 +37,7 @@ async function validateBackgrounds() {
       warnings: []
     };
 
-    let data: any;
+    let data: unknown;
     try {
       data = JSON.parse(bg.data);
     } catch (e) {
@@ -46,37 +46,60 @@ async function validateBackgrounds() {
       continue;
     }
 
+    if (typeof data !== "object" || data === null) {
+      result.issues.push("Daten sind kein Objekt");
+      results.push(result);
+      continue;
+    }
+    const dataObj = data as Record<string, unknown>;
+
     // Pflichtfelder prüfen
-    if (!data.description || data.description.length < 50) {
+    const description =
+      typeof dataObj.description === "string" ? dataObj.description : "";
+    if (!description || description.length < 50) {
       result.warnings.push('Beschreibung fehlt oder zu kurz');
     }
 
-    if (!data.skills || !Array.isArray(data.skills) || data.skills.length === 0) {
+    const skills = dataObj.skills;
+    if (!Array.isArray(skills) || skills.length === 0) {
       result.issues.push('Keine Fertigkeiten definiert');
     }
 
     // Startausrüstung prüfen
-    if (!data.starting_equipment) {
+    const startingEquipment = dataObj.starting_equipment;
+    if (!startingEquipment || typeof startingEquipment !== "object") {
       result.warnings.push('Keine Startausrüstung definiert (Legacy: gold/equipment_id vorhanden?)');
-    } else if (!data.starting_equipment.options || !Array.isArray(data.starting_equipment.options)) {
+    } else if (
+      !("options" in (startingEquipment as Record<string, unknown>)) ||
+      !Array.isArray((startingEquipment as { options?: unknown }).options)
+    ) {
       result.issues.push('Startausrüstung hat keine options-Array');
     } else {
       // Prüfe jede Option
-      data.starting_equipment.options.forEach((opt: any, idx: number) => {
-        if (!opt.label) {
+      const options = (startingEquipment as { options?: unknown }).options as unknown[];
+      options.forEach((opt: unknown, idx: number) => {
+        const optObj =
+          typeof opt === "object" && opt !== null
+            ? (opt as Record<string, unknown>)
+            : {};
+        const label = typeof optObj.label === "string" ? optObj.label : "";
+        if (!label) {
           result.issues.push(`Option ${idx + 1} hat kein label`);
         }
-        if (!opt.items && !opt.gold) {
-          result.issues.push(`Option ${opt.label || idx + 1} hat weder items noch gold`);
+        const items = optObj.items;
+        const gold = optObj.gold;
+        if (!items && !gold) {
+          result.issues.push(`Option ${label || idx + 1} hat weder items noch gold`);
         }
-        if (opt.items && Array.isArray(opt.items)) {
+        if (Array.isArray(items)) {
           // Prüfe Item-Referenzen
-          opt.items.forEach((itemName: string) => {
+          items.forEach((itemName: unknown) => {
+            if (typeof itemName !== "string") return;
             const itemId = itemMap.get(itemName.toLowerCase());
             const toolId = toolMap.get(itemName.toLowerCase());
             const equipId = equipmentMap.get(itemName.toLowerCase());
             if (!itemId && !toolId && !equipId) {
-              result.warnings.push(`Item/Tool nicht gefunden: "${itemName}" (Option ${opt.label})`);
+              result.warnings.push(`Item/Tool nicht gefunden: "${itemName}" (Option ${label})`);
             }
           });
         }
@@ -84,21 +107,23 @@ async function validateBackgrounds() {
     }
 
     // Werkzeug prüfen
-    if (data.tool) {
-      const toolId = toolMap.get(data.tool.toLowerCase());
+    const tool = dataObj.tool;
+    if (typeof tool === "string" && tool) {
+      const toolId = toolMap.get(tool.toLowerCase());
       if (!toolId) {
-        result.warnings.push(`Werkzeug nicht gefunden: "${data.tool}"`);
+        result.warnings.push(`Werkzeug nicht gefunden: "${tool}"`);
       }
     }
 
     // Talent prüfen
-    if (data.feat) {
+    const feat = dataObj.feat;
+    if (typeof feat === "string" && feat) {
       const featExists = db.prepare('SELECT id FROM core_feats WHERE id = ? OR name = ?').get(
-        data.feat.toLowerCase().replace(/\s+/g, '_'),
-        data.feat
+        feat.toLowerCase().replace(/\s+/g, '_'),
+        feat
       );
       if (!featExists) {
-        result.warnings.push(`Talent nicht gefunden: "${data.feat}"`);
+        result.warnings.push(`Talent nicht gefunden: "${feat}"`);
       }
     }
 

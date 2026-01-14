@@ -156,7 +156,7 @@ function optimizeBackgroundEquipment() {
   const changes: Array<{ background: string; table: string; changes: string[] }> = [];
   
   for (const bg of allBackgrounds) {
-    let data: any;
+    let data: unknown;
     try {
       data = JSON.parse(bg.data);
     } catch (e) {
@@ -164,14 +164,23 @@ function optimizeBackgroundEquipment() {
       continue;
     }
     
-    if (!data.starting_equipment || !data.starting_equipment.options) {
+    if (
+      typeof data !== "object" ||
+      data === null ||
+      !("starting_equipment" in data)
+    ) {
       continue;
     }
+
+    const se = (data as { starting_equipment?: unknown }).starting_equipment;
+    if (typeof se !== "object" || se === null) continue;
+    const options = (se as { options?: unknown }).options;
+    if (!Array.isArray(options)) continue;
     
     let hasChanges = false;
     const bgChanges: string[] = [];
     
-    for (const option of data.starting_equipment.options) {
+    for (const option of options as Array<Record<string, unknown>>) {
       if (!option.items || !Array.isArray(option.items)) {
         continue;
       }

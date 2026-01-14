@@ -24,9 +24,37 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+type EditorType = "spells" | "weapons" | "armor" | "gear" | "tool" | "tools";
+
+type EditorInitialData = Record<string, unknown> & {
+  id?: string;
+  parent_id?: string;
+  source?: string;
+};
+
+type EditorFormData = Record<string, unknown> & {
+  name?: string;
+  description?: string;
+  level?: number;
+  school?: string;
+  casting_time?: string;
+  range?: string;
+  components?: string;
+  material_components?: string;
+  duration?: string;
+  classes?: string;
+  cost_gp?: number;
+  weight_kg?: number;
+  damage_dice?: string;
+  damage_type?: string;
+  base_ac?: number;
+  is_homebrew?: boolean;
+  data?: Record<string, unknown>;
+};
+
 interface Props {
-  type: string;
-  initialData?: any;
+  type: EditorType;
+  initialData?: EditorInitialData;
   onClose: () => void;
   onSave: () => void;
 }
@@ -38,29 +66,45 @@ export function CompendiumEditor({
   onSave,
 }: Props) {
   const [viewMode, setViewMode] = useState<"form" | "json">("form");
-  const [formData, setFormData] = useState<any>(
-    initialData || {
-      name: "",
-      description: "",
-      level: 0,
-      school: "",
-      casting_time: "",
-      range: "",
-      components: "",
-      material_components: "",
-      duration: "",
-      classes: "",
-      is_homebrew: true,
-      data: {},
-    },
-  );
+  const [formData, setFormData] = useState<EditorFormData>(() => ({
+    ...(initialData || {}),
+    ...(initialData
+      ? {}
+      : {
+          name: "",
+          description: "",
+          level: 0,
+          school: "",
+          casting_time: "",
+          range: "",
+          components: "",
+          material_components: "",
+          duration: "",
+          classes: "",
+          is_homebrew: true,
+          data: {},
+        }),
+  }));
   const [jsonValue, setJsonValue] = useState(
     JSON.stringify(initialData || {}, null, 2),
   );
 
+  const getDataDescription = (fd: EditorFormData): string => {
+    if (typeof fd.description === "string" && fd.description)
+      return fd.description;
+    const d = fd.data;
+    if (!d) return "";
+    return typeof d.description === "string" ? d.description : "";
+  };
+
   const handleSave = async () => {
     try {
-      const dataToSave = viewMode === "json" ? JSON.parse(jsonValue) : formData;
+      const parsed =
+        viewMode === "json" ? (JSON.parse(jsonValue) as unknown) : formData;
+      const dataToSave: Record<string, unknown> =
+        typeof parsed === "object" && parsed !== null
+          ? (parsed as Record<string, unknown>)
+          : {};
 
       const finalData = {
         ...dataToSave,
@@ -256,7 +300,7 @@ export function CompendiumEditor({
                 <div className="relative group">
                   <textarea
                     className="w-full bg-muted/30 border-2 border-border rounded-[2.5rem] px-10 py-8 text-lg h-64 outline-none focus:border-primary transition-all resize-none custom-scrollbar leading-relaxed italic font-medium"
-                    value={formData.description || formData.data?.description}
+                    value={getDataDescription(formData)}
                     onChange={(e) =>
                       setFormData({ ...formData, description: e.target.value })
                     }
@@ -451,7 +495,7 @@ function EditorInput({
   placeholder = "",
 }: {
   label: string;
-  value: any;
+  value: string | number | undefined;
   onChange: (v: string) => void;
   type?: string;
   placeholder?: string;
@@ -464,7 +508,7 @@ function EditorInput({
       <input
         type={type}
         className="w-full bg-background border border-border rounded-2xl px-5 py-3.5 text-base font-bold focus:border-primary focus:ring-4 focus:ring-primary/5 transition-all outline-none shadow-sm"
-        value={value}
+        value={value ?? ""}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
       />

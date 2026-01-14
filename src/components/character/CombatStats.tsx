@@ -1,6 +1,7 @@
 import React from "react";
 import { Character, Class, Species, Weapon, Armor } from "../../lib/types";
 import { Shield, Zap, Wind, Heart, Sparkles, Sword } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { formatModifier } from "../../lib/math";
 import { calculateDerivedStats } from "../../lib/characterLogic";
 
@@ -8,7 +9,7 @@ interface Props {
   character: Character;
   characterClass?: Class;
   characterSpecies?: Species;
-  inventoryItems: (Weapon | Armor | any)[];
+  inventoryItems: Array<Weapon | Armor>;
 }
 
 export const CombatStats: React.FC<Props> = ({
@@ -117,13 +118,13 @@ function StatCard({
   color,
   isMain = false,
 }: {
-  icon: any;
+  icon: LucideIcon;
   label: string;
-  value: any;
+  value: React.ReactNode;
   color: string;
   isMain?: boolean;
 }) {
-  const colorMap: any = {
+  const colorMap: Record<string, string> = {
     primary: "text-primary bg-primary/10 border-primary/20",
     amber: "text-amber-500 bg-amber-500/10 border-amber-500/20",
     blue: "text-blue-500 bg-blue-500/10 border-blue-500/20",
@@ -175,6 +176,7 @@ function StatCard({
   );
 }
 
-function cn(...inputs: any[]) {
+type ClassInput = string | false | null | undefined;
+function cn(...inputs: ClassInput[]) {
   return inputs.filter(Boolean).join(" ");
 }

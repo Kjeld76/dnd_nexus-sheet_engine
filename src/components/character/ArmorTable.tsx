@@ -353,8 +353,8 @@ export const ArmorTable: React.FC<Props> = ({ character, armor }) => {
                         {armorItem.properties &&
                           armorItem.properties.length > 0 && (
                             <span className="truncate">
-                              {(armorItem.properties as any[])
-                                .map((p: any) => p.name || p.id)
+                              {armorItem.properties
+                                .map((p) => p.name || p.id)
                                 .join(", ")}
                             </span>
                           )}

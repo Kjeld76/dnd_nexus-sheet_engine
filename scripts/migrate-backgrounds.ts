@@ -23,7 +23,7 @@ interface ExtractedBackground {
     name: string;
     description: string;
   };
-  data: any;
+  data: Record<string, unknown>;
 }
 
 async function migrateBackgrounds() {
@@ -58,10 +58,15 @@ async function migrateBackgrounds() {
         data: string;
       } | undefined;
 
-      let currentData: any = {};
+      let currentData: Record<string, unknown> = {};
       if (existing) {
         try {
-          currentData = JSON.parse(existing.data);
+          const parsed = JSON.parse(existing.data) as unknown;
+          if (typeof parsed === "object" && parsed !== null) {
+            currentData = parsed as Record<string, unknown>;
+          } else {
+            currentData = {};
+          }
         } catch (e) {
           console.warn(`⚠️  Konnte Daten von ${extracted.name} nicht parsen, überschreibe`);
           currentData = {};
@@ -69,7 +74,7 @@ async function migrateBackgrounds() {
       }
 
       // Merge: Behalte bestehende Daten, überschreibe mit neuen
-      const mergedData: any = {
+      const mergedData: Record<string, unknown> = {
         ...currentData,
         description: extracted.description || currentData.description,
         ability_scores: extracted.ability_scores || currentData.ability_scores,

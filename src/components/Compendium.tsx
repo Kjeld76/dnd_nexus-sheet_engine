@@ -1007,7 +1007,7 @@ export function Compendium() {
 
       {isEditorOpen && (
         <CompendiumEditor
-          type={activeTab}
+          type={activeTab as any}
           initialData={selectedItem}
           onClose={() => setIsEditorOpen(false)}
           onSave={() => {

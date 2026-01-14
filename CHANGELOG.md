@@ -5,11 +5,11 @@ Alle relevanten Änderungen an D&D Nexus werden in dieser Datei dokumentiert.
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.7.7] - 2026-01-14
-### Geändert
-- **Build-Stabilität:** Produktnamen auf `dnd-nexus` (Kleinschreibung) vereinheitlicht, um Artefakt-Suchfehler ("No artifacts found") auf Linux-Systemen zu beheben.
+## [1.7.8] - 2026-01-14
+### Behoben
+- **CI/CD:** Bundle-Ziele in `tauri.conf.json` von festen Windows-Werten auf `all` geändert, damit auch auf Linux Installationspakete (.deb, .AppImage) erstellt werden.
 
-## [1.7.6] - 2026-01-14
+## [1.7.7] - 2026-01-14
 ### Behoben
 - **CI/CD:** Erneute Korrektur der Linux-Systemabhängigkeiten für Ubuntu 24.04 (Noble).
 - **Rust Backend:** Absicherung der `open_devtools` Funktion gegen Release-Build-Abstürze.

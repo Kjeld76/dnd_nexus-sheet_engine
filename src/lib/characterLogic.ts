@@ -55,6 +55,10 @@ export const calculateDerivedStats = (
   inventoryItems: Array<Weapon | Armor> = [],
   activeModifiers: Modifier[] = [],
 ): DerivedStats => {
+  const isWeapon = (v: unknown): v is Weapon => {
+    if (typeof v !== "object" || v === null) return false;
+    return (v as { damage_dice?: unknown }).damage_dice !== undefined;
+  };
   const level = character.meta.level;
   const attributes = character.attributes;
   const conMod = calculateModifier(attributes.con);
@@ -189,10 +193,7 @@ export const calculateDerivedStats = (
       ...invItem,
       data: inventoryItems.find((i) => i.id === invItem.item_id),
     }))
-    .filter((item) => {
-      const data = item.data as any;
-      return item.is_equipped && data && data.damage_dice !== undefined;
-    })
+    .filter((item) => item.is_equipped && isWeapon(item.data))
     .map((item) => {
       const weapon = item.data as Weapon;
       const isProficient =
