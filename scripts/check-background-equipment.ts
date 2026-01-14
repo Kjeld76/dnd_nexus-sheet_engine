@@ -26,13 +26,29 @@ const backgrounds = [
 console.log('Prüfe Background Equipment:\n');
 
 for (const bg of backgrounds) {
-  const data = JSON.parse(bg.data);
-  if (data.starting_equipment?.options) {
+  const data = JSON.parse(bg.data) as unknown;
+  if (
+    typeof data === 'object' &&
+    data !== null &&
+    (data as { starting_equipment?: unknown }).starting_equipment &&
+    typeof (data as { starting_equipment?: unknown }).starting_equipment === 'object' &&
+    (data as { starting_equipment?: { options?: unknown } }).starting_equipment?.options
+  ) {
     console.log(`\n📌 ${bg.name} (${bg.table}):`);
-    data.starting_equipment.options.forEach((opt: any, idx: number) => {
-      if (opt.items && Array.isArray(opt.items)) {
-        console.log(`  Option ${opt.label || idx + 1}:`);
-        opt.items.forEach((item: any) => {
+    const options = (data as { starting_equipment?: { options?: unknown } })
+      .starting_equipment?.options;
+    if (!Array.isArray(options)) continue;
+    options.forEach((opt: unknown, idx: number) => {
+      const optObj =
+        typeof opt === 'object' && opt !== null
+          ? (opt as { label?: unknown; items?: unknown })
+          : {};
+      const items = optObj.items;
+      if (Array.isArray(items)) {
+        const label =
+          typeof optObj.label === 'string' ? optObj.label : String(idx + 1);
+        console.log(`  Option ${label}:`);
+        items.forEach((item: unknown) => {
           if (typeof item === 'string') {
             console.log(`    - "${item}" (String)`);
           } else {

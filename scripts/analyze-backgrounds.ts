@@ -9,21 +9,35 @@ interface BackgroundAnalysis {
     name: string;
     type: string;
     notNull: boolean;
-    defaultValue: any;
+    defaultValue: unknown;
   }>;
-  sampleData: any[];
+  sampleData: unknown[];
   missingFields: string[];
   recommendations: string[];
 }
+
+type SqliteTableInfoRow = {
+  name: string;
+  type: string;
+  notnull: number;
+  dflt_value: unknown;
+};
+
+type BackgroundSampleRow = {
+  id: string;
+  name: string;
+  data: string;
+  data_len: number;
+};
 
 function analyzeBackgroundsTable(): BackgroundAnalysis {
   console.log('🔍 Analysiere backgrounds-Tabelle...\n');
 
   // 1. Schema-Struktur
-  const columns = db.pragma('table_info(core_backgrounds)');
+  const columns = db.pragma('table_info(core_backgrounds)') as SqliteTableInfoRow[];
   
   console.log('📋 Aktuelle Spalten:');
-  columns.forEach((col: any) => {
+  columns.forEach((col) => {
     console.log(`   - ${col.name} (${col.type})${col.notnull ? ' NOT NULL' : ''}`);
   });
 
@@ -33,17 +47,18 @@ function analyzeBackgroundsTable(): BackgroundAnalysis {
     FROM core_backgrounds 
     ORDER BY name 
     LIMIT 5
-  `).all();
+  `).all() as BackgroundSampleRow[];
 
   console.log('\n📄 Beispiel-Datensätze:');
-  sampleData.forEach((bg: any, idx: number) => {
+  sampleData.forEach((bg, idx: number) => {
     console.log(`\n   Background ${idx + 1}: ${bg.name} (${bg.id})`);
     console.log(`   Datenlänge: ${bg.data_len} Zeichen`);
     
     try {
-      const data = JSON.parse(bg.data);
+      const data = JSON.parse(bg.data) as unknown;
       console.log('   Inhalt:');
-      Object.entries(data).forEach(([key, val]) => {
+      if (typeof data === 'object' && data !== null) {
+        Object.entries(data as Record<string, unknown>).forEach(([key, val]) => {
         if (typeof val === 'string' && val.length > 100) {
           console.log(`      ${key}: ${val.substring(0, 80)}... (${val.length} Zeichen)`);
         } else if (Array.isArray(val)) {
@@ -51,7 +66,8 @@ function analyzeBackgroundsTable(): BackgroundAnalysis {
         } else {
           console.log(`      ${key}: ${JSON.stringify(val)}`);
         }
-      });
+        });
+      }
     } catch (e) {
       console.log(`   ⚠️  Daten nicht als JSON parsebar: ${e}`);
     }
@@ -70,7 +86,7 @@ function analyzeBackgroundsTable(): BackgroundAnalysis {
     'page'
   ];
 
-  const existingColumns = columns.map((col: any) => col.name);
+  const existingColumns = columns.map((col) => col.name);
   const missingFields = expectedFields.filter(field => !existingColumns.includes(field));
 
   console.log('\n⚠️  Fehlende Felder (normalisierte Spalten):');
@@ -85,8 +101,10 @@ function analyzeBackgroundsTable(): BackgroundAnalysis {
   // 4. Empfehlungen
   const recommendations: string[] = [];
 
-  const allBackgrounds = db.prepare('SELECT * FROM core_backgrounds').all();
-  const avgDataLength = allBackgrounds.reduce((sum: number, bg: any) => sum + (bg.data?.length || 0), 0) / allBackgrounds.length;
+  const allBackgrounds = db.prepare('SELECT data FROM core_backgrounds').all() as Array<{ data: string }>;
+  const avgDataLength =
+    allBackgrounds.reduce((sum, bg) => sum + (bg.data?.length || 0), 0) /
+    Math.max(1, allBackgrounds.length);
   
   if (avgDataLength < 500) {
     recommendations.push('Beschreibungen erscheinen zu kurz - vollständige Regelwerk-Texte fehlen');
@@ -103,11 +121,15 @@ function analyzeBackgroundsTable(): BackgroundAnalysis {
 
   // 5. Prüfe existierende Relationen
   console.log('\n🔗 Existierende Foreign Keys:');
-  const foreignKeys = db.pragma('foreign_key_list(core_backgrounds)');
+  const foreignKeys = db.pragma('foreign_key_list(core_backgrounds)') as Array<{
+    from: string;
+    table: string;
+    to: string;
+  }>;
   if (foreignKeys.length === 0) {
     console.log('   ⚠️  Keine Foreign Keys definiert!');
   } else {
-    foreignKeys.forEach((fk: any) => {
+    foreignKeys.forEach((fk) => {
       console.log(`   - ${fk.from} → ${fk.table}.${fk.to}`);
     });
   }
@@ -119,10 +141,11 @@ function analyzeBackgroundsTable(): BackgroundAnalysis {
     SELECT name FROM sqlite_master 
     WHERE type='table' 
     AND name NOT LIKE 'sqlite_%'
-  `).all().map((t: any) => t.name);
+  `).all() as Array<{ name: string }>;
+  const existingTableNames = existingTables.map((t) => t.name);
 
   relatedTables.forEach(table => {
-    if (existingTables.includes(table)) {
+    if (existingTableNames.includes(table)) {
       const count = db.prepare(`SELECT COUNT(*) as count FROM ${table}`).get().count;
       console.log(`   ✓ ${table}: ${count} Einträge`);
     } else {
@@ -132,7 +155,7 @@ function analyzeBackgroundsTable(): BackgroundAnalysis {
 
   const analysis: BackgroundAnalysis = {
     tableName: 'core_backgrounds',
-    columns: columns.map((col: any) => ({
+    columns: columns.map((col) => ({
       name: col.name,
       type: col.type,
       notNull: col.notnull === 1,

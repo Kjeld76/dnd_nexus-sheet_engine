@@ -5,11 +5,11 @@ Alle relevanten Änderungen an D&D Nexus werden in dieser Datei dokumentiert.
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.7.5] - 2026-01-14
+## [1.7.7] - 2026-01-14
 ### Geändert
-- **Build-Stabilität:** Internen Produktnamen von `D&D Nexus` auf `DnD-Nexus` geändert, um XML-Fehler im Windows-Installer (WiX/candle.exe) und Suchprobleme bei Build-Artefakten auf Linux zu vermeiden. (Anzeigename bleibt "D&D Nexus").
+- **Build-Stabilität:** Produktnamen auf `dnd-nexus` (Kleinschreibung) vereinheitlicht, um Artefakt-Suchfehler ("No artifacts found") auf Linux-Systemen zu beheben.
 
-## [1.7.4] - 2026-01-14
+## [1.7.6] - 2026-01-14
 ### Behoben
 - **CI/CD:** Erneute Korrektur der Linux-Systemabhängigkeiten für Ubuntu 24.04 (Noble).
 - **Rust Backend:** Absicherung der `open_devtools` Funktion gegen Release-Build-Abstürze.

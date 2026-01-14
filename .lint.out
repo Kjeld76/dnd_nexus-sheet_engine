@@ -1,0 +1,97 @@
+
+> dnd-nexus@1.7.6 lint
+> eslint . --ext ts,tsx --report-unused-disable-directives
+
+
+/daten/projects/dnd_nexus-sheet_engine/scripts/analyze-backgrounds.ts
+   12:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   14:15  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   26:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   39:27  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   73:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   89:65  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  110:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  122:20  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  135:32  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/daten/projects/dnd_nexus-sheet_engine/scripts/analyze-items-structure.ts
+  100:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  126:42  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/daten/projects/dnd_nexus-sheet_engine/scripts/check-background-equipment.ts
+  32:51  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  35:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/daten/projects/dnd_nexus-sheet_engine/scripts/debug-items-equipment.ts
+  11:11  warning  'TableAnalysis' is defined but never used  @typescript-eslint/no-unused-vars
+
+/daten/projects/dnd_nexus-sheet_engine/scripts/extract-backgrounds-complete.ts
+  27:9  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/daten/projects/dnd_nexus-sheet_engine/scripts/fix-background-equipment.ts
+  157:15  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/daten/projects/dnd_nexus-sheet_engine/scripts/migrate-backgrounds.ts
+  26:9   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  61:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  72:25  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/daten/projects/dnd_nexus-sheet_engine/scripts/optimize-background-equipment.ts
+  159:15  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/daten/projects/dnd_nexus-sheet_engine/scripts/validate-backgrounds.ts
+  40:15  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  65:53  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/daten/projects/dnd_nexus-sheet_engine/src/components/Compendium.tsx
+    51:60  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   127:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   185:59  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   389:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   424:65  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   457:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   468:55  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   574:63  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   575:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   585:53  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   587:53  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   687:64  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   688:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   699:75  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   825:67  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   827:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   846:67  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   848:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   885:60  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   887:64  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   889:86  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   891:66  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   929:40  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   964:63  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  1030:10  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  1032:10  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  1077:14  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  1080:10  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  1150:9   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/daten/projects/dnd_nexus-sheet_engine/src/components/CompendiumEditor.tsx
+   29:17  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   41:44  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  454:10  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/daten/projects/dnd_nexus-sheet_engine/src/components/character/ArmorTable.tsx
+  356:57  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  357:42  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/daten/projects/dnd_nexus-sheet_engine/src/components/character/CombatStats.tsx
+   11:37  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  120:9   warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  122:10  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  126:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  178:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/daten/projects/dnd_nexus-sheet_engine/src/components/character/ModifiersList.tsx
+  71:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 62 problems (0 errors, 62 warnings)
+

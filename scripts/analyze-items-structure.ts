@@ -97,8 +97,12 @@ function analyzeItems() {
     try {
       const items = JSON.parse(eq.items);
       if (Array.isArray(items)) {
-        items.forEach((item: any) => {
-          if (typeof item === 'object' && item.quantity && item.quantity > 1) {
+        items.forEach((item: unknown) => {
+          const obj = (typeof item === 'object' && item !== null)
+            ? (item as { quantity?: unknown })
+            : null;
+          const qty = obj?.quantity;
+          if (typeof qty === 'number' && qty > 1) {
             equipmentItemsWithQuantities++;
             if (equipmentExamples.length < 5) {
               equipmentExamples.push(`${eq.name}: ${JSON.stringify(item)}`);
@@ -123,11 +127,16 @@ function analyzeItems() {
     try {
       const charData = JSON.parse(char.data);
       if (charData.inventory && Array.isArray(charData.inventory)) {
-        charData.inventory.forEach((inv: any) => {
-          if (inv.quantity && inv.quantity > 1) {
+        charData.inventory.forEach((inv: unknown) => {
+          const obj = (typeof inv === 'object' && inv !== null)
+            ? (inv as { quantity?: unknown; item_id?: unknown })
+            : null;
+          const qty = obj?.quantity;
+          const itemId = obj?.item_id;
+          if (typeof qty === 'number' && qty > 1) {
             inventoryItemsWithQuantities++;
             if (inventoryExamples.length < 5) {
-              inventoryExamples.push(`${inv.item_id}: quantity=${inv.quantity}`);
+              inventoryExamples.push(`${typeof itemId === 'string' ? itemId : 'unknown'}: quantity=${qty}`);
             }
           }
         });

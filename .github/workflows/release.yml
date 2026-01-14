@@ -68,7 +68,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: ${{ github.ref_name }}
-          releaseName: "DnD Nexus ${{ github.ref_name }}"
+          releaseName: "D&D Nexus ${{ github.ref_name }}"
           releaseBody: "Automatischer Release durch GitHub Actions."
           releaseDraft: true
           prerelease: false

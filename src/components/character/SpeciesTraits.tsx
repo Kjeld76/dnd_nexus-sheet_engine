@@ -36,7 +36,9 @@ export const SpeciesTraits: React.FC<Props> = ({ species }) => {
     return null;
   }
 
-  const traits = species.data.traits || [];
+  const traits = Array.isArray(species.data.traits) ? species.data.traits : [];
+  const asString = (v: unknown, fallback = ""): string =>
+    typeof v === "string" ? v : fallback;
 
   return (
     <div className="bg-card p-6 rounded-[3.5rem] border-2 border-border shadow-2xl shadow-foreground/[0.02]">
@@ -55,11 +57,13 @@ export const SpeciesTraits: React.FC<Props> = ({ species }) => {
       </div>
 
       <div className="grid grid-cols-1 gap-6">
-        {traits.map((trait: any) => {
+        {traits.map((trait, idx) => {
+          const t = (trait ?? {}) as { name?: unknown; description?: unknown };
+          const traitName = asString(t.name, `Trait ${idx + 1}`);
           const effects = parseTraitEffects(trait);
           return (
             <div
-              key={trait.name}
+              key={`${traitName}-${idx}`}
               className="bg-background p-6 rounded-[2.5rem] border-2 border-border hover:border-primary/40 transition-all group relative overflow-hidden"
             >
               <div className="absolute -top-6 -right-6 w-24 h-24 bg-primary/5 rounded-full group-hover:scale-150 transition-transform duration-1000 opacity-0 group-hover:opacity-100" />
@@ -69,7 +73,7 @@ export const SpeciesTraits: React.FC<Props> = ({ species }) => {
                     <Zap size={20} className="text-primary" />
                   </div>
                   <h4 className="text-lg font-black text-foreground">
-                    {trait.name}
+                    {traitName}
                   </h4>
                 </div>
                 {effects.length > 0 && (
@@ -90,7 +94,7 @@ export const SpeciesTraits: React.FC<Props> = ({ species }) => {
                 )}
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed italic border-l-4 border-border/50 pl-6 group-hover:border-primary/30 transition-colors">
-                {trait.description}
+                {asString(t.description)}
               </p>
               {effects.length > 0 && (
                 <div className="mt-4 pt-4 border-t border-border/30">

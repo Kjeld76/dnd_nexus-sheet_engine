@@ -52,7 +52,7 @@ export const SKILL_MAP: Record<string, keyof Attributes> = {
 export const calculateDerivedStats = (
   character: Character,
   characterClass?: Class,
-  inventoryItems: (Weapon | Armor | any)[] = [],
+  inventoryItems: Array<Weapon | Armor> = [],
   activeModifiers: Modifier[] = [],
 ): DerivedStats => {
   const level = character.meta.level;
@@ -64,7 +64,10 @@ export const calculateDerivedStats = (
   // 1. HP Calculation
   let hp_max = 0;
   if (characterClass) {
-    const hitDie = (characterClass.data.hit_die as number) || 8;
+    const hitDie =
+      typeof characterClass.data?.hit_die === "number"
+        ? characterClass.data.hit_die
+        : 8;
     const avgHitDie = Math.floor(hitDie / 2) + 1;
     hp_max = hitDie + conMod + (level - 1) * (avgHitDie + conMod);
   } else {
@@ -80,7 +83,7 @@ export const calculateDerivedStats = (
     }))
     .filter((item) => item.is_equipped && item.data?.category)
     .find((item) => {
-      const category = (item.data as any)?.category?.toLowerCase() || "";
+      const category = item.data?.category?.toLowerCase() || "";
       return (
         category !== "schild" &&
         (category.includes("ruestung") ||
@@ -95,9 +98,7 @@ export const calculateDerivedStats = (
       ...invItem,
       data: inventoryItems.find((i) => i.id === invItem.item_id),
     }))
-    .find(
-      (item) => item.is_equipped && (item.data as any)?.category === "schild",
-    );
+    .find((item) => item.is_equipped && item.data?.category === "schild");
 
   let ac = 10 + dexMod; // Base unarmored
 
@@ -188,7 +189,10 @@ export const calculateDerivedStats = (
       ...invItem,
       data: inventoryItems.find((i) => i.id === invItem.item_id),
     }))
-    .filter((item) => item.is_equipped && item.data?.damage_dice !== undefined)
+    .filter((item) => {
+      const data = item.data as any;
+      return item.is_equipped && data && data.damage_dice !== undefined;
+    })
     .map((item) => {
       const weapon = item.data as Weapon;
       const isProficient =
@@ -198,9 +202,10 @@ export const calculateDerivedStats = (
       const isRanged =
         (weapon.category?.toLowerCase() || "").includes("ranged") ||
         (weapon.category?.toLowerCase() || "").includes("fernkampf");
-      const isFinesse = (weapon.properties as any[])?.some(
-        (p: any) => p.name?.toLowerCase() === "finesse" || p.id === "finesse",
-      );
+      const isFinesse =
+        weapon.properties?.some(
+          (p) => p.name?.toLowerCase() === "finesse" || p.id === "finesse",
+        ) ?? false;
 
       let abilityMod = calculateModifier(attributes.str);
       if (isRanged) abilityMod = calculateModifier(attributes.dex);
@@ -210,8 +215,7 @@ export const calculateDerivedStats = (
           calculateModifier(attributes.dex),
         );
 
-      const properties =
-        (weapon.properties as any[])?.map((p: any) => p.name || p.id) || [];
+      const properties = weapon.properties?.map((p) => p.name || p.id) || [];
 
       return {
         name: weapon.name,

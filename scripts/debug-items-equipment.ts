@@ -8,14 +8,6 @@ interface SectionMarker {
   context: string;
 }
 
-interface TableAnalysis {
-  startIndex: number;
-  endIndex: number;
-  header?: string;
-  rowCount: number;
-  structure: string;
-}
-
 function fixEncoding(text: string): string {
   const ENCODING_FIXES: Record<string, string> = {
     'Ã¤': 'ä', 'Ã¶': 'ö', 'Ã¼': 'ü', 'ÃŸ': 'ß',

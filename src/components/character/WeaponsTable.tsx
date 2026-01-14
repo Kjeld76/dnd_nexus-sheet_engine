@@ -168,7 +168,7 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                       {weapon.properties && weapon.properties.length > 0 && (
                         <span className="truncate">
                           {weapon.properties
-                            .map((p: any) => p.name || p.id)
+                            .map((p) => p.name || p.id)
                             .join(", ")}
                         </span>
                       )}
@@ -235,7 +235,7 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                         {weapon.properties && weapon.properties.length > 0 && (
                           <span className="truncate">
                             {weapon.properties
-                              .map((p: any) => p.name || p.id)
+                              .map((p) => p.name || p.id)
                               .join(", ")}
                           </span>
                         )}

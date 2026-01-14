@@ -24,7 +24,7 @@ interface Background {
     name: string;
     description: string;
   };
-  data: any;
+  data: Record<string, unknown>;
 }
 
 function slugify(text: string): string {

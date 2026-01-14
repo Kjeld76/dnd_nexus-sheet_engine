@@ -8,13 +8,13 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-interface Props {
+type Props = {
   backgroundName: string;
   toolCategory: string; // "spielset" | "handwerkszeug" | "musikinstrument"
   availableTools: Tool[];
   onConfirm: (selectedTool: Tool) => void;
   onCancel: () => void;
-}
+};
 
 const CATEGORY_LABELS: Record<string, string> = {
   spielset: "Spielset",
@@ -31,12 +31,28 @@ export const ToolChoiceDialog = ({
 }: Props) => {
   const [selectedTool, setSelectedTool] = useState<Tool | null>(null);
 
+  const getVariantOf = (tool: Tool): string | null => {
+    const v = tool.data?.["variant_of"];
+    return typeof v === "string" ? v : null;
+  };
+
+  const getAttribute = (tool: Tool): string | null => {
+    const a = tool.data?.["attribute"];
+    return typeof a === "string" ? a : null;
+  };
+
+  const getVerwenden = (tool: Tool): string[] => {
+    const v = tool.data?.["verwenden"];
+    if (!Array.isArray(v)) return [];
+    return v.filter((x): x is string => typeof x === "string");
+  };
+
   // Helper function to check if tool matches category
   const toolMatchesCategory = (tool: Tool): boolean => {
     const toolCategoryLower = tool.category.toLowerCase();
     const targetCategoryLower = toolCategory.toLowerCase();
     const toolNameLower = tool.name.toLowerCase();
-    const variantOf = (tool.data as any)?.variant_of?.toLowerCase() || "";
+    const variantOf = (getVariantOf(tool) || "").toLowerCase();
 
     // Direktes Matching
     if (
@@ -96,7 +112,7 @@ export const ToolChoiceDialog = ({
   // Gruppiere Tools: Basis-Tools und ihre Varianten
   const toolGroups = filteredTools.reduce(
     (groups, tool) => {
-      const variantOf = (tool.data as any)?.variant_of;
+      const variantOf = getVariantOf(tool);
 
       if (variantOf) {
         // Dies ist eine Variante
@@ -105,14 +121,10 @@ export const ToolChoiceDialog = ({
           // Finde das Basis-Tool (auch in allen Tools, nicht nur gefilterten)
           const baseTool =
             availableTools.find(
-              (t) =>
-                t.name.toLowerCase() === baseToolName &&
-                !(t.data as any)?.variant_of,
+              (t) => t.name.toLowerCase() === baseToolName && !getVariantOf(t),
             ) ||
             filteredTools.find(
-              (t) =>
-                t.name.toLowerCase() === baseToolName &&
-                !(t.data as any)?.variant_of,
+              (t) => t.name.toLowerCase() === baseToolName && !getVariantOf(t),
             );
           if (baseTool) {
             groups[baseToolName] = {
@@ -170,7 +182,7 @@ export const ToolChoiceDialog = ({
       group.variants.forEach((variant) => {
         displayTools.push({
           tool: variant,
-          groupName: (variant.data as any)?.variant_of as string,
+          groupName: getVariantOf(variant) || undefined,
         });
       });
     }
@@ -239,26 +251,23 @@ export const ToolChoiceDialog = ({
                         </span>
                       )}
                     </div>
-                    {!!tool.data?.verwenden &&
-                      Array.isArray(tool.data.verwenden) &&
-                      tool.data.verwenden.length > 0 && (
-                        <div className="text-sm mt-2 opacity-80">
-                          <div className="font-semibold mb-1">Verwenden:</div>
-                          <ul className="list-disc list-inside space-y-1">
-                            {(tool.data.verwenden as string[])
-                              .slice(0, 2)
-                              .map((use: string, idx: number) => (
-                                <li key={idx} className="text-xs">
-                                  {use}
-                                </li>
-                              ))}
-                          </ul>
-                        </div>
-                      )}
+                    {getVerwenden(tool).length > 0 && (
+                      <div className="text-sm mt-2 opacity-80">
+                        <div className="font-semibold mb-1">Verwenden:</div>
+                        <ul className="list-disc list-inside space-y-1">
+                          {getVerwenden(tool)
+                            .slice(0, 2)
+                            .map((use: string, idx: number) => (
+                              <li key={idx} className="text-xs">
+                                {use}
+                              </li>
+                            ))}
+                        </ul>
+                      </div>
+                    )}
                     <div className="text-xs mt-2 opacity-60">
                       {tool.cost_gp} GM • {tool.weight_kg} kg
-                      {(tool.data as any)?.attribute &&
-                        ` • ${(tool.data as any).attribute}`}
+                      {getAttribute(tool) && ` • ${getAttribute(tool)}`}
                     </div>
                   </button>
                 ))}

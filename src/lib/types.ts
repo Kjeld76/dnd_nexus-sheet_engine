@@ -177,6 +177,7 @@ export interface Class {
 }
 
 export interface ClassData {
+  hit_die?: number;
   subclasses?: Array<{ id: string; name: string }>;
   [key: string]: unknown;
 }

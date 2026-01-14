@@ -912,13 +912,16 @@ export function CharacterSheet() {
         const oldEquipment = previousBackground.data.starting_equipment;
         if (oldEquipment) {
           const itemsToRemove = new Set<string>();
-          if (oldEquipment.options)
-            oldEquipment.options.forEach((opt: any) =>
-              opt.items?.forEach((i: any) =>
-                itemsToRemove.add(typeof i === "string" ? i : i.name),
-              ),
+          if (oldEquipment.options) {
+            const normalized = normalizeStartingEquipmentOptions(
+              oldEquipment.options,
             );
-          else if (oldEquipment.items)
+            normalized.forEach((opt) => {
+              opt.items?.forEach((i) => {
+                itemsToRemove.add(typeof i === "string" ? i : i.name);
+              });
+            });
+          } else if (oldEquipment.items)
             oldEquipment.items.forEach((i: string) => itemsToRemove.add(i));
           itemsToRemove.forEach((name) =>
             removeBackgroundItem(name, updateMeta),
@@ -980,7 +983,9 @@ export function CharacterSheet() {
       !currentCharacter.meta.background_tool_choice;
     if (needsToolChoice) {
       setPendingBackground(currentBackground);
-      setPendingToolCategory((toolData as any).category || null);
+      setPendingToolCategory(
+        typeof toolData.category === "string" ? toolData.category : null,
+      );
       setShowToolChoiceDialog(true);
       return;
     }
@@ -1018,7 +1023,7 @@ export function CharacterSheet() {
     if (
       fixedToolName &&
       (typeof backgroundData.tool !== "object" ||
-        (backgroundData.tool as any)?.type !== "choice")
+        backgroundData.tool.type !== "choice")
     ) {
       if (!currentCharacter.proficiencies.tools.includes(fixedToolName))
         updateProficiency("tools", fixedToolName, true);
