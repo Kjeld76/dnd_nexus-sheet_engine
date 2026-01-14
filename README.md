@@ -287,4 +287,4 @@ Siehe [RELEASE_GUIDE.md](./RELEASE_GUIDE.md) für Entwicklungsumgebung und Build
 
 ## Lizenz
 
-Proprietär
+MIT (siehe `LICENSE`)
