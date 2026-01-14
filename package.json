@@ -18,7 +18,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "typecheck": "tsc --noEmit",
-    "parse:phb": "tsx tools/parser/cli.ts",
+    "parse:phb": "tsx archive/tools/tools/parser/cli.ts \"resources/books/D&D Spielerhandbuch (2024).docx\"",
     "release": "tsx scripts/release.ts",
     "maintenance": "tsx scripts/maintenance.ts",
     "db:push": "node scripts/db-sync.js push",

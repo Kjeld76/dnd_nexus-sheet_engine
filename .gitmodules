@@ -1,4 +1,4 @@
 [submodule "wiki"]
 	path = wiki
-	url = https://github.com/Kjeld76/dnd_nexus-sheet_engine.git
-	branch = main
+	url = https://github.com/Kjeld76/dnd_nexus-sheet_engine.wiki.git
+	branch = master
