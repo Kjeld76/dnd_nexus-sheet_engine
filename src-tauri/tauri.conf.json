@@ -1,6 +1,6 @@
 {
-  "productName": "D&D Nexus",
-  "version": "1.7.4",
+  "productName": "DnD-Nexus",
+  "version": "1.7.5",
   "identifier": "com.dndnexus.app",
   "build": {
     "beforeDevCommand": "pnpm dev",
