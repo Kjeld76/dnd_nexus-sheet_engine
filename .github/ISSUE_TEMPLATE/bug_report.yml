@@ -1,0 +1,53 @@
+name: Bug Report
+description: Fehler melden
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Danke fürs Melden. Bitte gib genug Details, damit wir den Bug reproduzieren können.
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: App-Version (z.B. 1.7.9) und OS
+      placeholder: "1.7.9 / Windows 11"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Repro-Schritte
+      description: Schritt für Schritt
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Erwartetes Verhalten
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Tatsächliches Verhalten
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Screenshots
+      description: Relevante Logs aus der Konsole oder Screenshots anhängen
+    validations:
+      required: false
+
