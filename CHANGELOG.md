@@ -5,6 +5,28 @@ Alle relevanten Änderungen an D&D Nexus werden in dieser Datei dokumentiert.
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.5] - 2026-01-14
+### Geändert
+- **Build-Stabilität:** Internen Produktnamen von `D&D Nexus` auf `DnD-Nexus` geändert, um XML-Fehler im Windows-Installer (WiX/candle.exe) und Suchprobleme bei Build-Artefakten auf Linux zu vermeiden. (Anzeigename bleibt "D&D Nexus").
+
+## [1.7.4] - 2026-01-14
+### Behoben
+- **CI/CD:** Erneute Korrektur der Linux-Systemabhängigkeiten für Ubuntu 24.04 (Noble).
+- **Rust Backend:** Absicherung der `open_devtools` Funktion gegen Release-Build-Abstürze.
+
+## [1.7.3] - 2026-01-14
+### Behoben
+- **Linux Build:** Fehlende System-Bibliotheken (`libglib2.0-dev`, `libsoup-3.0-dev` etc.) im GitHub Action Workflow hinzugefügt.
+- **Windows Build:** Rust-Kompilierungsfehler behoben, indem `open_devtools` nur im Debug-Modus aktiviert wird (`#[cfg(debug_assertions)]`).
+
+## [1.7.2] - 2026-01-14
+### Behoben
+- **Frontend Build:** TypeScript-Fehler in `Compendium.tsx` behoben (Typ-Konflikt bei `RefObject` für die virtualisierte Liste).
+
+## [1.7.1] - 2026-01-14
+### Behoben
+- **CI/CD:** Platzhalter-Fehler in der `release.yml` korrigiert, damit Git-Tags korrekt für die Release-Erstellung genutzt werden.
+
 ## [1.7.0] - 2026-01-14
 ### Hinzugefügt
 - **Hintergründe - Strukturierte Startausrüstung:**
