@@ -80,7 +80,7 @@ export const calculateDerivedStats = (
     }))
     .filter((item) => item.is_equipped && item.data?.category)
     .find((item) => {
-      const category = item.data?.category?.toLowerCase() || "";
+      const category = (item.data as any)?.category?.toLowerCase() || "";
       return (
         category !== "schild" &&
         (category.includes("ruestung") ||
@@ -95,7 +95,9 @@ export const calculateDerivedStats = (
       ...invItem,
       data: inventoryItems.find((i) => i.id === invItem.item_id),
     }))
-    .find((item) => item.is_equipped && item.data?.category === "schild");
+    .find(
+      (item) => item.is_equipped && (item.data as any)?.category === "schild",
+    );
 
   let ac = 10 + dexMod; // Base unarmored
 
@@ -194,9 +196,9 @@ export const calculateDerivedStats = (
         character.proficiencies?.weapons?.includes(weapon.category);
 
       const isRanged =
-        weapon.category?.toLowerCase().includes("ranged") ||
-        weapon.category?.toLowerCase().includes("fernkampf");
-      const isFinesse = weapon.properties?.some(
+        (weapon.category?.toLowerCase() || "").includes("ranged") ||
+        (weapon.category?.toLowerCase() || "").includes("fernkampf");
+      const isFinesse = (weapon.properties as any[])?.some(
         (p: any) => p.name?.toLowerCase() === "finesse" || p.id === "finesse",
       );
 
@@ -209,7 +211,7 @@ export const calculateDerivedStats = (
         );
 
       const properties =
-        weapon.properties?.map((p: any) => p.name || p.id) || [];
+        (weapon.properties as any[])?.map((p: any) => p.name || p.id) || [];
 
       return {
         name: weapon.name,

@@ -571,7 +571,7 @@ export function Compendium() {
                             value={
                               selectedItem.properties &&
                               selectedItem.properties.length > 0
-                                ? selectedItem.properties
+                                ? (selectedItem.properties as any[])
                                     .map((p: any) => p.name)
                                     .join(", ")
                                 : selectedItem.weapon_type || "—"
@@ -582,8 +582,9 @@ export function Compendium() {
                             label="Meisterung"
                             value={
                               selectedItem.mastery?.name ||
-                              selectedItem.data.mastery_details?.name ||
-                              selectedItem.data.mastery ||
+                              (selectedItem.data as any)?.mastery_details
+                                ?.name ||
+                              (selectedItem.data as any)?.mastery ||
                               "—"
                             }
                             highlight
@@ -610,7 +611,8 @@ export function Compendium() {
                               selectedItem.category === "schild"
                                 ? `+${selectedItem.ac_bonus}`
                                 : selectedItem.ac_formula ||
-                                  (selectedItem.base_ac !== null
+                                  (selectedItem.base_ac !== null &&
+                                  selectedItem.base_ac !== undefined
                                     ? selectedItem.base_ac.toString()
                                     : "—")
                             }
@@ -682,38 +684,42 @@ export function Compendium() {
                                   <Info size={18} /> Eigenschaften Details
                                 </h4>
                                 <div className="space-y-8">
-                                  {selectedItem.properties.map((prop: any) => (
-                                    <div
-                                      key={prop.id}
-                                      className="space-y-3 group"
-                                    >
-                                      <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
-                                        {prop.name}
-                                        {prop.parameter_value && (
-                                          <span className="text-sm text-muted-foreground normal-case ml-2">
-                                            {(() => {
-                                              const param =
-                                                prop.parameter_value;
-                                              if (param.strength_requirement) {
-                                                return `(STÄ ${param.strength_requirement})`;
-                                              }
-                                              if (param.ac_bonus) {
-                                                return `(+${param.ac_bonus} RK)`;
-                                              }
-                                              if (param.damage_type) {
-                                                return `(${param.damage_type})`;
-                                              }
-                                              return "";
-                                            })()}
-                                          </span>
-                                        )}
-                                      </span>
-                                      <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20 group-hover:border-primary transition-colors">
-                                        {prop.description ||
-                                          "Keine Beschreibung im PHB."}
-                                      </p>
-                                    </div>
-                                  ))}
+                                  {(selectedItem.properties as any[]).map(
+                                    (prop: any) => (
+                                      <div
+                                        key={prop.id}
+                                        className="space-y-3 group"
+                                      >
+                                        <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
+                                          {prop.name}
+                                          {prop.parameter_value && (
+                                            <span className="text-sm text-muted-foreground normal-case ml-2">
+                                              {(() => {
+                                                const param =
+                                                  prop.parameter_value as any;
+                                                if (
+                                                  param.strength_requirement
+                                                ) {
+                                                  return `(STÄ ${param.strength_requirement})`;
+                                                }
+                                                if (param.ac_bonus) {
+                                                  return `(+${param.ac_bonus} RK)`;
+                                                }
+                                                if (param.damage_type) {
+                                                  return `(${param.damage_type})`;
+                                                }
+                                                return "";
+                                              })()}
+                                            </span>
+                                          )}
+                                        </span>
+                                        <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20 group-hover:border-primary transition-colors">
+                                          {prop.description ||
+                                            "Keine Beschreibung im PHB."}
+                                        </p>
+                                      </div>
+                                    ),
+                                  )}
                                 </div>
                               </div>
                             )}
@@ -876,12 +882,14 @@ export function Compendium() {
                               label="Werkzeug"
                               items={[
                                 typeof selectedItem.data.tool === "object" &&
-                                selectedItem.data.tool.type === "choice"
-                                  ? selectedItem.data.tool.description ||
-                                    `Wähle eine Art von ${selectedItem.data.tool.category}`
+                                (selectedItem.data.tool as any).type ===
+                                  "choice"
+                                  ? (selectedItem.data.tool as any)
+                                      .description ||
+                                    `Wähle eine Art von ${(selectedItem.data.tool as any).category}`
                                   : typeof selectedItem.data.tool === "object"
-                                    ? selectedItem.data.tool.name || ""
-                                    : selectedItem.data.tool,
+                                    ? (selectedItem.data.tool as any).name || ""
+                                    : (selectedItem.data.tool as string),
                               ]}
                               itemsData={tools}
                               onItemClick={(id: string) => {

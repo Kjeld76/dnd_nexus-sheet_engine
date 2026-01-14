@@ -1,6 +1,6 @@
 {
   "name": "dnd-nexus",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "D&D 5e 2024 Character Sheet Manager",
   "type": "module",
   "scripts": {
