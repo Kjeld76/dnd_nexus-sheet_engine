@@ -76,6 +76,7 @@ pub fn handle_menu_event(app: &AppHandle, event: tauri::menu::MenuEvent) {
             // Get all webview windows and toggle devtools on the first one
             let windows = app.webview_windows();
             if let Some((_, window)) = windows.iter().next() {
+                #[cfg(debug_assertions)]
                 window.open_devtools();
             }
         }
