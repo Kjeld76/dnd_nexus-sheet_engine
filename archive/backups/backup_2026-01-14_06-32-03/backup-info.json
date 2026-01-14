@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-01-14T06:32:03.278Z",
+  "backupName": "backup_2026-01-14_06-32-03",
+  "databases": [
+    "dnd-nexus.db",
+    "dnd-nexus.db.backup",
+    "sync.db"
+  ],
+  "projectVersion": "1.6.1"
+}

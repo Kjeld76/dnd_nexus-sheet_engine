@@ -1,6 +1,6 @@
 use tauri::{
     menu::{Menu, MenuItem, Submenu},
-    AppHandle, Emitter, Wry,
+    AppHandle, Emitter, Manager, Wry,
 };
 
 pub fn build_menu(app: &AppHandle) -> tauri::Result<Menu<Wry>> {
@@ -45,9 +45,19 @@ pub fn build_menu(app: &AppHandle) -> tauri::Result<Menu<Wry>> {
     db_menu.append(&MenuItem::with_id(app, "import_phb", "PHB Daten importieren", true, None::<&str>)?)?;
     db_menu.append(&MenuItem::with_id(app, "reset_db", "Auf Werkseinstellungen zurücksetzen", true, None::<&str>)?)?;
 
+    // View Menu (for DevTools) - Tauri 2.0 doesn't have toggle_devtools, so we'll use a custom menu item
+    let view_menu = Submenu::with_id(
+        app,
+        "view",
+        "Ansicht",
+        true,
+    )?;
+    view_menu.append(&MenuItem::with_id(app, "toggle_devtools", "Entwicklertools", true, Some("F12"))?)?;
+
     let menu = Menu::with_id(app, "main")?;
     menu.append(&file_menu)?;
     menu.append(&edit_menu)?;
+    menu.append(&view_menu)?;
     menu.append(&db_menu)?;
 
     Ok(menu)
@@ -62,6 +72,13 @@ pub fn handle_menu_event(app: &AppHandle, event: tauri::menu::MenuEvent) {
         "backup" => { let _ = app.emit("menu-backup", ()); }
         "import_phb" => { let _ = app.emit("menu-import-phb", ()); }
         "reset_db" => { let _ = app.emit("menu-reset-db", ()); }
+        "toggle_devtools" => {
+            // Get all webview windows and toggle devtools on the first one
+            let windows = app.webview_windows();
+            if let Some((_, window)) = windows.iter().next() {
+                window.open_devtools();
+            }
+        }
         _ => {}
     }
 }

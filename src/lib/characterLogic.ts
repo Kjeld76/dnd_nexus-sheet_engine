@@ -64,7 +64,7 @@ export const calculateDerivedStats = (
   // 1. HP Calculation
   let hp_max = 0;
   if (characterClass) {
-    const hitDie = characterClass.data.hit_die || 8;
+    const hitDie = (characterClass.data.hit_die as number) || 8;
     const avgHitDie = Math.floor(hitDie / 2) + 1;
     hp_max = hitDie + conMod + (level - 1) * (avgHitDie + conMod);
   } else {
@@ -72,23 +72,30 @@ export const calculateDerivedStats = (
   }
 
   // 2. AC Calculation
-  // Find equipped armor and shield
+  // Find equipped armor (only one armor can be equipped, plus optional shield)
   const equippedArmor = character.inventory
     .map((invItem) => ({
       ...invItem,
       data: inventoryItems.find((i) => i.id === invItem.item_id),
     }))
-    .find((item) => item.is_equipped && item.data?.base_ac !== undefined);
+    .filter((item) => item.is_equipped && item.data?.category)
+    .find((item) => {
+      const category = item.data?.category?.toLowerCase() || "";
+      return (
+        category !== "schild" &&
+        (category.includes("ruestung") ||
+          category === "leichte_ruestung" ||
+          category === "mittelschwere_ruestung" ||
+          category === "schwere_ruestung")
+      );
+    });
 
-  const hasShield = character.inventory
+  const equippedShield = character.inventory
     .map((invItem) => ({
       ...invItem,
       data: inventoryItems.find((i) => i.id === invItem.item_id),
     }))
-    .some(
-      (item) =>
-        item.is_equipped && item.data?.name?.toLowerCase().includes("schild"),
-    );
+    .find((item) => item.is_equipped && item.data?.category === "schild");
 
   let ac = 10 + dexMod; // Base unarmored
 
@@ -96,17 +103,39 @@ export const calculateDerivedStats = (
     const armor = equippedArmor.data as Armor;
     const category = armor.category?.toLowerCase() || "";
 
-    if (category.includes("leicht")) {
-      ac = armor.base_ac + dexMod;
-    } else if (category.includes("mittel")) {
-      ac = armor.base_ac + Math.min(dexMod, 2);
-    } else if (category.includes("schwer")) {
-      ac = armor.base_ac;
+    // Use ac_formula if available, otherwise fall back to base_ac
+    if (armor.ac_formula) {
+      // Parse formula like "11 + DEX", "12 + DEX (max. 2)", "14"
+      const formula = armor.ac_formula;
+      if (formula.includes("+ DEX")) {
+        const baseMatch = formula.match(/(\d+)/);
+        const base = baseMatch ? parseInt(baseMatch[1]) : 10;
+        if (formula.includes("max. 2")) {
+          ac = base + Math.min(dexMod, 2);
+        } else {
+          ac = base + dexMod;
+        }
+      } else {
+        // Fixed value like "14"
+        const baseMatch = formula.match(/(\d+)/);
+        ac = baseMatch ? parseInt(baseMatch[1]) : 10;
+      }
+    } else if (armor.base_ac !== null && armor.base_ac !== undefined) {
+      // Fallback to old base_ac logic
+      if (category.includes("leicht")) {
+        ac = armor.base_ac + dexMod;
+      } else if (category.includes("mittel")) {
+        ac = armor.base_ac + Math.min(dexMod, 2);
+      } else if (category.includes("schwer")) {
+        ac = armor.base_ac;
+      }
     }
   }
 
-  if (hasShield) {
-    ac += 2;
+  // Add shield bonus
+  if (equippedShield && equippedShield.data) {
+    const shield = equippedShield.data as Armor;
+    ac += shield.ac_bonus || 2; // Default +2 for shields
   }
 
   // 3. Initiative
@@ -157,16 +186,18 @@ export const calculateDerivedStats = (
       ...invItem,
       data: inventoryItems.find((i) => i.id === invItem.item_id),
     }))
-    .filter((item) => item.data?.damage_dice !== undefined)
+    .filter((item) => item.is_equipped && item.data?.damage_dice !== undefined)
     .map((item) => {
       const weapon = item.data as Weapon;
       const isProficient =
         character.proficiencies?.weapons?.includes(weapon.name) ||
-        character.proficiencies?.weapons?.includes(weapon.weapon_type);
+        character.proficiencies?.weapons?.includes(weapon.category);
 
-      const isRanged = weapon.weapon_type?.toLowerCase().includes("fernkampf");
-      const isFinesse = weapon.data?.properties?.some(
-        (p: string) => p.toLowerCase() === "finesse",
+      const isRanged =
+        weapon.category?.toLowerCase().includes("ranged") ||
+        weapon.category?.toLowerCase().includes("fernkampf");
+      const isFinesse = weapon.properties?.some(
+        (p: any) => p.name?.toLowerCase() === "finesse" || p.id === "finesse",
       );
 
       let abilityMod = calculateModifier(attributes.str);
@@ -177,11 +208,14 @@ export const calculateDerivedStats = (
           calculateModifier(attributes.dex),
         );
 
+      const properties =
+        weapon.properties?.map((p: any) => p.name || p.id) || [];
+
       return {
         name: weapon.name,
         attack_bonus: abilityMod + (isProficient ? profBonus : 0),
         damage: `${weapon.damage_dice}${abilityMod >= 0 ? "+" : ""}${abilityMod} ${weapon.damage_type}`,
-        properties: weapon.data?.properties || [],
+        properties: properties,
       };
     });
 

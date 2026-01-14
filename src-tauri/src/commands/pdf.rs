@@ -1,47 +1,62 @@
 use tauri::{AppHandle, Manager, WebviewWindowBuilder, WebviewUrl};
 use crate::core::types::Character;
 use crate::db::Database;
+use crate::error::{AppError, AppResult, map_lock_error};
 use std::fs;
 
+/// Exports a character to PDF by generating HTML and opening it in a hidden window.
+///
+/// # Arguments
+/// * `app` - Tauri application handle
+/// * `character_id` - Character UUID as string
+///
+/// # Returns
+/// Success message
+///
+/// # Errors
+/// Returns `AppError::CharacterNotFound` if character doesn't exist
+/// Returns `AppError` if database, file, or window operations fail
 #[tauri::command]
 pub async fn export_character_pdf(
     app: AppHandle,
     character_id: String,
 ) -> Result<String, String> {
-    // 1. Charakter laden
-    let db = app.state::<Database>();
-    let conn = db.0.lock().map_err(|e| format!("Lock error: {}", e))?;
-    
-    let mut stmt = conn.prepare("SELECT data FROM characters WHERE id = ?")
-        .map_err(|e: rusqlite::Error| e.to_string())?;
-    
-    let data: String = stmt.query_row([character_id], |row: &rusqlite::Row| row.get(0))
-        .map_err(|e: rusqlite::Error| e.to_string())?;
-    
-    let character: Character = serde_json::from_str(&data).map_err(|e: serde_json::Error| e.to_string())?;
+    let result: AppResult<String> = (|| {
+        // 1. Charakter laden
+        let db = app.state::<Database>();
+        let conn = map_lock_error(db.0.lock())?;
+        
+        let mut stmt = conn.prepare("SELECT data FROM characters WHERE id = ?")?;
+        
+        let data: String = stmt.query_row([character_id.clone()], |row: &rusqlite::Row| row.get(0))
+            .map_err(|_| AppError::CharacterNotFound(character_id.clone()))?;
+        
+        let character: Character = serde_json::from_str(&data)?;
 
-    // 2. HTML Template generieren
-    let html = render_character_html(&character);
+        // 2. HTML Template generieren
+        let html = render_character_html(&character);
+        
+        // 3. Temporäre Datei schreiben (oder Data URL nutzen)
+        let temp_path = app.path().app_cache_dir()?.join("temp_export.html");
+        fs::write(&temp_path, html)?;
+
+        // 4. Verstecktes Fenster erstellen
+        let _window = WebviewWindowBuilder::new(
+            &app,
+            "pdf-export",
+            WebviewUrl::App(temp_path)
+        )
+        .visible(false)
+        .build()?;
+
+        // HINWEIS: In Tauri 2.0 ist der native PDF-Export über die API noch im Fluss.
+        // Oft wird dies über Plugins oder direktes Drucken gelöst.
+        // Für diesen Prompt implementieren wir die Vorbereitung.
+
+        Ok("PDF-Export gestartet".into())
+    })();
     
-    // 3. Temporäre Datei schreiben (oder Data URL nutzen)
-    let temp_path = app.path().app_cache_dir().map_err(|e: tauri::Error| e.to_string())?.join("temp_export.html");
-    fs::write(&temp_path, html).map_err(|e: std::io::Error| e.to_string())?;
-
-    // 4. Verstecktes Fenster erstellen
-    let _window = WebviewWindowBuilder::new(
-        &app,
-        "pdf-export",
-        WebviewUrl::App(temp_path)
-    )
-    .visible(false)
-    .build()
-    .map_err(|e: tauri::Error| e.to_string())?;
-
-    // HINWEIS: In Tauri 2.0 ist der native PDF-Export über die API noch im Fluss.
-    // Oft wird dies über Plugins oder direktes Drucken gelöst.
-    // Für diesen Prompt implementieren wir die Vorbereitung.
-
-    Ok("PDF-Export gestartet".into())
+    result.map_err(|e| e.to_string())
 }
 
 fn render_character_html(character: &Character) -> String {

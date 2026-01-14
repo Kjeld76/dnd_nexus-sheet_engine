@@ -11,20 +11,25 @@ interface Props {
   onChange: (value: number) => void;
   onBlur?: () => void;
   species?: Species;
+  savingThrowBonus?: number;
+  isSavingThrowProficient?: boolean;
+  onToggleSavingThrow?: () => void;
 }
 
-export const AttributeBlock: React.FC<Props> = ({
+const AttributeBlockComponent: React.FC<Props> = ({
   name,
   attrKey,
   value,
   onChange,
   onBlur,
   species,
+  savingThrowBonus,
+  isSavingThrowProficient,
+  onToggleSavingThrow,
 }) => {
   const modifier = calculateModifier(value);
   const modifierText = formatModifier(modifier);
 
-  // Find trait effects for this attribute's saving throw
   const traitEffects: TraitEffect[] = species
     ? getTraitEffectsForSpecies(species)
     : [];
@@ -35,7 +40,7 @@ export const AttributeBlock: React.FC<Props> = ({
   );
 
   return (
-    <div className="flex flex-col items-center p-3 bg-card rounded-lg border border-border shadow-lg shadow-foreground/[0.02] transition-all hover:border-primary/40 w-full group relative overflow-hidden active:scale-[0.98]">
+    <div className="flex flex-col items-center p-3 bg-card rounded-lg border-2 border-border shadow-lg shadow-foreground/[0.02] transition-all hover:border-primary/40 w-full group relative overflow-hidden active:scale-[0.98]">
       <div className="absolute top-0 left-0 w-full h-1 bg-primary/10 group-hover:bg-primary/40 transition-all duration-500" />
 
       <div className="flex items-center gap-2 mb-2.5">
@@ -66,11 +71,42 @@ export const AttributeBlock: React.FC<Props> = ({
         <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity pointer-events-none" />
       </div>
 
-      <div className="mt-2 w-full flex justify-center">
-        <div className="text-base font-black text-primary bg-muted/50 px-3 py-1 rounded-lg border border-border min-w-[55px] text-center shadow-inner tracking-tight group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300">
-          {modifierText}
+      <div className="mt-2 w-full flex items-center justify-center gap-12">
+        <div className="flex flex-col items-center gap-1">
+          <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground/70">
+            Mod
+          </span>
+          <div className="text-lg font-black text-primary bg-muted/50 px-3 py-1 rounded-lg border border-border min-w-[55px] text-center shadow-inner tracking-tight group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300">
+            {modifierText}
+          </div>
         </div>
+
+        {savingThrowBonus !== undefined && onToggleSavingThrow && (
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center gap-1.5">
+              <div className="relative flex items-center shrink-0">
+                <input
+                  type="checkbox"
+                  checked={isSavingThrowProficient || false}
+                  onChange={onToggleSavingThrow}
+                  className="peer w-4 h-4 rounded-md border-2 border-border text-primary focus:ring-2 focus:ring-primary/10 bg-background cursor-pointer transition-all appearance-none checked:bg-primary checked:border-primary"
+                />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity">
+                  <div className="w-1.5 h-1.5 bg-primary-foreground rounded-full" />
+                </div>
+              </div>
+              <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground/70">
+                RW
+              </span>
+            </div>
+            <div className="text-lg font-black text-primary bg-muted/50 px-3 py-1 rounded-lg border border-border min-w-[55px] text-center shadow-inner tracking-tight group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300">
+              {formatModifier(savingThrowBonus)}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
 };
+
+export const AttributeBlock = React.memo(AttributeBlockComponent);

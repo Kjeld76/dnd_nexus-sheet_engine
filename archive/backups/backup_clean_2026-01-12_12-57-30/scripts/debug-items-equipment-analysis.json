@@ -1,0 +1,31 @@
+{
+  "markers": [
+    {
+      "name": "KAPITEL 6: AUSRÜSTUNG",
+      "index": 652294,
+      "context": "KAPITEL 6\n\n\n\nAUSRÜSTUNG"
+    },
+    {
+      "name": "WERKZEUGE",
+      "index": 132031,
+      "context": "WERKZEUG\n\nDUNGEONS &DRAGONS r` \n\n(.,. • I\tINITIATIVE"
+    },
+    {
+      "name": "ABENTEUERAUSRÜSTUNG",
+      "index": 72136,
+      "context": "ABENTEUERAUSRÜSTUNG\n\nAusrüstung kann Abenteurern bei Erkundungen auf vielerlei Arten nützlich sein. Hohe Bereiche lassen sich beispielsweise mit Leitern erreichen, an dunklen Orten sind Fackeln und an"
+    },
+    {
+      "name": "KAPITEL 7:",
+      "index": 719282,
+      "context": "KAPITEL 7\n\n\n\n"
+    }
+  ],
+  "textLength": 1316400,
+  "hasWerkzeuge": true,
+  "hasAusruestung": true,
+  "hasStandard": false,
+  "hasPakete": false,
+  "pageNumbers": 2277,
+  "emptyAreas": 59
+}

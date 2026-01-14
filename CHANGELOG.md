@@ -5,7 +5,34 @@ Alle relevanten Änderungen an D&D Nexus werden in dieser Datei dokumentiert.
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.7.0] - 2026-01-14
+### Hinzugefügt
+- **Hintergründe - Strukturierte Startausrüstung:**
+  - Datenbank-Schema für `starting_equipment` optimiert (Mengenangaben, Einheiten und Varianten werden jetzt strukturiert gespeichert)
+  - Unterstützung für komplexe Items wie "Pergament (10 Blätter)" oder "Öl (drei Flaschen)"
+  - Varianten wie "Buch (Gebete)" werden korrekt im Inventar und in Dialogen angezeigt
+- **Inventar - Dedizierter Werkzeug-Bereich:**
+  - Neuer Bereich "WERKZEUGE" im Inventar-Tab
+  - Automatische Zuweisung von Werkzeugen (aus Hintergründen oder Paketen) in diesen Bereich
+  - Werkzeuge werden jetzt korrekt aus allen Inventar-Listen gelöscht, wenn der Hintergrund gewechselt wird
+- **Gewichtsberechnung & UI:**
+  - Werkzeuge werden nun in das Gesamtgewicht eingerechnet
+  - Interaktives Info-Icon (Tooltip) beim Gesamtgewicht erklärt die berechneten Bereiche (Am Körper, Rucksack, Werkzeuge, Ausrüstung)
+- **Hintergrund-Wechsel - Gold-Tracking:**
+  - Automatisches Tracking von Gold, das durch den Hintergrund gewährt wurde
+  - Bei einem Hintergrund-Wechsel wird das gewährte Gold wieder abgezogen (mit Schutz gegen negativen Kontostand)
+- **Stabilität & Persistenz:**
+  - Rust Backend (`CharacterMeta`) erweitert, um Hintergrund-Fortschritt (Boni, Werkzeugwahl, Ausrüstung) dauerhaft zu speichern
+  - "Clean-First" Prinzip beim Hintergrund-Wechsel: Komplette Bereinigung alter Daten vor Anwendung des neuen Hintergrunds zur Vermeidung von Race Conditions
+
+### Behoben
+- **Hintergründe - Dialog-Sequenzierung:**
+  - Dialoge für Attribute, Werkzeuge und Ausrüstung erscheinen nun zuverlässig nacheinander
+  - Fehler behoben, bei dem Dialoge nach einem Hintergrund-Wechsel nicht mehr erschienen
+  - Problem mit verschwindenden Mengen/Varianten im Frontend gelöst
+- **Fehlerbehandlung:**
+  - "Can't find variable: removeBackgroundItem" Fehler behoben
+  - Absicherung gegen Abstürze beim Löschen von nicht (mehr) vorhandenen Gegenständen oder Gold
 
 ## [1.6.0] - 2026-01-12
 ### Hinzugefügt

@@ -1,0 +1,289 @@
+[
+  {
+    "id": "adeliger",
+    "name": "Adeliger",
+    "description": "Du bist in einer Burg aufgewachsen, umgeben von Reichtum, Macht und Privilegien. Deine Familie ist von niederem Adel und hat dir erstklassige Bildung angedeihen lassen, die du zum Teil genossen und zum Teil verabscheut hast. Deine Zeit in der Burg - vor allem die vielen Stunden, die du deine Familie am Hof beobachtet hast - hat dich vieles über das Herrschen gelehrt.",
+    "skills": [
+      "Geschichte",
+      "Überzeugen"
+    ],
+    "data": {},
+    "ability_scores": [
+      "Stärke",
+      "Intelligenz",
+      "Charisma"
+    ],
+    "feat": "Begabt",
+    "tool": "Spielset aus",
+    "starting_equipment": {
+      "options": [
+        {
+          "label": "A",
+          "items": [
+            "Spielset (wie oben)"
+          ],
+          "gold": null
+        },
+        {
+          "label": "B",
+          "items": null,
+          "gold": 29
+        }
+      ]
+    }
+  },
+  {
+    "id": "bauer",
+    "name": "Bauer",
+    "description": "Du bist auf dem Land aufgewachsen. Jahrelang hast du Tiere versorgt und den Boden kultiviert, und dafür bist du mit Geduld und guter Gesundheit belohnt worden. Du schätzt die Gaben der Natur und hast zugleich gesunden Respekt vor ihrem Zorn.",
+    "skills": [
+      "Mit Tieren umgehen",
+      "Naturkunde"
+    ],
+    "data": {},
+    "ability_scores": [
+      "Stärke",
+      "Konstitution",
+      "Weisheit"
+    ],
+    "feat": "Zäh",
+    "tool": "Schreinerwerkzeug",
+    "starting_equipment": {
+      "options": [
+        {
+          "label": "B",
+          "items": null,
+          "gold": 30
+        }
+      ]
+    }
+  },
+  {
+    "id": "einsiedler",
+    "name": "Einsiedler",
+    "description": "",
+    "skills": [
+      "Heilkunde",
+      "Religion Werkzeug",
+      "mit dem du geübt bist: Kräuterkundeausrüstung Ausrüstung: Wähle A oder B aus: (A) Kampfstab"
+    ],
+    "data": {},
+    "ability_scores": [
+      "Konstitution",
+      "Weisheit",
+      "Charisma"
+    ],
+    "feat": "Heiler"
+  },
+  {
+    "id": "haendler",
+    "name": "Händler",
+    "description": "",
+    "skills": [
+      "Mit Tieren umgehen",
+      "Überzeugen"
+    ],
+    "data": {},
+    "ability_scores": [
+      "Konstitution",
+      "Intelligenz",
+      "Charisma"
+    ],
+    "feat": "Glückspilz",
+    "tool": "Navigationswerkzeug",
+    "starting_equipment": {
+      "options": [
+        {
+          "label": "A",
+          "items": [
+            "Navigationswerkzeug"
+          ],
+          "gold": null
+        },
+        {
+          "label": "B",
+          "items": null,
+          "gold": 22
+        }
+      ]
+    }
+  },
+  {
+    "id": "handwerker",
+    "name": "Handwerker",
+    "description": "Du hast in einem Handwerksbetrieb für ein paar Kupferstücke am Tag Böden gewischt und Tische geschrubbt, sowie du groß genug warst, um einen Eimer zu tragen. In deiner Lehre hast du gelernt, grundlegende handwerkliche Arbeiten auszuführen und schwierige Kunden zu besänftigen. Außerdem hast du ein gutes Auge fürs Detail entwickelt.",
+    "skills": [
+      "Nachforschungen",
+      "Überzeugen"
+    ],
+    "data": {},
+    "ability_scores": [
+      "Stärke",
+      "Geschicklichkeit",
+      "Intelligenz"
+    ],
+    "feat": "Handwerker",
+    "tool": "Handwerkszeug aus",
+    "starting_equipment": {
+      "options": [
+        {
+          "label": "A",
+          "items": [
+            "Handwerkszeug (wie oben)"
+          ],
+          "gold": null
+        },
+        {
+          "label": "B",
+          "items": null,
+          "gold": 32
+        }
+      ]
+    }
+  },
+  {
+    "id": "krimineller",
+    "name": "Krimineller",
+    "description": "Du hast dich in dunklen Gassen durchgeschlagen und mit Taschendiebstählen und Einbrüchen über Wasser gehalten. Vielleicht hat du einer kleinen Bande von gleichgesinnten Halunken angehört, die aufeinander aufpassten. Oder vielleicht warst du ein Einzelgänger und hast dich gegen die örtliche Diebesgilde oder noch fürchterlichere Gesetzesbrecher behauptet.",
+    "skills": [
+      "Fingerfertigkeit",
+      "Heimlichkeit"
+    ],
+    "data": {},
+    "feat": "Wachsam",
+    "ability_scores": [
+      "Geschicklichkeit",
+      "Konstitution",
+      "Intelligenz"
+    ],
+    "tool": "Diebeswerkzeug",
+    "starting_equipment": {
+      "options": [
+        {
+          "label": "A",
+          "items": [
+            "zwei Dolche",
+            "Diebeswerkzeug",
+            "Brechstange",
+            "zwei Beutel",
+            "Reisekleidung"
+          ],
+          "gold": 16
+        },
+        {
+          "label": "B",
+          "items": null,
+          "gold": 50
+        }
+      ]
+    }
+  },
+  {
+    "id": "reisender",
+    "name": "Reisender",
+    "description": "Du bist auf der Straße in Gesellschaft ähnlich glückloser Außenseiter aufgewachsen, manche von ihnen Freunde, manche von ihnen Rivalen. Du hast geschlafen, wo es sich angeboten hat, und so manche merkwürdige Arbeit getan, um etwas zu Essen zu kriegen. Wenn der Hunger unerträglich wurde, blieb dir nur Diebstahl. Dennoch hast du weder deinen Stolz noch die Hoffnung verloren. Das Schicksal ist noch nicht fertig mit dir.",
+    "skills": [
+      "Motiv erkennen",
+      "Heimlichkeit"
+    ],
+    "data": {},
+    "ability_scores": [
+      "Geschicklichkeit",
+      "Weisheit",
+      "Charisma"
+    ],
+    "feat": "Glückspilz",
+    "tool": "Diebeswerkzeug",
+    "starting_equipment": {
+      "options": [
+        {
+          "label": "A",
+          "items": [
+            "zwei Dolche",
+            "Diebeswerkzeug",
+            "Spielset (beliebig)",
+            "Schlafsack",
+            "zwei Beutel",
+            "Reisekleidung"
+          ],
+          "gold": null
+        },
+        {
+          "label": "B",
+          "items": null,
+          "gold": 16
+        }
+      ]
+    }
+  },
+  {
+    "id": "scharlatan",
+    "name": "Scharlatan",
+    "description": "Sowie du alt genug warst, um ein Bier zu bestellen, hattest du im Nu in jeder Taverne in Reichweite deinen Lieblingsplatz. Während deiner Tavernentouren hast du gelernt, jene Pechvögel auszunehmen, die auf der Suche nach einer schönen Lüge waren - vielleicht hast du ihnen mit gefälschten Zaubertränken oder Stammbäumen das Geld aus der Tasche gezogen.",
+    "skills": [
+      "Fingerfertigkeit",
+      "Täuschen"
+    ],
+    "data": {},
+    "feat": "Begabt",
+    "ability_scores": [
+      "Geschicklichkeit",
+      "Konstitution",
+      "Charisma"
+    ],
+    "starting_equipment": {
+      "options": [
+        {
+          "label": "A",
+          "items": [
+            "Fälscherausrüstung"
+          ],
+          "gold": null
+        },
+        {
+          "label": "B",
+          "items": null,
+          "gold": 15
+        }
+      ]
+    }
+  },
+  {
+    "id": "handwerker",
+    "name": "HANDWERKER",
+    "description": "Du hast deine prägenden Jahre in einem Skriptorium verbracht, einem Kloster zur Bewahrung von Wissen oder einer staatlichen Behörde, wo du gelernt hast, in klarer Schrift fügliche Texte zu verfassen. Vielleicht hast du Regierungsdokumente geschrieben oder viele Wälzer an Literatur kopiert. Möglicherweise hast du Erfahrung als Autor von Gedichten, Prosa oder wissenschaftlichen Arbeiten. Du achtest auf Details, damit du keine Fehler in die Dokumente einschleppst, die du erstellst oder kopierst.",
+    "skills": [
+      "Nachforschungen",
+      "Wahrnehmung"
+    ],
+    "data": {},
+    "ability_scores": [
+      "Geschicklichkeit",
+      "Intelligenz",
+      "Weisheit"
+    ],
+    "feat": "Begabt",
+    "tool": "Kalligrafenwerkzeug",
+    "starting_equipment": {
+      "options": [
+        {
+          "label": "A",
+          "items": [
+            "Kalligrafenwerkzeug",
+            "feine",
+            "Kleidung",
+            "Lampe",
+            "Öl (drei Flaschen)",
+            "Pergament (12 Blätter)"
+          ],
+          "gold": null
+        },
+        {
+          "label": "B",
+          "items": null,
+          "gold": 23
+        }
+      ]
+    }
+  }
+]

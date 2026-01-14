@@ -38,8 +38,8 @@ export const characterApi = {
 };
 
 export const compendiumApi = {
-  async getSpells(): Promise<Spell[]> {
-    return await invoke("get_all_spells");
+  async getSpells(limit?: number, offset?: number): Promise<Spell[]> {
+    return await invoke("get_all_spells", { limit, offset });
   },
   async getSpecies(): Promise<Species[]> {
     return await invoke("get_all_species");

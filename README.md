@@ -54,14 +54,26 @@ D&D Nexus ist eine moderne Desktop-Anwendung zur Verwaltung von D&D 5e Charakter
 #### Hintergründe (Backgrounds)
 - **Hintergrund-Auswahl**: Auswahl aus verfügbaren Hintergründen (PHB 2024)
 - **Automatische Anwendung**:
-  - Attributswerte: Dialog zur Auswahl zwischen +2/+1 oder alle +1 (bei "Alle +1" automatische Auswahl)
-  - Herkunftstalent (Feat): Automatisches Hinzufügen des Hintergrund-Feats
-  - Fertigkeiten: Automatisches Hinzufügen von zwei Fertigkeiten zur Proficiencies-Liste
-  - Werkzeug: Automatisches Hinzufügen eines Werkzeugs zur Proficiencies-Liste
+  - **Attributswerte**: Dialog zur Auswahl zwischen +2/+1 oder +1/+1/+1
+    - Dialog wird automatisch angezeigt, wenn Hintergrund gewechselt wird
+    - Auswahl wird auf Charakterbogen angewendet und gespeichert
+  - **Werkzeug-Auswahl**: Dialog zur Auswahl eines Werkzeugs (falls wählbar)
+    - Automatisches Hinzufügen zur Proficiencies-Liste
+    - Automatisches Hinzufügen zum Inventar
+    - Unterstützung für Varianten: Spielsets (Drachenschach, Drei-Drachen-Ante, Spielkarten, Würfel) und Musikinstrumente (10 Varianten)
+    - Verbessertes Kategorie-Matching findet alle relevanten Tools
+  - **Starting Equipment**: Dialog zur Auswahl zwischen Option A oder B (falls vorhanden)
+    - Automatisches Hinzufügen gewählter Items zum Inventar (mit Unterstützung für Mengen und Varianten)
+    - Automatisches Hinzufügen von Gold (falls vorhanden)
+    - **Intelligentes Gold-Tracking**: Gold wird beim Hintergrund-Wechsel automatisch wieder abgezogen
+  - **Herkunftstalent (Feat)**: Automatisches Hinzufügen des Hintergrund-Feats
+  - **Fertigkeiten**: Automatisches Hinzufügen von zwei Fertigkeiten zur Proficiencies-Liste
 - **Hintergrund-Wechsel**: 
-  - Automatisches Entfernen alter Hintergrund-Boni beim Wechsel
-  - Entfernen von Attributswerten, Feats, Fertigkeiten und Werkzeugen des vorherigen Hintergrunds
+  - Automatisches Entfernen aller alten Hintergrund-Boni beim Wechsel (Attribute, Feats, Fertigkeiten, Werkzeuge, Items, Gold)
+  - "Clean-First" Prinzip sorgt für stabile Dialog-Sequenzen beim Wechsel
+  - Alle Dialoge werden erneut angezeigt für den neuen Hintergrund
 - **Herkunftstalent-Anzeige**: Dedizierte Anzeige aller aktiven Talente (inkl. Hintergrund-Talent) im Charakterbogen
+- **Persistent Tracking**: Rust-Backend speichert den Fortschritt der Hintergrund-Anwendung (Wahlen/Boni) dauerhaft
 
 #### Kampf-Statistiken
 - **Rüstungsklasse (AC)**: Automatische Berechnung basierend auf Rüstung
@@ -93,7 +105,17 @@ D&D Nexus ist eine moderne Desktop-Anwendung zur Verwaltung von D&D 5e Charakter
 - **Rüstungen**: 
   - Verwaltung von Rüstungen (wird aus Kompendium geladen)
   - Automatische Berechnung der Rüstungsklasse (AC)
-- **Ausrüstung**: Verwaltung von Werkzeugen, Ausrüstung und anderen Gegenständen
+- **Werkzeuge**: 
+  - **Eigener Bereich**: Dedizierte Liste für Werkzeuge im Inventar
+  - 39 Werkzeuge aus PHB 2024 (Handwerkszeug, Anderes Werkzeug)
+  - Varianten-Support: Musikinstrumente (10 Varianten) und Spielsets (4 Varianten)
+  - Vollständige Informationen: Attribut, Verwenden-Aktionen, Herstellen-Listen
+  - Automatisches Hinzufügen bei Background-Auswahl
+- **Gewichtsberechnung**: 
+  - Automatisches Gesamtgewicht (Körper + Rucksack + Werkzeuge + Ausrüstung)
+  - **Info-Tooltip**: Detaillierte Aufschlüsselung der berechneten Bereiche via Hover-Icon
+- **Währungs-Management**: Gold, Silber, Kupfer mit automatischem Tracking für Hintergrund-Boni
+- **Ausrüstung**: Verwaltung von Ausrüstung und anderen Gegenständen
 
 ### Kompendium
 
@@ -127,6 +149,10 @@ D&D Nexus ist eine moderne Desktop-Anwendung zur Verwaltung von D&D 5e Charakter
   - Waffen: Waffenstatistiken, Eigenschaften und Meisterschaften
   - Rüstungen: Rüstungsstatistiken und Eigenschaften
   - Werkzeuge: Werkzeuginformationen und Kategorien
+    - 39 Werkzeuge aus PHB 2024 (Handwerkszeug, Anderes Werkzeug)
+    - Varianten-Support: Musikinstrumente (10 Varianten) und Spielsets (4 Varianten)
+    - Vollständige Daten: Attribut, Verwenden-Aktionen, Herstellen-Listen
+    - Kategorie-basierte Filterung und Gruppierung
   - Ausrüstung: Verschiedene Ausrüstungsgegenstände
   - Talente: Alle verfügbaren Talente mit Beschreibungen
   - Fertigkeiten: Fertigkeitsinformationen und zugehörige Attribute

@@ -5,9 +5,18 @@ export interface TraitEffect {
   source: string; // trait name
 }
 
-export function parseTraitEffects(trait: any): TraitEffect[] {
+type TraitLike = { name?: unknown; description?: unknown };
+type SpeciesLike = { data?: { traits?: unknown } };
+
+function asString(value: unknown, fallback = ""): string {
+  return typeof value === "string" ? value : fallback;
+}
+
+export function parseTraitEffects(trait: unknown): TraitEffect[] {
   const effects: TraitEffect[] = [];
-  const desc = (trait.description || "").toLowerCase();
+  const t = (trait ?? {}) as TraitLike;
+  const desc = asString(t.description).toLowerCase();
+  const traitName = asString(t.name, "Trait");
 
   // Vorteil bei Rettungswürfen
   if (desc.includes("vorteil") && desc.includes("rettungswurf")) {
@@ -29,7 +38,7 @@ export function parseTraitEffects(trait: any): TraitEffect[] {
       effects.push({
         type: "advantage",
         target: `${attrKey} saving throw`,
-        source: trait.name,
+        source: traitName,
       });
     }
   }
@@ -46,7 +55,7 @@ export function parseTraitEffects(trait: any): TraitEffect[] {
       effects.push({
         type: "advantage",
         target: skillMatch[1].trim(),
-        source: trait.name,
+        source: traitName,
       });
     }
   }
@@ -60,7 +69,7 @@ export function parseTraitEffects(trait: any): TraitEffect[] {
       effects.push({
         type: "resistance",
         target: damageMatch[1].trim(),
-        source: trait.name,
+        source: traitName,
       });
     }
   }
@@ -76,7 +85,7 @@ export function parseTraitEffects(trait: any): TraitEffect[] {
         type: "bonus",
         target: bonusMatch[2],
         value: parseInt(bonusMatch[1]),
-        source: trait.name,
+        source: traitName,
       });
     }
   }
@@ -84,14 +93,15 @@ export function parseTraitEffects(trait: any): TraitEffect[] {
   return effects;
 }
 
-export function getTraitEffectsForSpecies(species: any): TraitEffect[] {
-  if (!species?.data?.traits) return [];
+export function getTraitEffectsForSpecies(species: unknown): TraitEffect[] {
+  const s = species as SpeciesLike;
+  const traits = s?.data?.traits;
+  if (!Array.isArray(traits)) return [];
 
   const allEffects: TraitEffect[] = [];
-  species.data.traits.forEach((trait: any) => {
-    const effects = parseTraitEffects(trait);
-    allEffects.push(...effects);
-  });
+  for (const trait of traits) {
+    allEffects.push(...parseTraitEffects(trait));
+  }
 
   return allEffects;
 }

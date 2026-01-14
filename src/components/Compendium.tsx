@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useCompendiumStore } from "../lib/compendiumStore";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import {
   Zap,
   Users,
@@ -49,6 +50,7 @@ export function Compendium() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedSubclass, setSelectedSubclass] = useState<any>(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const parentRef = useRef<HTMLDivElement>(null);
 
   const {
     spells,
@@ -256,7 +258,10 @@ export function Compendium() {
       <main className="flex flex-1 overflow-hidden">
         {/* Left: Sidebar List */}
         <aside className="w-96 border-r border-border flex flex-col bg-muted/10 overflow-hidden">
-          <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-2">
+          <div
+            className="flex-1 overflow-y-auto custom-scrollbar p-6"
+            ref={parentRef}
+          >
             {isLoading ? (
               <div className="flex flex-col items-center justify-center py-20 space-y-4">
                 <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent shadow-xl shadow-primary/20"></div>
@@ -269,80 +274,17 @@ export function Compendium() {
                 Keine Einträge gefunden
               </div>
             ) : (
-              data.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    setSelectedId(item.id);
-                    setSelectedSubclass(null);
-                  }}
-                  className={cn(
-                    "w-full text-left px-5 py-4 rounded-2xl transition-all group relative overflow-hidden",
-                    selectedId === item.id
-                      ? "bg-card border-2 border-primary shadow-xl shadow-primary/5"
-                      : "hover:bg-card hover:border-border border-2 border-transparent",
-                  )}
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <div className="flex items-center overflow-hidden flex-1">
-                      <span
-                        className={cn(
-                          "text-base font-black truncate leading-none",
-                          selectedId === item.id
-                            ? "text-primary"
-                            : "text-foreground group-hover:text-primary transition-colors",
-                        )}
-                      >
-                        {item.name}
-                      </span>
-                      {renderSourceBadge(item.source)}
-                    </div>
-                    {activeTab === "spells" && (
-                      <span
-                        className={cn(
-                          "text-[10px] font-black px-2 py-0.5 rounded-md",
-                          selectedId === item.id
-                            ? "bg-primary text-primary-foreground"
-                            : "bg-muted text-muted-foreground",
-                        )}
-                      >
-                        G{item.level}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex gap-3 items-center">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-                      {activeTab === "spells"
-                        ? item.school
-                        : activeTab === "classes"
-                          ? `W${item.data.hit_die} Hit Die`
-                          : activeTab === "weapons"
-                            ? item.damage_dice
-                            : activeTab === "armor"
-                              ? `RK ${item.base_ac}`
-                              : activeTab === "backgrounds"
-                                ? item.data?.feature_name || "PHB"
-                                : activeTab === "items"
-                                  ? item.category || "PHB"
-                                  : activeTab === "equipment"
-                                    ? item.total_cost_gp !== undefined
-                                      ? `${item.total_cost_gp} GM`
-                                      : "PHB"
-                                    : item.category || "PHB"}
-                    </span>
-                    <div className="flex-1 h-px bg-border/50" />
-                    <ChevronRight
-                      size={14}
-                      className={cn(
-                        "transition-transform",
-                        selectedId === item.id
-                          ? "translate-x-1 text-primary"
-                          : "text-muted-foreground/30",
-                      )}
-                    />
-                  </div>
-                </button>
-              ))
+              <VirtualizedList
+                parentRef={parentRef}
+                data={data}
+                selectedId={selectedId}
+                activeTab={activeTab}
+                onSelect={(id) => {
+                  setSelectedId(id);
+                  setSelectedSubclass(null);
+                }}
+                renderSourceBadge={renderSourceBadge}
+              />
             )}
           </div>
         </aside>
@@ -626,14 +568,23 @@ export function Compendium() {
                           />
                           <StatRow
                             label="Eigenschaft"
-                            value={selectedItem.weapon_type}
+                            value={
+                              selectedItem.properties &&
+                              selectedItem.properties.length > 0
+                                ? selectedItem.properties
+                                    .map((p: any) => p.name)
+                                    .join(", ")
+                                : selectedItem.weapon_type || "—"
+                            }
                             icon={Sword}
                           />
                           <StatRow
                             label="Meisterung"
                             value={
+                              selectedItem.mastery?.name ||
                               selectedItem.data.mastery_details?.name ||
-                              selectedItem.data.mastery
+                              selectedItem.data.mastery ||
+                              "—"
                             }
                             highlight
                             icon={Award}
@@ -655,10 +606,25 @@ export function Compendium() {
                         <>
                           <StatRow
                             label="Rüstungsklasse"
-                            value={selectedItem.base_ac}
+                            value={
+                              selectedItem.category === "schild"
+                                ? `+${selectedItem.ac_bonus}`
+                                : selectedItem.ac_formula ||
+                                  (selectedItem.base_ac !== null
+                                    ? selectedItem.base_ac.toString()
+                                    : "—")
+                            }
                             highlight
                             icon={Shield}
                           />
+                          {selectedItem.ac_bonus > 0 &&
+                            selectedItem.category !== "schild" && (
+                              <StatRow
+                                label="AC-Bonus"
+                                value={`+${selectedItem.ac_bonus}`}
+                                highlight
+                              />
+                            )}
                           <StatRow label="Typ" value={selectedItem.category} />
                           <StatRow
                             label="Stärke"
@@ -672,6 +638,31 @@ export function Compendium() {
                                 : "Normal"
                             }
                           />
+                          {(selectedItem.don_time_minutes !== null ||
+                            selectedItem.doff_time_minutes !== null) && (
+                            <div className="grid grid-cols-2 gap-8 border-t border-border pt-8 mt-8">
+                              <StatRow
+                                label="Anlegezeit"
+                                value={
+                                  selectedItem.don_time_minutes === 0
+                                    ? "1 Aktion"
+                                    : selectedItem.don_time_minutes !== null
+                                      ? `${selectedItem.don_time_minutes} Min.`
+                                      : "—"
+                                }
+                              />
+                              <StatRow
+                                label="Ablegezeit"
+                                value={
+                                  selectedItem.doff_time_minutes === 0
+                                    ? "1 Aktion"
+                                    : selectedItem.doff_time_minutes !== null
+                                      ? `${selectedItem.doff_time_minutes} Min.`
+                                      : "—"
+                                }
+                              />
+                            </div>
+                          )}
                           <div className="grid grid-cols-2 gap-8 border-t border-border pt-8 mt-8">
                             <StatRow
                               label="Gewicht"
@@ -682,6 +673,50 @@ export function Compendium() {
                               value={`${selectedItem.cost_gp} GM`}
                             />
                           </div>
+
+                          {/* Properties Details für Rüstungen */}
+                          {selectedItem.properties &&
+                            selectedItem.properties.length > 0 && (
+                              <div className="glass-panel p-6 rounded-[2.5rem] space-y-6 animate-reveal mt-8">
+                                <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
+                                  <Info size={18} /> Eigenschaften Details
+                                </h4>
+                                <div className="space-y-8">
+                                  {selectedItem.properties.map((prop: any) => (
+                                    <div
+                                      key={prop.id}
+                                      className="space-y-3 group"
+                                    >
+                                      <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
+                                        {prop.name}
+                                        {prop.parameter_value && (
+                                          <span className="text-sm text-muted-foreground normal-case ml-2">
+                                            {(() => {
+                                              const param =
+                                                prop.parameter_value;
+                                              if (param.strength_requirement) {
+                                                return `(STÄ ${param.strength_requirement})`;
+                                              }
+                                              if (param.ac_bonus) {
+                                                return `(+${param.ac_bonus} RK)`;
+                                              }
+                                              if (param.damage_type) {
+                                                return `(${param.damage_type})`;
+                                              }
+                                              return "";
+                                            })()}
+                                          </span>
+                                        )}
+                                      </span>
+                                      <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20 group-hover:border-primary transition-colors">
+                                        {prop.description ||
+                                          "Keine Beschreibung im PHB."}
+                                      </p>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
                         </>
                       )}
 
@@ -839,7 +874,15 @@ export function Compendium() {
                           {selectedItem.data?.tool && (
                             <ClickableStatRow
                               label="Werkzeug"
-                              items={[selectedItem.data.tool]}
+                              items={[
+                                typeof selectedItem.data.tool === "object" &&
+                                selectedItem.data.tool.type === "choice"
+                                  ? selectedItem.data.tool.description ||
+                                    `Wähle eine Art von ${selectedItem.data.tool.category}`
+                                  : typeof selectedItem.data.tool === "object"
+                                    ? selectedItem.data.tool.name || ""
+                                    : selectedItem.data.tool,
+                              ]}
                               itemsData={tools}
                               onItemClick={(id: string) => {
                                 setActiveTab("tools");
@@ -903,24 +946,26 @@ export function Compendium() {
 
                   {/* Property Details for Weapons */}
                   {activeTab === "weapons" &&
-                    selectedItem.data.properties?.length > 0 && (
+                    selectedItem.properties &&
+                    selectedItem.properties.length > 0 && (
                       <div className="glass-panel p-6 rounded-[2.5rem] space-y-6 animate-reveal">
                         <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
-                          <Info size={18} /> Details
+                          <Info size={18} /> Eigenschaften
                         </h4>
                         <div className="space-y-8">
-                          {selectedItem.data.properties.map((p: string) => {
-                            const detail =
-                              selectedItem.data.property_details?.[
-                                p.toLowerCase()
-                              ];
+                          {selectedItem.properties.map((prop: any) => {
                             return (
-                              <div key={p} className="space-y-3 group">
+                              <div key={prop.id} className="space-y-3 group">
                                 <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
-                                  {detail?.name || p}
+                                  {prop.name}
+                                  {prop.parameter_value && (
+                                    <span className="text-sm text-muted-foreground normal-case ml-2">
+                                      ({JSON.stringify(prop.parameter_value)})
+                                    </span>
+                                  )}
                                 </span>
                                 <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20 group-hover:border-primary transition-colors">
-                                  {detail?.description ||
+                                  {prop.description ||
                                     "Keine Beschreibung im PHB."}
                                 </p>
                               </div>
@@ -929,6 +974,22 @@ export function Compendium() {
                         </div>
                       </div>
                     )}
+                  {/* Mastery Details for Weapons */}
+                  {activeTab === "weapons" && selectedItem.mastery && (
+                    <div className="glass-panel p-6 rounded-[2.5rem] space-y-6 animate-reveal">
+                      <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
+                        <Award size={18} /> Meisterschaft
+                      </h4>
+                      <div className="space-y-3">
+                        <span className="text-base font-black text-primary uppercase tracking-widest block">
+                          {selectedItem.mastery.name}
+                        </span>
+                        <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20">
+                          {selectedItem.mastery.description}
+                        </p>
+                      </div>
+                    </div>
+                  )}
                 </aside>
               </div>
             </div>
@@ -1064,6 +1125,130 @@ function ClickableStatRow({
           highlight && "from-primary/20",
         )}
       />
+    </div>
+  );
+}
+
+// Virtualisierte Liste für bessere Performance bei großen Datensätzen
+function VirtualizedList({
+  parentRef,
+  data,
+  selectedId,
+  activeTab,
+  onSelect,
+  renderSourceBadge,
+}: {
+  parentRef: React.RefObject<HTMLDivElement | null>;
+  data: any[];
+  selectedId: string | null;
+  activeTab: Tab;
+  onSelect: (id: string) => void;
+  renderSourceBadge: (source: string) => React.ReactNode;
+}) {
+  const virtualizer = useVirtualizer({
+    count: data.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 90,
+    overscan: 5,
+  });
+
+  return (
+    <div
+      style={{
+        height: `${virtualizer.getTotalSize()}px`,
+        width: "100%",
+        position: "relative",
+      }}
+    >
+      {virtualizer.getVirtualItems().map((virtualItem) => {
+        const item = data[virtualItem.index];
+        return (
+          <div
+            key={virtualItem.key}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: `${virtualItem.size}px`,
+              transform: `translateY(${virtualItem.start}px)`,
+            }}
+            className="px-0 py-2"
+          >
+            <button
+              onClick={() => onSelect(item.id)}
+              className={cn(
+                "w-full text-left px-5 py-4 rounded-2xl transition-all group relative overflow-hidden",
+                selectedId === item.id
+                  ? "bg-card border-2 border-primary shadow-xl shadow-primary/5"
+                  : "hover:bg-card hover:border-border border-2 border-transparent",
+              )}
+            >
+              <div className="flex justify-between items-start mb-2">
+                <div className="flex items-center overflow-hidden flex-1">
+                  <span
+                    className={cn(
+                      "text-base font-black truncate leading-none",
+                      selectedId === item.id
+                        ? "text-primary"
+                        : "text-foreground group-hover:text-primary transition-colors",
+                    )}
+                  >
+                    {item.name}
+                  </span>
+                  {renderSourceBadge(item.source)}
+                </div>
+                {activeTab === "spells" && (
+                  <span
+                    className={cn(
+                      "text-[10px] font-black px-2 py-0.5 rounded-md",
+                      selectedId === item.id
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground",
+                    )}
+                  >
+                    G{item.level}
+                  </span>
+                )}
+              </div>
+              <div className="flex gap-3 items-center">
+                <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
+                  {activeTab === "spells"
+                    ? item.school
+                    : activeTab === "classes"
+                      ? `W${item.data.hit_die} Hit Die`
+                      : activeTab === "weapons"
+                        ? item.damage_dice
+                        : activeTab === "armor"
+                          ? item.ac_formula ||
+                            (item.base_ac !== null
+                              ? `RK ${item.base_ac}`
+                              : "RK —")
+                          : activeTab === "backgrounds"
+                            ? item.data?.feature_name || "PHB"
+                            : activeTab === "items"
+                              ? item.category || "PHB"
+                              : activeTab === "equipment"
+                                ? item.total_cost_gp !== undefined
+                                  ? `${item.total_cost_gp} GM`
+                                  : "PHB"
+                                : item.category || "PHB"}
+                </span>
+                <div className="flex-1 h-px bg-border/50" />
+                <ChevronRight
+                  size={14}
+                  className={cn(
+                    "transition-transform",
+                    selectedId === item.id
+                      ? "translate-x-1 text-primary"
+                      : "text-muted-foreground/30",
+                  )}
+                />
+              </div>
+            </button>
+          </div>
+        );
+      })}
     </div>
   );
 }

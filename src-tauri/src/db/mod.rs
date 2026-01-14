@@ -1,7 +1,6 @@
 use rusqlite::Connection;
 use std::sync::Mutex;
 use tauri::AppHandle;
-use tauri::Manager;
 
 pub mod migrations;
 pub mod queries;
@@ -9,7 +8,7 @@ pub mod seed;
 
 pub struct Database(pub Mutex<Connection>);
 
-pub fn init_database(app: &AppHandle) -> Result<Database, String> {
+pub fn init_database(_app: &AppHandle) -> Result<Database, String> {
     // Verwende die Projekt-DB direkt (dnd-nexus.db im Projektverzeichnis)
     // Alle Daten (Regelwerks-Daten UND Charaktere) werden in EINER DB gespeichert
     

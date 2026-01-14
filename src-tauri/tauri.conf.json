@@ -1,6 +1,6 @@
 {
   "productName": "D&D Nexus",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "identifier": "com.dndnexus.app",
   "build": {
     "beforeDevCommand": "pnpm dev",
@@ -18,7 +18,8 @@
         "minHeight": 800,
         "resizable": true,
         "fullscreen": false,
-        "center": true
+        "center": true,
+        "devtools": true
       }
     ],
     "security": {

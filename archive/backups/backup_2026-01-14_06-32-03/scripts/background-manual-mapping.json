@@ -1,0 +1,178 @@
+{
+  "comment": "Manuelle Mapping-Tabelle für Hintergrund-Identifikation",
+  "instructions": "Fülle für jeden Hintergrund die eindeutigen Merkmale ein. Diese werden verwendet, um 'Unbekannt' Hintergründe zu identifizieren.",
+  "backgrounds": [
+    {
+      "name": "Adeliger",
+      "ability_scores": ["Stärke", "Intelligenz", "Charisma"],
+      "feat": "Begabt",
+      "first_skill": "Geschichte",
+      "tool": "Spielset (beliebig)",
+      "option_a_items": ["Spielset (wie oben)", "feine Kleidung", "Parfüm"],
+      "option_a_gold": 29,
+      "option_b_gold": 50
+    },
+    {
+      "name": "Akolyth",
+      "ability_scores": ["Intelligenz", "Weisheit", "Charisma"],
+      "feat": "Eingeweihter der Magie",
+      "first_skill": "Motiv erkennen",
+      "tool": "Kalligrafenwerkzeug",
+      "option_a_items": ["Kalligrafenwerkzeug", "Buch (Gebete)", "Heiliges Symbol", "Pergament (10 Blätter)", "Robe"],
+      "option_a_gold": 8,
+      "option_b_gold": 50
+    },
+    {
+      "name": "Bauer",
+      "ability_scores": ["Stärke", "Konstitution", "Weisheit"],
+      "feat": "Zäh",
+      "first_skill": "Mit Tieren umgehen",
+      "tool": "Schreinerwerkzeug",
+      "option_a_items": ["Schreinerwerkzeug", "Sichel", "Heilerausrüstung", "Eisenkessel", "Schaufel", "Reisekleidung"],
+      "option_a_gold": null,
+      "option_b_items": ["Schreinerwerkzeug"],
+      "option_b_gold": 50
+    },
+    {
+      "name": "Einsiedler",
+      "ability_scores": ["Konstitution", "Weisheit", "Intelligenz"],
+      "feat": "Heiler",
+      "first_skill": "Heilkunde",
+      "tool": "Kräuterkundeausrüstung",
+      "option_a_items": null,
+      "option_a_gold": null,
+      "option_b_gold": null,
+      "note": "TODO: Optionen aus Buch ergänzen"
+    },
+    {
+      "name": "Händler",
+      "ability_scores": ["Geschicklichkeit", "Intelligenz", "Charisma"],
+      "feat": "Glückspilz",
+      "first_skill": "Einschüchtern",
+      "tool": null,
+      "option_a_items": null,
+      "option_a_gold": null,
+      "option_b_gold": null,
+      "note": "TODO: Optionen aus Buch ergänzen"
+    },
+    {
+      "name": "Handwerker",
+      "ability_scores": ["Stärke", "Geschicklichkeit", "Intelligenz"],
+      "feat": "Handwerker",
+      "first_skill": "Nachforschungen",
+      "tool": "Handwerkszeug (beliebig)",
+      "option_a_items": ["Handwerkszeug (wie oben)", "zwei Beutel", "Reisekleidung"],
+      "option_a_gold": 32,
+      "option_b_gold": 50
+    },
+    {
+      "name": "Krimineller",
+      "ability_scores": ["Geschicklichkeit", "Konstitution", "Intelligenz"],
+      "feat": "Wachsam",
+      "first_skill": "Fingerfertigkeit",
+      "tool": "Diebeswerkzeug",
+      "option_a_items": ["zwei Dolche", "Diebeswerkzeug", "Brechstange", "zwei Beutel", "Reisekleidung"],
+      "option_a_gold": 16,
+      "option_b_gold": 50
+    },
+    {
+      "name": "Reisender",
+      "ability_scores": ["Geschicklichkeit", "Weisheit", "Charisma"],
+      "feat": "Glückspilz",
+      "first_skill": null,
+      "tool": null,
+      "option_a_items": null,
+      "option_a_gold": null,
+      "option_b_gold": null,
+      "note": "TODO: Aus Buch ergänzen"
+    },
+    {
+      "name": "Scharlatan",
+      "ability_scores": ["Geschicklichkeit", "Weisheit", "Charisma"],
+      "feat": "Glückspilz",
+      "first_skill": null,
+      "tool": null,
+      "option_a_items": null,
+      "option_a_gold": null,
+      "option_b_gold": null,
+      "note": "TODO: Aus Buch ergänzen"
+    },
+    {
+      "name": "Schreiber",
+      "ability_scores": ["Intelligenz", "Weisheit", "Charisma"],
+      "feat": "Wachsam",
+      "first_skill": null,
+      "tool": null,
+      "option_a_items": null,
+      "option_a_gold": null,
+      "option_b_gold": null,
+      "note": "TODO: Aus Buch ergänzen"
+    },
+    {
+      "name": "Seemann",
+      "ability_scores": ["Geschicklichkeit", "Weisheit", "Charisma"],
+      "feat": "Zäh",
+      "first_skill": null,
+      "tool": null,
+      "option_a_items": null,
+      "option_a_gold": null,
+      "option_b_gold": null,
+      "note": "TODO: Aus Buch ergänzen"
+    },
+    {
+      "name": "Soldat",
+      "ability_scores": ["Stärke", "Konstitution", "Intelligenz"],
+      "feat": "Wilder Angreifer",
+      "first_skill": null,
+      "tool": null,
+      "option_a_items": null,
+      "option_a_gold": null,
+      "option_b_gold": null,
+      "note": "TODO: Aus Buch ergänzen"
+    },
+    {
+      "name": "Unterhaltungskünstler",
+      "ability_scores": ["Geschicklichkeit", "Intelligenz", "Charisma"],
+      "feat": "Begabt",
+      "first_skill": null,
+      "tool": null,
+      "option_a_items": null,
+      "option_a_gold": null,
+      "option_b_gold": null,
+      "note": "TODO: Aus Buch ergänzen"
+    },
+    {
+      "name": "Wache",
+      "ability_scores": ["Geschicklichkeit", "Weisheit", "Intelligenz"],
+      "feat": "Wachsam",
+      "first_skill": null,
+      "tool": null,
+      "option_a_items": null,
+      "option_a_gold": null,
+      "option_b_gold": null,
+      "note": "TODO: Aus Buch ergänzen"
+    },
+    {
+      "name": "Wegfinder",
+      "ability_scores": ["Geschicklichkeit", "Weisheit", "Intelligenz"],
+      "feat": "Wachsam",
+      "first_skill": null,
+      "tool": null,
+      "option_a_items": null,
+      "option_a_gold": null,
+      "option_b_gold": null,
+      "note": "TODO: Aus Buch ergänzen"
+    },
+    {
+      "name": "Weiser",
+      "ability_scores": ["Intelligenz", "Weisheit", "Charisma"],
+      "feat": "Heiler",
+      "first_skill": null,
+      "tool": null,
+      "option_a_items": null,
+      "option_a_gold": null,
+      "option_b_gold": null,
+      "note": "TODO: Aus Buch ergänzen"
+    }
+  ]
+}

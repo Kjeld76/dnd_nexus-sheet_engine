@@ -7,6 +7,7 @@ mod commands;
 mod menu;
 mod tools;
 mod types;
+mod error;
 
 use tauri::Manager;
 
@@ -58,6 +59,9 @@ fn main() {
             commands::compendium::get_all_backgrounds,
             commands::compendium::get_all_items,
             commands::compendium::get_all_equipment,
+            // commands::logging::write_log,
+            // commands::logging::export_logs,
+            // commands::logging::read_logs,
             db::seed::import_phb_data,
             tools::data_validator::validate_core_compendium,
         ])

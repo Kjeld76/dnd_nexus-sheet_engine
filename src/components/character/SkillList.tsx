@@ -1,6 +1,6 @@
 import React from "react";
 import { Character, Species } from "../../lib/types";
-import { Users, Search, TrendingUp } from "lucide-react";
+import { Search, TrendingUp } from "lucide-react";
 import { formatModifier } from "../../lib/math";
 import { calculateDerivedStats } from "../../lib/characterLogic";
 import { useCharacterStore } from "../../lib/store";
@@ -34,7 +34,7 @@ const SKILLS = [
   { name: "Überlebenskunst", attr: "wis" },
 ];
 
-export const SkillList: React.FC<Props> = ({ character, species }) => {
+const SkillListComponent: React.FC<Props> = ({ character, species }) => {
   const { updateProficiency, saveCharacter } = useCharacterStore();
   const stats = calculateDerivedStats(character);
   const [search, setSearch] = React.useState("");
@@ -65,38 +65,27 @@ export const SkillList: React.FC<Props> = ({ character, species }) => {
   );
 
   return (
-    <div className="bg-card p-5 rounded-xl border border-border shadow-xl shadow-foreground/[0.02]">
-      {/* ... existing header code ... */}
-      <div className="flex items-center justify-between mb-4 border-b border-border pb-3">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-primary/10 rounded-lg shadow-inner">
-            <Users className="w-5 h-5 text-primary" />
-          </div>
-          <div className="space-y-0.5">
-            <h2 className="text-xl font-black tracking-tighter italic font-serif">
-              Fertigkeiten
-            </h2>
-            <p className="text-[9px] font-black uppercase tracking-[0.2em] text-muted-foreground opacity-50">
-              Proficiency & Expertise
-            </p>
-          </div>
-        </div>
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-base font-black uppercase tracking-wider text-muted-foreground">
+          Fertigkeiten
+        </h3>
         <div className="relative">
           <Search
-            size={18}
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground opacity-40"
+            size={12}
+            className="absolute left-1.5 top-1/2 -translate-y-1/2 text-muted-foreground opacity-40"
           />
           <input
             type="text"
             placeholder="Suchen..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-12 pr-6 py-2.5 bg-muted/30 border border-border rounded-xl text-xs outline-none focus:border-primary transition-all w-48"
+            className="pl-7 pr-2 py-0.5 bg-muted/30 border border-border rounded text-[9px] outline-none focus:border-primary transition-all w-24"
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-1.5">
+      <div className="space-y-1">
         {filteredSkills.map((skill) => {
           const isProficient =
             character.proficiencies?.skills?.includes(skill.name) ?? false;
@@ -104,7 +93,7 @@ export const SkillList: React.FC<Props> = ({ character, species }) => {
           return (
             <div
               key={skill.name}
-              className="flex items-center px-3 py-2 rounded-lg hover:bg-muted/50 transition-all group border border-transparent hover:border-border/50 gap-2"
+              className="flex items-center px-2 py-1.5 rounded-lg hover:bg-muted/50 transition-all group border border-transparent hover:border-border/50 gap-2 min-w-0"
             >
               <div className="relative flex items-center shrink-0">
                 <input
@@ -114,35 +103,33 @@ export const SkillList: React.FC<Props> = ({ character, species }) => {
                     updateProficiency("skills", skill.name, e.target.checked);
                     saveCharacter();
                   }}
-                  className="peer w-5 h-5 rounded-md border-2 border-border text-primary focus:ring-2 focus:ring-primary/10 bg-background cursor-pointer transition-all appearance-none checked:bg-primary checked:border-primary"
+                  className="peer w-4 h-4 rounded-md border-2 border-border text-primary focus:ring-2 focus:ring-primary/10 bg-background cursor-pointer transition-all appearance-none checked:bg-primary checked:border-primary"
                 />
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity">
-                  <div className="w-2 h-2 bg-primary-foreground rounded-full" />
+                  <div className="w-1.5 h-1.5 bg-primary-foreground rounded-full" />
                 </div>
               </div>
-              <div className="flex flex-col -space-y-0.5 min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-bold tracking-tight text-foreground group-hover:text-primary transition-colors truncate">
-                    {skill.name}
-                  </span>
-                  {skillEffects.length > 0 && (
-                    <div
-                      className="flex items-center gap-1 px-1.5 py-0.5 bg-emerald-500/20 border border-emerald-500/30 rounded shrink-0"
-                      title={`Vorteil bei ${skill.name} (${skillEffects.map((e) => e.source).join(", ")})`}
-                    >
-                      <TrendingUp size={10} className="text-emerald-500" />
-                      <span className="text-[7px] font-black uppercase tracking-wider text-emerald-500">
-                        V
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <span className="text-[9px] text-muted-foreground uppercase font-black tracking-wider opacity-40 group-hover:opacity-60">
+              <div className="flex items-center gap-2 min-w-0 flex-1">
+                <span className="text-sm font-bold tracking-tight text-foreground group-hover:text-primary transition-colors whitespace-nowrap">
+                  {skill.name}
+                </span>
+                <span className="text-[10px] text-muted-foreground uppercase font-black tracking-wider opacity-40 shrink-0">
                   ({skill.attr})
                 </span>
+                {skillEffects.length > 0 && (
+                  <div
+                    className="flex items-center gap-1 px-1 py-0.5 bg-emerald-500/20 border border-emerald-500/30 rounded shrink-0"
+                    title={`Vorteil bei ${skill.name} (${skillEffects.map((e) => e.source).join(", ")})`}
+                  >
+                    <TrendingUp size={8} className="text-emerald-500" />
+                    <span className="text-[6px] font-black uppercase tracking-wider text-emerald-500">
+                      V
+                    </span>
+                  </div>
+                )}
               </div>
-              <div className="h-px w-3 bg-border group-hover:bg-primary/20 transition-all shrink-0" />
-              <span className="font-black text-primary tracking-tight text-base min-w-[30px] text-right shrink-0">
+              <div className="h-px w-2 bg-border group-hover:bg-primary/20 transition-all shrink-0" />
+              <span className="font-black text-primary tracking-tight text-base min-w-[32px] text-right shrink-0">
                 {formatModifier(calculateBonus(skill))}
               </span>
             </div>
@@ -152,3 +139,5 @@ export const SkillList: React.FC<Props> = ({ character, species }) => {
     </div>
   );
 };
+
+export const SkillList = React.memo(SkillListComponent);

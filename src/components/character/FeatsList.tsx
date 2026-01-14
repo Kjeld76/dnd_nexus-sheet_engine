@@ -16,8 +16,8 @@ export const FeatsList: React.FC<Props> = ({
   const activeFeats = feats.filter((f) => characterFeats.includes(f.id));
 
   return (
-    <div className="bg-card p-10 rounded-[3.5rem] border border-border shadow-2xl shadow-foreground/[0.02] h-full flex flex-col">
-      <div className="flex items-center justify-between mb-10 border-b border-border pb-8">
+    <div className="bg-card p-10 rounded-[3.5rem] border-2 border-border shadow-2xl shadow-foreground/[0.02] h-full flex flex-col">
+      <div className="flex items-center justify-between mb-10 border-b-2 border-border pb-8">
         <div className="flex items-center gap-5">
           <div className="p-4 bg-primary/10 rounded-2xl shadow-inner relative group">
             <Award className="w-8 h-8 text-primary group-hover:rotate-12 transition-transform" />
@@ -47,7 +47,7 @@ export const FeatsList: React.FC<Props> = ({
           {activeFeats.map((feat) => (
             <div
               key={feat.id}
-              className="flex flex-col gap-3 p-6 bg-background rounded-[2rem] border border-border group hover:border-primary/40 transition-all shadow-sm relative overflow-hidden"
+              className="flex flex-col gap-3 p-6 bg-background rounded-[2rem] border-2 border-border group hover:border-primary/40 transition-all shadow-sm relative overflow-hidden"
             >
               <div className="absolute top-0 left-0 w-1 h-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="flex items-start justify-between">
@@ -69,9 +69,9 @@ export const FeatsList: React.FC<Props> = ({
                   <X className="w-5 h-5" />
                 </button>
               </div>
-              {feat.data?.description && (
+              {!!feat.data?.description && (
                 <p className="text-sm text-muted-foreground leading-relaxed italic border-l-2 border-primary/20 pl-4">
-                  {feat.data.description}
+                  {feat.data.description as string}
                 </p>
               )}
             </div>

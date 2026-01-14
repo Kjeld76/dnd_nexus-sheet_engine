@@ -46,7 +46,7 @@ interface CompendiumState {
   fetchEquipment: () => Promise<void>;
 }
 
-export const useCompendiumStore = create<CompendiumState>((set) => ({
+export const useCompendiumStore = create<CompendiumState>((set, get) => ({
   spells: [],
   species: [],
   classes: [],
@@ -63,8 +63,11 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   error: null,
 
   fetchSpells: async () => {
+    const state = get();
+    if (state.spells.length > 0) return;
     set({ isLoading: true });
     try {
+      // Lade alle Spells (kein Limit für initial load)
       const spells = await compendiumApi.getSpells();
       set({ spells, isLoading: false });
     } catch (err) {
@@ -73,6 +76,8 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   },
 
   fetchSpecies: async () => {
+    const state = get();
+    if (state.species.length > 0) return;
     set({ isLoading: true });
     try {
       const species = await compendiumApi.getSpecies();
@@ -83,6 +88,8 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   },
 
   fetchClasses: async () => {
+    const state = get();
+    if (state.classes.length > 0) return;
     set({ isLoading: true });
     try {
       const classes = await compendiumApi.getClasses();
@@ -93,6 +100,8 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   },
 
   fetchGear: async () => {
+    const state = get();
+    if (state.gear.length > 0) return;
     set({ isLoading: true });
     try {
       const gear = await compendiumApi.getGear();
@@ -103,6 +112,8 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   },
 
   fetchTools: async () => {
+    const state = get();
+    if (state.tools.length > 0) return;
     set({ isLoading: true });
     try {
       const tools = await compendiumApi.getTools();
@@ -113,6 +124,8 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   },
 
   fetchWeapons: async () => {
+    const state = get();
+    if (state.weapons.length > 0) return;
     set({ isLoading: true });
     try {
       const weapons = await compendiumApi.getWeapons();
@@ -123,6 +136,8 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   },
 
   fetchArmor: async () => {
+    const state = get();
+    if (state.armor.length > 0) return;
     set({ isLoading: true });
     try {
       const armor = await compendiumApi.getArmor();
@@ -133,6 +148,8 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   },
 
   fetchFeats: async () => {
+    const state = get();
+    if (state.feats.length > 0) return;
     set({ isLoading: true });
     try {
       const feats = await compendiumApi.getFeats();
@@ -143,6 +160,8 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   },
 
   fetchSkills: async () => {
+    const state = get();
+    if (state.skills.length > 0) return;
     set({ isLoading: true });
     try {
       const skills = await compendiumApi.getSkills();
@@ -153,6 +172,8 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   },
 
   fetchBackgrounds: async () => {
+    const state = get();
+    if (state.backgrounds.length > 0) return;
     set({ isLoading: true, error: null });
     try {
       const backgrounds = await compendiumApi.getBackgrounds();
@@ -165,6 +186,8 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   },
 
   fetchItems: async () => {
+    const state = get();
+    if (state.items.length > 0) return;
     set({ isLoading: true, error: null });
     try {
       const items = await compendiumApi.getAllItems();
@@ -177,6 +200,8 @@ export const useCompendiumStore = create<CompendiumState>((set) => ({
   },
 
   fetchEquipment: async () => {
+    const state = get();
+    if (state.equipment.length > 0) return;
     set({ isLoading: true, error: null });
     try {
       const equipment = await compendiumApi.getAllEquipment();

@@ -1,0 +1,22 @@
+{
+  "comment": "Korrekturen für falsch identifizierte Hintergründe",
+  "instructions": "Für jeden Lookup-Key den korrekten Hintergrund-Namen eintragen",
+  "corrections": {
+    "Charisma,Intelligenz,Stärke|Begabt|Geschichte": "Adeliger",
+    "Konstitution,Stärke,Weisheit|Zäh|Mit Tieren umgehen": "Bauer",
+    "Charisma,Konstitution,Weisheit|Heiler|Heilkunde": "Einsiedler",
+    "Charisma,Intelligenz,Konstitution|Glückspilz|Mit Tieren umgehen": "Händler",
+    "Geschicklichkeit,Intelligenz,Stärke|Handwerker|Nachforschungen": "Handwerker",
+    "Geschicklichkeit,Intelligenz,Konstitution|Wachsam|Fingerfertigkeit": "Krimineller",
+    "Charisma,Geschicklichkeit,Weisheit|Glückspilz|Motiv erkennen": "Reisender",
+    "Charisma,Geschicklichkeit,Konstitution|Begabt|Fingerfertigkeit": "Scharlatan",
+    "Geschicklichkeit,Intelligenz,Weisheit|Begabt|Nachforschungen": "TODO: Welcher Hintergrund?",
+    "Charisma,Geschicklichkeit,Intelligenz|Begabt|Akrobatik": "Unterhaltungskünstler",
+    "Geschicklichkeit,Weisheit,Intelligenz|Wachsam|Einschüchtern": "Wache",
+    "Geschicklichkeit,Weisheit,Intelligenz|Wachsam|Überleben": "Wegfinder",
+    "Intelligenz,Weisheit,Charisma|Wachsam|Geschichte": "Schreiber",
+    "Geschicklichkeit,Weisheit,Charisma|Zäh|Athletik": "Seemann",
+    "Stärke,Konstitution,Intelligenz|Wilder Angreifer|Athletik": "Soldat",
+    "Intelligenz,Weisheit,Charisma|Heiler|Geschichte": "Weiser"
+  }
+}

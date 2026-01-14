@@ -73,6 +73,7 @@ pub fn validate_core_data(conn: &Connection) -> Result<ValidationReport, String>
 }
 
 #[tauri::command]
+#[allow(dead_code)] // Used by Tauri command
 pub async fn validate_core_compendium(
     db: tauri::State<'_, crate::db::Database>,
 ) -> Result<ValidationReport, String> {

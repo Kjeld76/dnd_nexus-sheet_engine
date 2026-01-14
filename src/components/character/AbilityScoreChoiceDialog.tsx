@@ -31,7 +31,8 @@ export const AbilityScoreChoiceDialog: React.FC<Props> = ({
   onCancel,
 }) => {
   const speciesData = species.data;
-  const choiceData = speciesData?.ability_score_increase?.choice;
+  const asi = speciesData?.ability_score_increase;
+  const choiceData = asi?.type === "choice" ? asi.choice : null;
 
   if (!choiceData) return null;
 

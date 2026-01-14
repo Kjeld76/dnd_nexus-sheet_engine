@@ -1,0 +1,246 @@
+    const currentBackgroundId = currentCharacter.meta.background_id;
+    const previousBackgroundId = prevBackgroundIdRef.current;
+
+    // 1. BACKGROUND CHANGE DETECTED: Cleanup old background first
+    if (previousBackgroundId && previousBackgroundId !== currentBackgroundId) {
+      logger.trace("Background change detected, cleaning up old background", "Background", { 
+        from: previousBackgroundId, 
+        to: currentBackgroundId 
+      });
+
+      const previousBackground = backgrounds.find(
+        (bg) => bg.id === previousBackgroundId,
+      );
+
+      if (previousBackground?.data) {
+        // Remove old background's ability score bonuses
+        if (currentCharacter.meta.background_ability_scores) {
+          const oldBonuses = currentCharacter.meta.background_ability_scores;
+          Object.entries(oldBonuses).forEach(([attr, value]) => {
+            if (value > 0) {
+              const attrKey = attr as keyof typeof currentCharacter.attributes;
+              const currentValue = currentCharacter.attributes[attrKey];
+              updateAttribute(attrKey, Math.max(currentValue - value, 1));
+            }
+          });
+          // Clear scores marker
+          updateMeta({ background_ability_scores: undefined });
+        }
+
+        // Remove old background's feat
+        if (previousBackground.data.feat) {
+          const previousFeatName = previousBackground.data.feat;
+          const previousFeat = feats.find(
+            (f) => f.name.toUpperCase() === previousFeatName.toUpperCase(),
+          );
+          if (previousFeat && currentCharacter.feats.includes(previousFeat.id)) {
+            removeFeat(previousFeat.id);
+          }
+        }
+
+        // Remove old background's skills
+        if (previousBackground.data.skills && Array.isArray(previousBackground.data.skills)) {
+          previousBackground.data.skills.forEach((skill: string) => {
+            if (currentCharacter.proficiencies.skills.includes(skill)) {
+              updateProficiency("skills", skill, false);
+            }
+          });
+        }
+
+        // Remove old background's tool
+        if (previousBackground.data.tool) {
+          const oldToolName = getToolName(previousBackground.data.tool);
+          if (oldToolName && currentCharacter.proficiencies.tools.includes(oldToolName)) {
+            updateProficiency("tools", oldToolName, false);
+          }
+          
+          // Remove tool from inventory
+          if (oldToolName) {
+            const tool = tools.find(
+              (t) => t?.name && t.name.toLowerCase() === oldToolName.toLowerCase()
+            );
+            if (tool) {
+              const toolInInventory = currentCharacter.inventory.find(
+                (item) => item.item_id === tool.id
+              );
+              if (toolInInventory) {
+                useCharacterStore.setState({
+                  currentCharacter: {
+                    ...currentCharacter,
+                    inventory: currentCharacter.inventory.filter(
+                      (item) => item.id !== toolInInventory.id
+                    ),
+                  },
+                });
+              }
+            } else {
+              // Remove from all equipment lists if it was added as text
+              const normalizedToolName = normalizeItemName(oldToolName);
+              const equipmentLists = [
+                "equipment_on_body_items",
+                "equipment_in_backpack_items",
+                "equipment_on_pack_animal_items",
+                "equipment_in_bag_of_holding_items",
+              ] as const;
+
+              equipmentLists.forEach((listKey) => {
+                const currentItems = currentCharacter.meta[listKey] || [];
+                const toolItem = currentItems.find(
+                  (item) => normalizeItemName(item.name) === normalizedToolName
+                );
+                if (toolItem) {
+                  updateMeta({
+                    [listKey]: currentItems.filter((item) => item.id !== toolItem.id),
+                  });
+                }
+              });
+            }
+          }
+        }
+        
+        // Remove old starting equipment
+        if (previousBackground.data.starting_equipment) {
+          const oldEquipment = previousBackground.data.starting_equipment;
+          const allItemNames = new Set<string>();
+          
+          if (oldEquipment.options && Array.isArray(oldEquipment.options)) {
+            oldEquipment.options.forEach((option) => {
+              if (option.items && Array.isArray(option.items)) {
+                option.items.forEach((item: string | { name: string; variant?: string }) => {
+                  let itemName: string;
+                  if (typeof item === "string") itemName = item;
+                  else if (typeof item === "object" && item !== null && item.name) {
+                    itemName = item.variant ? `${item.name} (${item.variant})` : item.name;
+                  } else itemName = String(item);
+                  allItemNames.add(itemName);
+                });
+              }
+            });
+          } else if (oldEquipment.items && Array.isArray(oldEquipment.items)) {
+            oldEquipment.items.forEach((item: string) => allItemNames.add(item));
+          }
+
+          allItemNames.forEach((itemName) => {
+            removeBackgroundItem(itemName, items, equipment, tools, currentCharacter, updateMeta);
+          });
+        }
+      }
+
+      // Update ref and applied markers immediately
+      prevBackgroundIdRef.current = currentBackgroundId;
+      if (currentBackgroundId) {
+        backgroundEquipmentAppliedRef.current.delete(currentBackgroundId);
+      }
+      
+      // STOP HERE: Let React process the cleanup before we start applying the new background
+      return;
+    }
+
+    // 2. APPLY NEW BACKGROUND (if not already applied and no cleanup needed)
+    if (!currentBackground || !currentBackground.data) return;
+    
+    // Update ref if it was undefined (initial load)
+    if (prevBackgroundIdRef.current === undefined) {
+      prevBackgroundIdRef.current = currentBackgroundId;
+    }
+
+    const backgroundData = currentBackground.data;
+    const isAlreadyApplied = backgroundEquipmentAppliedRef.current.has(currentBackgroundId || "");
+    const isShowingDialog = showBackgroundAbilityDialog || showToolChoiceDialog || showStartingEquipmentDialog;
+
+    // Skip if already applied or we're in the middle of a dialog
+    if (isAlreadyApplied || isShowingDialog) return;
+
+    logger.trace("Applying background data", "Background", { 
+      name: currentBackground.name,
+      alreadyApplied: isAlreadyApplied 
+    });
+
+    // Add skills from background
+    if (backgroundData.skills && Array.isArray(backgroundData.skills)) {
+      backgroundData.skills.forEach((skill: string) => {
+        if (!currentCharacter.proficiencies.skills.includes(skill)) {
+          updateProficiency("skills", skill, true);
+        }
+      });
+    }
+
+    // Check if we need to show background ability choice dialog
+    const needsAbilityScoreDialog = 
+      backgroundData.ability_scores &&
+      Array.isArray(backgroundData.ability_scores) &&
+      backgroundData.ability_scores.length === 3 &&
+      !currentCharacter.meta.background_ability_scores;
+
+    if (needsAbilityScoreDialog) {
+      logger.trace("Showing ability score dialog for", "Background", { name: currentBackground.name });
+      setPendingBackground(currentBackground);
+      setShowBackgroundAbilityDialog(true);
+      return; // Wait for user choice
+    }
+
+    // Add tool proficiency from background
+    if (backgroundData.tool) {
+      if (typeof backgroundData.tool === "object" && backgroundData.tool.type === "choice") {
+        logger.trace("Showing tool choice dialog for", "Background", { name: currentBackground.name });
+        setPendingBackground(currentBackground);
+        setPendingToolCategory(backgroundData.tool.category || null);
+        setShowToolChoiceDialog(true);
+        return; // Wait for user choice
+      } else {
+        const toolName = getToolName(backgroundData.tool);
+        if (toolName && !currentCharacter.proficiencies.tools.includes(toolName)) {
+          updateProficiency("tools", toolName, true);
+        }
+
+        // Add fixed tool to inventory
+        if (toolName) {
+          const tool = findItemByName(toolName, tools);
+          if (tool) {
+            const existingTool = currentCharacter.inventory.find(item => item.item_id === tool.id);
+            if (!existingTool) updateInventory(tool.id, 1, false);
+            
+            const latestState = useCharacterStore.getState().currentCharacter;
+            const latestBodyItems = latestState?.meta.equipment_on_body_items || [];
+            if (!latestBodyItems.find(item => normalizeItemName(item.name) === normalizeItemName(tool.name))) {
+              updateMeta({
+                equipment_on_body_items: [...latestBodyItems, { id: crypto.randomUUID(), name: tool.name, quantity: 1 }]
+              });
+            }
+          }
+        }
+      }
+    }
+    
+    // Add starting equipment
+    if (backgroundData.starting_equipment?.options && Array.isArray(backgroundData.starting_equipment.options)) {
+      logger.trace("Showing starting equipment dialog for", "Background", { name: currentBackground.name });
+      setPendingBackground(currentBackground);
+      setPendingStartingEquipment(backgroundData.starting_equipment.options);
+      setShowStartingEquipmentDialog(true);
+      return; // Wait for user choice
+    } else if (backgroundData.starting_equipment) {
+      const startingEquipment = backgroundData.starting_equipment;
+      if (startingEquipment.items && Array.isArray(startingEquipment.items)) {
+        startingEquipment.items.forEach((itemName: string) => {
+          addItemToInventory(itemName, 1, null, null, null, items, equipment, tools, weapons, currentCharacter, updateInventory, updateMeta, saveCharacter);
+        });
+      }
+      if (startingEquipment.gold && typeof startingEquipment.gold === "number") {
+        updateMeta({ currency_gold: (currentCharacter.meta.currency_gold || 0) + startingEquipment.gold });
+      }
+    } else if (backgroundData.gold && typeof backgroundData.gold === "number") {
+      updateMeta({ currency_gold: (currentCharacter.meta.currency_gold || 0) + backgroundData.gold });
+    }
+    
+    // Add feat
+    if (backgroundData.feat) {
+      const matchingFeat = feats.find(f => f.name.toUpperCase() === backgroundData.feat.toUpperCase());
+      if (matchingFeat && !currentCharacter.feats.includes(matchingFeat.id)) {
+        addFeat(matchingFeat.id);
+      }
+    }
+
+    // Finally mark as applied
+    backgroundEquipmentAppliedRef.current.add(currentBackgroundId || "");
+    saveCharacter();

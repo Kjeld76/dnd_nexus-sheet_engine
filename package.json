@@ -1,6 +1,6 @@
 {
   "name": "dnd-nexus",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "D&D 5e 2024 Character Sheet Manager",
   "type": "module",
   "scripts": {
@@ -23,6 +23,12 @@
     "maintenance": "tsx scripts/maintenance.ts",
     "db:push": "node scripts/db-sync.js push",
     "db:pull": "node scripts/db-sync.js pull",
+    "extract:backgrounds": "tsx scripts/extract-backgrounds-complete.ts",
+    "identify:backgrounds": "tsx scripts/identify-unknown-backgrounds.ts",
+    "analyze:backgrounds": "tsx scripts/analyze-extracted-backgrounds.ts",
+    "correct:backgrounds": "tsx scripts/apply-background-corrections.ts",
+    "migrate:backgrounds": "tsx scripts/migrate-backgrounds.ts",
+    "validate:backgrounds": "tsx scripts/validate-backgrounds.ts",
     "prepare": "husky"
   },
   "lint-staged": {
@@ -58,6 +64,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "ajv": "^8.17.0",
     "autoprefixer": "^10.4.16",
+    "better-sqlite3": "^12.6.0",
     "eslint": "^8.55.0",
     "husky": "^9.1.7",
     "jsdom": "^27.4.0",

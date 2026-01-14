@@ -1,0 +1,24 @@
+{
+  "totalItems": 70,
+  "itemsWithParentheses": 0,
+  "itemsWithQuantities": 0,
+  "itemsWithVariants": 0,
+  "examples": {
+    "withParentheses": [],
+    "withQuantities": [],
+    "withVariants": []
+  },
+  "recommendations": [
+    "Equipment-Pakete verwenden bereits quantity-Felder (20 Einträge)"
+  ],
+  "equipmentItemsWithQuantities": 20,
+  "inventoryItemsWithQuantities": 0,
+  "equipmentExamples": [
+    "GELEHRTENAUSRÜSTUNG: {\"item_id\":\"öl\",\"quantity\":10}",
+    "GELEHRTENAUSRÜSTUNG: {\"item_id\":\"pergament\",\"quantity\":10}",
+    "GEWÖLBEFORSCHERAUSRÜSTUNG: {\"item_id\":\"fackel\",\"quantity\":10}",
+    "GEWÖLBEFORSCHERAUSRÜSTUNG: {\"item_id\":\"öl\",\"quantity\":2}",
+    "GEWÖLBEFORSCHERAUSRÜSTUNG: {\"item_id\":\"rationen\",\"quantity\":10}"
+  ],
+  "inventoryExamples": []
+}
