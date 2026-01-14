@@ -26,6 +26,42 @@ export interface CharacterMeta {
   xp: number;
   use_metric: boolean;
   background_ability_scores?: Record<string, number>; // Tracks ability score bonuses from background
+  background_tool_choice?: string; // Tracks tool choice from background
+  background_gold_granted?: number; // Tracks gold granted by background
+  background_equipment_applied?: boolean; // Tracks if background equipment has been fully applied
+  currency_gold?: number;
+  currency_silver?: number;
+  currency_copper?: number;
+  equipment_on_body?: string;
+  equipment_in_backpack?: string;
+  equipment_on_pack_animal?: string;
+  equipment_in_bag_of_holding?: string;
+  equipment_on_body_items?: Array<{
+    id: string;
+    name: string;
+    quantity: number;
+  }>;
+  equipment_in_backpack_items?: Array<{
+    id: string;
+    name: string;
+    quantity: number;
+  }>;
+  equipment_on_pack_animal_items?: Array<{
+    id: string;
+    name: string;
+    quantity: number;
+  }>;
+  equipment_in_bag_of_holding_items?: Array<{
+    id: string;
+    name: string;
+    quantity: number;
+  }>;
+  equipment_tool_items?: Array<{ id: string; name: string; quantity: number }>;
+  total_weight_kg?: number;
+  personality_traits?: string;
+  ideals?: string;
+  bonds?: string;
+  flaws?: string;
 }
 
 export interface CharacterAppearance {
@@ -51,6 +87,7 @@ export interface HealthPool {
   temp: number;
   hit_dice_max: number;
   hit_dice_used: number;
+  use_rolled_hp?: boolean; // true = gewürfelt, false/undefined = Durchschnitt
   death_saves: {
     successes: number;
     failures: number;
@@ -71,7 +108,7 @@ export interface CharacterItem {
   item_id: string; // Reference to compendium
   quantity: number;
   is_equipped: boolean;
-  custom_data?: any;
+  custom_data?: Record<string, unknown>;
 }
 
 export interface Attributes {
@@ -107,29 +144,48 @@ export interface Spell {
   description: string;
   higher_levels?: string;
   classes: string;
-  data: any;
+  data: Record<string, unknown>;
   source: "core" | "override" | "homebrew";
 }
 
 export interface Species {
   id: string;
   name: string;
-  data: any;
+  data: SpeciesData;
   source: "core" | "override" | "homebrew";
+}
+
+export type AbilityScoreIncrease =
+  | { type: "fixed"; fixed: Record<string, number> }
+  | { type: "choice"; choice: { count: number; amount: number } };
+
+export interface SpeciesData {
+  speed?: number;
+  size?: string;
+  traits?: unknown[];
+  languages?: { known?: string[] };
+  ability_score_increase?: AbilityScoreIncrease;
+  // Allow forward-compatible extra fields without using `any`
+  [key: string]: unknown;
 }
 
 export interface Class {
   id: string;
   name: string;
-  data: any;
+  data: ClassData;
   source: "core" | "override" | "homebrew";
+}
+
+export interface ClassData {
+  subclasses?: Array<{ id: string; name: string }>;
+  [key: string]: unknown;
 }
 
 export interface Feat {
   id: string;
   name: string;
   category: string;
-  data: any;
+  data: Record<string, unknown>;
   source: "core" | "override" | "homebrew";
 }
 
@@ -144,7 +200,31 @@ export interface Skill {
 export interface Background {
   id: string;
   name: string;
-  data: any;
+  data: {
+    description?: string;
+    ability_scores?: string[];
+    feat?: string;
+    skills?: string[];
+    tool?:
+      | string
+      | {
+          type: "fixed" | "choice";
+          name?: string;
+          category?: string;
+          description?: string;
+        };
+    starting_equipment?: {
+      options?: Array<{
+        label: string;
+        items: string[] | null;
+        gold: number | null;
+      }>;
+      // Legacy fields
+      items?: string[];
+      gold?: number;
+    };
+    [key: string]: unknown;
+  };
   source: "core" | "override" | "homebrew";
 }
 
@@ -154,7 +234,7 @@ export interface Gear {
   description: string;
   cost_gp: number;
   weight_kg: number;
-  data: any;
+  data: Record<string, unknown>;
   source: "core" | "override" | "homebrew";
 }
 
@@ -164,7 +244,7 @@ export interface Tool {
   category: string;
   cost_gp: number;
   weight_kg: number;
-  data: any;
+  data: Record<string, unknown>;
   source: "core" | "override" | "homebrew";
 }
 
@@ -175,7 +255,7 @@ export interface Item {
   cost_gp: number;
   weight_kg: number;
   category?: string;
-  data: any;
+  data: Record<string, unknown>;
   source: "core" | "override" | "homebrew";
 }
 
@@ -187,7 +267,7 @@ export interface Equipment {
   total_weight_kg?: number;
   items: Array<{ item_id: string; quantity: number }>;
   tools?: Array<{ tool_id: string; quantity: number }>;
-  data: any;
+  data: Record<string, unknown>;
   source: "core" | "override" | "homebrew";
 }
 
@@ -200,7 +280,19 @@ export interface Weapon {
   damage_type: string;
   weight_kg: number;
   cost_gp: number;
-  data: any;
+  properties?: Array<{
+    id: string;
+    name: string;
+    description?: string;
+    [key: string]: unknown;
+  }>;
+  mastery?: {
+    id: string;
+    name: string;
+    description?: string;
+    [key: string]: unknown;
+  };
+  data: Record<string, unknown>;
   source: "core" | "override" | "homebrew";
 }
 
@@ -208,12 +300,23 @@ export interface Armor {
   id: string;
   name: string;
   category: string;
-  base_ac: number;
+  base_ac: number | null; // NULL für Formeln
+  ac_bonus: number; // Für Schilde (+2)
+  ac_formula: string | null; // z.B. "11 + DEX", "12 + DEX (max. 2)", "14"
   strength_requirement: number | null;
   stealth_disadvantage: boolean;
+  don_time_minutes: number | null; // Anlegezeit in Minuten
+  doff_time_minutes: number | null; // Ablegezeit in Minuten
   weight_kg: number;
   cost_gp: number;
-  data: any;
+  properties?: Array<{
+    id: string;
+    name: string;
+    description: string;
+    affects_field?: string;
+    parameter_value?: unknown;
+  }>;
+  data: Record<string, unknown>;
   source: "core" | "override" | "homebrew";
 }
 
@@ -232,7 +335,7 @@ export interface CustomSpell {
   description: string;
   higher_levels?: string;
   classes: string;
-  data: any;
+  data: Record<string, unknown>;
   parent_id?: string;
   is_homebrew?: boolean;
 }
@@ -246,7 +349,7 @@ export interface CustomWeapon {
   damage_type: string;
   weight_kg: number;
   cost_gp: number;
-  data: any;
+  data: Record<string, unknown>;
   parent_id?: string;
   is_homebrew?: boolean;
 }
@@ -260,7 +363,7 @@ export interface CustomArmor {
   stealth_disadvantage: boolean;
   weight_kg: number;
   cost_gp: number;
-  data: any;
+  data: Record<string, unknown>;
   parent_id?: string;
   is_homebrew?: boolean;
 }
@@ -271,7 +374,7 @@ export interface CustomItem {
   description: string;
   cost_gp: number;
   weight_kg: number;
-  data: any;
+  data: Record<string, unknown>;
   parent_id?: string;
   item_type: "gear" | "tool";
   is_homebrew?: boolean;

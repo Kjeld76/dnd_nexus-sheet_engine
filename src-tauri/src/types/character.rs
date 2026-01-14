@@ -30,10 +30,45 @@ pub struct CharacterMeta {
     pub class_id: Option<String>,
     pub subclass_id: Option<String>,
     pub background_id: Option<String>,
+    pub origin_id: Option<String>,
     pub alignment: Option<String>,
+    pub gender: Option<String>,
+    pub player_name: Option<String>,
+    pub faith: Option<String>,
     #[serde(default)]
     pub xp: i32,
     pub use_metric: bool,
+    pub background_ability_scores: Option<std::collections::HashMap<String, i32>>,
+    pub background_tool_choice: Option<String>,
+    pub background_gold_granted: Option<i32>,
+    pub background_equipment_applied: Option<bool>,
+    pub personality_traits: Option<String>,
+    pub ideals: Option<String>,
+    pub bonds: Option<String>,
+    pub flaws: Option<String>,
+    // Inventar & Währung
+    #[serde(default)]
+    pub equipment_on_body_items: Option<Vec<EquipmentListItem>>,
+    #[serde(default)]
+    pub equipment_in_backpack_items: Option<Vec<EquipmentListItem>>,
+    #[serde(default)]
+    pub equipment_on_pack_animal_items: Option<Vec<EquipmentListItem>>,
+    #[serde(default)]
+    pub equipment_in_bag_of_holding_items: Option<Vec<EquipmentListItem>>,
+    #[serde(default)]
+    pub equipment_tool_items: Option<Vec<EquipmentListItem>>,
+    #[serde(default)]
+    pub currency_gold: Option<i32>,
+    #[serde(default)]
+    pub currency_silver: Option<i32>,
+    #[serde(default)]
+    pub currency_copper: Option<i32>,
+    pub equipment_on_body: Option<String>,
+    pub equipment_in_backpack: Option<String>,
+    pub equipment_on_pack_animal: Option<String>,
+    pub equipment_in_bag_of_holding: Option<String>,
+    #[serde(default)]
+    pub total_weight_kg: Option<f64>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -43,6 +78,8 @@ pub struct HealthPool {
     pub temp: i32,
     pub hit_dice_max: i32,
     pub hit_dice_used: i32,
+    #[serde(default)]
+    pub use_rolled_hp: Option<bool>, // true = gewürfelt, false/None = Durchschnitt
     pub death_saves: DeathSaves,
 }
 
@@ -54,6 +91,7 @@ impl Default for HealthPool {
             temp: 0,
             hit_dice_max: 1,
             hit_dice_used: 0,
+            use_rolled_hp: None,
             death_saves: DeathSaves::default(),
         }
     }
@@ -123,3 +161,9 @@ pub struct Modifier {
     pub condition: Option<String>,
 }
 
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct EquipmentListItem {
+    pub id: String,
+    pub name: String,
+    pub quantity: i32,
+}
