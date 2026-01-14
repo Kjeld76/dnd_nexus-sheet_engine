@@ -25,30 +25,44 @@ import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { CompendiumEditor } from "./CompendiumEditor";
 import { Button } from "./ui/Button";
+import {
+  COMPENDIUM_OVERSCAN_ROWS,
+  COMPENDIUM_ROW_ESTIMATED_HEIGHT_PX,
+} from "../lib/uiConstants";
+import type {
+  Armor,
+  Background,
+  Class,
+  Equipment,
+  Species,
+  Weapon,
+} from "../lib/types";
+import {
+  formatBackgroundTool,
+  getFeaturesByLevel,
+  getSubclasses,
+  getTraits,
+  isRecord,
+  getWeaponMasteryName,
+} from "./compendium/compendiumUtils";
+import type {
+  ClickableItem,
+  CompendiumEntry,
+  IconType,
+  SubclassWithFeatures,
+  Tab,
+} from "./compendium/compendiumUtils";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-type Tab =
-  | "spells"
-  | "species"
-  | "classes"
-  | "weapons"
-  | "armor"
-  | "tools"
-  | "gear"
-  | "feats"
-  | "skills"
-  | "backgrounds"
-  | "items"
-  | "equipment";
-
 export function Compendium() {
   const [activeTab, setActiveTab] = useState<Tab>("spells");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [selectedSubclass, setSelectedSubclass] = useState<any>(null);
+  const [selectedSubclass, setSelectedSubclass] =
+    useState<SubclassWithFeatures | null>(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const parentRef = useRef<HTMLDivElement>(null);
 
@@ -124,40 +138,40 @@ export function Compendium() {
 
   const getFilteredData = () => {
     const s = searchTerm.toLowerCase();
-    let baseData: any[] = [];
+    let baseData: CompendiumEntry[] = [];
     switch (activeTab) {
       case "spells":
-        baseData = spells;
+        baseData = spells as CompendiumEntry[];
         break;
       case "species":
-        baseData = species;
+        baseData = species as CompendiumEntry[];
         break;
       case "classes":
-        baseData = classes;
+        baseData = classes as CompendiumEntry[];
         break;
       case "weapons":
-        baseData = weapons;
+        baseData = weapons as CompendiumEntry[];
         break;
       case "armor":
-        baseData = armor;
+        baseData = armor as CompendiumEntry[];
         break;
       case "tools":
-        baseData = tools;
+        baseData = tools as CompendiumEntry[];
         break;
       case "feats":
-        baseData = feats;
+        baseData = feats as CompendiumEntry[];
         break;
       case "skills":
-        baseData = skills;
+        baseData = skills as CompendiumEntry[];
         break;
       case "backgrounds":
-        baseData = backgrounds;
+        baseData = backgrounds as CompendiumEntry[];
         break;
       case "items":
-        baseData = items;
+        baseData = items as CompendiumEntry[];
         break;
       case "equipment":
-        baseData = equipment;
+        baseData = equipment as CompendiumEntry[];
         break;
     }
     return baseData.filter((x) => x.name.toLowerCase().includes(s));
@@ -182,7 +196,7 @@ export function Compendium() {
     );
   };
 
-  const renderTabButton = (tab: Tab, label: string, Icon: any) => (
+  const renderTabButton = (tab: Tab, label: string, Icon: IconType) => (
     <button
       onClick={() => setActiveTab(tab)}
       className={cn(
@@ -364,47 +378,70 @@ export function Compendium() {
                     <div className="glass-panel p-6 lg:p-8 relative group overflow-hidden">
                       <div className="absolute top-0 left-0 w-2 h-full bg-primary/10 group-hover:bg-primary transition-colors duration-700" />
                       <p className="text-foreground/90 leading-relaxed text-lg lg:text-xl whitespace-pre-wrap font-medium italic first-letter:text-3xl first-letter:font-black first-letter:text-primary first-letter:mr-2">
-                        {selectedItem.description ||
-                          selectedItem.data?.description ||
-                          "Keine Beschreibung im Archiv gefunden."}
+                        {(() => {
+                          const direct = (
+                            selectedItem as { description?: unknown }
+                          ).description;
+                          if (typeof direct === "string" && direct)
+                            return direct;
+                          const data = (selectedItem as { data?: unknown })
+                            .data;
+                          if (isRecord(data)) {
+                            const fromData = data["description"];
+                            if (typeof fromData === "string" && fromData)
+                              return fromData;
+                          }
+                          return "Keine Beschreibung im Archiv gefunden.";
+                        })()}
                       </p>
                     </div>
 
-                    {activeTab === "spells" && selectedItem.higher_levels && (
-                      <div className="p-6 bg-primary/[0.02] rounded-2xl border-2 border-dashed border-primary/10 relative group">
-                        <Sparkles className="absolute top-4 right-4 text-primary/20 group-hover:rotate-12 group-hover:scale-125 transition-all duration-500" />
-                        <h4 className="text-xs font-black text-primary uppercase tracking-[0.4em] mb-4 flex items-center gap-4">
-                          <Zap size={18} /> Verstärkung
-                        </h4>
-                        <p className="text-base text-muted-foreground/80 leading-relaxed italic border-l-4 border-primary/20 pl-6">
-                          {selectedItem.higher_levels}
-                        </p>
-                      </div>
-                    )}
+                    {activeTab === "spells" &&
+                      (() => {
+                        const spell =
+                          selectedItem as import("../lib/types").Spell;
+                        if (!spell.higher_levels) return null;
+                        return (
+                          <div className="p-6 bg-primary/[0.02] rounded-2xl border-2 border-dashed border-primary/10 relative group">
+                            <Sparkles className="absolute top-4 right-4 text-primary/20 group-hover:rotate-12 group-hover:scale-125 transition-all duration-500" />
+                            <h4 className="text-xs font-black text-primary uppercase tracking-[0.4em] mb-4 flex items-center gap-4">
+                              <Zap size={18} /> Verstärkung
+                            </h4>
+                            <p className="text-base text-muted-foreground/80 leading-relaxed italic border-l-4 border-primary/20 pl-6">
+                              {spell.higher_levels}
+                            </p>
+                          </div>
+                        );
+                      })()}
                   </div>
 
                   {/* Species Specifics */}
-                  {activeTab === "species" && (
-                    <div className="grid grid-cols-1 gap-6">
-                      {selectedItem.data.traits?.map((trait: any) => (
-                        <div
-                          key={trait.name}
-                          className="bg-card p-6 rounded-[2rem] border border-border shadow-xl hover:border-primary/40 transition-all group relative overflow-hidden"
-                        >
-                          <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/5 rounded-full group-hover:scale-150 transition-transform duration-1000" />
-                          <h4 className="text-xl font-black text-foreground mb-4 flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shadow-inner group-hover:rotate-12 transition-transform">
-                              <Zap size={20} className="text-primary" />
+                  {activeTab === "species" &&
+                    (() => {
+                      const sp = selectedItem as Species;
+                      const traits = getTraits(sp.data?.traits);
+                      return (
+                        <div className="grid grid-cols-1 gap-6">
+                          {traits.map((trait, idx) => (
+                            <div
+                              key={`${trait.name}-${idx}`}
+                              className="bg-card p-6 rounded-[2rem] border border-border shadow-xl hover:border-primary/40 transition-all group relative overflow-hidden"
+                            >
+                              <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/5 rounded-full group-hover:scale-150 transition-transform duration-1000" />
+                              <h4 className="text-xl font-black text-foreground mb-4 flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center shadow-inner group-hover:rotate-12 transition-transform">
+                                  <Zap size={20} className="text-primary" />
+                                </div>
+                                {trait.name}
+                              </h4>
+                              <p className="text-base text-muted-foreground leading-relaxed italic border-l-4 border-border/50 pl-6 group-hover:border-primary/30 transition-colors">
+                                {trait.description}
+                              </p>
                             </div>
-                            {trait.name}
-                          </h4>
-                          <p className="text-base text-muted-foreground leading-relaxed italic border-l-4 border-border/50 pl-6 group-hover:border-primary/30 transition-colors">
-                            {trait.description}
-                          </p>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  )}
+                      );
+                    })()}
 
                   {/* Class Features Timeline */}
                   {activeTab === "classes" && (
@@ -421,7 +458,9 @@ export function Compendium() {
                         >
                           Basisklasse
                         </button>
-                        {selectedItem.data.subclasses?.map((sc: any) => (
+                        {getSubclasses(
+                          (selectedItem as Class).data?.subclasses,
+                        ).map((sc) => (
                           <button
                             key={sc.name}
                             onClick={() => setSelectedSubclass(sc)}
@@ -450,38 +489,38 @@ export function Compendium() {
                         <div className="space-y-10 relative pl-8 lg:pl-12">
                           <div className="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-primary via-border to-transparent rounded-full" />
                           {Object.entries(
-                            (selectedSubclass
-                              ? selectedSubclass.features
-                              : selectedItem.data.features_by_level) || {},
-                          ).map(
-                            ([level, features]: [string, any]) =>
-                              features.length > 0 && (
-                                <div
-                                  key={level}
-                                  className="relative pl-16 group"
-                                >
-                                  <div className="absolute left-[-40px] lg:left-[-56px] top-4 w-8 h-8 rounded-full bg-background border-4 border-primary shadow-2xl group-hover:scale-125 transition-transform z-10" />
-                                  <span className="text-base font-black text-primary/30 uppercase tracking-[0.5em] mb-6 block">
-                                    Grad {level}
-                                  </span>
-                                  <div className="grid gap-10">
-                                    {features.map((f: any) => (
-                                      <div
-                                        key={f.name}
-                                        className="bg-card p-6 lg:p-8 rounded-[2.5rem] border border-border shadow-2xl shadow-foreground/[0.02] hover:border-primary/20 transition-all group/feat"
-                                      >
-                                        <h5 className="text-xl font-black text-foreground mb-4 group-hover/feat:text-primary transition-colors italic font-serif">
-                                          {f.name}
-                                        </h5>
-                                        <p className="text-base text-muted-foreground italic leading-relaxed border-l-4 border-border pl-6 group-hover/feat:border-primary transition-colors">
-                                          {f.description}
-                                        </p>
-                                      </div>
-                                    ))}
-                                  </div>
+                            getFeaturesByLevel(
+                              selectedSubclass?.features ||
+                                (selectedItem as Class).data?.[
+                                  "features_by_level"
+                                ],
+                            ),
+                          ).map(([level, features]) => {
+                            if (features.length === 0) return null;
+                            return (
+                              <div key={level} className="relative pl-16 group">
+                                <div className="absolute left-[-40px] lg:left-[-56px] top-4 w-8 h-8 rounded-full bg-background border-4 border-primary shadow-2xl group-hover:scale-125 transition-transform z-10" />
+                                <span className="text-base font-black text-primary/30 uppercase tracking-[0.5em] mb-6 block">
+                                  Grad {level}
+                                </span>
+                                <div className="grid gap-10">
+                                  {features.map((f) => (
+                                    <div
+                                      key={f.name}
+                                      className="bg-card p-6 lg:p-8 rounded-[2.5rem] border border-border shadow-2xl shadow-foreground/[0.02] hover:border-primary/20 transition-all group/feat"
+                                    >
+                                      <h5 className="text-xl font-black text-foreground mb-4 group-hover/feat:text-primary transition-colors italic font-serif">
+                                        {f.name}
+                                      </h5>
+                                      <p className="text-base text-muted-foreground italic leading-relaxed border-l-4 border-border pl-6 group-hover/feat:border-primary transition-colors">
+                                        {f.description}
+                                      </p>
+                                    </div>
+                                  ))}
                                 </div>
-                              ),
-                          )}
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>
@@ -498,215 +537,228 @@ export function Compendium() {
                     </h4>
 
                     <div className="space-y-6">
-                      {activeTab === "spells" && (
-                        <>
-                          <StatRow
-                            label="Zaubergrad"
-                            value={`Stufe ${selectedItem.level}`}
-                            highlight
-                            icon={Sparkles}
-                          />
-                          <StatRow
-                            label="Schule"
-                            value={selectedItem.school}
-                            icon={Brain}
-                          />
-                          <StatRow
-                            label="Zeitaufwand"
-                            value={selectedItem.casting_time}
-                            icon={Clock}
-                          />
-                          <StatRow
-                            label="Reichweite"
-                            value={selectedItem.range}
-                            icon={Target}
-                          />
-                          <StatRow
-                            label="Dauer"
-                            value={selectedItem.duration}
-                            icon={Clock}
-                          />
-                          <StatRow
-                            label="Komponenten"
-                            value={selectedItem.components}
-                            icon={ScrollText}
-                          />
-                          {selectedItem.material_components && (
-                            <div className="bg-muted/30 p-10 rounded-[3rem] border border-border mt-10 relative group">
-                              <Info
-                                className="absolute top-6 right-6 text-primary/30 group-hover:text-primary transition-colors"
-                                size={20}
-                              />
-                              <span className="text-[10px] font-black text-primary/60 uppercase tracking-[0.4em] block mb-4">
-                                Materialien
-                              </span>
-                              <p className="text-sm text-muted-foreground font-medium italic leading-relaxed">
-                                {selectedItem.material_components}
-                              </p>
-                            </div>
-                          )}
-                          <StatRow
-                            label="Klassen"
-                            value={selectedItem.classes}
-                            highlight
-                            icon={Users}
-                          />
-                        </>
-                      )}
-
-                      {activeTab === "weapons" && (
-                        <>
-                          <StatRow
-                            label="Schaden"
-                            value={selectedItem.damage_dice}
-                            highlight
-                            icon={Zap}
-                          />
-                          <StatRow
-                            label="Typ"
-                            value={selectedItem.damage_type}
-                          />
-                          <StatRow
-                            label="Eigenschaft"
-                            value={
-                              selectedItem.properties &&
-                              selectedItem.properties.length > 0
-                                ? (selectedItem.properties as any[])
-                                    .map((p: any) => p.name)
-                                    .join(", ")
-                                : selectedItem.weapon_type || "—"
-                            }
-                            icon={Sword}
-                          />
-                          <StatRow
-                            label="Meisterung"
-                            value={
-                              selectedItem.mastery?.name ||
-                              (selectedItem.data as any)?.mastery_details
-                                ?.name ||
-                              (selectedItem.data as any)?.mastery ||
-                              "—"
-                            }
-                            highlight
-                            icon={Award}
-                          />
-                          <div className="grid grid-cols-2 gap-8 border-t border-border pt-8 mt-8">
-                            <StatRow
-                              label="Gewicht"
-                              value={`${selectedItem.weight_kg} kg`}
-                            />
-                            <StatRow
-                              label="Preis"
-                              value={`${selectedItem.cost_gp} GM`}
-                            />
-                          </div>
-                        </>
-                      )}
-
-                      {activeTab === "armor" && (
-                        <>
-                          <StatRow
-                            label="Rüstungsklasse"
-                            value={
-                              selectedItem.category === "schild"
-                                ? `+${selectedItem.ac_bonus}`
-                                : selectedItem.ac_formula ||
-                                  (selectedItem.base_ac !== null &&
-                                  selectedItem.base_ac !== undefined
-                                    ? selectedItem.base_ac.toString()
-                                    : "—")
-                            }
-                            highlight
-                            icon={Shield}
-                          />
-                          {selectedItem.ac_bonus > 0 &&
-                            selectedItem.category !== "schild" && (
+                      {activeTab === "spells" &&
+                        (() => {
+                          const spell =
+                            selectedItem as import("../lib/types").Spell;
+                          return (
+                            <>
                               <StatRow
-                                label="AC-Bonus"
-                                value={`+${selectedItem.ac_bonus}`}
+                                label="Zaubergrad"
+                                value={`Stufe ${spell.level}`}
                                 highlight
-                              />
-                            )}
-                          <StatRow label="Typ" value={selectedItem.category} />
-                          <StatRow
-                            label="Stärke"
-                            value={selectedItem.strength_requirement || "—"}
-                          />
-                          <StatRow
-                            label="Schleichen"
-                            value={
-                              selectedItem.stealth_disadvantage
-                                ? "Nachteil"
-                                : "Normal"
-                            }
-                          />
-                          {(selectedItem.don_time_minutes !== null ||
-                            selectedItem.doff_time_minutes !== null) && (
-                            <div className="grid grid-cols-2 gap-8 border-t border-border pt-8 mt-8">
-                              <StatRow
-                                label="Anlegezeit"
-                                value={
-                                  selectedItem.don_time_minutes === 0
-                                    ? "1 Aktion"
-                                    : selectedItem.don_time_minutes !== null
-                                      ? `${selectedItem.don_time_minutes} Min.`
-                                      : "—"
-                                }
+                                icon={Sparkles}
                               />
                               <StatRow
-                                label="Ablegezeit"
-                                value={
-                                  selectedItem.doff_time_minutes === 0
-                                    ? "1 Aktion"
-                                    : selectedItem.doff_time_minutes !== null
-                                      ? `${selectedItem.doff_time_minutes} Min.`
-                                      : "—"
-                                }
+                                label="Schule"
+                                value={spell.school}
+                                icon={Brain}
                               />
-                            </div>
-                          )}
-                          <div className="grid grid-cols-2 gap-8 border-t border-border pt-8 mt-8">
-                            <StatRow
-                              label="Gewicht"
-                              value={`${selectedItem.weight_kg} kg`}
-                            />
-                            <StatRow
-                              label="Preis"
-                              value={`${selectedItem.cost_gp} GM`}
-                            />
-                          </div>
+                              <StatRow
+                                label="Zeitaufwand"
+                                value={spell.casting_time}
+                                icon={Clock}
+                              />
+                              <StatRow
+                                label="Reichweite"
+                                value={spell.range}
+                                icon={Target}
+                              />
+                              <StatRow
+                                label="Dauer"
+                                value={spell.duration}
+                                icon={Clock}
+                              />
+                              <StatRow
+                                label="Komponenten"
+                                value={spell.components}
+                                icon={ScrollText}
+                              />
+                              {spell.material_components && (
+                                <div className="bg-muted/30 p-10 rounded-[3rem] border border-border mt-10 relative group">
+                                  <Info
+                                    className="absolute top-6 right-6 text-primary/30 group-hover:text-primary transition-colors"
+                                    size={20}
+                                  />
+                                  <span className="text-[10px] font-black text-primary/60 uppercase tracking-[0.4em] block mb-4">
+                                    Materialien
+                                  </span>
+                                  <p className="text-sm text-muted-foreground font-medium italic leading-relaxed">
+                                    {spell.material_components}
+                                  </p>
+                                </div>
+                              )}
+                              <StatRow
+                                label="Klassen"
+                                value={spell.classes}
+                                highlight
+                                icon={Users}
+                              />
+                            </>
+                          );
+                        })()}
 
-                          {/* Properties Details für Rüstungen */}
-                          {selectedItem.properties &&
-                            selectedItem.properties.length > 0 && (
-                              <div className="glass-panel p-6 rounded-[2.5rem] space-y-6 animate-reveal mt-8">
-                                <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
-                                  <Info size={18} /> Eigenschaften Details
-                                </h4>
-                                <div className="space-y-8">
-                                  {(selectedItem.properties as any[]).map(
-                                    (prop: any) => (
+                      {activeTab === "weapons" &&
+                        (() => {
+                          const weapon = selectedItem as Weapon;
+                          return (
+                            <>
+                              <StatRow
+                                label="Schaden"
+                                value={weapon.damage_dice}
+                                highlight
+                                icon={Zap}
+                              />
+                              <StatRow label="Typ" value={weapon.damage_type} />
+                              <StatRow
+                                label="Eigenschaft"
+                                value={
+                                  weapon.properties &&
+                                  weapon.properties.length > 0
+                                    ? weapon.properties
+                                        .map((p) => p.name)
+                                        .join(", ")
+                                    : weapon.weapon_type || "—"
+                                }
+                                icon={Sword}
+                              />
+                              <StatRow
+                                label="Meisterung"
+                                value={getWeaponMasteryName(weapon) || "—"}
+                                highlight
+                                icon={Award}
+                              />
+                              <div className="grid grid-cols-2 gap-8 border-t border-border pt-8 mt-8">
+                                <StatRow
+                                  label="Gewicht"
+                                  value={`${weapon.weight_kg} kg`}
+                                />
+                                <StatRow
+                                  label="Preis"
+                                  value={`${weapon.cost_gp} GM`}
+                                />
+                              </div>
+                            </>
+                          );
+                        })()}
+
+                      {activeTab === "armor" &&
+                        (() => {
+                          const a = selectedItem as Armor;
+                          return (
+                            <>
+                              <StatRow
+                                label="Rüstungsklasse"
+                                value={
+                                  a.category === "schild"
+                                    ? `+${a.ac_bonus}`
+                                    : a.ac_formula ||
+                                      (a.base_ac !== null &&
+                                      a.base_ac !== undefined
+                                        ? a.base_ac.toString()
+                                        : "—")
+                                }
+                                highlight
+                                icon={Shield}
+                              />
+                              {a.ac_bonus > 0 && a.category !== "schild" && (
+                                <StatRow
+                                  label="AC-Bonus"
+                                  value={`+${a.ac_bonus}`}
+                                  highlight
+                                />
+                              )}
+                              <StatRow label="Typ" value={a.category} />
+                              <StatRow
+                                label="Stärke"
+                                value={a.strength_requirement || "—"}
+                              />
+                              <StatRow
+                                label="Schleichen"
+                                value={
+                                  a.stealth_disadvantage ? "Nachteil" : "Normal"
+                                }
+                              />
+                              {(a.don_time_minutes !== null ||
+                                a.doff_time_minutes !== null) && (
+                                <div className="grid grid-cols-2 gap-8 border-t border-border pt-8 mt-8">
+                                  <StatRow
+                                    label="Anlegezeit"
+                                    value={
+                                      a.don_time_minutes === 0
+                                        ? "1 Aktion"
+                                        : a.don_time_minutes !== null
+                                          ? `${a.don_time_minutes} Min.`
+                                          : "—"
+                                    }
+                                  />
+                                  <StatRow
+                                    label="Ablegezeit"
+                                    value={
+                                      a.doff_time_minutes === 0
+                                        ? "1 Aktion"
+                                        : a.doff_time_minutes !== null
+                                          ? `${a.doff_time_minutes} Min.`
+                                          : "—"
+                                    }
+                                  />
+                                </div>
+                              )}
+                              <div className="grid grid-cols-2 gap-8 border-t border-border pt-8 mt-8">
+                                <StatRow
+                                  label="Gewicht"
+                                  value={`${a.weight_kg} kg`}
+                                />
+                                <StatRow
+                                  label="Preis"
+                                  value={`${a.cost_gp} GM`}
+                                />
+                              </div>
+
+                              {/* Properties Details für Rüstungen */}
+                              {a.properties && a.properties.length > 0 && (
+                                <div className="glass-panel p-6 rounded-[2.5rem] space-y-6 animate-reveal mt-8">
+                                  <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
+                                    <Info size={18} /> Eigenschaften Details
+                                  </h4>
+                                  <div className="space-y-8">
+                                    {a.properties.map((prop) => (
                                       <div
                                         key={prop.id}
                                         className="space-y-3 group"
                                       >
                                         <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
                                           {prop.name}
-                                          {prop.parameter_value && (
+                                          {prop.parameter_value != null && (
                                             <span className="text-sm text-muted-foreground normal-case ml-2">
                                               {(() => {
                                                 const param =
-                                                  prop.parameter_value as any;
+                                                  prop.parameter_value;
+                                                const p = isRecord(param)
+                                                  ? (param as Record<
+                                                      string,
+                                                      unknown
+                                                    >)
+                                                  : null;
+                                                const strength =
+                                                  p?.["strength_requirement"];
                                                 if (
-                                                  param.strength_requirement
+                                                  typeof strength === "number"
                                                 ) {
-                                                  return `(STÄ ${param.strength_requirement})`;
+                                                  return `(STÄ ${strength})`;
                                                 }
-                                                if (param.ac_bonus) {
-                                                  return `(+${param.ac_bonus} RK)`;
+                                                const acBonus = p?.["ac_bonus"];
+                                                if (
+                                                  typeof acBonus === "number"
+                                                ) {
+                                                  return `(+${acBonus} RK)`;
                                                 }
-                                                if (param.damage_type) {
-                                                  return `(${param.damage_type})`;
+                                                const damageType =
+                                                  p?.["damage_type"];
+                                                if (
+                                                  typeof damageType === "string"
+                                                ) {
+                                                  return `(${damageType})`;
                                                 }
                                                 return "";
                                               })()}
@@ -718,286 +770,359 @@ export function Compendium() {
                                             "Keine Beschreibung im PHB."}
                                         </p>
                                       </div>
-                                    ),
-                                  )}
+                                    ))}
+                                  </div>
                                 </div>
-                              </div>
-                            )}
-                        </>
-                      )}
-
-                      {activeTab === "classes" && (
-                        <>
-                          <StatRow
-                            label="Trefferwürfel"
-                            value={`W${selectedItem.data.hit_die}`}
-                            highlight
-                            icon={Zap}
-                          />
-                          <StatRow
-                            label="Rettungswürfe"
-                            value={selectedItem.data.saving_throws?.join(", ")}
-                            icon={Shield}
-                          />
-                        </>
-                      )}
-
-                      {activeTab === "species" && (
-                        <>
-                          <StatRow
-                            label="Größe"
-                            value={(() => {
-                              const size = selectedItem.data.size;
-                              if (!size) return "Mittel";
-                              const sizeMap: Record<string, string> = {
-                                Small: "Klein",
-                                Medium: "Mittel",
-                                Large: "Groß",
-                                Tiny: "Winzig",
-                                Huge: "Riesig",
-                                Gargantuan: "Gigantisch",
-                              };
-                              return sizeMap[size] || size;
-                            })()}
-                            icon={Users}
-                          />
-                          <StatRow
-                            label="Bewegung"
-                            value={`${selectedItem.data.speed} m`}
-                            highlight
-                            icon={Compass}
-                          />
-                          <StatRow
-                            label="Sprachen"
-                            value={selectedItem.data.languages?.known?.join(
-                              ", ",
-                            )}
-                          />
-                        </>
-                      )}
-
-                      {(activeTab === "tools" || activeTab === "items") && (
-                        <>
-                          <StatRow
-                            label="Preis"
-                            value={`${selectedItem.cost_gp} GM`}
-                          />
-                          <StatRow
-                            label="Gewicht"
-                            value={`${selectedItem.weight_kg} kg`}
-                          />
-                          {activeTab === "tools" && (
-                            <StatRow
-                              label="Attribute"
-                              value={selectedItem.data.abilities?.join(", ")}
-                              highlight
-                              icon={Brain}
-                            />
-                          )}
-                          {activeTab === "items" && selectedItem.category && (
-                            <StatRow
-                              label="Kategorie"
-                              value={selectedItem.category}
-                            />
-                          )}
-                        </>
-                      )}
-
-                      {activeTab === "equipment" && (
-                        <>
-                          {selectedItem.total_cost_gp !== undefined && (
-                            <StatRow
-                              label="Gesamtkosten"
-                              value={`${selectedItem.total_cost_gp} GM`}
-                              highlight
-                            />
-                          )}
-                          {selectedItem.total_weight_kg !== undefined && (
-                            <StatRow
-                              label="Gesamtgewicht"
-                              value={`${selectedItem.total_weight_kg} kg`}
-                            />
-                          )}
-                          {Array.isArray(selectedItem.items) &&
-                            selectedItem.items.length > 0 && (
-                              <ClickableStatRow
-                                label="Enthält Gegenstände"
-                                items={selectedItem.items.map((i: any) => {
-                                  const item = items.find(
-                                    (item: any) => item.id === i.item_id,
-                                  );
-                                  return item
-                                    ? `${i.quantity > 1 ? `${i.quantity}x ` : ""}${item.name}`
-                                    : `${i.quantity > 1 ? `${i.quantity}x ` : ""}${i.item_id}`;
-                                })}
-                                itemsData={items}
-                                onItemClick={(id) => {
-                                  setActiveTab("items");
-                                  setSelectedId(id);
-                                }}
-                                highlight
-                                icon={Book}
-                              />
-                            )}
-                          {Array.isArray(selectedItem.tools) &&
-                            selectedItem.tools.length > 0 && (
-                              <ClickableStatRow
-                                label="Enthält Werkzeuge"
-                                items={selectedItem.tools.map((t: any) => {
-                                  const tool = tools.find(
-                                    (tool: any) => tool.id === t.tool_id,
-                                  );
-                                  return tool
-                                    ? `${t.quantity > 1 ? `${t.quantity}x ` : ""}${tool.name}`
-                                    : `${t.quantity > 1 ? `${t.quantity}x ` : ""}${t.tool_id}`;
-                                })}
-                                itemsData={tools}
-                                onItemClick={(id) => {
-                                  setActiveTab("tools");
-                                  setSelectedId(id);
-                                }}
-                                icon={Package}
-                              />
-                            )}
-                        </>
-                      )}
-
-                      {activeTab === "backgrounds" && (
-                        <>
-                          {selectedItem.data?.skills?.length > 0 && (
-                            <ClickableStatRow
-                              label="Fertigkeiten"
-                              items={selectedItem.data.skills}
-                              itemsData={skills}
-                              onItemClick={(id) => {
-                                setActiveTab("skills");
-                                setSelectedId(id);
-                              }}
-                              highlight
-                              icon={Brain}
-                            />
-                          )}
-                          {selectedItem.data?.tool && (
-                            <ClickableStatRow
-                              label="Werkzeug"
-                              items={[
-                                typeof selectedItem.data.tool === "object" &&
-                                (selectedItem.data.tool as any).type ===
-                                  "choice"
-                                  ? (selectedItem.data.tool as any)
-                                      .description ||
-                                    `Wähle eine Art von ${(selectedItem.data.tool as any).category}`
-                                  : typeof selectedItem.data.tool === "object"
-                                    ? (selectedItem.data.tool as any).name || ""
-                                    : (selectedItem.data.tool as string),
-                              ]}
-                              itemsData={tools}
-                              onItemClick={(id: string) => {
-                                setActiveTab("tools");
-                                setSelectedId(id);
-                              }}
-                              icon={Package}
-                            />
-                          )}
-                          {selectedItem.data?.feat && (
-                            <ClickableStatRow
-                              label="Herkunftstalent"
-                              items={[selectedItem.data.feat]}
-                              itemsData={feats}
-                              onItemClick={(id: string) => {
-                                setActiveTab("feats");
-                                setSelectedId(id);
-                              }}
-                              highlight
-                              icon={Award}
-                            />
-                          )}
-                          {selectedItem.data?.ability_scores?.length > 0 && (
-                            <StatRow
-                              label="Attributs-Boni"
-                              value={selectedItem.data.ability_scores.join(
-                                ", ",
                               )}
-                              icon={Zap}
-                            />
-                          )}
-                          {selectedItem.data?.equipment_id && (
-                            <ClickableStatRow
-                              label="Ausrüstung"
-                              items={[
-                                equipment.find(
-                                  (eq: any) =>
-                                    eq.id === selectedItem.data.equipment_id,
-                                )?.name || selectedItem.data.equipment_id,
-                              ]}
-                              itemsData={equipment}
-                              onItemClick={(id) => {
-                                setActiveTab("equipment");
-                                setSelectedId(id);
-                              }}
-                              highlight
-                              icon={Package}
-                            />
-                          )}
-                          {selectedItem.data?.gold && (
-                            <StatRow
-                              label="Startgold"
-                              value={`${selectedItem.data.gold} GM`}
-                              highlight
-                              icon={Package}
-                            />
-                          )}
-                        </>
-                      )}
+                            </>
+                          );
+                        })()}
+
+                      {activeTab === "classes" &&
+                        (() => {
+                          const cls = selectedItem as Class;
+                          const savingThrowsRaw = cls.data?.["saving_throws"];
+                          const savingThrows = Array.isArray(savingThrowsRaw)
+                            ? savingThrowsRaw.filter(
+                                (x): x is string => typeof x === "string",
+                              )
+                            : [];
+                          return (
+                            <>
+                              <StatRow
+                                label="Trefferwürfel"
+                                value={
+                                  cls.data?.hit_die
+                                    ? `W${cls.data.hit_die}`
+                                    : "—"
+                                }
+                                highlight
+                                icon={Zap}
+                              />
+                              <StatRow
+                                label="Rettungswürfe"
+                                value={
+                                  savingThrows.length > 0
+                                    ? savingThrows.join(", ")
+                                    : "—"
+                                }
+                                icon={Shield}
+                              />
+                            </>
+                          );
+                        })()}
+
+                      {activeTab === "species" &&
+                        (() => {
+                          const sp = selectedItem as Species;
+                          const known = sp.data?.languages?.known;
+                          const knownText = Array.isArray(known)
+                            ? known
+                                .filter(
+                                  (x): x is string => typeof x === "string",
+                                )
+                                .join(", ")
+                            : "";
+                          return (
+                            <>
+                              <StatRow
+                                label="Größe"
+                                value={(() => {
+                                  const size = sp.data.size;
+                                  if (!size) return "Mittel";
+                                  const sizeMap: Record<string, string> = {
+                                    Small: "Klein",
+                                    Medium: "Mittel",
+                                    Large: "Groß",
+                                    Tiny: "Winzig",
+                                    Huge: "Riesig",
+                                    Gargantuan: "Gigantisch",
+                                  };
+                                  return sizeMap[size] || size;
+                                })()}
+                                icon={Users}
+                              />
+                              <StatRow
+                                label="Bewegung"
+                                value={`${sp.data.speed ?? "—"} m`}
+                                highlight
+                                icon={Compass}
+                              />
+                              <StatRow
+                                label="Sprachen"
+                                value={knownText || "—"}
+                              />
+                            </>
+                          );
+                        })()}
+
+                      {(activeTab === "tools" || activeTab === "items") &&
+                        (() => {
+                          if (activeTab === "tools") {
+                            const t =
+                              selectedItem as import("../lib/types").Tool;
+                            const abilitiesRaw = t.data?.["abilities"];
+                            const abilities = Array.isArray(abilitiesRaw)
+                              ? abilitiesRaw.filter(
+                                  (x): x is string => typeof x === "string",
+                                )
+                              : [];
+                            return (
+                              <>
+                                <StatRow
+                                  label="Preis"
+                                  value={`${t.cost_gp} GM`}
+                                />
+                                <StatRow
+                                  label="Gewicht"
+                                  value={`${t.weight_kg} kg`}
+                                />
+                                <StatRow
+                                  label="Attribute"
+                                  value={
+                                    abilities.length > 0
+                                      ? abilities.join(", ")
+                                      : "—"
+                                  }
+                                  highlight
+                                  icon={Brain}
+                                />
+                              </>
+                            );
+                          }
+                          const it =
+                            selectedItem as import("../lib/types").Item;
+                          return (
+                            <>
+                              <StatRow
+                                label="Preis"
+                                value={`${it.cost_gp} GM`}
+                              />
+                              <StatRow
+                                label="Gewicht"
+                                value={`${it.weight_kg} kg`}
+                              />
+                              {it.category && (
+                                <StatRow
+                                  label="Kategorie"
+                                  value={it.category}
+                                />
+                              )}
+                            </>
+                          );
+                        })()}
+
+                      {activeTab === "equipment" &&
+                        (() => {
+                          const eq = selectedItem as Equipment;
+                          return (
+                            <>
+                              {eq.total_cost_gp !== undefined && (
+                                <StatRow
+                                  label="Gesamtkosten"
+                                  value={`${eq.total_cost_gp} GM`}
+                                  highlight
+                                />
+                              )}
+                              {eq.total_weight_kg !== undefined && (
+                                <StatRow
+                                  label="Gesamtgewicht"
+                                  value={`${eq.total_weight_kg} kg`}
+                                />
+                              )}
+                              {Array.isArray(eq.items) &&
+                                eq.items.length > 0 && (
+                                  <ClickableStatRow
+                                    label="Enthält Gegenstände"
+                                    items={eq.items.map((i) => {
+                                      const item = items.find(
+                                        (it) => it.id === i.item_id,
+                                      );
+                                      return item
+                                        ? `${i.quantity > 1 ? `${i.quantity}x ` : ""}${item.name}`
+                                        : `${i.quantity > 1 ? `${i.quantity}x ` : ""}${i.item_id}`;
+                                    })}
+                                    itemsData={items}
+                                    onItemClick={(id) => {
+                                      setActiveTab("items");
+                                      setSelectedId(id);
+                                    }}
+                                    highlight
+                                    icon={Book}
+                                  />
+                                )}
+                              {Array.isArray(eq.tools) &&
+                                eq.tools.length > 0 && (
+                                  <ClickableStatRow
+                                    label="Enthält Werkzeuge"
+                                    items={eq.tools.map((t) => {
+                                      const tool = tools.find(
+                                        (to) => to.id === t.tool_id,
+                                      );
+                                      return tool
+                                        ? `${t.quantity > 1 ? `${t.quantity}x ` : ""}${tool.name}`
+                                        : `${t.quantity > 1 ? `${t.quantity}x ` : ""}${t.tool_id}`;
+                                    })}
+                                    itemsData={tools}
+                                    onItemClick={(id) => {
+                                      setActiveTab("tools");
+                                      setSelectedId(id);
+                                    }}
+                                    icon={Package}
+                                  />
+                                )}
+                            </>
+                          );
+                        })()}
+
+                      {activeTab === "backgrounds" &&
+                        (() => {
+                          const bg = selectedItem as Background;
+                          return (
+                            <>
+                              {bg.data?.skills && bg.data.skills.length > 0 && (
+                                <ClickableStatRow
+                                  label="Fertigkeiten"
+                                  items={bg.data.skills}
+                                  itemsData={skills}
+                                  onItemClick={(id) => {
+                                    setActiveTab("skills");
+                                    setSelectedId(id);
+                                  }}
+                                  highlight
+                                  icon={Brain}
+                                />
+                              )}
+                              {bg.data?.tool && (
+                                <ClickableStatRow
+                                  label="Werkzeug"
+                                  items={[formatBackgroundTool(bg.data.tool)]}
+                                  itemsData={tools}
+                                  onItemClick={(id: string) => {
+                                    setActiveTab("tools");
+                                    setSelectedId(id);
+                                  }}
+                                  icon={Package}
+                                />
+                              )}
+                              {bg.data?.feat && (
+                                <ClickableStatRow
+                                  label="Herkunftstalent"
+                                  items={[bg.data.feat]}
+                                  itemsData={feats}
+                                  onItemClick={(id: string) => {
+                                    setActiveTab("feats");
+                                    setSelectedId(id);
+                                  }}
+                                  highlight
+                                  icon={Award}
+                                />
+                              )}
+                              {bg.data?.ability_scores &&
+                                bg.data.ability_scores.length > 0 && (
+                                  <StatRow
+                                    label="Attributs-Boni"
+                                    value={bg.data.ability_scores.join(", ")}
+                                    icon={Zap}
+                                  />
+                                )}
+                              {bg.data?.equipment_id && (
+                                <ClickableStatRow
+                                  label="Ausrüstung"
+                                  items={[
+                                    (() => {
+                                      const eqId =
+                                        typeof bg.data.equipment_id === "string"
+                                          ? bg.data.equipment_id
+                                          : "";
+                                      return (
+                                        equipment.find((eq) => eq.id === eqId)
+                                          ?.name || eqId
+                                      );
+                                    })(),
+                                  ]}
+                                  itemsData={equipment}
+                                  onItemClick={(id) => {
+                                    setActiveTab("equipment");
+                                    setSelectedId(id);
+                                  }}
+                                  highlight
+                                  icon={Package}
+                                />
+                              )}
+                              {bg.data?.gold && (
+                                <StatRow
+                                  label="Startgold"
+                                  value={`${bg.data.gold} GM`}
+                                  highlight
+                                  icon={Package}
+                                />
+                              )}
+                            </>
+                          );
+                        })()}
                     </div>
                   </div>
 
-                  {/* Property Details for Weapons */}
                   {activeTab === "weapons" &&
-                    selectedItem.properties &&
-                    selectedItem.properties.length > 0 && (
-                      <div className="glass-panel p-6 rounded-[2.5rem] space-y-6 animate-reveal">
-                        <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
-                          <Info size={18} /> Eigenschaften
-                        </h4>
-                        <div className="space-y-8">
-                          {selectedItem.properties.map((prop: any) => {
-                            return (
-                              <div key={prop.id} className="space-y-3 group">
-                                <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
-                                  {prop.name}
-                                  {prop.parameter_value && (
-                                    <span className="text-sm text-muted-foreground normal-case ml-2">
-                                      ({JSON.stringify(prop.parameter_value)})
-                                    </span>
-                                  )}
+                    (() => {
+                      const weapon = selectedItem as Weapon;
+                      return (
+                        <>
+                          {/* Property Details for Weapons */}
+                          {weapon.properties &&
+                            weapon.properties.length > 0 && (
+                              <div className="glass-panel p-6 rounded-[2.5rem] space-y-6 animate-reveal">
+                                <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
+                                  <Info size={18} /> Eigenschaften
+                                </h4>
+                                <div className="space-y-8">
+                                  {weapon.properties.map((prop) => (
+                                    <div
+                                      key={prop.id}
+                                      className="space-y-3 group"
+                                    >
+                                      <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
+                                        {prop.name}
+                                        {prop.parameter_value != null && (
+                                          <span className="text-sm text-muted-foreground normal-case ml-2">
+                                            (
+                                            {JSON.stringify(
+                                              prop.parameter_value,
+                                            )}
+                                            )
+                                          </span>
+                                        )}
+                                      </span>
+                                      <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20 group-hover:border-primary transition-colors">
+                                        {prop.description ||
+                                          "Keine Beschreibung im PHB."}
+                                      </p>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+
+                          {/* Mastery Details for Weapons */}
+                          {weapon.mastery && (
+                            <div className="glass-panel p-6 rounded-[2.5rem] space-y-6 animate-reveal">
+                              <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
+                                <Award size={18} /> Meisterschaft
+                              </h4>
+                              <div className="space-y-3">
+                                <span className="text-base font-black text-primary uppercase tracking-widest block">
+                                  {weapon.mastery.name}
                                 </span>
-                                <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20 group-hover:border-primary transition-colors">
-                                  {prop.description ||
-                                    "Keine Beschreibung im PHB."}
+                                <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20">
+                                  {weapon.mastery.description}
                                 </p>
                               </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-                  {/* Mastery Details for Weapons */}
-                  {activeTab === "weapons" && selectedItem.mastery && (
-                    <div className="glass-panel p-6 rounded-[2.5rem] space-y-6 animate-reveal">
-                      <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
-                        <Award size={18} /> Meisterschaft
-                      </h4>
-                      <div className="space-y-3">
-                        <span className="text-base font-black text-primary uppercase tracking-widest block">
-                          {selectedItem.mastery.name}
-                        </span>
-                        <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20">
-                          {selectedItem.mastery.description}
-                        </p>
-                      </div>
-                    </div>
-                  )}
+                            </div>
+                          )}
+                        </>
+                      );
+                    })()}
                 </aside>
               </div>
             </div>
@@ -1007,7 +1132,7 @@ export function Compendium() {
 
       {isEditorOpen && (
         <CompendiumEditor
-          type={activeTab as any}
+          type={activeTab}
           initialData={selectedItem}
           onClose={() => setIsEditorOpen(false)}
           onSave={() => {
@@ -1027,9 +1152,9 @@ function StatRow({
   icon: Icon,
 }: {
   label: string;
-  value: any;
+  value: React.ReactNode;
   highlight?: boolean;
-  icon?: any;
+  icon?: IconType;
 }) {
   return (
     <div className="flex flex-col gap-4 group">
@@ -1074,10 +1199,10 @@ function ClickableStatRow({
 }: {
   label: string;
   items: string[];
-  itemsData: any[];
+  itemsData: ClickableItem[];
   onItemClick: (id: string) => void;
   highlight?: boolean;
-  icon?: any;
+  icon?: IconType;
 }) {
   const findItemId = (itemName: string): string | null => {
     const found = itemsData.find((item) => item.name === itemName);
@@ -1147,7 +1272,7 @@ function VirtualizedList({
   renderSourceBadge,
 }: {
   parentRef: React.RefObject<HTMLDivElement | null>;
-  data: any[];
+  data: CompendiumEntry[];
   selectedId: string | null;
   activeTab: Tab;
   onSelect: (id: string) => void;
@@ -1156,9 +1281,50 @@ function VirtualizedList({
   const virtualizer = useVirtualizer({
     count: data.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 90,
-    overscan: 5,
+    estimateSize: () => COMPENDIUM_ROW_ESTIMATED_HEIGHT_PX,
+    overscan: COMPENDIUM_OVERSCAN_ROWS,
   });
+
+  const getSecondaryLabel = (item: CompendiumEntry): string => {
+    switch (activeTab) {
+      case "spells":
+        return (item as import("../lib/types").Spell).school || "PHB";
+      case "classes": {
+        const cls = item as Class;
+        return cls.data?.hit_die ? `W${cls.data.hit_die} Hit Die` : "PHB";
+      }
+      case "weapons":
+        return (item as Weapon).damage_dice || "PHB";
+      case "armor": {
+        const a = item as Armor;
+        if (a.ac_formula) return a.ac_formula;
+        if (a.base_ac !== null && a.base_ac !== undefined)
+          return `RK ${a.base_ac}`;
+        return "RK —";
+      }
+      case "backgrounds": {
+        const bg = item as Background;
+        const featureName = bg.data?.["feature_name"];
+        return typeof featureName === "string" && featureName
+          ? featureName
+          : "PHB";
+      }
+      case "items":
+        return (item as import("../lib/types").Item).category || "PHB";
+      case "equipment": {
+        const eq = item as Equipment;
+        return eq.total_cost_gp !== undefined
+          ? `${eq.total_cost_gp} GM`
+          : "PHB";
+      }
+      case "tools":
+        return (item as import("../lib/types").Tool).category || "PHB";
+      case "feats":
+        return (item as import("../lib/types").Feat).category || "PHB";
+      default:
+        return "PHB";
+    }
+  };
 
   return (
     <div
@@ -1206,41 +1372,24 @@ function VirtualizedList({
                   </span>
                   {renderSourceBadge(item.source)}
                 </div>
-                {activeTab === "spells" && (
-                  <span
-                    className={cn(
-                      "text-[10px] font-black px-2 py-0.5 rounded-md",
-                      selectedId === item.id
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-muted text-muted-foreground",
-                    )}
-                  >
-                    G{item.level}
-                  </span>
-                )}
+                {activeTab === "spells" &&
+                  "level" in item &&
+                  typeof (item as { level?: unknown }).level === "number" && (
+                    <span
+                      className={cn(
+                        "text-[10px] font-black px-2 py-0.5 rounded-md",
+                        selectedId === item.id
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted text-muted-foreground",
+                      )}
+                    >
+                      G{(item as { level: number }).level}
+                    </span>
+                  )}
               </div>
               <div className="flex gap-3 items-center">
                 <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
-                  {activeTab === "spells"
-                    ? item.school
-                    : activeTab === "classes"
-                      ? `W${item.data.hit_die} Hit Die`
-                      : activeTab === "weapons"
-                        ? item.damage_dice
-                        : activeTab === "armor"
-                          ? item.ac_formula ||
-                            (item.base_ac !== null
-                              ? `RK ${item.base_ac}`
-                              : "RK —")
-                          : activeTab === "backgrounds"
-                            ? item.data?.feature_name || "PHB"
-                            : activeTab === "items"
-                              ? item.category || "PHB"
-                              : activeTab === "equipment"
-                                ? item.total_cost_gp !== undefined
-                                  ? `${item.total_cost_gp} GM`
-                                  : "PHB"
-                                : item.category || "PHB"}
+                  {getSecondaryLabel(item)}
                 </span>
                 <div className="flex-1 h-px bg-border/50" />
                 <ChevronRight

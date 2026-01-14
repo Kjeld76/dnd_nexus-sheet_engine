@@ -865,93 +865,119 @@ export function CharacterSheet() {
     const currentBackgroundId = currentCharacter.meta.background_id;
     const previousBackgroundId = prevBackgroundIdRef.current;
 
-    if (previousBackgroundId && previousBackgroundId !== currentBackgroundId) {
+    const resetDialogs = () => {
       setShowBackgroundAbilityDialog(false);
       setShowToolChoiceDialog(false);
       setShowStartingEquipmentDialog(false);
+    };
+
+    const clearBackgroundMeta = () => {
+      updateMeta({
+        background_ability_scores: undefined,
+        background_tool_choice: undefined,
+        background_gold_granted: undefined,
+        background_equipment_applied: undefined,
+      });
+    };
+
+    const cleanupPreviousBackgroundEffects = (
+      previousBackground: Background,
+    ) => {
+      const MIN_ATTRIBUTE_SCORE = 1;
+
+      const oldBonuses = currentCharacter.meta.background_ability_scores;
+      if (oldBonuses) {
+        Object.entries(oldBonuses).forEach(([attr, rawValue]) => {
+          if (typeof rawValue !== "number") return;
+          const attrKey = attr as keyof typeof currentCharacter.attributes;
+          updateAttribute(
+            attrKey,
+            Math.max(
+              currentCharacter.attributes[attrKey] - rawValue,
+              MIN_ATTRIBUTE_SCORE,
+            ),
+          );
+        });
+      }
+
+      const oldFeatName = previousBackground.data?.feat;
+      if (typeof oldFeatName === "string") {
+        const feat = feats.find(
+          (f) => f.name.toUpperCase() === oldFeatName.toUpperCase(),
+        );
+        if (feat && currentCharacter.feats.includes(feat.id)) {
+          removeFeat(feat.id);
+        }
+      }
+
+      const oldSkills = previousBackground.data?.skills;
+      if (Array.isArray(oldSkills)) {
+        oldSkills.forEach((skill) => {
+          if (typeof skill !== "string") return;
+          if (currentCharacter.proficiencies.skills.includes(skill)) {
+            updateProficiency("skills", skill, false);
+          }
+        });
+      }
+
+      const oldToolName = getToolName(previousBackground.data?.tool);
+      const choiceToolName = currentCharacter.meta.background_tool_choice;
+      const toolToRemove = choiceToolName || oldToolName;
+      if (toolToRemove) {
+        if (currentCharacter.proficiencies.tools.includes(toolToRemove)) {
+          updateProficiency("tools", toolToRemove, false);
+        }
+        removeBackgroundItem(toolToRemove, updateMeta);
+      }
+
+      const oldEquipment = previousBackground.data?.starting_equipment;
+      if (oldEquipment) {
+        const itemsToRemove = new Set<string>();
+        if (oldEquipment.options) {
+          const normalized = normalizeStartingEquipmentOptions(
+            oldEquipment.options,
+          );
+          normalized.forEach((opt) => {
+            opt.items?.forEach((i) => {
+              itemsToRemove.add(typeof i === "string" ? i : i.name);
+            });
+          });
+        } else if (oldEquipment.items) {
+          oldEquipment.items.forEach((i: string) => itemsToRemove.add(i));
+        }
+        itemsToRemove.forEach((name) => removeBackgroundItem(name, updateMeta));
+      }
+    };
+
+    const rollbackGoldIfNeeded = () => {
+      const granted = currentCharacter.meta.background_gold_granted;
+      if (!granted) return;
+      const currentGold = currentCharacter.meta.currency_gold || 0;
+      updateMeta({
+        currency_gold: Math.max(0, currentGold - granted),
+      });
+    };
+
+    const onBackgroundChanged = () => {
+      resetDialogs();
       const previousBackground = backgrounds.find(
         (bg) => bg.id === previousBackgroundId,
       );
       if (previousBackground?.data) {
-        if (currentCharacter.meta.background_ability_scores) {
-          const oldBonuses = currentCharacter.meta.background_ability_scores;
-          Object.entries(oldBonuses).forEach(([attr, value]) => {
-            const attrKey = attr as keyof typeof currentCharacter.attributes;
-            updateAttribute(
-              attrKey,
-              Math.max(
-                currentCharacter.attributes[attrKey] - (value as number),
-                1,
-              ),
-            );
-          });
-        }
-        if (previousBackground.data.feat) {
-          const feat = feats.find(
-            (f) =>
-              f.name.toUpperCase() ===
-              (previousBackground.data.feat as string).toUpperCase(),
-          );
-          if (feat && currentCharacter.feats.includes(feat.id))
-            removeFeat(feat.id);
-        }
-        if (previousBackground.data.skills) {
-          previousBackground.data.skills.forEach((skill: string) => {
-            if (currentCharacter.proficiencies.skills.includes(skill))
-              updateProficiency("skills", skill, false);
-          });
-        }
-        const oldToolName = getToolName(previousBackground.data.tool);
-        const choiceToolName = currentCharacter.meta.background_tool_choice;
-        const toolToRemove = choiceToolName || oldToolName;
-        if (toolToRemove) {
-          if (currentCharacter.proficiencies.tools.includes(toolToRemove))
-            updateProficiency("tools", toolToRemove, false);
-          removeBackgroundItem(toolToRemove, updateMeta);
-        }
-        const oldEquipment = previousBackground.data.starting_equipment;
-        if (oldEquipment) {
-          const itemsToRemove = new Set<string>();
-          if (oldEquipment.options) {
-            const normalized = normalizeStartingEquipmentOptions(
-              oldEquipment.options,
-            );
-            normalized.forEach((opt) => {
-              opt.items?.forEach((i) => {
-                itemsToRemove.add(typeof i === "string" ? i : i.name);
-              });
-            });
-          } else if (oldEquipment.items)
-            oldEquipment.items.forEach((i: string) => itemsToRemove.add(i));
-          itemsToRemove.forEach((name) =>
-            removeBackgroundItem(name, updateMeta),
-          );
-        }
+        cleanupPreviousBackgroundEffects(previousBackground);
       }
-      if (currentCharacter.meta.background_gold_granted) {
-        const currentGold = currentCharacter.meta.currency_gold || 0;
-        updateMeta({
-          currency_gold: Math.max(
-            0,
-            currentGold - currentCharacter.meta.background_gold_granted,
-          ),
-          background_ability_scores: undefined,
-          background_tool_choice: undefined,
-          background_gold_granted: undefined,
-          background_equipment_applied: undefined,
-        });
-      } else {
-        updateMeta({
-          background_ability_scores: undefined,
-          background_tool_choice: undefined,
-          background_gold_granted: undefined,
-          background_equipment_applied: undefined,
-        });
-      }
+      rollbackGoldIfNeeded();
+      clearBackgroundMeta();
+
       prevBackgroundIdRef.current = currentBackgroundId;
       backgroundEquipmentAppliedRef.current.delete(previousBackgroundId || "");
-      if (currentBackgroundId)
+      if (currentBackgroundId) {
         backgroundEquipmentAppliedRef.current.delete(currentBackgroundId);
+      }
+    };
+
+    if (previousBackgroundId && previousBackgroundId !== currentBackgroundId) {
+      onBackgroundChanged();
       return;
     }
 
@@ -964,45 +990,51 @@ export function CharacterSheet() {
       return;
 
     const backgroundData = currentBackground.data;
-    const needsAbilityScores =
-      backgroundData.ability_scores &&
-      Array.isArray(backgroundData.ability_scores) &&
-      backgroundData.ability_scores.length === 3 &&
-      !currentCharacter.meta.background_ability_scores;
-    if (needsAbilityScores) {
-      setPendingBackground(currentBackground);
-      setShowBackgroundAbilityDialog(true);
-      return;
-    }
+    const maybeOpenBackgroundDialogs = (): boolean => {
+      const needsAbilityScores =
+        backgroundData.ability_scores &&
+        Array.isArray(backgroundData.ability_scores) &&
+        backgroundData.ability_scores.length === 3 &&
+        !currentCharacter.meta.background_ability_scores;
+      if (needsAbilityScores) {
+        setPendingBackground(currentBackground);
+        setShowBackgroundAbilityDialog(true);
+        return true;
+      }
 
-    const toolData = backgroundData.tool;
-    const needsToolChoice =
-      toolData &&
-      typeof toolData === "object" &&
-      toolData.type === "choice" &&
-      !currentCharacter.meta.background_tool_choice;
-    if (needsToolChoice) {
-      setPendingBackground(currentBackground);
-      setPendingToolCategory(
-        typeof toolData.category === "string" ? toolData.category : null,
-      );
-      setShowToolChoiceDialog(true);
-      return;
-    }
+      const toolData = backgroundData.tool;
+      const needsToolChoice =
+        toolData &&
+        typeof toolData === "object" &&
+        toolData.type === "choice" &&
+        !currentCharacter.meta.background_tool_choice;
+      if (needsToolChoice) {
+        setPendingBackground(currentBackground);
+        setPendingToolCategory(
+          typeof toolData.category === "string" ? toolData.category : null,
+        );
+        setShowToolChoiceDialog(true);
+        return true;
+      }
 
-    const options = backgroundData.starting_equipment?.options;
-    const needsEquipmentChoice =
-      options &&
-      Array.isArray(options) &&
-      options.length > 0 &&
-      !currentCharacter.meta.background_equipment_applied;
-    if (needsEquipmentChoice) {
-      setPendingBackground(currentBackground);
-      const normalized = normalizeStartingEquipmentOptions(options);
-      setPendingStartingEquipment(normalized);
-      setShowStartingEquipmentDialog(true);
-      return;
-    }
+      const options = backgroundData.starting_equipment?.options;
+      const needsEquipmentChoice =
+        options &&
+        Array.isArray(options) &&
+        options.length > 0 &&
+        !currentCharacter.meta.background_equipment_applied;
+      if (needsEquipmentChoice) {
+        setPendingBackground(currentBackground);
+        const normalized = normalizeStartingEquipmentOptions(options);
+        setPendingStartingEquipment(normalized);
+        setShowStartingEquipmentDialog(true);
+        return true;
+      }
+
+      return false;
+    };
+
+    if (maybeOpenBackgroundDialogs()) return;
 
     if (backgroundData.skills && Array.isArray(backgroundData.skills)) {
       backgroundData.skills.forEach((s: string) => {

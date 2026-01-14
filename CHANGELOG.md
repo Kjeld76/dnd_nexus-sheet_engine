@@ -5,30 +5,37 @@ Alle relevanten Änderungen an D&D Nexus werden in dieser Datei dokumentiert.
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.9] - 2026-01-14
+### Changed
+- **Code-Qualität:** ESLint/TypeScript-Cleanup abgeschlossen (0 Warnings, `typecheck` + `build` wieder stabil).
+- **Refactor:** `CharacterSheet.tsx` Background-Apply/Change-Flow ent-nestet und in klar benannte Helper-Funktionen zerlegt (ohne Verhaltensänderung).
+- **Refactor:** `Compendium.tsx` Helper/Guards/Typen nach `src/components/compendium/compendiumUtils.ts` ausgelagert (bessere Lesbarkeit, weniger Deep-Nesting).
+- **Refactor:** UI-Magic-Numbers zentralisiert in `src/lib/uiConstants.ts` (z.B. Default-Speed, Virtualizer-Parameter).
+
 ## [1.7.8] - 2026-01-14
-### Behoben
+### Fixed
 - **CI/CD:** Bundle-Ziele in `tauri.conf.json` von festen Windows-Werten auf `all` geändert, damit auch auf Linux Installationspakete (.deb, .AppImage) erstellt werden.
 
 ## [1.7.7] - 2026-01-14
-### Behoben
+### Fixed
 - **CI/CD:** Erneute Korrektur der Linux-Systemabhängigkeiten für Ubuntu 24.04 (Noble).
 - **Rust Backend:** Absicherung der `open_devtools` Funktion gegen Release-Build-Abstürze.
 
 ## [1.7.3] - 2026-01-14
-### Behoben
+### Fixed
 - **Linux Build:** Fehlende System-Bibliotheken (`libglib2.0-dev`, `libsoup-3.0-dev` etc.) im GitHub Action Workflow hinzugefügt.
 - **Windows Build:** Rust-Kompilierungsfehler behoben, indem `open_devtools` nur im Debug-Modus aktiviert wird (`#[cfg(debug_assertions)]`).
 
 ## [1.7.2] - 2026-01-14
-### Behoben
+### Fixed
 - **Frontend Build:** TypeScript-Fehler in `Compendium.tsx` behoben (Typ-Konflikt bei `RefObject` für die virtualisierte Liste).
 
 ## [1.7.1] - 2026-01-14
-### Behoben
+### Fixed
 - **CI/CD:** Platzhalter-Fehler in der `release.yml` korrigiert, damit Git-Tags korrekt für die Release-Erstellung genutzt werden.
 
 ## [1.7.0] - 2026-01-14
-### Hinzugefügt
+### Added
 - **Hintergründe - Strukturierte Startausrüstung:**
   - Datenbank-Schema für `starting_equipment` optimiert (Mengenangaben, Einheiten und Varianten werden jetzt strukturiert gespeichert)
   - Unterstützung für komplexe Items wie "Pergament (10 Blätter)" oder "Öl (drei Flaschen)"
@@ -47,7 +54,7 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v
   - Rust Backend (`CharacterMeta`) erweitert, um Hintergrund-Fortschritt (Boni, Werkzeugwahl, Ausrüstung) dauerhaft zu speichern
   - "Clean-First" Prinzip beim Hintergrund-Wechsel: Komplette Bereinigung alter Daten vor Anwendung des neuen Hintergrunds zur Vermeidung von Race Conditions
 
-### Behoben
+### Fixed
 - **Hintergründe - Dialog-Sequenzierung:**
   - Dialoge für Attribute, Werkzeuge und Ausrüstung erscheinen nun zuverlässig nacheinander
   - Fehler behoben, bei dem Dialoge nach einem Hintergrund-Wechsel nicht mehr erschienen
@@ -57,13 +64,13 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v
   - Absicherung gegen Abstürze beim Löschen von nicht (mehr) vorhandenen Gegenständen oder Gold
 
 ## [1.6.0] - 2026-01-12
-### Hinzugefügt
+### Added
 - **Navigationsmenü im Charakterblatt:** Tab-Navigation für Kampf, Zauber, Inventar und Notizen
   - Visuelle Tab-Buttons mit Icons (Shield, Wand2, Backpack, Book)
   - Aktiver Tab wird hervorgehoben
   - Einfaches Wechseln zwischen den verschiedenen Bereichen des Charakterbogens
 
-### Behoben
+### Fixed
 - **Equipment-Datenanzeige:** Korrekte Behandlung von NULL-Werten in Equipment-Daten
   - Option<f64> für total_cost_gp und total_weight_kg
   - Option<String> für items, tools und data Felder
@@ -74,14 +81,14 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v
   - Verbesserte Pfadauflösung für Datenbank-Datei
   - Alle Compendium-Daten (Spells, Items, Equipment, etc.) sind jetzt vollständig sichtbar
 
-### Geändert
+### Changed
 - **Datenbank-Architektur:** Übergang von zwei Datenbanken (Projekt-DB + App-DB) zu einer einzigen Datenbank
   - Alle Daten (Regelwerks-Daten UND Charaktere) werden in dnd-nexus.db gespeichert
   - Verhindert Datenverlust bei Charakteren
   - Einfacheres Backup und Datenmanagement
 
 ## [1.4.3] - 2026-01-07
-### Hinzugefügt
+### Added
 - **Hintergründe (Backgrounds):** Vollständige Integration von Hintergründen aus PHB 2024
   - Hintergrund-Auswahl im Charakterbogen
   - Automatische Anwendung von Attributswerten (+2/+1 oder alle +1)
@@ -93,24 +100,24 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v
   - Hintergründe im Kompendium mit verlinkbaren Skills, Tools und Feats
 
 ## [1.4.3] - 2026-01-07
-### Hinzugefügt
+### Added
 - **CI/CD Pipeline:** Automatisierte Builds und Releases via GitHub Actions.
 - **Wartungs-Script:** Neuer Befehl `pnpm maintenance` zum Aufräumen, Testen und Releasen.
 - **Code-Qualität:** Husky & lint-staged integriert für automatische Prüfungen vor jedem Commit.
 - **Konfiguration:** `vitest.config.ts`, `vite.config.ts` und `.eslintrc.cjs` für stabile Test- und Linting-Umgebungen hinzugefügt.
 
-### Behoben
+### Fixed
 - Unbenutzte Variablen und fehlerhafte Imports in Frontend-Komponenten entfernt.
 - Typ-Prüfungsfehler (Typecheck) behoben, die den GitHub-Build blockiert haben.
 
 ## [1.4.0] - 2026-01-07
-### Hinzugefügt
+### Added
 - Kompendium-Editor für Homebrew-Inhalte.
 - JSON-Modus für fortgeschrittene Datenbearbeitung.
 - Erste Version des automatisierten Release-Scripts.
 
 ## [1.3.1] - 2026-01-07
-### Hinzugefügt
+### Added
 - Support für PHB 2024 Regelwerk.
 - SQLite Integration für Core-Daten.
 

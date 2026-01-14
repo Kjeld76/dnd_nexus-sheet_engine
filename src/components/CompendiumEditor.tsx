@@ -24,13 +24,22 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-type EditorType = "spells" | "weapons" | "armor" | "gear" | "tool" | "tools";
+type EditorType =
+  | "spells"
+  | "species"
+  | "classes"
+  | "weapons"
+  | "armor"
+  | "tools"
+  | "gear"
+  | "feats"
+  | "skills"
+  | "backgrounds"
+  | "items"
+  | "equipment"
+  | "tool";
 
-type EditorInitialData = Record<string, unknown> & {
-  id?: string;
-  parent_id?: string;
-  source?: string;
-};
+type EditorInitialData = unknown;
 
 type EditorFormData = Record<string, unknown> & {
   name?: string;
@@ -65,9 +74,22 @@ export function CompendiumEditor({
   onClose,
   onSave,
 }: Props) {
+  const isRecord = (v: unknown): v is Record<string, unknown> =>
+    typeof v === "object" && v !== null;
+
+  const initialObj = isRecord(initialData) ? initialData : undefined;
+  const initialId =
+    typeof initialObj?.id === "string" ? initialObj.id : undefined;
+  const initialSource =
+    typeof initialObj?.source === "string" ? initialObj.source : undefined;
+  const initialParentId =
+    typeof initialObj?.parent_id === "string"
+      ? initialObj.parent_id
+      : undefined;
+
   const [viewMode, setViewMode] = useState<"form" | "json">("form");
   const [formData, setFormData] = useState<EditorFormData>(() => ({
-    ...(initialData || {}),
+    ...(initialObj || {}),
     ...(initialData
       ? {}
       : {
@@ -108,11 +130,8 @@ export function CompendiumEditor({
 
       const finalData = {
         ...dataToSave,
-        parent_id:
-          initialData?.source === "core"
-            ? initialData.id
-            : initialData?.parent_id,
-        id: initialData?.source !== "core" ? initialData?.id : undefined,
+        parent_id: initialSource === "core" ? initialId : initialParentId,
+        id: initialSource !== "core" ? initialId : undefined,
       };
 
       if (type === "spells") {
@@ -140,11 +159,11 @@ export function CompendiumEditor({
   };
 
   const handleDelete = async () => {
-    if (!initialData?.id || initialData.source === "core") return;
+    if (!initialId || initialSource === "core") return;
     if (!confirm("Eintrag wirklich löschen?")) return;
     try {
       const tableType = type.endsWith("s") ? type.slice(0, -1) : type;
-      await homebrewApi.deleteEntry(initialData.id, tableType);
+      await homebrewApi.deleteEntry(initialId, tableType);
       onSave();
     } catch (error) {
       console.error("Failed to delete:", error);
@@ -459,7 +478,7 @@ export function CompendiumEditor({
 
         {/* Footer */}
         <div className="p-10 border-t border-border flex justify-between gap-6 bg-muted/20">
-          {initialData?.source !== "core" && initialData?.id && (
+          {initialSource !== "core" && initialId && (
             <button
               onClick={handleDelete}
               className="flex items-center gap-3 px-8 py-4 text-red-500 hover:bg-red-500 hover:text-white rounded-[1.5rem] transition-all font-black uppercase text-xs tracking-[0.2em] border border-red-500/20 shadow-xl shadow-red-500/5"

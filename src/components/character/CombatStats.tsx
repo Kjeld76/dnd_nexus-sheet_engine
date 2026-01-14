@@ -4,6 +4,7 @@ import { Shield, Zap, Wind, Heart, Sparkles, Sword } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { formatModifier } from "../../lib/math";
 import { calculateDerivedStats } from "../../lib/characterLogic";
+import { DEFAULT_SPEED_M } from "../../lib/uiConstants";
 
 interface Props {
   character: Character;
@@ -25,7 +26,7 @@ export const CombatStats: React.FC<Props> = ({
   );
 
   // Speed comes from species, not class (PHB 2024)
-  const speed = characterSpecies?.data?.speed || 9; // default 9m (30ft)
+  const speed = characterSpecies?.data?.speed || DEFAULT_SPEED_M;
 
   return (
     <div className="flex flex-col gap-3">
