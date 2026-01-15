@@ -23,7 +23,11 @@ pub fn init_database(app: &AppHandle) -> Result<Database, String> {
     // 2. Datenbank aus Ressourcen kopieren, falls sie nicht existiert
     if !db_path.exists() {
         println!("Datenbank nicht gefunden. Kopiere Vorlage aus Ressourcen...");
-        let resource_path = app.path().resolve_resource("dnd-nexus.db").map_err(|e| e.to_string())?;
+        let resource_path = app
+            .path()
+            .resource_dir()
+            .map_err(|e| e.to_string())?
+            .join("dnd-nexus.db");
         
         if resource_path.exists() {
             fs::copy(&resource_path, &db_path).map_err(|e| format!("Konnte Datenbank-Vorlage nicht kopieren: {}", e))?;
@@ -43,8 +47,12 @@ pub fn init_database(app: &AppHandle) -> Result<Database, String> {
     
     // 4. Wenn die Datenbank ganz neu ist, müssen wir die PHB-Daten importieren
     // Wir prüfen einfach, ob die core_spells Tabelle Daten enthält
-    let mut stmt = conn.prepare("SELECT COUNT(*) FROM core_spells").map_err(|e| e.to_string())?;
-    let count: i32 = stmt.query_row([], |row| row.get(0)).unwrap_or(0);
+    let count: i32 = {
+        let mut stmt = conn
+            .prepare("SELECT COUNT(*) FROM core_spells")
+            .map_err(|e| e.to_string())?;
+        stmt.query_row([], |row| row.get(0)).unwrap_or(0)
+    };
     
     if count == 0 {
         println!("Initialisiere leere Datenbank mit PHB-Daten...");

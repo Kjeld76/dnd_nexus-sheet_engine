@@ -1,6 +1,6 @@
 {
   "name": "dnd-nexus",
-  "version": "1.7.10",
+  "version": "1.7.11",
   "description": "D&D 5e 2024 Character Sheet Manager",
   "type": "module",
   "scripts": {
@@ -30,6 +30,8 @@
     "migrate:backgrounds": "tsx scripts/migrate-backgrounds.ts",
     "validate:backgrounds": "tsx scripts/validate-backgrounds.ts",
     "prepare": "husky"
+    ,
+    "extract:magic-items": "tsx scripts/extract-magic-items.ts"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [

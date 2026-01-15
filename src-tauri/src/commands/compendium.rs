@@ -4,7 +4,7 @@ use crate::error::{AppResult, map_lock_error};
 use crate::types::spell::Spell;
 use crate::types::compendium::{Species, Class, Gear, Tool, Feat, Armor, ArmorProperty, Skill, Background, Item, Equipment};
 use crate::types::weapons::{Weapon, WeaponProperty, WeaponMastery};
-use serde_json::from_str;
+use serde_json::{from_str, json, Value};
 use rusqlite::params;
 
 /// Retrieves all spells from the database with optional pagination.
@@ -569,34 +569,93 @@ pub async fn get_all_equipment(db: State<'_, Database>) -> Result<Vec<Equipment>
     println!("[get_all_equipment] Starting fetch");
     let result: AppResult<Vec<Equipment>> = (|| {
         let conn = map_lock_error(db.0.lock())?;
+        
+        // 1. Basis-Equipment aus View laden (ohne items/tools Spalten)
         let mut stmt = conn.prepare(
-            "SELECT id, name, description, total_cost_gp, total_weight_kg, items, tools, data, source FROM all_equipment ORDER BY name",
+            "SELECT id, name, description, total_cost_gp, total_weight_kg, data, source 
+             FROM all_equipment ORDER BY name",
         )?;
 
-        let iter = stmt.query_map([], |row: &rusqlite::Row| {
-            let total_cost_gp: Option<f64> = row.get(3)?;
-            let total_weight_kg: Option<f64> = row.get(4)?;
-            let items_str: Option<String> = row.get(5)?;
-            let tools_str: Option<String> = row.get(6)?;
-            let data_str: Option<String> = row.get(7)?;
-            Ok(Equipment {
-                id: row.get(0)?,
-                name: row.get(1)?,
-                description: row.get(2)?,
-                total_cost_gp,
-                total_weight_kg,
-                items: from_str(items_str.as_deref().unwrap_or("[]")).unwrap_or_default(),
-                tools: from_str(tools_str.as_deref().unwrap_or("[]")).unwrap_or_default(),
-                data: from_str(data_str.as_deref().unwrap_or("{}")).unwrap_or_default(),
-                source: row.get(8)?,
-            })
+        let equipment_iter = stmt.query_map([], |row: &rusqlite::Row| {
+            let data_str: Option<String> = row.get(5)?;
+            Ok((
+                row.get::<_, String>(0)?,  // id
+                row.get::<_, String>(1)?,  // name
+                row.get::<_, String>(2)?,  // description
+                row.get::<_, Option<f64>>(3)?,  // total_cost_gp
+                row.get::<_, Option<f64>>(4)?,  // total_weight_kg
+                from_str(data_str.as_deref().unwrap_or("{}")).unwrap_or_default(), // data
+                row.get::<_, String>(6)?,  // source
+            ))
         })?;
 
-        let mut results = Vec::new();
-        for item in iter {
-            results.push(item?);
+        let mut equipment_list = Vec::new();
+        for eq_row in equipment_iter {
+            let (id, name, description, total_cost_gp, total_weight_kg, data, source) = eq_row?;
+            
+            // 2. Items via JOIN aus normalisierten Tabellen laden
+            let mut items_stmt = conn.prepare(
+                "SELECT item_id, quantity 
+                 FROM core_equipment_items 
+                 WHERE equipment_id = ?
+                 UNION ALL
+                 SELECT item_id, quantity 
+                 FROM custom_equipment_items 
+                 WHERE equipment_id = ?"
+            )?;
+            
+            let items_iter = items_stmt.query_map([&id, &id], |row: &rusqlite::Row| {
+                Ok(json!({
+                    "item_id": row.get::<_, String>(0)?,
+                    "quantity": row.get::<_, i32>(1)?
+                }))
+            })?;
+            
+            let mut items_vec = Vec::new();
+            for item in items_iter {
+                items_vec.push(item?);
+            }
+            let items = Value::Array(items_vec);
+            
+            // 3. Tools via JOIN aus normalisierten Tabellen laden
+            let mut tools_stmt = conn.prepare(
+                "SELECT tool_id, quantity, source_table 
+                 FROM core_equipment_tools 
+                 WHERE equipment_id = ?
+                 UNION ALL
+                 SELECT tool_id, quantity, source_table 
+                 FROM custom_equipment_tools 
+                 WHERE equipment_id = ?"
+            )?;
+            
+            let tools_iter = tools_stmt.query_map([&id, &id], |row: &rusqlite::Row| {
+                Ok(json!({
+                    "tool_id": row.get::<_, String>(0)?,
+                    "quantity": row.get::<_, i32>(1)?,
+                    "source_table": row.get::<_, String>(2)?
+                }))
+            })?;
+            
+            let mut tools_vec = Vec::new();
+            for tool in tools_iter {
+                tools_vec.push(tool?);
+            }
+            let tools = Value::Array(tools_vec);
+            
+            equipment_list.push(Equipment {
+                id,
+                name,
+                description,
+                total_cost_gp,
+                total_weight_kg,
+                items,
+                tools,
+                data,
+                source,
+            });
         }
-        Ok(results)
+        
+        Ok(equipment_list)
     })();
 
     match result {

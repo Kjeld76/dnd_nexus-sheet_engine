@@ -5,6 +5,28 @@ Alle relevanten Änderungen an D&D Nexus werden in dieser Datei dokumentiert.
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.10] - 2026-01-15
+### Added
+- **Datenbank-Normalisierung:** Vollständige Analyse und Optimierung der Datenbankstruktur (1NF, 2NF, 3NF)
+  - Normalisierung von `core_equipment` (JSON-Arrays → relationale Tabellen)
+  - Neue Tabellen: `core_equipment_items`, `core_equipment_tools` für strukturierte Daten
+  - Views für einheitliche Abfragen: `all_equipment_items`, `all_equipment_tools`
+- **Magische Gegenstände - Custom-Varianten:**
+  - Custom-Tabellen für Homebrew magische Items erstellt (`custom_mag_items_base`, `custom_mag_weapons`, `custom_mag_armor`, etc.)
+  - Views für vereinheitlichte Abfragen: `all_mag_items_base`, `all_mag_weapons`, `all_mag_armor`, etc.
+  - Konsistente Struktur zwischen normalen und magischen Items (analog zu `custom_weapons`/`custom_armors`)
+- **Magische Gegenstände - Import:**
+  - Vollständiger Import von 240 magischen Gegenständen aus dem Spielleiterhandbuch (2024)
+  - Normalisierte Tabellenstruktur: `core_mag_items_base` + kategorie-spezifische Tabellen
+  - Tool-Matching für Crafting-Anforderungen (Verknüpfung mit `core_tools`/`custom_tools`)
+  - Unterstützung für alle Kategorien: Waffen, Rüstungen, Consumables, Focus Items, Jewelry, Wondrous Items
+
+### Changed
+- **Datenbank-Architektur:** Konsistente Struktur zwischen normalen und magischen Items
+  - Normale Items: monolithische Tabellen (wie bisher)
+  - Magische Items: normalisierte Struktur (Basis-Tabelle + Kategorie-Tabellen)
+  - Beide unterstützen jetzt Custom-Varianten für Homebrew-Inhalte
+
 ## [1.7.9] - 2026-01-14
 ### Changed
 - **Code-Qualität:** ESLint/TypeScript-Cleanup abgeschlossen (0 Warnings, `typecheck` + `build` wieder stabil).

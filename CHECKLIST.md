@@ -16,6 +16,12 @@
   - Schadensbonus = Attributsmodifikator + Waffenmodifikatoren
   - Waffeneigenschaften berücksichtigen (z.B. Finesse, Two-Handed)
 
+### **P1 — Datenmigration (Compendium)**
+- [x] **Magische Gegenstände (Spielleiterhandbuch):** „Magische Gegenstände" aus dem Spielleiterhandbuch in die Datenbank migrieren
+  - Import/Mapping (Kategorien, Seltenheit, Attunement, Effekte)
+  - Anzeige im Kompendium + Verknüpfung im Inventar (wie Items/Equipment)
+  - ✅ 240 magische Gegenstände importiert, normalisierte Tabellenstruktur, Custom-Varianten erstellt
+
 ### **P2 — Refactor & Wartbarkeit (Frontend)**
 - [ ] **CharacterSheet weiter entschlacken:** Helper aus `src/screens/CharacterSheet.tsx` nach `src/lib/character/*` auslagern
   - z.B. Background-Apply/Equipment-Normalisierung/Inventory-Helpers als eigene Module
@@ -84,6 +90,10 @@
   - Automatische Rüstungsklasse-Berechnung: AC-Berechnung basierend auf ausgerüsteter Rüstung
   - Rüstung ausrüsten/ablegen: Toggle für is_equipped Status
   - Waffe ausrüsten/ablegen: Toggle für is_equipped Status
+- [x] **Datenbank-Normalisierung:**
+  - Normalisierung von `core_equipment` (JSON-Arrays → relationale Tabellen)
+  - Custom-Varianten für magische Items erstellt (konsistente Struktur)
+  - Views für einheitliche Abfragen implementiert
 - [x] **Combat-Seite - HP-Management:**
   - HP-Anzeige erweitern: Aktuelle HP, Maximale HP, Temporäre HP
   - Hit Dice Anzeige: Verwendet/Verfügbar

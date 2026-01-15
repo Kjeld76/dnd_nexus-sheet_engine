@@ -1,0 +1,3719 @@
+[
+  {
+    "name": "ADAMANTRÜSTUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 228,
+      "end_page_physical": 228
+    }
+  },
+  {
+    "name": "AMETHYST-STIRNBAND DER INTELLIGENZ"
+  },
+  {
+    "name": "AMETHYST-PLATTENPANZER (+3)"
+  },
+  {
+    "name": "MITHRAL-PLATTENPANZER (+3)"
+  },
+  {
+    "name": "ADAMANTWAFFE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 228,
+      "end_page_physical": 228
+    }
+  },
+  {
+    "name": "ALCHEMIEKRUG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 228,
+      "end_page_physical": 229
+    }
+  },
+  {
+    "name": "AMULETT DER EBENEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 229,
+      "end_page_physical": 229
+    }
+  },
+  {
+    "name": "AMULETT DER GESUNDHEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 229,
+      "end_page_physical": 230
+    }
+  },
+  {
+    "name": "AMULETT DER WARNUNG"
+  },
+  {
+    "name": "AMULETT DES SCHUTZES GEGEN ORTUNG UND AUSSPÄHUNG"
+  },
+  {
+    "name": "ANHÄNGER DER GESUNDHEIT"
+  },
+  {
+    "name": "ANHÄNGER DES GIFTSCHUTZES",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 229,
+      "end_page_physical": 230
+    }
+  },
+  {
+    "name": "ANHÄNGER DER WUNDHEILUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 230,
+      "end_page_physical": 231
+    }
+  },
+  {
+    "name": "APPARAT VON KWALISH",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 230,
+      "end_page_physical": 231
+    }
+  },
+  {
+    "name": "ARMSCHIENEN DES BOGENSCHÜTZEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 231,
+      "end_page_physical": 233
+    }
+  },
+  {
+    "name": "ARMSCHIENEN DER VERTEIDIGUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 231,
+      "end_page_physical": 233
+    }
+  },
+  {
+    "name": "AUGE VON VECNA"
+  },
+  {
+    "name": "AUGEN DER BEZAUBERUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 233,
+      "end_page_physical": 233
+    }
+  },
+  {
+    "name": "AUGEN DES ADLERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 233,
+      "end_page_physical": 233
+    }
+  },
+  {
+    "name": "AUGEN DES PRÄZISEN SEHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 233,
+      "end_page_physical": 233
+    }
+  },
+  {
+    "name": "AXT DER ZWERGENFÜRSTEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 233,
+      "end_page_physical": 234
+    }
+  },
+  {
+    "name": "AXT DES HENKERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 233,
+      "end_page_physical": 235
+    }
+  },
+  {
+    "name": "BABA YAGAS TANZENDER BESEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 234,
+      "end_page_physical": 235
+    }
+  },
+  {
+    "name": "BANDAGEN DER WAFFENLOSEN KRAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 235,
+      "end_page_physical": 235
+    }
+  },
+  {
+    "name": "BARDENINSTRUMENT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 235,
+      "end_page_physical": 235
+    }
+  },
+  {
+    "name": "BELEBTER SCHILD",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 236,
+      "end_page_physical": 236
+    }
+  },
+  {
+    "name": "BERSERKERAXT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 236,
+      "end_page_physical": 236
+    }
+  },
+  {
+    "name": "BOHNENBEUTEL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 236,
+      "end_page_physical": 237
+    }
+  },
+  {
+    "name": "BÖSARTIGE WAFFE"
+  },
+  {
+    "name": "BROSCHE DES ABSCHIRMENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 237,
+      "end_page_physical": 237
+    }
+  },
+  {
+    "name": "BRUNNEN DER VIELEN WELTEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 237,
+      "end_page_physical": 239
+    }
+  },
+  {
+    "name": "BUCH DER BÖSEN DUNKELHEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 238,
+      "end_page_physical": 241
+    }
+  },
+  {
+    "name": "BUCH DER ÜBERSCHWÄNGLICHEN TATEN"
+  },
+  {
+    "name": "DAERNS FLOTTE FESTUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 239,
+      "end_page_physical": 240
+    }
+  },
+  {
+    "name": "DÄMONENRÜSTUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "DÄMONOMIKON VON IGGWILV"
+  },
+  {
+    "name": "DIADEM DES VERSENGENS"
+  },
+  {
+    "name": "DIEB DER NEUN LEBEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 245,
+      "end_page_physical": 246
+    },
+    "magic": {
+      "category": "Waffe",
+      "rarity": "sehr selten",
+      "requires_attunement": true,
+      "attunement": {
+        "required": true,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) Du erhältst einen Bonus von +1 auf Angriffsund Schadenswürfe mit dieser magischen Waffe, die keine Bogensehne aufweist. Wann immer du den Arm zurückziehst, als würdest du den Bogen spannen, erscheint ein schussbereit angelegter Pfeil aus goldener Energie. Ein Pfeil dieser Waffe bewirkt bei einem Treffer Energiestatt Stichschaden. Wenn er sein Ziel getroffen oder verfehlt hat, verschwindet er. Ehe der Pfeil verschwindet, spendet er in einem Radius von sechs Metern helles Licht und in einem Radius von weiteren sechs Metern dämmriges Licht. Diese Waffe hat folgende zusätzliche Eigenschaften: Energieleiter: Als magische Aktion kannst du mit dieser Waffe eine Serie von Energiepfeilen auf eine Wand im Abstand von bis zu 18 Metern von dir schießen. Die Pfeile werden zu leuchtenden Sprossen,"
+        },
+        {
+          "type": "table",
+          "raw": "die eine bis zu 18 Meter",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "lange magische Leiter an der Wand bilden. Die Leiter bleibt eine Minute lang bestehen und verschwindet dann. ELEMENTARE EDELSTEINE. Pfeil des Festsetzens: Wann immer du mit dieser Waffe einen Fernkampfangriff gegen eine Kreatur ausführst, kannst du versuchen, das Ziel festzusetzen, statt ihm Schaden zuzufügen . Wenn der Pfeil trifft, muss das Ziel einen SG-15-Stärkerettungswurf bestehen, oder es ist eine Minute lang festgesetzt. Als Aktion kann eine vom Pfeil festgesetzte Kreatur einen SG-20-Stärkewurf (Athletik) ausführen, um sich zu befreien . Bei einem Erfolg endet der Effekt bei ihr. Pfeil des Transports: Als magische Aktion kannst du einen Energiepfeil von dieser Waffe auf ein Ziel im Abstand von bis zu 18 Metern von dir schießen, das du sehen kannst. Das Ziel kann entweder eine bereitwillige Kreatur von höchstens mittelgroßer Größe oder ein Gegenstand sein , der nicht getragen oder gehalten wird, sofern er klein genug ist, um in einen Würfel von 1,5 Metern"
+        }
+      ],
+      "raw": {
+        "title": "DIEB DER NEUN LEBEN",
+        "meta_line": "folgenden Zustände bei dir: Blind, Gelähmt, Taub und Vergiftet. In der klaren roten Flüssigkeit wirbeln kleine Lichtbläschen. ENERGIEBOGEN Waffe (Kurzoder Langbogen), sehr selten (erfordert Einstimmung)",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "DIMENSIONSFESSELN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "DOLCH DES GIFTS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 329,
+      "end_page_physical": 329
+    }
+  },
+  {
+    "name": "DONNERNDER ZWEIHANDKNÜPPEL"
+  },
+  {
+    "name": "DRACHENSCHUPPENPANZER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 242,
+      "end_page_physical": 243
+    }
+  },
+  {
+    "name": "DRACHENTÖTER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 243,
+      "end_page_physical": 243
+    }
+  },
+  {
+    "name": "DREIZACK DER FISCHHERRSCHAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 243,
+      "end_page_physical": 243
+    }
+  },
+  {
+    "name": "DUNKELSCHERBENAMULETT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 241,
+      "end_page_physical": 241
+    },
+    "magic": {
+      "category": "Stab",
+      "rarity": "sehr selten",
+      "requires_attunement": true,
+      "attunement": {
+        "required": true,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) Du erhältst einen Bonus von +2 auf Angriffsund Schadenswürfe mit dieser magischen Waffe. Lebensentzug: Die Waffe hat 1W8+1 Ladungen. Wenn du mit ihr eine Kreatur angreifst, die weniger als 100 Trefferpunkte hat, und beim Angriffswurf eine 20 würfelst, muss die Kreatur einen SG-15-Konstitutionsrettungswurf bestehen, oder sie stirbt sofort, da das Schwert ihr die Lebenskraft entreißt. Konstrukte und Untote bestehen den Rettungswurf automatisch. Wenn die Kreatur getötet"
+        }
+      ],
+      "raw": {
+        "title": "DUNKELSCHERBENAMULETT",
+        "meta_line": "diesen Zauber erst ab dem nächsten Morgengrauen erneut mit dem Diadem wirken. DIEB DER NEUN LEBEN Waffe (beliebige einfache Waffe oder Kriegswaffe), sehr selten (erfordert Einstimmung)",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "EDELSTEIN DER HELLIGKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 243,
+      "end_page_physical": 243
+    }
+  },
+  {
+    "name": "EDELSTEIN DES SEHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 243,
+      "end_page_physical": 244
+    }
+  },
+  {
+    "name": "EISENBÄNDER VON BILARRO",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 244,
+      "end_page_physical": 244
+    }
+  },
+  {
+    "name": "EISERNE FLASCHE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 244,
+      "end_page_physical": 244
+    }
+  },
+  {
+    "name": "ELEMENTARER EDELSTEIN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 245,
+      "end_page_physical": 245
+    }
+  },
+  {
+    "name": "ELFENRÜSTUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 329,
+      "end_page_physical": 329
+    }
+  },
+  {
+    "name": "ELIXIER DER GESUNDHEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 245,
+      "end_page_physical": 245
+    }
+  },
+  {
+    "name": "ENERGIEBOGEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 245,
+      "end_page_physical": 246
+    }
+  },
+  {
+    "name": "ERSATZAUGE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 246,
+      "end_page_physical": 246
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "legendär",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Diese zähflüssige weiße Substanz kann zwei Gegenstände dauerhaft miteinander verkleben . Sie muss in einem Behälter aufbewahrt werden, der innen mit Öl der Glätte bestrichen wurde. Wenn ein Behälter mit Ewigem Leim gefunden wird, enthält er (1W6+1) x 30 Milliliter Leim. 30 Milliliter Leim reichen aus , um ein Quadrat mit 0,3 Metern Kantenlänge zu bedecken. Es erfordert eine Verwenden-Aktion, 30 Milliliter Ewigen Leim anzuwenden. Der Leim bindet nach einer Minute ab. Danach"
+        }
+      ],
+      "raw": {
+        "title": "ERSATZAUGE",
+        "meta_line": "oder entfernen. Es kann nicht gegen deinen Willen entfernt werden, solange du lebendig bist. EWIGER LEIM Wundersamer Gegenstand, legendär Diese zähflüssige weiße",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "EWIGER LEIM",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 246,
+      "end_page_physical": 246
+    }
+  },
+  {
+    "name": "FALTBOOT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 246,
+      "end_page_physical": 246
+    }
+  },
+  {
+    "name": "FESSELSEIL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 246,
+      "end_page_physical": 246
+    }
+  },
+  {
+    "name": "FEUERSCHALE DER FEUERELEMENTAR-HERRSCHAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 247,
+      "end_page_physical": 249
+    }
+  },
+  {
+    "name": "FIGUR DER WUNDERSAMEN KRAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 247,
+      "end_page_physical": 248
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Wenn du dich im Abstand von bis zu 1,5 Metern von dieser Feuerschale befindest, kannst du eine magische Aktion ausführen, um einen Feuerelementar herbeizurufen. Der Elementar erscheint in einem freien Bereich so nahe wie möglich bei der Feuerschale. Er versteht deine Sprachen, gehorcht deinen Befehlen und ist bei deinem Initiativewert unmittelbar"
+        },
+        {
+          "type": "table",
+          "raw": "nach dir am Zug. Der Elementar",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "verschwindet, wenn eine Stunde vergangen"
+        },
+        {
+          "type": "table",
+          "raw": "ist, er stirbt oder du ihn als",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Bonusaktion verwirfst. Wurde die Feuerschale verwendet,"
+        },
+        {
+          "type": "table",
+          "raw": "so kann sie erst ab dem nächsten",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Morgengrauen erneut auf diese Weise verwendet werden. FIGUR DER WUNDERSA M EN KRA F T Wundersamer Gegenstand, Seltenheit variiert Eine Figur der wundersamen Kraft ist eine Statuette, die klein genug ist, um in eine Tasche zu passen. Wenn du eine magische Aktion ausführst,"
+        },
+        {
+          "type": "table",
+          "raw": "um die Figur auf einen Punkt",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "auf dem Boden im Abstand von bis zu 18 Metern von dir zu werfen, wird die Figur zu einer lebendigen Kreatur, wie in der jeweiligen Beschreibung unten angegeben. Wenn der Bereich, an der die Kreatur erscheinen würde, von anderen Kreaturen oder Gegenständen besetzt ist oder nicht genügend Platz für die Kreatur bietet, wird die Figur nicht zu einer Kreatur. Die Kreatur ist dir und deinen Verbündeten gegenüber freundlich gesinnt. Sie versteht deine Sprachen, gehorcht deinen Befehlen und ist bei deinem Initiativewert unmittelbar nach dir am Zug. Wenn du keine Befehle erteilst, verteidigt die Kreatur sich, führt aber keine anderen Aktionen aus. KAPITEL 7 1 SCHÄTZE FIGUR DER WUNDERSAMEN KRAFT (ÜNYX·i1UND). FIGUREN DER Die Kreatur existiert für eine für jede Figur spezifische Wirkungsdauer. Am Ende der jeweiligen Dauer wird die Kreatur wieder zur Figur. Sie wird vorzeitig wieder zur Figur, wenn die Trefferpunkte der Kreaturenform auf O sinken oder du eine magische Aktion ausführst, während du die Kreatur berührst, damit sie wieder zur Figur wird. Wenn die Kreatur wieder zur Figur geworden ist, kann diese Eigenschaft erst nach der jeweils angegebenen Dauer erneut verwendet werden. Bronze-Greif (selten): Dies ist die Bronzestatue eines wilden Greifs."
+        },
+        {
+          "type": "table",
+          "raw": "Sie kann bis zu sechs Stunden",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "lang zu einem Greif werden. Nachdem sie verwendet wurde, kann sie erst nach fünf Tagen erneut verwendet werden. Ebenholz-Fliege (selten): Diese Statuette aus Ebenholz ist wie eine Stechfliege geschnitzt. Sie kann bis zu zwölf Stunden lang zu einer Riesenfliege (siehe begleitender Wertekasten) werden und als Reittier dienen. Wenn sie verwendet wurde, kann sie erst nach zwei Tagen erneut verwendet werden. Elfenbein-Ziegen (selten): Diese Ziegenstatuetten aus Elfenbein werden immer zu dritt erschaffen. Jede Ziege sieht einzigartig aus und hat spezielle Eigenschaften. Die Eigenschaften sind: RIESENFLIEGE Großes Tier, gesinnungslos RK 11 Initiative +l (11) TP 19 (3Wl0+3) Bewegungsrate 9 m, Fliegen 18 m MOD RW MOD RW MOD RW STÄ 14 +2 +2"
+        },
+        {
+          "type": "table",
+          "raw": "GEs 13 +1 +l KoN 13 +1 +1\nINT 2 - 4 -4 WEI 10 +0 +0 CHA 3 - 4 -4",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Sinne Dunkelsicht 18 m, Passive Wahrnehmung 10 Sprachen"
+        },
+        {
+          "type": "table",
+          "raw": "HG 0 (EP 0, ÜB +2)",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "FIGUREN DER WUNDERSAMEN KRAFT (ELFENBEIN ·ZIEGEN). Ziege der Mühsal: Diese Figur kann bis zu drei Stunden lang zu einer Riesenziege werden. Wenn sie verwendet wurde, kann sie erst nach 30 Tagen erneut verwendet werden. Ziege des Reisens: Diese Figur kann zu einer großen Ziege mit den Spielwerten eines Reitpferds werden. Sie hat 24 Ladungen, und für jede angebrochene Stunde in Ziegengestalt wird eine Ladung verbraucht. Solange die Figur Ladungen hat, kannst du sie beliebig oft verwenden. Sind ihre Ladungen verbraucht, so wird sie wieder zur Figur und kann erst nach sieben Tagen erneut verwendet werden. Sie erhält dann alle Ladungen zurück. Ziege des Schreckens: Diese Figur kann bis zu drei Stunden lang zu einer Riesenziege werden. Die Ziege kann nicht angreifen, aber du kannst ihre Hörner abnehmen (ohne ihr zu schaden) und als Waffen verwenden. Ein Horn wird"
+        },
+        {
+          "type": "table",
+          "raw": "zu einer Lanze +1, das andere",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "zu einem Langschwert +2. Es erfordert eine magische Aktion, ein Horn abzunehmen. Die Waffen verschwinden und werden wieder zu Hörnern, wenn die Ziege wieder zu einer Figur wird. Wenn du auf der Ziege reitest, muss jede feindlich gesinnte Kreatur, die ihren Zug innerhalb einer Ausströmung von neun Metern beginnt, die von der Ziege ausgeht, einen SG-15-Weisheitsrettungswurfbestehen, oder sie ist verängstigt, bis eine Minute vergangen ist, du nicht mehr auf der Ziege reitest oder diese wieder zur Figur wird. Die verängstigte Kreatur wiederholt den Rettungswurf am Ende jedes ihrer Züge. Bei einem Erfolg endet der Effekt bei ihr. Bei einem Erfolg ist die Kreatur in den nächsten 24 Stunden gegen diesen Effekt immun. Wenn die Figur verwendet wurde, kann sie erst nach 15 Tagen erneut verwendet werden. Goldene Löwen (selten): Diese Goldstatuetten zweier Löwen werden immer als Paar erschaffen. Du kannst die Figuren einzeln oder gemeinsam verwenden. Jede kann für bis zu eine Stunde zu einem Löwen werden. Wenn ein Löwe verwendet wurde, kann er erst nach sieben Tagen erneut verwendet werden. FEUERSCHALE DER FEUERELEMENTAR· /iERRSCHAFT. WUNDERSAMEN KRAFT (SERPENTIN-EULE). Marmor-Elefant (selten): Diese Marmorstatuette sieht wie ein trompetender Elefant"
+        },
+        {
+          "type": "table",
+          "raw": "aus. Sie kann bis zu 24 Stunden",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "lang zu einem Elefanten werden. Wenn sie verwendet wurde, kann sie erst nach sieben Tagen erneut verwendet werden. Obsidian-Pferd (sehr selten): Dieses polierte"
+        },
+        {
+          "type": "table",
+          "raw": "ObsidianPferd kann bis zu 24 Stunden",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "lang zu einem Nachtmahr werden. Der Nachtmahr kämpft nur, um sich zu verteidigen. Nachdem sie verwendet wurde, kann sie erst nach fünf Tagen erneut verwendet werden. Wann immer du die Figur verwendest, besteht ein Risiko von zehn Prozent, dass der Nachtmahr deine Befehle ignoriert - auch den Befehl, wieder zur Figur zu werden. Wenn du auf den Nachtmahr aufsitzt, während er deine Befehle ignoriert, werdet du und der Nachtmahr sofort an einen zufälligen Ort auf der Ebene Hades transportiert, wo der Nachtmahr sich wieder in eine Figur verwandelt. Onyx-Hund (selten): Diese Onyx-Statuette kann bis zu sechs Stunden lang zu einer Dogge werden. Die Dogge hat einen Intelligenzwert"
+        },
+        {
+          "type": "table",
+          "raw": "von 8 und kann die Gemeinsprache",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "sprechen. Sie hat außerdem Blindsicht mit einer Reichweite von 18 Metern. Wenn sie verwendet wurde, kann sie erst nach sieben Tagen erneut verwendet werden. Serpentin-Eule (selten): Diese Serpentin-Statuette einer Eule kann bis zu acht Stunden lang zu einer Rieseneule werden. Solange du dich auf derselben Existenzebene wie die Eule befindest, kann sie auf unbegrenzte Reichweite telepathisch mit dir kommunizieren. Wenn sie verwendet wurde, kann sie erst nach zwei Tagen erneut verwendet werden. Silberrabe (ungewöhnlich): Diese silberne Statuette eines Raben kann bis zu zwölf Stunden lang zu einem Raben werden. Wenn sie verwendet wurde, kann sie erst nach zwei Tagen erneut verwendet werden. In ihrer Rabenform gewährt die Figur dir die Fähigkeit, Tierbote auf sie zu wirken. KAP[TEL"
+        }
+      ],
+      "raw": {
+        "title": "FIGUR DER WUNDERSAMEN KRAFT",
+        "meta_line": "(MARMOR-ELEFANT). FIGU R DER WUNDERSAMEN KRAFT (ÜBSIDIAN-PFERD). WUNDERSAMEN KRAFT (EBENHOU:-FLIEGE). FEUERSCHALE DER F EUERELEMENTARHERRSCHAFT Wundersamer Gegenstand, selten Wenn du dich im Abstand",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "HAND VON VECNA"
+  },
+  {
+    "name": "MANTEL DER ZAUBERRESISTENZ",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 275,
+      "end_page_physical": 275
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": true,
+      "attunement": {
+        "required": true,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) Das Medaillon hat fünf Ladungen. Wenn du es trägst, kannst du eine Ladung verbrauchen, um den Zauber Gedanken wahrnehmen (Rettungswurf-SG 13) damit zu wirken. Das Medaillon erhält"
+        }
+      ],
+      "raw": {
+        "title": "MANTEL DER ZAUBERRESISTENZ",
+        "meta_line": "Einstimmung) Wenn du diesen Mantel trägst, bist du bei Rettungswürfen gegen Zauber im Vorteil. MEDAILLON DER GEDANKEN Wundersamer Gegenstand, ungewöhnlich (erfordert Einstimmung)",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "MEDAILLON DER GEDANKEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 275,
+      "end_page_physical": 275
+    }
+  },
+  {
+    "name": "MITHRALRÜSTUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 275,
+      "end_page_physical": 276
+    }
+  },
+  {
+    "name": "MONDKLINGE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "MÜTZE DER WASSERATMUNG"
+  },
+  {
+    "name": "MYSTERIENSCHLÜSSEL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "NACHTBRILLE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 276,
+      "end_page_physical": 276
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Dieser Beutel hat einen Innenraum, der erheblich größer ist als seine Außenmaße: Seine Öffnung hat einen Durchmesser von etwa 60 Zentimetern, und er ist 120 Zentimeter tief. Der Beutel kann bis zu 250 Kilogramm Gewicht und bis zu 1.800 Liter Volumen fassen. Er wiegt unabhängig von seinem Inhalt 2,5 Kilogramm. Es erfordert eine VerwendenAktion, einen Gegenstand aus dem Beutel zu holen. Wird der Beutel überfüllt, durchbohrt oder zerrissen, so ist er zerstört, und sein Inhalt wird auf der Astralebene verstreut. Wenn der Beutel auf links gedreht wird, fällt sein gesamter Inhalt unbeschädigt heraus. Der Beutel muss wieder auf rechts gedreht werden, damit er erneut verwendet werden kann. Der Beutel enthält genug Atemluft für zehn Minuten (geteilt durch die Anzahl atmender Kreaturen darin). Wenn ein Nimmervoller Beutel in den extradimensionalen Raum von Hewards Praktischem Rucksack, eines Tragbaren Lochs oder eines ähnlichen Gegenstands gelangt, werden beide Gegenstände sofort zerstört, und ein Tor zur Astralebene öffnet sich. Das Tor erscheint dort, wo der eine Gegenstand in den anderen gelangt ist. Jede Kreatur innerhalb einer Kugel mit einem Radius von drei Metern um das Tor wird hindurchgezogen und gelangt an einen zufälligen Ort auf der Astralebene . Dann schließt sich das"
+        }
+      ],
+      "raw": {
+        "title": "NACHTBRILLE",
+        "meta_line": "Diese dunkle Brille gibt dir Dunkelsicht auf bis zu 18 Meter. Hast du bereits Dunkelsicht , so erhöht diese Brille deine Sichtweite um 18 Meter . NIMMERVOLLER BEUTEL Wundersamer Gegenstand, ungewöhnlich Dieser Beutel",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "NIMMERVOLLER BEUTEL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 276,
+      "end_page_physical": 276
+    }
+  },
+  {
+    "name": "NOLZURS WUNDERFARBEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 277,
+      "end_page_physical": 277
+    }
+  },
+  {
+    "name": "ÖL DER GLÄTTE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 327,
+      "end_page_physical": 328
+    },
+    "magic": {
+      "category": "Zepter",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "lWlOO Gegenstand 1-2 Armschienen der Verteidigung 3 Bohnenbeutel 4 Daerns Flotte Festung 5-6 Edelstein des Sehens 7 Eisenbänder von Bilarro 8-9 Faltboot 10 Feuerschale der Feuerelementar-Herrschaft 11-12 Figur der Wundersamen Kraft (Bronze-Greif, EbenholzFliege, Elfenbein-Ziegen, Goldene Löwen, MarmorElefant, Onyx-Hund oder Serpentin-Eule) 13-14 Glocke des Öffnens 15-16 Halskette der Feuerbälle 17 Helm der Teleportation 18-19 Hewards Praktischer Rucksack 20-21 Hufeisen der Geschwindigkeit 22-23 /oun-Stein (Reserve) 24 Mantel der Zauberresistenz 25 öl der Körperlosigkeit 26-27 Perle der Kraft 28-29 Quaals Feder (Peitsche, Schwanenboot oder Vogel) Rauchfass der 30 Luftelementar-Herrschaft 31 Ring der Durchsicht 32-33 Ring des Fede,falls 34 Ring des Zauberspeichers 35-36 Robe der Augen 37 Schale der WasserelementarHerrschaft 38-39 Schriftrolle des Schutzes 40-41 Stab der Bezauberung 42-43 Stab der Insektenschwärme 44-45 Stab der Verkümmerung 46 Stein der ErdelementarHerrschaft 47 Tragbares Loch 48-49 Trank der Gasförmigen Gestalt 50-51 Trank des Gedankenlesens l lWlOO Gegenstand lWlOO Gegenstand 52-53 Trank des Heldenmuts 17 lfrit-Flasche 54-55 Trank des Heilsehens 18-19 loun-Stein (Absorption, Führungskraft, Standhaftigkeit 56 Trank der Riesenstärke (Feuer) oder Verstand) 57-58 Trank der Riesenstärke 20-21 Kessel der Wiedergeburt (Frost oder Stein) 22-23 Kristallkugel 59-60 Trank der Unsichtbarkeit 24-25 Leitfaden des Klaren Denkens 61-62 Trank der Unverwundbarkeit 26-27 Nolzurs Wunderfarben 63-64 Trank der Verkleinerung 28-30 Öl der Schä,fe 65-66 Umhang der Fledermaus 31-32 Ring der Regeneration 67-68 Umhang des Scharlatans 33-34 Ring der Sternschnuppen 69-70 Umhang der Verlagerung 35-36 Ring der Telekinese 71 Wü,fel der Herbeirufung 37-38 Robe der Schillernden Farben 72 Wü,fel der Kraft 39-40 Robe der Sterne 73-74 Zauberflügel 41 Seelenspiegel 75-79 Zauberschriftrolle (Zauber des 4. oder 5. Grades) 42 Stab der Macht 80-81 Zauberstab der Angst 43-44 Stab des Blitzes und Donners 82-83 Zauberstab der Bindung 45-46 Stab des Feuers 84-87 Zauberstab der Blitzschläge 47-48 Stab des Frosts 88-91 Zauberstab der Feuerbälle 49 Tanzendes Schwert 92-93 Zauberstab des 50-53 Trank des Fliegens Kriegsmagiers +2 54-57 Trank der Geschwindigkeit 94-95 Zauberstab des Wunders 58-60 Trank der Langlebigkeit 96-97 Zaubertragender Stab 61-64 Trank der Mächtigen (Zauber des 2. oder Unsichtbarkeit 3. Grades) 65-68 Trank der Riesenstärke 98 Zepter"
+        }
+      ],
+      "raw": {
+        "title": "ÖL DER GLÄTTE",
+        "meta_line": "Zepter des Paktbewahrers +1 32 Perle der Macht 33 Quaals Feder (Anker, Baum oder Fächer) 34 Rauchflasche ARKANA - SELTEN lWlOO Gegenstand",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "ÖL DER KÖRPERLOSIGKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 277,
+      "end_page_physical": 277
+    }
+  },
+  {
+    "name": "ÖL DER SCHÄRFE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 277,
+      "end_page_physical": 278
+    }
+  },
+  {
+    "name": "PANZERHANDSCHUHE DER OGERKRAFT"
+  },
+  {
+    "name": "PARFÜM DES VERHEXENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 278,
+      "end_page_physical": 278
+    }
+  },
+  {
+    "name": "PERLE DER ERFRISCHUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 278,
+      "end_page_physical": 278
+    }
+  },
+  {
+    "name": "PERLE DER ERNÄHRUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 278,
+      "end_page_physical": 278
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Diese kleine schwarze Kugel hat einen Durchmesser von etwa zwei Zentimetern und wiegt rund 30 Gramm. Normalerweise werden 1W4+4 Perlen der Kraft auf einmal gefunden. Du kannst eine magische Aktion ausführen, um eine Perle bis zu 18 Meter weit zu werfen. Wenn sie auftriffi, explodiert sie in einer Kugel mit einem Radius von drei Metern und wird dabei zerstört. Jede Kreatur in der Kugel muss einen SG-15-Geschicklichkeitsrettungswurf bestehen, oder sie erleidet 5W4 Energieschaden. Dann wird der Bereich eine Minute lang von einer Kugel aus transparenter Energie umschlossen. Jede Kreatur, deren Rettungswurf misslungen ist und die sich vollständig im betroffenen Bereich befindet, ist in der Kugel gefangen. Jede Kreatur, deren Rettungswurf erfolgreich war oder die sich nur teilweise im Bereich der Kugel befindet , wird von deren Zentrum weggestoßen, bis sie sich außerhalb der Kugel befindet. Nur Atemluft kann die Kugel passieren. Für Angriffe und andere Effekte ist sie undurchdringlich. PFEIFE DER RAUCH MONSTER. Eine gefangene Kreatur kann eine Verwenden-Aktion ausführen , um sich gegen die Kugelwand zu lehnen und die Kugel so um bis zur halben Bewegungsrate der Kreatur zu bewegen. Die Kugel kann aufgehoben"
+        }
+      ],
+      "raw": {
+        "title": "PERLE DER ERNÄHRUNG",
+        "meta_line": "Diese geschmacksneutrale gallertartige Perle löst sich auf der Zunge auf und liefert so viel Nahrung wie eine Tagesration. P ER LE DER KRAFT Wundersamer Gegenstand, selten Diese kleine schwarze",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "PERLE DER KRAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 328,
+      "end_page_physical": 328
+    }
+  },
+  {
+    "name": "PERLE DER MACHT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 278,
+      "end_page_physical": 278
+    }
+  },
+  {
+    "name": "PFEIFE DER RAUCHMONSTER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 278,
+      "end_page_physical": 278
+    }
+  },
+  {
+    "name": "PFEILFANGENDER SCHILD"
+  },
+  {
+    "name": "PROTHESE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 279,
+      "end_page_physical": 279
+    }
+  },
+  {
+    "name": "PRÜGELMUNITION",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 279,
+      "end_page_physical": 280
+    }
+  },
+  {
+    "name": "QUAALS FEDER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 279,
+      "end_page_physical": 280
+    }
+  },
+  {
+    "name": "RAUCHFASS DER LUFTELEMENTAR-HERRSCHAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 230,
+      "end_page_physical": 230
+    }
+  },
+  {
+    "name": "RAUCHFLASCHE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 280,
+      "end_page_physical": 281
+    }
+  },
+  {
+    "name": "RIESENTÖTER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 281,
+      "end_page_physical": 281
+    }
+  },
+  {
+    "name": "RING DER DSCHINNI-BESCHWÖRUNG"
+  },
+  {
+    "name": "RING DER DURCHSICHT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 281,
+      "end_page_physical": 281
+    }
+  },
+  {
+    "name": "RING DER ELEMENTAR-HERRSCHAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 281,
+      "end_page_physical": 282
+    }
+  },
+  {
+    "name": "RING DER GEDANKENABSCHIRMUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 327,
+      "end_page_physical": 327
+    }
+  },
+  {
+    "name": "RING DER REGENERATION",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 283,
+      "end_page_physical": 283
+    }
+  },
+  {
+    "name": "RING DER RESISTENZ",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 283,
+      "end_page_physical": 283
+    }
+  },
+  {
+    "name": "RING DER STERNSCHNUPPEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 283,
+      "end_page_physical": 284
+    }
+  },
+  {
+    "name": "RING DES AUSWEICHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 281,
+      "end_page_physical": 281
+    }
+  },
+  {
+    "name": "RING DES FEDERFALLS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 282,
+      "end_page_physical": 282
+    },
+    "magic": {
+      "category": "Ring",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": true,
+      "attunement": {
+        "required": true,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Juwelierwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) Wenn du diesen Ring trägst, bist du gegen Magie immun, die anderen Kreaturen ermöglicht, deine Gedanken zu lesen, zu erkennen, ob du die Wahrheit sagst, oder deine Gesinnung oder deinen Kreaturentyp zu erfahren. Kreaturen können nur telepathisch mit dir kommunizieren, wenn du es erlaubst. Du kannst eine magische Aktion ausführen und bewirken, dass der Ring nicht wahrnehmbar"
+        },
+        {
+          "type": "table",
+          "raw": "ist, bis du ihn mit einer",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "weiteren magischen Aktion wieder wahrnehmbar machst, bis du ihn entfernst oder bis du stirbst. Wenn du stirbst, während du den Ring trägst, geht deine Seele in den Ring über, sofern sich in diesem noch keine Seele befindet. Deine Seele kann im Ring bleiben oder ins Jenseits reisen. Solange sie sich im Ring befindet, kannst du telepathisch mit jeder Kreatur kommunizieren, die ihn trägt. Der Träger"
+        }
+      ],
+      "raw": {
+        "title": "RING DES FEDERFALLS",
+        "meta_line": "du fällst, während du diesen Ring trägst, sinkst du mit einer Geschwindigkeit von 18 Metern pro Runde und erleidest keinen Fallschaden. RING DER GEDANKE N ABSCHIRMUNG Ring, ungewöhnlich (erfordert Einstimmung)",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "RING DES SCHUTZES",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 283,
+      "end_page_physical": 283
+    },
+    "magic": {
+      "category": "Ring",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": true,
+      "attunement": {
+        "required": true,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Juwelierwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [],
+      "raw": {
+        "title": "RING DES SCHUTZES",
+        "meta_line": "Einstimmung) Wenn du diesen Ring trägst, erhältst du einen Bonus von +1 auf deine Rüstungsklasse und auf deine Rettungswürfe. RING DES SCHWIMMENS Ring, ungewöhnlich Wenn du diesen",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "RING DES SCHWIMMENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 283,
+      "end_page_physical": 283
+    },
+    "magic": {
+      "category": "Ring",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": true,
+      "attunement": {
+        "required": true,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Juwelierwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert"
+        }
+      ],
+      "raw": {
+        "title": "RING DES SCHWIMMENS",
+        "meta_line": "Wenn du diesen Ring trägst, hast du eine Schwimmbewegungsrate von zwölf Metern. RING DES SPRINGENS Ring, ungewöhnlich (erfordert Einstimmung)",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "RING DES SPRINGENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 283,
+      "end_page_physical": 284
+    },
+    "magic": {
+      "category": "Ring",
+      "rarity": "sehr selten",
+      "requires_attunement": true,
+      "attunement": {
+        "required": true,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Juwelierwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Einstimmung) Du kannst den Zauber Licht oder den Zauber Tanzende Lichter mit dem Ring wirken. Der Ring hat sechs Ladungen und erhält täglich im Morgengrauen 1W6 verbrauchte Ladungen zurück. Du kannst seine Ladungen verbrauchen, um die folgenden Eigenschaften zu verwenden: Feenfeuer: Du kannst eine Ladung verbrauchen, um den Zauber Feenfeuer mit dem Ring zu wirken. Kugelblitze: Du kannst als magische Aktion zwei Ladungen verbrauchen, um bis zu vier Kugelblitze mit einem Durchmesser von einem Meter mit dem Ring zu wirken. Jeder Kugelblitz erscheint in einem freien Bereich im Abstand von bis zu 36 Metern von dir, den du sehen kannst. Die Kugelblitze bleiben bestehen, bis eine Minute vergangen ist oder deine Konzentration unterbrochen wird. Jeder Kugelblitz spendet in einem Radius von neun r C. Metern dämmriges Licht. 0 TELEKINESE. Als Bonusaktion kannst du jeden Kugelblitz bis zu neun Meter weit bewegen. Die Kugelblitze können sich jedoch nicht weiter als 36 Meter von dir entfernen. Wenn ein Kugelblitz sich einer anderen Kreatur als dir, die sich nicht hinter vollständiger Deckung befindet, erstmals auf bis zu 1,5 Meter nähert, entlädt er seine Blitzenergie auf die Kreatur und verschwindet dann. Die Kreatur führt einen SG-15-Geschicklichkeitsrettungswurf aus. Misslingt der Wurf, so erleidet die Kreatur Blitzschaden je nach Anzahl der erzeugten Kugelblitze, wie in der nachstehenden Tabelle dargestellt. Bei einem erfolgreichen Rettungswurf erleidet die Kreatur halb so viel Schaden. Anzahl der Anzahl der Kugelblitze Blitzschaden Kugelblitze Blitzschaden 4Wl2 3 2W6 2 5W4 4 2W4 Sternschnuppen: Du kannst als magische Aktion eine bis drei Ladungen verbrauchen. Für jede verbrauchte Ladung verschießt der Ring einen Lichtfunken an einen Punkt im Abstand von bis zu 18 Metern von dir, den du sehen kannst. Auf jede Kreatur innerhalb eines Würfels mit einer Kantenlänge von 4,5 Metern, der von diesem Punkt ausgeht, regnen Funken herab, und die Kreaturen führen"
+        }
+      ],
+      "raw": {
+        "title": "RING DES SPRINGENS",
+        "meta_line": "Einstimmung) Wenn du diesen Ring trägst, kannst du den Zauber Springen damit wirken, jedoch nur auf dich selbst. RING DER STERNSCHNUPPEN Ring, sehr selten (erfordert Einstimmung) Du kannst",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "RING DER TELEKINESE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 284,
+      "end_page_physical": 284
+    },
+    "magic": {
+      "category": "Ring",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Juwelierwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Dieser Ring hat drei Ladungen und erhält täglich im Morgengrauen 1W3 verbrauchte Ladungen zurück. Wenn du den Ring trägst, kannst du eine Ladung verbrauchen, um einen der folgenden"
+        }
+      ],
+      "raw": {
+        "title": "RING DER TELEKINESE",
+        "meta_line": "Wenn du diesen Ring trägst, kannst du Telekinese mit ihm wirken. RING DES RING DES WASSERWANDELNS. UNSICHTBARKEIT RING DES TIERUMGANGS Ring, selten Dieser Ring hat drei Ladungen",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "RING DES TIERUMGANGS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 284,
+      "end_page_physical": 284
+    }
+  },
+  {
+    "name": "RING DER UNSICHTBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 284,
+      "end_page_physical": 284
+    }
+  },
+  {
+    "name": "RING DER WÄRME",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 284,
+      "end_page_physical": 285
+    }
+  },
+  {
+    "name": "RING DES WASSERWANDELNS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "RING DES WIDDERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 285,
+      "end_page_physical": 285
+    }
+  },
+  {
+    "name": "RING DES ZAUBERSPEICHERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 284,
+      "end_page_physical": 284
+    }
+  },
+  {
+    "name": "RING DES ZAUBERWENDENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 285,
+      "end_page_physical": 286
+    }
+  },
+  {
+    "name": "RITTERRÜSTUNG DER KÖRPERLOSIGKEIT"
+  },
+  {
+    "name": "RIVALENMÜNZE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 286,
+      "end_page_physical": 286
+    }
+  },
+  {
+    "name": "ROBE DER AUGEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 328,
+      "end_page_physical": 328
+    }
+  },
+  {
+    "name": "ROBE DER ERZMAGIER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 329,
+      "end_page_physical": 329
+    }
+  },
+  {
+    "name": "ROBE DER NÜTZLICHEN DINGE"
+  },
+  {
+    "name": "ROBE DER SCHILLERNDEN FARBEN"
+  },
+  {
+    "name": "ROBE DER STERNE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 328,
+      "end_page_physical": 328
+    }
+  },
+  {
+    "name": "RUBIN DES KRIEGSMAGIERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 288,
+      "end_page_physical": 288
+    }
+  },
+  {
+    "name": "RÜSTUNG +1"
+  },
+  {
+    "name": "RÜSTUNG +2"
+  },
+  {
+    "name": "RÜSTUNG +3",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 288,
+      "end_page_physical": 288
+    }
+  },
+  {
+    "name": "RÜSTUNG DER MAKELLOSIGKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 288,
+      "end_page_physical": 288
+    }
+  },
+  {
+    "name": "RÜSTUNG DER RESISTENZ",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 288,
+      "end_page_physical": 289
+    }
+  },
+  {
+    "name": "RÜSTUNG DES SCHWELENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 289,
+      "end_page_physical": 289
+    }
+  },
+  {
+    "name": "RÜSTUNG DER UNVERWUNDBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 289,
+      "end_page_physical": 289
+    }
+  },
+  {
+    "name": "RÜSTUNG DER VERWUNDBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 289,
+      "end_page_physical": 289
+    }
+  },
+  {
+    "name": "RÜSTUNG DES WASSERMANNS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 289,
+      "end_page_physical": 289
+    }
+  },
+  {
+    "name": "SATTEL DES KAVALIERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 290,
+      "end_page_physical": 290
+    }
+  },
+  {
+    "name": "SCHALE DER WASSERELEMENTAR-HERRSCHAFT"
+  },
+  {
+    "name": "SCHILD DER GESCHOSSANZIEHUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 314,
+      "end_page_physical": 314
+    },
+    "magic": {
+      "category": "Schild",
+      "rarity": "sehr selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Weberwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(+1), selten (+2) oder sehr selten (+3) Du hast einen Bonus auf Angriffsund Schadenswürfe mit dieser"
+        }
+      ],
+      "raw": {
+        "title": "SCHILD DER GESCHOSSANZIEHUNG",
+        "meta_line": "hältst, bist du bei Initiativewürfen und Weisheitswürfen (Wahrnehmung) im Vorteil. Der Schild trägt ein Auge als Symbol. WAFFE +1, +2 ODER +3 Waffe (beliebige einfache Waffe oder Kriegswaffe), ungewöhnlich (+1), selten (+2) oder sehr selten (+3) Du hast einen Bonus",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "SCHILD +1"
+  },
+  {
+    "name": "SCHILD +2"
+  },
+  {
+    "name": "SCHILD +3",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "SCHILD DES GESICHTSAUSDRUCKS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "SCHILD DES KAVALIERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "SCHLÜPFRÜSTUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 291,
+      "end_page_physical": 291
+    }
+  },
+  {
+    "name": "SCHRECKENSHELM",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 291,
+      "end_page_physical": 291
+    }
+  },
+  {
+    "name": "SCHRIFTROLLE DES SCHUTZES"
+  },
+  {
+    "name": "SCHRIFTROLLE DER TITANENBESCHWÖRUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 291,
+      "end_page_physical": 292
+    }
+  },
+  {
+    "name": "SCHUHE DES SPINNENKLETTERNS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 292,
+      "end_page_physical": 292
+    }
+  },
+  {
+    "name": "SCHWARZKLINGE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 292,
+      "end_page_physical": 292
+    }
+  },
+  {
+    "name": "SCHWEBEKUGEL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 293,
+      "end_page_physical": 293
+    }
+  },
+  {
+    "name": "SCHWERT DER ANTWORT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 293,
+      "end_page_physical": 294
+    }
+  },
+  {
+    "name": "SCHWERT VON KAS"
+  },
+  {
+    "name": "SCHWERT DES LEBENSENTZUGS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 294,
+      "end_page_physical": 294
+    }
+  },
+  {
+    "name": "SCHWERT DER MONDBERÜHRUNG"
+  },
+  {
+    "name": "SCHWERT DER SCHÄRFE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 294,
+      "end_page_physical": 294
+    }
+  },
+  {
+    "name": "SCHWERT DER VERGELTUNG"
+  },
+  {
+    "name": "SCHWERT DER VERWUNDUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 294,
+      "end_page_physical": 294
+    }
+  },
+  {
+    "name": "SCHWURBOGEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 294,
+      "end_page_physical": 295
+    }
+  },
+  {
+    "name": "SEELENSPIEGEL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 295,
+      "end_page_physical": 296
+    }
+  },
+  {
+    "name": "SEIL DES FLICKENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "SEIL DES KLETTERNS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "SKARABÄUS DES SCHUTZES",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 296,
+      "end_page_physical": 296
+    }
+  },
+  {
+    "name": "SONNENKLINGE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 296,
+      "end_page_physical": 296
+    }
+  },
+  {
+    "name": "SPRECHENDE PUPPE"
+  },
+  {
+    "name": "STAB DER BEZAUBERUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 297,
+      "end_page_physical": 297
+    }
+  },
+  {
+    "name": "STAB DER BLUMEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 297,
+      "end_page_physical": 297
+    }
+  },
+  {
+    "name": "STAB DES BLITZES UND DONNERS"
+  },
+  {
+    "name": "STAB DES FEUERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 297,
+      "end_page_physical": 297
+    }
+  },
+  {
+    "name": "STAB DES FROSTS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 297,
+      "end_page_physical": 299
+    }
+  },
+  {
+    "name": "STAB DER HEILUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 332,
+      "end_page_physical": 332
+    }
+  },
+  {
+    "name": "STAB DER INSEKTENSCHWÄRME",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 332,
+      "end_page_physical": 332
+    }
+  },
+  {
+    "name": "STAB DER KREUZOTTER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 299,
+      "end_page_physical": 299
+    }
+  },
+  {
+    "name": "STAB DER MACHT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 299,
+      "end_page_physical": 299
+    }
+  },
+  {
+    "name": "STAB DER MAGIER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 299,
+      "end_page_physical": 300
+    }
+  },
+  {
+    "name": "STAB DER PYTHON",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 300,
+      "end_page_physical": 301
+    }
+  },
+  {
+    "name": "STAB DES SCHLAGENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 301,
+      "end_page_physical": 301
+    }
+  },
+  {
+    "name": "STAB DER VERKÜMMERUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 301,
+      "end_page_physical": 301
+    }
+  },
+  {
+    "name": "STAB DER VOGELRUFE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "STAB DER WALDLANDE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 301,
+      "end_page_physical": 302
+    }
+  },
+  {
+    "name": "STANGE DES ANGELNS"
+  },
+  {
+    "name": "STANGE DES SCHRUMPFENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 301,
+      "end_page_physical": 301
+    }
+  },
+  {
+    "name": "STAUB DES NIESENS UND ERSTICKENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 327,
+      "end_page_physical": 327
+    },
+    "magic": {
+      "category": "Zauberstab",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "51-52 Steine der Verständigung lWlOO Gegenstand 53 Stirnband der Intelligenz Amulett des Schutzes gegen 54-55 Trank des Feueratems Ortung und Ausspähung 56-57 Trank des Gifts 2 Anhänger der Gesundheit 58-59 Trank der Resistenz 3 Augen der Bezauberung 60-61 Trank der Riesenstärke 4 Augen des Präzisen Sehens (Hügel) 5 Baba Yagas Tanzender Besen 62-63 Trank der Tierfreundschaft 6 Brosche des Abschirmens 64-65 Trank des Wachstums 7 Diadem des Versengens 66-67 Trank der Wasseratmung 8 Edelstein der Helligkeit 68-69 Trickbeute/ 9-10 Elementarer Edelstein 70 Umhang des Mantarochens 11-12 Figur der Wundersamen Kraft 71-72 Umhang des Schutzes (Silberrabe) 73 Unbewegliches Zepter Flugbesen 13 74 Vettelauge 14 Geflügelte Stiefel 75-76 Windfächer 15-16 Halskette der Anpassung 77-84 Zauberschriftrolle (Zauber 17 Helm des Sprachenverstehens des 2. oder 3. Grades) 18 Helm der Telepathie 85-86 Zauberstab der Geheimnisse 19 Hut der Verkleidung 87-88 Zauberstab des 20 Karaffe des Endlosen Wassers Kriegsmagiers +1 21 Karten der Illusionen 89-92 Zauberstab der 22 Laterne der Enttarnung Magieerkennung 23-24 Liebestrank 93-95 Zauberstab der Magischen Geschosse 25 Medaillon der Gedanken 96-97 Zauberstab des Netzes 26 Mithralrüstung 98 Zaubertragender Stab 27 Mütze der Wasseratmung (Zaubertrick oder Zauber 28-30 Nimmervoller Beutel des 1. Grades) 31 öl der Glätte 99-100"
+        }
+      ],
+      "raw": {
+        "title": "STAUB DES NIESENS UND ERSTICKENS",
+        "meta_line": "und 95-97 Zauberstab des Dirigierens Erstickens 98-100 Zauberstab des Feuerwerkens 48 Staub der Trockenheit 49-50 Staub des Verschwindens ARKANA - UNGEWÖHNLICH 51-52 Steine",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "STAUB DER TROCKENHEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 302,
+      "end_page_physical": 303
+    }
+  },
+  {
+    "name": "STAUB DES VERSCHWINDENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 327,
+      "end_page_physical": 327
+    }
+  },
+  {
+    "name": "STEIN DER ERDELEMENTAR-HERRSCHAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 303,
+      "end_page_physical": 303
+    }
+  },
+  {
+    "name": "STEIN DES GLÜCKS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 303,
+      "end_page_physical": 303
+    }
+  },
+  {
+    "name": "STEINE DER VERSTÄNDIGUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 303,
+      "end_page_physical": 303
+    }
+  },
+  {
+    "name": "STIEFEL DER ELFEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 303,
+      "end_page_physical": 303
+    }
+  },
+  {
+    "name": "STIEFEL DER FALSCHEN FÄHRTE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 303,
+      "end_page_physical": 304
+    }
+  },
+  {
+    "name": "STIEFEL DER GESCHWINDIGKEIT"
+  },
+  {
+    "name": "STIEFEL DES SCHREITENS UND SPRINGENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 303,
+      "end_page_physical": 303
+    }
+  },
+  {
+    "name": "STIEFEL DES SCHWEBENS"
+  },
+  {
+    "name": "STIEFEL DER WINTERLANDE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 304,
+      "end_page_physical": 304
+    }
+  },
+  {
+    "name": "STIRNBAND DER INTELLIGENZ",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 304,
+      "end_page_physical": 304
+    }
+  },
+  {
+    "name": "STREITKOLBEN DES NIEDERSTRECKENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 304,
+      "end_page_physical": 304
+    }
+  },
+  {
+    "name": "STREITKOLBEN DES TERRORS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 304,
+      "end_page_physical": 304
+    }
+  },
+  {
+    "name": "STREITKOLBEN DES ZUSAMMENBRUCHS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 304,
+      "end_page_physical": 305
+    }
+  },
+  {
+    "name": "SYLVANISCHE KRALLE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 329,
+      "end_page_physical": 329
+    },
+    "magic": {
+      "category": "Waffe",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "24-27 Kristallkugel der Telepathie lWlOO Gegenstand 28-31 Kristallkugel des Wahren Blicks 1-4 Adamantrüstung 32 Kugel der Auslöschung 5-8 Adamantwaffe 33-36 Leitfaden der Verstummten 9-13 Armschienen des Sprache Bogenschützen 1 37 Ring der Drei Wünsche , 14-18 Bandagen der Waffenlosen 38-41 Ring der DschinniKraft +1 Beschwörung 19-22 Dreizack der Fischherrschaft 42-45 Ring der Elementar-Herrschaft 23-27 Geschoss +1 (Erde, Feuer, Luft oder 28-31 Köcher von Ehlonna Wasser) 32-36 Mithralrüstung 46-49 Ring der Unsichtbarkeit 37-41 Panzerhandschuhe der 50-53 Ring des Zauberwendens Ogerkraft 54 Robe der Erzmagier 42-46 Rüstung des Wassermanns 55-56 Schriftrolle der 47-50 Sattel des Kavaliers Titanenbeschwörung 51-55 Schild +1 57 Stab der Magier 56-60 Schwert der Vergeltung 58-60 Talisman des Nichts 61-65 Trank des Faustkampfs 61-68 Trank der Riesenstärke (Sturm) 66-70 Trank der Riesenstärke (Hügel) 69-72 Umhang der Unsichtbarkeit 71-75 Wächterschild 73-76 Universelles Lösungsmittel 76-80 Waffe der Warnung 77-78 Würfel der Ebenen 81-85 Waffe +1 79-96 Zauberschriftrolle (Zauber des 9. Grades) 86-90 Wurfspeer des Blitzes 97-700 Zaubertragender Stab 91-95 Zaubertragende Rüstung (Zauber des 6., 7. oder"
+        }
+      ],
+      "raw": {
+        "title": "SYLVANISCHE KRALLE",
+        "meta_line": "Kralle oder Regeneration) 97-100 Versilberte Waffe 19 Karten des Schicksals 20-23 Kristallkugel des BEWAFFNUNG Gedankenlesens UNGEWÖHNLICH 24-27 Kristallkugel",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "TALISMAN DES ABSOLUT BÖSEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 305,
+      "end_page_physical": 305
+    }
+  },
+  {
+    "name": "TALISMAN DES NICHTS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 305,
+      "end_page_physical": 305
+    }
+  },
+  {
+    "name": "TALISMAN DES REINEN GUTEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 305,
+      "end_page_physical": 305
+    }
+  },
+  {
+    "name": "TANZENDES SCHWERT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 305,
+      "end_page_physical": 305
+    }
+  },
+  {
+    "name": "TENTAKELZEPTER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 332,
+      "end_page_physical": 355
+    }
+  },
+  {
+    "name": "TOPF DES ERWACHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 332
+    }
+  },
+  {
+    "name": "TRAGBARES LOCH",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 306,
+      "end_page_physical": 307
+    }
+  },
+  {
+    "name": "TRANK DER FAUSTKAMPFS"
+  },
+  {
+    "name": "TRANK DES FEUERATEMS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 307,
+      "end_page_physical": 307
+    }
+  },
+  {
+    "name": "TRANK DES FLIEGENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "TRANK DER GASFÖRMIGEN GESTALT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 307,
+      "end_page_physical": 307
+    }
+  },
+  {
+    "name": "TRANK DES GEDANKENLESENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 307,
+      "end_page_physical": 307
+    }
+  },
+  {
+    "name": "TRANK DER GESCHWINDIGKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 307,
+      "end_page_physical": 308
+    }
+  },
+  {
+    "name": "TRANK DER LANGLEBIGKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 308,
+      "end_page_physical": 308
+    }
+  },
+  {
+    "name": "TRANK DER MÄCHTIGEN UNSICHTBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 308,
+      "end_page_physical": 308
+    },
+    "magic": {
+      "category": "Trank",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Alchemistenausrüstung",
+          "Kräuterkundeausrüstung"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Wenn du diesen Trank trinkst, bist du eine Minute lang"
+        }
+      ],
+      "raw": {
+        "title": "TRANK DER MÄCHTIGEN UNSICHTBARKEIT",
+        "meta_line": "zu dir nimmst, bist du eine Stunde lang unsichtbar. Der Effekt endet vorzeitig, wenn du einen Angriffswurf ausführst, Schaden bewirkst oder einen Zauber wirkst. TRANK DER UNVERWUNDBARKEIT Trank , selten Wenn du diesen",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "TRANK DER RESISTENZ",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 308,
+      "end_page_physical": 308
+    }
+  },
+  {
+    "name": "TRANK DER RIESENSTÄRKE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 328,
+      "end_page_physical": 328
+    },
+    "magic": {
+      "category": "Schriftrolle",
+      "rarity": "sehr selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Kalligrafiewerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "75-86 Zauberschriftrolle (Zauber lWlOO Gegenstand"
+        },
+        {
+          "type": "table",
+          "raw": "des 6., 7. oder 8. Grades)",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "1-2 Amulett der Ebenen 87-89 Zauberstab des 3-4 Figur der Wundersamen Kraft Kriegsmagiers +3 (Obsidian-Pferd) 90-92 Zauberstab der Verwandlung 5-6 Fliegender Teppich 93-94 Zaubertragender Stab 7-8 Fraßbeutel (Zauber des 4. oder 9-10 Handbuch der Golems (Eisen, 5. Grades) Fleisch, Lehm oder Stein) 95-96 Zepter der Absorption 11-12 Helm der Pracht 97-98 Zepter des Paktbewahrers +3"
+        }
+      ],
+      "raw": {
+        "title": "TRANK DER RIESENSTÄRKE",
+        "meta_line": "der Herrschaft (Wolken) 99-100 Zepter des Paktbewahrers +2 69-72 Trank der Vitalität 73-74 Umhang der Spinnentiere ARKANA - SEHR SELTEN 75-86 Zauberschriftrolle",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "TRANK DER TIERFREUNDSCHAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 308,
+      "end_page_physical": 308
+    }
+  },
+  {
+    "name": "TRANK DER UNSICHTBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 328,
+      "end_page_physical": 328
+    }
+  },
+  {
+    "name": "TRANK DER UNVERWUNDBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 308,
+      "end_page_physical": 308
+    }
+  },
+  {
+    "name": "TRANK DER VERKLEINERUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 309
+    }
+  },
+  {
+    "name": "TRANK DES VERSTEHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 309
+    }
+  },
+  {
+    "name": "TRANK DER VITALITÄT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 309
+    }
+  },
+  {
+    "name": "TRANK DES WACHSTUMS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 309
+    }
+  },
+  {
+    "name": "TRANK DER WASSERATMUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 309
+    }
+  },
+  {
+    "name": "TRICKBEUTEL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 310
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "gewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Dieses Schloss sieht gewöhnlich aus (vom Typ, der in Kapitel 6 des Spielerhandbuchs beschrieben ist) und hat einen einzigen Schlüssel. Die Zuhaltungen im Schloss passen sich auf magische Weise an, um Einbrecher abzuwehren. Geschicklichkeitswürfe zum Knacken des Schlosses sind im Nachteil. ÜBERSCHUTT Waffe (Kriegshammer), Artefakt (erfordert Einstimmung durch einen Zwerg oder eine Kreatur, die auf einen Zwergischen Gürtel eingestimmt ist) Überschutt ist eine mächtige Waffe, geschmiedet von Zwergen und verschollen in den Gewölben des Weißfederbergs. TRANK DER VITALITifr . Du erhältst einen Bonus von +3 auf Angriffsund Schadenswürfe, die du mit dieser magischen Waffe ausführst. Schleudern: Überschutt ist eine Wurfwaffe mit einer Grundreichweite von 18 Metern"
+        },
+        {
+          "type": "table",
+          "raw": "und einer Maximalreichweite von 54 Metern.",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Wenn du bei einem Fernkampfangriffswurf mit Überschutt triffst , erleidet das Ziel zusätzlich 1W8 Energieschaden (4W8 Energieschaden, wenn das Ziel ein Konstrukt, ein Elementar oder ein Riese ist). Sofort nach dem Angriff fliegt die Waffe zurück in deine Hand. Schockwelle: Du kannst eine magische Aktion ausführen, um Überschutt auf den Boden zu schlagen und vom Aufschlagpunkt aus eine Schockwelle durch den Boden rasen zu lassen. Jede Kreatur deiner Wahl auf dem Boden im Abstand von bis zu 18 Metern von diesem Punkt muss einen SG-20-Konstitutionsrettungswurf bestehen, oder sie ist eine Minute lang betäubt. Sie wiederholt den Rettungswurf am Ende jedes ihrer Züge. Bei einem Erfolg endet der Effekt bei ihr . Wurde diese Eigenschaft verwendet, so kann sie erst ab dem nächsten Morgengrauen erneut verwendet werden. Übernatürliche Aufmerksamkeit: Wenn du die Waffe hältst, macht"
+        },
+        {
+          "type": "table",
+          "raw": "sie dich auf die Orte von Geheimnissen",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "oder verborgenen Türen im Abstand von bis zu neun Metern von dir aufmerksam. Außerdem kannst du die Zauber Gutes und Böses entdecken oder Gegenstand aufspüren mit der Waffe wirken. Wurde einer der Zauber gewirkt, so"
+        },
+        {
+          "type": "table",
+          "raw": "kann er erst ab dem nächsten",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Morgengrauen erneut mit der Waffe gewirkt werden . Intelligenz: Überschutt ist eine intelligente, rechtschaffen neutrale Waffe mit einem Intelligenzwert von 15, einem Weisheitswert von 12 und einem Charismawert von 15. Sie hat Gehör und Dunkelsicht auf bis zu 36 Meter. Die Waffe kommuniziert telepathisch mit ihrem Träger und spricht Zwergisch, Riesisch sowie Goblinisch . Persönlichkeit: Überschutt ist dem Zwergenklan verbunden , der sie erschaffen"
+        },
+        {
+          "type": "table",
+          "raw": "hat: dem Dankiloder MachthammerKlan . Sie wünscht",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "sich, diesem Klan zurückgegeben zu werden. Überschutt hat das Ziel, Zwerge zu beschützen. Wenn der Träger dieses Ziel nicht teilt, kommt es zum Konflikt. UMHANG /l.UFBLiiHENS. Überschutt zerstören: Überschutt kann in der säurehaltigen Galle eines kürzlich erschlagenen uralten schwarzen Drachen aufgelöst werden."
+        }
+      ],
+      "raw": {
+        "title": "TRICKBEUTEL",
+        "meta_line": "Kreatur Schakal Schwarzbär 5 2 Menschenaffe 6 Riesenwiesel 3 Pavian 7 Riesenhyäne 4 Axtschnabel 8 Tiger TRICKSCHLOSS Wundersamer Gegenstand, gewöhnlich Dieses Schloss",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "TRICKSCHLOSS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 310
+    }
+  },
+  {
+    "name": "ÜBERSCHUTT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 310
+    }
+  },
+  {
+    "name": "UHRWERKAMULETT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 310,
+      "end_page_physical": 310
+    }
+  },
+  {
+    "name": "UMHANG DES AUFBLÄHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 310,
+      "end_page_physical": 310
+    }
+  },
+  {
+    "name": "UMHANG DER ELFEN"
+  },
+  {
+    "name": "UMHANG DER FLEDERMAUS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 311,
+      "end_page_physical": 311
+    }
+  },
+  {
+    "name": "UMHANG DES MANTAROCHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 311,
+      "end_page_physical": 311
+    }
+  },
+  {
+    "name": "UMHANG DES SCHARLATANS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 311,
+      "end_page_physical": 311
+    }
+  },
+  {
+    "name": "UMHANG DES SCHUTZES"
+  },
+  {
+    "name": "UMHANG DER SPINNENTIERE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 328,
+      "end_page_physical": 329
+    }
+  },
+  {
+    "name": "UMHANG DER UNSICHTBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 312,
+      "end_page_physical": 312
+    }
+  },
+  {
+    "name": "UMHANG DER VERLAGERUNG"
+  },
+  {
+    "name": "UMHANG DER VIELEN MODEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 312,
+      "end_page_physical": 313
+    }
+  },
+  {
+    "name": "UNBEWEGLICHES ZEPTER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    },
+    "magic": {
+      "category": "Zauberstab",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "lWlOO Gegenstand 1-4 Bardeninstrument (CanaithMandoline oder Cli-Leier) 5-8 Bohnenbeutel 9-12 Dimensionsfesseln 13-16 Faltboot 17-20 Fesselseil 21-24 Geschoss +2 330 KAPITEL 7 1 SCHÄTZE HILFSMITTEL - LEGENDÄR lWlOO Gegenstand lWlOO Gegenstand 25-28 Glocke des Öffnens 1-17 Bardeninstrument 29-32 Hewards Praktischer Rucksack (Ollamh-Harfe) 33-36 Hufeisen der Geschwindigkeit 18-37 Ewiger Leim 37-40 loun-Stein (Wahrnehmung) 38-53 Kugel der Auslöschung 41-44 Quaals Feder (Peitsche, 54-66 Talisman des Nichts Schwanenboot oder Vogel) 67-83 Universelles Lösungsmittel 45-48 Ring des Ausweichens 84-100 Zaubertragende Waffe Ring der Bewegungsfreiheit 49-52 (Zauber des 6., 7. oder 53-56 Stab der Heilung 8. Grades) 57-60 Stiefel der Geschwindigkeit TABELLEN „RELIKTE\" 61-64 Stiefel des Schwebens 65-68 Tragbares Loch RELIKTE - GEWÖHNLICH 69-72 Trank der Gasförmigen Gestalt lWlOO Gegenstand 73-80 Trank der überlegenen Heilung 1-20 Heiltrank 81-84 Trank der Verkleinerung 21-28 Hörrohr des Hörens 85-88 Verzaubertes Beschlagenes 29-36 Rubin des Kriegsmagiers Leder 37-44 Rüstung des Schwelens 89-92 Zauberstab der 45-52 Schild des Gesichtsausdrucks Feindeslokalisierung 53-62 Stab der Blumen 93-96 Zaubertragende Waffe"
+        }
+      ],
+      "raw": {
+        "title": "UNBEWEGLICHES ZEPTER",
+        "meta_line": "Zepter 96 Vettelauge 97-98 Zauberstab der Geheimnisse 99-100 Zaubertragende Waffe (Zaubertrick oder Zauber des 1. Grades) HILFSMITTEL - SELTEN lWlOO Gegenstand",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "UNIVERSELLES LÖSUNGSMITTEL"
+  },
+  {
+    "name": "UNVERWÜSTLICHES ZAUBERBUCH"
+  },
+  {
+    "name": "VERSILBERTE WAFFE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 313,
+      "end_page_physical": 313
+    }
+  },
+  {
+    "name": "VERTEIDIGER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 313,
+      "end_page_physical": 313
+    }
+  },
+  {
+    "name": "VERZAUBERTES BESCHLAGENES LEDER"
+  },
+  {
+    "name": "VETTELAUGE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "WÄCHTERSCHILD",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 314,
+      "end_page_physical": 314
+    }
+  },
+  {
+    "name": "WAFFE +1",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 314,
+      "end_page_physical": 314
+    }
+  },
+  {
+    "name": "WAFFE +2",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 329,
+      "end_page_physical": 330
+    },
+    "magic": {
+      "category": "Rüstung",
+      "rarity": "sehr selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Weberwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "BEWAFFNUNG - LEGENDÄR lWlOO Gegenstand lWlOO Gegenstand 1-3 Axt des Henkers 1-6 Glücksklinge 4-6 Bandagen der Waffenlosen 7-9 Gürtel der Riesenstärke (Sturm) Kraft +3 10-15 Gürtel der Riesenstärke 7-9 Belebter Schild (Wolken) 10-12 Dämonenrüstung 16-21 Hammer des Blitzschlags 13-15 Dieb der Neun Leben 22-26 Heiliger Rächer 16-18 Donnernder Zweihandknüppel 27-31 Henkersschwert 19-21 Drachenschuppenpanzer 32-37 Horn von Walhalla (Eisen) 22-24 Energiebogen 38-43 lfrit-Rüstung 25-27 Frostbrand 44-47 Mondklinge 28-30 Geschoss des Tötens 48-53 Ritterrüstung der Körperlosigkeit 31-33 Geschoss +3 54-59 Rüstung der Unverwundbarkeit 34-35 Gürtel der Riesenstärke (Feuer) 60-65 Rüstung +3 36-38 Gürtel der Riesenstärke (Frost oder Stein) 66-70 Schwert der Antwort 39-41 Handbuch der Körperlichen 71-79 Trank der Riesenstärke (Sturm) Ertüchtigung 80-85 Verteidiger 42-44 Horn von Walhalla (Bronze) 86-91 Zaubertragende Rüstung 45-47 loun-Stein (Stärke) (Zauber des 6., 7. oder 8. Grades) 48-50 Kampfstab des Akrobaten 92-97 Zaubertragende Waffe 51-53 Krummsäbel der (Zauber des 6., 7. oder Geschwindigkeit 8. Grades) 54-56 Laute des Donnernden 98-100 Zepter der Herrschaftlichen Dreschens Macht"
+        }
+      ],
+      "raw": {
+        "title": "WAFFE +2",
+        "meta_line": "95-97 Zaubertragende Rüstung (Zauberdes2.oder 3. Grades) 98-100 Zaubertragende Waffe (Zauber des 2. oder 3. Grades) BEWAFFNUNG - SEHR SELTEN BEWAFFNUNG - LEGENDÄR",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "WAFFE +3",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "WAFFE DER WARNUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 332
+    },
+    "magic": {
+      "category": "Schriftrolle",
+      "rarity": "sehr selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Kalligrafiewerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(Zaubertrick oder Zauber des 1. Grades) lWlOO Gegenstand 1-7 Bardeninstrument RELIKTE - UNGEWÖHNLICH (Anstruth-Harfe) lWlOO Gegenstand 8-14 Fliegender Teppich 1-5 Anhänger der Gesundheit 15-21 Fraßbeutel 6-10 Anhänger der Wundheilung 22-28 Geschoss +3 11-15 Keoghtoms Salbe 29-35 Handbuch des Schnellen Handelns 16-20 Mantel der Natur 36-42 Hufeisen des Zephyrs 21-25 Perle der Macht 43-49 loun-Stein (Beweglichkeit) 26-30 Ring des Wasserwandelns 50-56 Laute des Donnernden 31-35 Rüstung des Wassermanns Dreschens 36-40 Stab der Kreuzotter 57-63 Leitfaden der Führungskraft 41-45 Stab der Python und der Einflussnahme 46-50 Steine der Verständigung 64-70 Nolzurs Wunderfarben 51-65 Trank der Mächtigen Heilung 71-77 Trank des Fliegens 66-70 Trank der Resistenz 78-84 Trank der Geschwindigkeit 71-75 Trank der Tierfreundschaft 85-93 Trank der Höchsten Heilung 76-85 Zauberschriftrolle (Zauber 94-100 Zaubertragende Waffe des2.oder3.Gradeaj (Zauber des 4. oder 5. Grades) lWlOO Gegenstand lWlOO Gegenstand 86-90 Zauberstab des 61-62 Stein der ErdelementarKriegsmagiers +1 Herrschaft 91-95 Zauberstab der 63-65 Streitkolben des Magieerkennung Niederstreckens 96-100 Zaubertragender Stab 66-68 Streitkolben des Terrors (Zaubertrick oder Zauber 69-71 Streitkolben des des l. Grades) Zusammenbruchs 72-74 Tentakelzepter RELIKTE - SELTEN 75-82 Trank der überlegenen Heilung lWlOO Gegenstand 83-90 Zauberschriftrolle (Zauber 1-3 Amulett der Gesundheit des4.oder5.Gradeaj 4-6 Anhänger des Giftschutzes 91-94 Zauberstab des 7-9 Elixier der Gesundheit Kriegsmagiers +2 70-71 Feuerschale der 95-97 Zauberstab der Paralyse"
+        }
+      ],
+      "raw": {
+        "title": "WAFFE DER WARNUNG",
+        "meta_line": "(Zauber des 2. oder 3. Grades) 63-72 Stab der Zierde 73-80 Topf des Erwachens 97-100 Zwergischer Gürtel 81-100 Zauberschriftrolle HILFSMITTEL - SEHR SELTEN (Zaubertrick oder Zauber",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "WELLE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 314,
+      "end_page_physical": 314
+    }
+  },
+  {
+    "name": "WINDFÄCHER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 314,
+      "end_page_physical": 314
+    }
+  },
+  {
+    "name": "WÜRFEL DER EBENEN"
+  },
+  {
+    "name": "WÜRFEL DER HERBEIRUFUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 315,
+      "end_page_physical": 315
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "selten",
+      "requires_attunement": true,
+      "attunement": {
+        "required": true,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Einstimmung) Dieser Würfel hat eine Kantenlänge von etwa 2,5 Zentimetern. Jede Würfelseite weist eine eindeutige Markierung auf. Du kannst auf jede dieser Seiten drücken, die erforderliche Anzahl von Ladungen verbrauchen und so den jeweiligen Zauber (Rettungswurf-SG 17) wirken, wie in der Tabelle „Seiten des Würfels der Kraft\" dargestellt. Der Würfel hat zunächst zehn Ladungen. Er erhält täglich im Morgengrauen 1W6 verbrauchte Ladungen zurück. SEITEN DES WÜRFELS DER KRAFT Zauber Ladungskosten Magierrüstung Schild Leomunds Winzige Hütte 3 Mordenkainens"
+        }
+      ],
+      "raw": {
+        "title": "WÜRFEL DER HERBEIRUFUNG",
+        "meta_line": "DER EBENEN WÜRFEL DER KRAFT. WÜRFEL DES SCHARLATANS. 314 KAPITEL 7 1 SCHÄTZE WÜRFEL DER KRAFT Wundersamer Gegenstand, selten (erfordert Einstimmung) Dieser",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "WÜRFEL DER KRAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 315,
+      "end_page_physical": 315
+    }
+  },
+  {
+    "name": "WÜRFEL DES SCHARLATANS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 315,
+      "end_page_physical": 315
+    },
+    "magic": {
+      "category": "Waffe",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": true,
+      "attunement": {
+        "required": true,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Wann immer du einen Angriffswurf mit dieser magischen Waffe ausführst, der trifft, kannst du ihn Blitzschaden statt Stichschaden bewirken lassen. Blitz: Wenn du diese Waffe auf ein Ziel im Abstand von bis zu 36 Metern von dir wirfst, brauchst du keinen Fernkampfangriffswurf auszuführen und kannst die Waffe stattdessen in einen Blitz verwandeln. Dieser Blitz bildet eine 1,5 Meter breite Line zwischen dir und dem Ziel. Das Ziel und alle weiteren Kreaturen in der Line (außer dir) führen einen SG-13-Geschicklichkeitsrettungswurf aus. Misslingt der Wurf, so erleiden sie 4W6 Blitzschaden, anderenfalls die Hälfte. Unmittelbar nach Bewirken dieses Schadens erscheint die Waffe wieder"
+        }
+      ],
+      "raw": {
+        "title": "WÜRFEL DES SCHARLATANS",
+        "meta_line": "Einstimmung) Wann immer du mit diesem sechsseitigen Würfel würfelst, kannst du das Ergebnis bestimmen. W U RFSPEER DES BLITZES Waffe (Wurfspeer), ungewöhnlich Wann immer",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "Malutensilien"
+  },
+  {
+    "name": "Materialkomponentenbeutel"
+  },
+  {
+    "name": "Maurerwerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 350,
+      "end_page_physical": 355
+    }
+  },
+  {
+    "name": "Metallkügelchen"
+  },
+  {
+    "name": "Musikinstrument",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 263,
+      "end_page_physical": 264
+    }
+  },
+  {
+    "name": "Navigationswerkzeug"
+  },
+  {
+    "name": "Netz",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 311,
+      "end_page_physical": 312
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "legendär",
+      "requires_attunement": true,
+      "attunement": {
+        "required": true,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) Dieser Umhang hat drei Ladungen und erhält täglich im Morgengrauen 1W3 verbrauchte Ladungen zurück. Wenn du den Umhang trägst, kannst du eine magische Aktion ausführen, um dir die Kapuze über den Kopf zu ziehen, eine Ladung zu verbrauchen und dich eine Stunde lang unsichtbar"
+        }
+      ],
+      "raw": {
+        "title": "Netz",
+        "meta_line": "Netze, als wären sie schwieriges Gelände. LJ N B E!WcGLICHES lEPTHI. V 1ncN M oo c N. UM H ANG D ER UNS IC H T BARK EIT Wundersamer Gegenstand, legendär (erfordert Einstimmung)",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "Priesterausrüstung"
+  },
+  {
+    "name": "Rammbock (tragbar)"
+  },
+  {
+    "name": "Rationen",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 341,
+      "end_page_physical": 347
+    }
+  },
+  {
+    "name": "Robe",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 288,
+      "end_page_physical": 288
+    }
+  },
+  {
+    "name": "Rucksack",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 257,
+      "end_page_physical": 274
+    }
+  },
+  {
+    "name": "Sack",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 287,
+      "end_page_physical": 287
+    }
+  },
+  {
+    "name": "Schaufel"
+  },
+  {
+    "name": "Schlafsack"
+  },
+  {
+    "name": "Schloss",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 310
+    }
+  },
+  {
+    "name": "Schmiedewerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 348,
+      "end_page_physical": 350
+    }
+  },
+  {
+    "name": "Schreinerwerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 350,
+      "end_page_physical": 350
+    }
+  },
+  {
+    "name": "Schusterwerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 350,
+      "end_page_physical": 350
+    }
+  },
+  {
+    "name": "Seil",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 296,
+      "end_page_physical": 296
+    }
+  },
+  {
+    "name": "Spiegel",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 295,
+      "end_page_physical": 296
+    }
+  },
+  {
+    "name": "Spielset"
+  },
+  {
+    "name": "Stachel, Eisen"
+  },
+  {
+    "name": "Stange",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 302,
+      "end_page_physical": 302
+    },
+    "magic": {
+      "category": "Zepter",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Dieses Pulver wird in einem kleinen Behälter gefunden"
+        },
+        {
+          "type": "table",
+          "raw": "und sieht wie Staub des Verschwindens",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "aus. Auch der Zauber Identifizieren identifiziert es als solchen. Es ist ausreichend für einen Einsatz. Du kannst den Staub als Verwenden-Aktion in die Luft werfen und dich selbst sowie jede Kreatur innerhalb einer Ausströmung von neun Metern, die von dir ausgeht, zu einem SG-15-Konstitutionsrettungswurf zwingen. Elementare, Konstrukte, Pflanzen, Schlicke und Untote bestehen den Rettungswurf automatisch. Misslingt der Wurf, so beginnt die Kreatur unkontrolliert zu niesen und zu ersticken, und sie ist kampfunfähig. Sie wiederholt den Rettungswurf am Ende jedes ihrer Züge. Bei einem"
+        }
+      ],
+      "raw": {
+        "title": "Stange",
+        "meta_line": "verwandeln. Das Zepter wird nur dann wieder zur Stange, wenn es genügend Platz dazu hat. STAUB DES NIESENS UND ERSTICKENS Wundersamer Gegenstand, ungewöhnlich Dieses Pulver",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "Säure",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 242,
+      "end_page_physical": 243
+    },
+    "magic": {
+      "category": "Waffe",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Du erhältst einen Bonus von +1 auf Angriffsund Schadenswürfe, die du mit dieser magischen"
+        }
+      ],
+      "raw": {
+        "title": "Säure",
+        "meta_line": "Kälte Kupfer Säure Weiß Kälte KAPITEL 7 J SCHÄTZE 241 /-/ELLIG/(EIT. DRACHENTÖTER Waffe (beliebige einfache Waffe oder Kriegswaffe), selten Du erhältst einen Bonus",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "Tinte"
+  },
+  {
+    "name": "Tintenfüller"
+  },
+  {
+    "name": "Topf, Eisen"
+  },
+  {
+    "name": "Trinkschlauch"
+  },
+  {
+    "name": "Truhe",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 287,
+      "end_page_physical": 288
+    }
+  },
+  {
+    "name": "Töpferwerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 350,
+      "end_page_physical": 350
+    }
+  },
+  {
+    "name": "Tüftlerwerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 350,
+      "end_page_physical": 350
+    }
+  },
+  {
+    "name": "Unterhaltungskünstler-Ausrüstung",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 265,
+      "end_page_physical": 268
+    }
+  },
+  {
+    "name": "Verkleidungsausrüstung"
+  },
+  {
+    "name": "Weberwerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 350,
+      "end_page_physical": 350
+    }
+  },
+  {
+    "name": "Weihwasser",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 347,
+      "end_page_physical": 348
+    }
+  },
+  {
+    "name": "Zelt"
+  },
+  {
+    "name": "Zunderkästchen"
+  }
+]

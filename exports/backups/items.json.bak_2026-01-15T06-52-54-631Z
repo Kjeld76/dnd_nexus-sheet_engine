@@ -1,0 +1,4663 @@
+[
+  {
+    "name": "ADAMANTRÜSTUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 228,
+      "end_page_physical": 228
+    }
+  },
+  {
+    "name": "AMETHYST-STIRNBAND DER INTELLIGENZ"
+  },
+  {
+    "name": "AMETHYST-PLATTENPANZER (+3)"
+  },
+  {
+    "name": "MITHRAL-PLATTENPANZER (+3)"
+  },
+  {
+    "name": "ADAMANTWAFFE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 228,
+      "end_page_physical": 228
+    },
+    "magic": {
+      "category": "Waffe",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Diese Waffe oder dieses Geschoss besteht aus Adamant, einem der härtesten Materialien, die es gibt. Wann immer die Waffe oder das Geschoss trifft, ist der Treffer"
+        }
+      ],
+      "raw": {
+        "title": "ADAMANTWAFFE",
+        "meta_line": "Waffe (beliebiges Geschoss oder beliebige Nahkampfwaffe), ungewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "ALCHEMIEKRUG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 228,
+      "end_page_physical": 229
+    }
+  },
+  {
+    "name": "AMULETT DER EBENEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 229,
+      "end_page_physical": 229
+    }
+  },
+  {
+    "name": "AMULETT DER GESUNDHEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 229,
+      "end_page_physical": 230
+    }
+  },
+  {
+    "name": "AMULETT DER WARNUNG"
+  },
+  {
+    "name": "AMULETT DES SCHUTZES GEGEN ORTUNG UND AUSSPÄHUNG"
+  },
+  {
+    "name": "ANHÄNGER DER GESUNDHEIT"
+  },
+  {
+    "name": "ANHÄNGER DES GIFTSCHUTZES",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 229,
+      "end_page_physical": 230
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) Wenn du diesen Anhänger trägst, kannst du eine magische Aktion ausführen, um 2W4+2 Trefferpunkte zurückzuerhalten. Wurde diese Eigenschaft verwendet,"
+        },
+        {
+          "type": "table",
+          "raw": "so kann sie erst ab dem nächsten",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Morgengrauen erneut verwendet werden. Außerdem bist du bei Rettungswürfen zum Vermeiden oder Beenden des Zustands Vergiftet im Vorteil, solange du diesen Anhänger trägst. ......____, r"
+        }
+      ],
+      "raw": {
+        "title": "ANHÄNGER DES GIFTSCHUTZES",
+        "meta_line": "DER G E SUNDHEI T Wundersamer Gegenstand, ungewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "ANHÄNGER DER WUNDHEILUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 230,
+      "end_page_physical": 231
+    }
+  },
+  {
+    "name": "APPARAT VON KWALISH",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 230,
+      "end_page_physical": 231
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "legendär",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Dieser Gegenstand scheint zunächst ein versiegeltes Eisenfass zu sein, das 250 Kilogramm wiegt. Das Fass hat einen versteckten Haken, der mit einem erfolgreichen SG-20-Intelligenzwurf (Nachforschungen) gefunden werden kann. Wird der Haken gelöst, so öffnet sich eine Luke am Ende des Fasses, durch die zwei Kreaturen von höchstens mittelgroßer Größe ins Innere kriechen können . Am anderen Ende des Fassinneren befinden sich zehn Hebel in mittlerer Stellung. Sie können nach oben und nach unten bewegt werden. Wenn bestimmte Hebel bewegt werden, verwandelt sich der Apparat in einen Riesenhummer. Der Apparat von Kwalish ist ein großer Gegenstand mit den folgenden Werten: RK 20, 200 TP, Bewegungsrate neun Meter, Schwimmbewegungsrate neun Meter (oder jeweils"
+        },
+        {
+          "type": "table",
+          "raw": "0 Meter , wenn die Beine nicht ausgefahren",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "sind), gegen Giftschaden und psychischen Schaden immun. Um als Fahrzeug verwendet zu werden , benötigt der Apparat einen Piloten. Wenn die Luke des Apparats geschlossen"
+        },
+        {
+          "type": "table",
+          "raw": "ist, ist er luft- und wasserdicht.",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Der Innenraum enthält genug Atemluft für zehn Stunden (geteilt durch die Anzahl atmender Kreaturen im Apparat). Der Apparat schwimmt auf dem Wasser. Er kann bis auf 270 Meter Tiefe tauchen. In größeren Tiefen erleidet das Fahrzeug durch den Druck 2W6 Wuchtschaden pro Minute. Eine Kreatur im Apparat kann als Verwenden-Aktion bis zu zwei Hebel nach oben oder unten bewegen. Nach jedem Bedienen kehren die Hebel in ihre neutrale Position zurück. Die Hebel funktion"
+        },
+        {
+          "type": "table",
+          "raw": "i eren wie in der Tabelle",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "„Hebel des Apparats von Kwalish\" (von links nach rechts gelesen) angegeben. APPARAT VON KWALl5H. K APITEL 7 1 SCHÄTZ E 229 HEBEL DES APPARATS VON KWALISH Hebel Oben Beine werden ausgefahren - der Apparat kann gehen und schwimmen. 2 Vorderer Fensterladen öffnet sich. 3 Seitliche Fensterläden öffnen sich (zwei pro Seite). 4 Vorne werden zwei Greifscheren ausgefahren. 5 Jede ausgefahrene Greifschere führt den folgenden Nahkampfangriff aus: +8 auf Treffer, Reichweite 1,5 m. Treffer: 7 (2W6) Wuchtschaden. 6 Der Apparat bewegt sich gehend oder schwimmend vorwärts, sofern seine Beine ausgefahren sind. 7 Der Apparat dreht sich um 90 Grad gegen den Uhrzeigersinn, sofern seine Beine ausgefahren sind. 8 Augenartige Vorrichtungen spenden im Radius von neun Metern helles Licht und im Radius von weiteren neun Metern dämmriges Licht. 9 Der Apparat sinkt um bis zu sechs Meter, wenn er sich in Flüssigkeit befindet. 10 Die hintere Luke entriegelt und öffnet sich."
+        }
+      ],
+      "raw": {
+        "title": "APPARAT VON KWALISH",
+        "meta_line": "KWALIS H Wundersamer Gegenstand, legendär",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "ARMSCHIENEN DES BOGENSCHÜTZEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 231,
+      "end_page_physical": 233
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Einstimmung) i 1 1 Wenn du diese Armschienen trägst, erhältst du einen i 1 Bonus von +2 auf deine Rüstungsklasse, sofern du keine 1 Rüstung trägst und keinen Schild verwendest. 1 1 i /l.RMSCH/ENEN DES BoGENSCHü1·zEN 230 KAPITEL 7 1 SCHÄTZE Unten Beine werden eingefahren - Bewegungsrate und Schwimmbewegungsrate des Apparats sind 0, und er kann keine Boni auf die Bewegungsrate nutzen. Vorderer Fensterladen schließt sich. Seitliche Fensterläden schließen sich (zwei pro Seite). Die Greifscheren werden eingefahren. Jede ausgefahrene Greifschere führt den folgenden Nahkampfangriff aus: +8 auf Treffer, Reichweite 1,5 m. Treffer: Das Ziel wird gepackt (Flucht-SG 15). Der Apparat bewegt sich gehend oder schwimmend rückwärts, sofern seine Beine ausgefahren sind. Der Apparat"
+        },
+        {
+          "type": "table",
+          "raw": "dreht sich um 90 Grad im Uhrzeigersinn,",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "sofern seine Beine ausgefahren sind. Das Licht erlischt. Der Apparat steigt um bis zu sechs Meter, wenn er sich in Flüssigkeit befindet. Die hintere Luke schließt und verriegelt sich. AUGE UND HAND VON VECNA Wundersamer Gegenstand, Artefakt (erfordert Einstimmung) Vecna war ein mächtiger Zauberer, der durch Magie und Eroberung ein schreckliches Reich schuf. Trotz all seiner Macht fürchtete Vecnajedoch den Tod. Er unternahm Schritte, um sein Ableben zu verhindern, indem er ein Lich wurde. Dann setzte der verräterischer Feldherr Kas Vecnas Herrschaft in einer fürchterlichen Schlacht ein Ende. Von Vecna blieben"
+        },
+        {
+          "type": "table",
+          "raw": "nur eine Hand und ein Auge übrig grässliche",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Artefakte, die noch immer versuchen, Vecnas Willen in der Welt zu wirken."
+        },
+        {
+          "type": "table",
+          "raw": "Das Auge von Vecna und die Hand von Vecna",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "sind separate Artefakte, die gemeinsam oder einzeln gefunden werden können. Das blutunterlaufene Auge sieht wie aus der Augenhöhle herausgerissen aus. Die Hand ist eine verschrumpelte linke Extremität. ARMSCHJCN EN OH/ Ve1ne1orc;uN6 t\\UGE VON VECNA. HAND VON V E CNA. Zufällige Eigenschaften von Auge und Hand: Das Auge von Vecna"
+        },
+        {
+          "type": "table",
+          "raw": "und die Hand von Vecna haben",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "jeweils folgende zufällige Eigenschaften (siehe „Artefakte\" in diesem Kapitel): l kleinere vorteilhafte Eigensch a ft l größere vorteilhafte Eigenschaft l kleinere nachteilige Eigenschaft Auf das Auge einstimmen: Um dich auf das Auge einzustimmen, musst"
+        },
+        {
+          "type": "table",
+          "raw": "du es in deine leere Augenhöhle",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "drücken. Es verwächst mit deinem Kopf und bleibt in der Augenhöhle, bis du stirbst. Wenn es je entfernt wird, stirbst du. Eigenschaften des Auges: Auf das Auge eingestimmt bist du von neutral böser Gesinnung und erhältst die folgenden Vorzüge: Durchsicht : Du kannst eine magische Aktion ausführen , um eine Minute lang Durchsicht mit einer Reichweite von neun Metern zu erhalten. Für dich wirken massive Gegenstände innerhalb dieses Radius durchsichtig und lichtdurchlässig. Die Durchsicht durchdringt 30 Zentimeter Stein, 2,5 Zentimeter gewöhnliches Metall oder einen Meter Holz oder Erde. Dickere Substanzen oder auch eine dünne Bleischicht blockieren die Sicht. Wahrer Blick: Du hast Wahrer Blick mit einer Reichweite von 72 Metern. Zauberwirken: Das Auge hat acht Ladungen und erhält tägli ch im Morgengrauen 1W4+4 verbrauchte Ladungen zurück. Du kannst einen Zauber aus der Tabelle „Zauber des Auges von Vecna\" (Rettungswurf - SG 18) mit dem Auge wirken. In der Tabelle ist angegeben, wie viele Ladungen du verbrauchen musst, um den Zauber zu wirken. Wann immer du einen Zauber mit dem Auge wirkst, besteht ein Risiko von fünf Prozent, dass Vecna"
+        },
+        {
+          "type": "table",
+          "raw": "dir die Seele aus dem Körper",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "reißt, sie verschlingt und deinen Körper dann wie eine Marionette kontrolliert. Wenn das geschieht,"
+        },
+        {
+          "type": "table",
+          "raw": "wirst du ein NSC unter der",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Kontrolle des SL. ZAUBER DES AUGES VON VECNA Zauber Ladungskosten Auflösung 4 Böser Blick 4 Hellsehen 2 Krone des Wahnsinns Monster beherrschen 5 Auf die Hand einstimmen: Um dich auf die Hand einzustimmen, musst du sie gegen den Stumpf drücken, wo deine linke Hand war. Sie verwächst mit deinem Arm und wird zur funktionierenden Extremität. Wenn sie je entfernt wird, stirbst du. Eigenschaften der Hand: Auf die Hand eingestimmt bist du von neutral böser Gesinnung und erhältst die folgenden Vorzüge : Eisige Berührung: Nahkampf-Zauberangriffe, die du mit der Hand ausführst, und Nahkampfangriffe mit Waffen,"
+        },
+        {
+          "type": "table",
+          "raw": "die du in der Hand hältst , bewirken",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "bei einem Treffer zusätzlich 2W8 Kälteschaden . Große Stärke: Dein Stärkewert wird auf 20 erhöht, sofern er nicht bereits mindestens 20 beträgt. Zauberwirken: Die Hand hat acht Ladungen und erhält täglich im Morgengrauen 1W4+4 verbrauchte Ladungen zurück. Du kannst"
+        },
+        {
+          "type": "table",
+          "raw": "einen Za uber aus der Tabelle",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": ",,Zauber der Hand von Vecna\" (Rettungswurf-SG 18) mit der Hand wirken. In der Tabelle ist angegeben, wie viele Ladungen du verb ra uchen musst, um den Zauber zu wirken. Wann immer du einen Zauber mit der Hand wirkst, wirkt die Hand Einflüsterung (Rettungswurf-SG 18, keine Konzentration erforderlich) auf dich und verlangt, dass du eine böse Tat begehst. Vielleicht hat sie eine bestimmte Tat im Sinn, oder sie überlässt die Entscheidung dir. ZAUBER DER HAND VON VECNA Zauber Ladungskosten Finger des Todes 5 Schlaf Teleportieren 3 Verlangsamen 2 Eigenschaften von Auge und Hand: Wenn du sowohl auf das Auge als auch auf die Hand eingestimmt bist, erhältst du folgende zusätzliche Vorzüge: Gefahrengespür: Du bist bei Initiativewürfen im Vorteil. Immunität gegen Gift: Du bist gegen Giftschaden und den Zustand Vergiftet immun. Nekrotische Verringerung: Als magische Aktion kannst du auf eine Kreatur im Abstand von bis zu 1,5 Metern von dir zielen, die du sehen kannst. Das Ziel führt KAPITEL 7 1 SCHÄTZE ~31 einen SG-18-Konstitutionsrettungswurf aus. Misslingt der Wurf , so erleidet es 7W6 nekrotischen Schaden , anderenfalls die Hälfte. Eine Kreatur, deren Trefferpunkte durch diesen Schaden auf 0 sinken, wird in grünen Schleim (siehe Kapitel 3) verwandelt, der in ihrem Bereich den Boden bedeckt. Jedes Schleimquadrat mit 1,5 Metern Kantenlänge stellt einen eigenen Schleimflecken dar. Nichtmagische Gegenstände aus Metall oder organischem Material, die vom Ziel getragen oder gehalten wurden, werden vom Schleim zerstört. Regeneration: Wenn du deinen Zug mit mindestens 1 Trefferpunkt beginnst, erhältst du lWlO Trefferpunkte zurück. Wunsch: Du kannst den Zauber Wunsch wirken . Wurde diese Eigenschaft verwendet, so kann sie erst nach 30 Tagen erneut verwendet werden. Auge und Hand zerstören: Wenn das Auge von Vecna und"
+        },
+        {
+          "type": "table",
+          "raw": "die Hand von Vecna beide mit derselben",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Kreatur verwachsen mit dem Schwert von Kas erschlagen sind und diese Kreatur wird, gehen sowohl Auge als auch Hand in Flammen auf und werden zerstört. Alle anderen Versuche, das Auge oder zu zerstören, scheinen zu funktionieren, doch die Hand das Artefakt erscheint in einem von Vecnas zahlreichen Gewölben wieder und wartet darauf , erneut entdeckt zu werden."
+        }
+      ],
+      "raw": {
+        "title": "ARMSCHIENEN DES BOGENSCHÜTZEN",
+        "meta_line": "DER VERTEIDIGUNG 1 Wundersamer Gegenstand, selten (erfordert",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "ARMSCHIENEN DER VERTEIDIGUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 231,
+      "end_page_physical": 233
+    }
+  },
+  {
+    "name": "AUGE VON VECNA"
+  },
+  {
+    "name": "AUGEN DER BEZAUBERUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 233,
+      "end_page_physical": 233
+    }
+  },
+  {
+    "name": "AUGEN DES ADLERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 233,
+      "end_page_physical": 233
+    }
+  },
+  {
+    "name": "AUGEN DES PRÄZISEN SEHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 233,
+      "end_page_physical": 233
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Diese Kristallgläser können als Brille getragen werden. Wenn du sie trägst, ist deine Sicht auf eine Reichweite von erheblich verbessert. Du hast Dunkelsicht 30 Zentimetern mit dieser Reichweite und bist bei Intelligenzwürfen (Nachforschungen) zum Untersuchen von etwas innerhalb dieser Reichweite im Vorteil. 232 KAPITEL 7 1 SCHÄTZE AXT"
+        }
+      ],
+      "raw": {
+        "title": "AUGEN DES PRÄZISEN SEHENS",
+        "meta_line": "DES PRÄZISEN SEHENS Wundersamer Gegenstand, ungewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "AXT DER ZWERGENFÜRSTEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 233,
+      "end_page_physical": 234
+    },
+    "magic": {
+      "category": "Waffe",
+      "rarity": "sehr selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Du erhältst einen Bonus von +1 auf Angriffsund Schadenswürfe, die du mit dieser magischen Waffe ausführst. Humanoide, die du mit der Waffe triffst, erleiden zusätzlich 2W6 Hiebschaden, und du erhältst temporäre Trefferpunkte in Höhe des bewirkten zusätzlichen Schadens . AXT DER ZWERGENFÜRSTEN Waffe (Streitaxt), Artefakt (erfordert Einstimmung) Einst wollte ein junger Zwergenprinz eine Waffe schmieden , die seinen Leuten als Symbol der Einheit dienen sollte. Er ging tiefer unter die Berge, als sich je ein Zwerg vor ihm gewagt hatte, und erreichte schließlich das lodernde Herz eines großen Vulkans. Mit der Hilfe von Moradin, einem Gott der Schöpfung, schuf er zunächst vier mächtige Werkzeuge: Die Picke Sterneisen, die Schmiede Erdherz, den Amboss der Lieder und den Hammer des Formens. Mit diesen Werkzeugen schmiedete er dann die Axt der Zwergenfürsten. Das Artefakt half dem Prinzen, die Zwergenklane zu befrieden, Fehden zu beenden und Kränkungen zu heilen . Die Klans verbündeten sich, schlugen ihre Feinde zurück und erlebten eine Ära des Wohlstands. Der junge Zwerg ging als der Erste König in die Geschichte ein. Als er alt war, gab er die Waffe als die Insignie seines Amtes an seinen Nachfolger weiter. So wurde die Axt über viele Generationen vererbt. Später, in einer Zeit des Verrats und der Bosheit, entbrannte ein blutiger Bürgerkrieg um die Axt - aus Gier nach ihrer Macht und dem Status, den sie verlieh. Seitdem ist die Axt verschollen . Noch heute suchen die Zwerge nach ihr. Auch Abenteurer jagen Gerüchten nach L und plündern alte Gewölbe, um sie zu finden. z 8 Magische Waffe: Die Axt der Zwergenfürsten ist eine magische Waffe. Sie gewährt einen Bonus von +3 auf Angriffsund Schadenswürfe, die mit ihr ausgeführt werden. Wenn"
+        },
+        {
+          "type": "table",
+          "raw": "du mit der Axt eine Kreatur",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "angreifst und beim Angriffswurf eine 20 würfelst, bewirkt die Axt zusätzlich 20 Hiebschaden. Die Axt ist eine Wurfwaffe mit einer Grundreichweite von sechs Metern und einer Maximalreichweite von 18 Metern. Wenn du mit ihr bei einem Fernkampfangriff triffst, bewirkt sie zusätzlich 1W8 Energieschaden (2W8 Energieschaden, wenn das Ziel eine Kreatur des Typs Riese ist). Sofort nach dem Angriff fliegt die Waffe zurück in deine Hand. Erdelementar beschwören: Wenn du die Axt hältst, kannst du eine magische Aktion ausführen, um einen Erdelementar herbeizurufen. Dieser erscheint in einem freien Bereich deiner Wahl im Abstand von bis zu neun Metern von dir, versteht deine Sprachen, gehorcht deinen Befehlen und ist bei deinem Initiativewert unmittelbar nach dir am Zug. Er verschwindet, wenn 24 Stunden vergangen"
+        },
+        {
+          "type": "table",
+          "raw": "sind, er stirbt oder du ihn als Bonusaktion",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "verwirfst. Wurde diese Eigenschaft verwendet, so kann sie erst ab dem nächsten Morgengrauen erneut verwendet werden."
+        },
+        {
+          "type": "table",
+          "raw": "Reise in die Tiefe: Du kannst",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "eine magische Aktion ausführen,"
+        },
+        {
+          "type": "table",
+          "raw": "um mit der Axt ein festes Stück",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Zwergenmauerwerk zu berühren und den Zauber Teleportieren mit ihr zu wirken. Wenn dein Zielort unterirdisch liegt, sind Missgeschicke oder unerwartete Zielorte ausgeschlossen. Du kannst diese Eigenschaft erst nach drei Tagen erneut verwenden. Segen von Moradin: Wenn du auf die Axt eingestimmt bist, erhältst du die folgenden Vorzüge: Dunkelsicht: Du erhältst Dunkelsicht mit einer Reichweite von 18 Metern. Wenn du bereits über Dunkelsicht verfügst, wird deren Reichweite um 18 Meter erhöht. Eins mit der Schmiede: Du bist gegen Feuerschaden resistent und gegen Giftschaden immun. Gaben des Schöpfers: Du hast Übung im Umgang mit Brauereizubehör, Maurerwerkzeug und Schmiedewerkzeug. Standhaftigkeit des Steins: Dein Konstitutionswert wird um 2 erhöht (auf höchstens 20). Zertrümmern: Wenn"
+        },
+        {
+          "type": "table",
+          "raw": "du mit der Axt einen Gegenstand",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "triffst, erleidet dieser den maximal möglichen Schaden. Zufällige Eigenschaften: Die Axt hat folgende zufällige Eigenschaften (siehe „Artefakte\" in diesem Kapitel): 2 kleinere vorteilhafte Eigenschaften 1 größere vorteilhafte Eigenschaft 2 kleinere nachteilige Eigenschaften Die Axt zerstören: Die Axt kann nur zerstört werden, indem sie in der Schmiede Erdherz eingeschmolzen wird, in der sie geschaffen wurde."
+        },
+        {
+          "type": "table",
+          "raw": "Sie muss 50 Jahre in der",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "brennenden Schmiede verbringen. Erst dann wird sie vom Feuer vernichtet. ü ÄXT DER ZWERGEN FÜRSTEN. BABA YAGA5 TANZENDER BESEN. BABA YAGAS"
+        }
+      ],
+      "raw": {
+        "title": "AXT DER ZWERGENFÜRSTEN",
+        "meta_line": "DES HENKERS Waffe (Beil, Hellebarde, Streitaxt oder Zweihandaxt), sehr selten",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "AXT DES HENKERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 233,
+      "end_page_physical": 235
+    }
+  },
+  {
+    "name": "BABA YAGAS TANZENDER BESEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 234,
+      "end_page_physical": 235
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) Die Erzfee Baba Yaga hat viele dieser magischen Besen hergestellt. Sie sehen alle unterschiedlich aus. Wenn du den Besen hältst, kannst du eine magische Aktion ausführen, um ihn in einen belebten Besen unter deiner Kontrolle zu verwandeln. Dann bewegt sich der Besen in einen freien Bereich so nahe wie möglich bei dir. Er handelt bei deinem Initiativewert unmittelbar nach dir und bleibt belebt, bis du eine Bonusaktion ausführst und • ein Befehlswort aussprichst, um ihn unbelebt zu machen. In deinem Zug kannst du den belebten Besen mental befehligen (keine Aktion erforderlich), sofern er sich im Abstand von bis zu neun Metern von dir befindet und du nicht kampfunfähig bist. Du entscheidest, welche Aktion der Besen im nächsten Zug ausführt und wohin er sich bewegt. Alternativ kannst du einen allgemeinen Befehl erteilen, um ihn beispielsweise deine Feinde angreifen oder einen Ort bewachen zu lassen. Wenn seine Trefferpunkte auf O sinken, zerbricht der Besen und ist zerstört. Wenn der Besen wieder seine unbelebte Form annimmt, ehe er alle Trefferpunkte verliert, erhält er all seine Trefferpunkte zurück. KAPITEL 7 1 SCHÄTZE 233 MAc•Fu1RMIDH· C1sTER. KAPITEL 7 1 SCHÄTZE BANDAGEN"
+        }
+      ],
+      "raw": {
+        "title": "BABA YAGAS TANZENDER BESEN",
+        "meta_line": "TANZENDER BESEN Wundersamer Gegenstand, ungewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "BANDAGEN DER WAFFENLOSEN KRAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 235,
+      "end_page_physical": 235
+    },
+    "magic": {
+      "category": "Waffe",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(+1), selten (+2) oder sehr selten (+3) Wenn du diese Bandagen trägst, erhältst du einen Bonus auf Angriffswürfe und Schadenswürfe, die du mit deinen waffenlosen Angriffen ausführst. Der Bonus hängt von der Seltenheit der Bandagen ab, und deine waffenlosen Angriffe bewirken nach deiner Wahl entweder Energieschaden oder ihre normale Schadensart. BARDENINSTRUMENT Wundersamer Gegenstand, Seltenheit variiert (erfordert Einstimmung durch einen Barden) Ein Bardeninstrument ist einem gewöhnlichen Instrument in jeder Hinsicht überlegen. Es gibt sieben Arten dieses Instruments. Jedes davon ist nach einer Bardenschule benannt. In der Tabelle „Bardeninstrumente\" sind die Zauber, die allen Instrumenten gemeinsam sind, außerdem die jeweils spezifischen Zauber sowie die jeweilige Seltenheit aufgeführt. Eine Kreatur, die auf einem Bardeninstrument zu spielen versucht, ohne darauf eingestimmt zu sein, muss einen SG-15-Weisheitsrettungswurfbestehen, oder sie erleidet 2W4 psychischen Schaden. Du kannst auf dem Instrument spielen, um einen seiner Zauber zu wirken. Wurde das Instrument verwendet, um einen Zauber zu wirken,"
+        },
+        {
+          "type": "table",
+          "raw": "so kann es erst ab dem nächsten",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Morgengrauen erneut verwendet werden, um diesen Zauber zu wirken. Der Zauber verwendet dein Attribut zum Zauberwirken und deinen Zauberrettungswurf-SG. BARDENINSTRUMENTE Instrument Seltenheit Zauber Alle Fliegen, Schutz vor Gut und Böse, Schweben, Unsichtbarkeit plus die Zauber des jeweiligen 1 nstruments AnstruthSehr selten Dornenwand, Eissturm, Harfe Wunden heilen (5. Grad) CanaithSelten Magie bannen, Schutz vor Mandoline Energie (nur Blitzschaden), Wunden heilen (3. Grad) Cli-Leier Selten Feuerwand, Steinformen, Windwall Doss-Laute Ungewöhnlich Schutz vor Energie (nur Feuerschaden), Schutz vor Gift, Tierfreundschaft FochlucanUngewöhnlich Feenfeuer, Mit Tieren Pandora sprechen, Shillelagh, Verstricken Mac-FuirmidhUngewöhnlich Nebelwolke, Rindenhaut, Cister Wunden heilen Ollamh-Harfe Legendär Feuersturm, Verwirrung, Wetterkontrolle"
+        }
+      ],
+      "raw": {
+        "title": "BANDAGEN DER WAFFENLOSEN KRAFT",
+        "meta_line": "DER WAFFENLOSEN KRAFT Wundersamer Gegenstand, ungewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "BARDENINSTRUMENT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 235,
+      "end_page_physical": 235
+    }
+  },
+  {
+    "name": "BELEBTER SCHILD",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 236,
+      "end_page_physical": 236
+    }
+  },
+  {
+    "name": "BERSERKERAXT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 236,
+      "end_page_physical": 236
+    }
+  },
+  {
+    "name": "BOHNENBEUTEL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 236,
+      "end_page_physical": 237
+    }
+  },
+  {
+    "name": "BÖSARTIGE WAFFE"
+  },
+  {
+    "name": "BROSCHE DES ABSCHIRMENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 237,
+      "end_page_physical": 237
+    }
+  },
+  {
+    "name": "BRUNNEN DER VIELEN WELTEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 237,
+      "end_page_physical": 239
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "legendär",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Dieses feine schwarze Tuch ist seidenweich und auf die Größe eines Taschentuchs zusammengefaltet. Ausgebreitet ist es ein kreisrund und hat einen Durchmesser von 1,8 Metern. Du kannst eine magische Aktion ausführen, um den Brunnen der Vielen Welten zu entfalten und auf einer festen Oberfläche zu platzieren. Dort bildet er ein rundes Zweiwegeportal mit einem Durchmesser von drei Metern, das in eine andere Welt oder auf eine andere Existenzebene führt. Wann immer der Gegenstand ein Portal öffnet, entscheidet der SL, wohin es führt. Das Portal bleibt geöffnet, bis eine Kreatur im Abstand von bis zu 1,5 Metern von ihm eine magische Aktion ausführt, um es zu schließen, indem"
+        },
+        {
+          "type": "table",
+          "raw": "sie das Tuch an den Rändern",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "greift und zusammenfaltet. Hat der Brunnen der Vielen Welten ein Portal geöffnet,"
+        },
+        {
+          "type": "table",
+          "raw": "so kann er dies erst nach 1W8 Stunden",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "erneut tun. BUCH DER BÖSEN DUNKELHEIT Wundersamer Gegenstand, Artefakt (erfordert Einstimmung) Der Inhalt dieses üblen Manuskripts ist ein Labsal für böse Naturen. Es enthält so grauenhaftes Wissen, dass schon ein Blick auf die bekritzelten Seiten das Verhängnis bedeutet. Man nimmt weithin an, dass der Lich-Gott Vecna das Buch der Bösen Dunkelheit verfasst hat. Er hat darin alle grässlichen Ideen, alle verdorbenen Gedanken und alle Beispiele böser Magie festgehalten, die ihm begegnet sind oder die er selbst ersonnen hat. Auch andere Anwender des Bösen haben ihren Beitrag zu diesem Katalog abscheulichen Wissens geleistet. Ihre Ergänzungen sind eindeutig zu erkennen, denn diese wurden in den vorhandenen Text eingefügt oder in einigen Fällen als Anmerkungen und Ergänzungen hinzugefügt. Es gibt Stellen mit fehlenden, zerkratzten oder zerrissenen Seiten. Andere sind so vollständig mit Tinte oder Blut beschmiert, dass der Text nicht mehr zu erkennen ist. Die Natur kann die Anwesenheit des Buchs nicht ertragen. Gewöhnliche Pflanzen verdorren in seiner Gegenwart, gewöhnliche Tiere meiden es, und das Buch zerstört nach"
+        },
+        {
+          "type": "table",
+          "raw": "und nach alles, was es berührt.",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Selbst Stein wird rissig und zerbröselt, wenn das Buch lange genug darauf liegt. Wann immer eine Kreatur, die kein Unhold oder Untoter"
+        },
+        {
+          "type": "table",
+          "raw": "ist sich auf das Buch der Bösen Dunkelheit",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "einstimmt, führt sie' einen SG-17-Charismarettungswurf aus. Misslingt der Wurf, so wird die Kreatur auf magische Art in eine Larve unter der Kontrolle des SL verwandelt. Nur der Zauber Wunsch kann diese üble Verwandlung aufheben. Eine auf das Buch eingestimmte Kreatur muss 80 Stunden damit verbringen,"
+        },
+        {
+          "type": "table",
+          "raw": "das Buch zu lesen und zu studieren,",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "um dessen Inhalt verarbeiten und dessen Eigenschaften Angepasste Attributswerte, Unermüdliche Form, Zauber, Böses Wissen und Böse Rede verwenden zu können. BROSCHE DES 1-\\BSCH/RMENS. BucH DER ÜBERSOIWÄNGL/CHEN TATEN. Das Buch der Bösen Dunkelheit bleibt dir nur erhalten, solange"
+        },
+        {
+          "type": "table",
+          "raw": "du Böses in der Welt zu tun versuchst.",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Wenn du innerhalb von zehn Tagen nicht mindestens einen bösen Akt vollziehst oder wenn du sogar eine gute Tat begehst, endet deine Einstimmung auf das Buch sofort, und du verlierst alle Vorzüge, die das Buch gewährt hat. Wenn du stirbst, während du auf das Buch eingestimmt bist, beansprucht ein Wesen von großer Bosheit deine Seele. Sie ist dann gefangen und kann in diesem Zustand unter keinen Umständen wieder zum Leben erweckt werden. Angepasste Attributswerte: Ein Attributswert deiner Wahl wird um 2 erhöht (auf höchstens 24). Ein anderer Attributswert deiner Wahl wird um 2 verringert (Minimum: 3). Das Buch kann deine Attributswerte nur einmal anpassen. Böse Rede: Wenn"
+        },
+        {
+          "type": "table",
+          "raw": "du das Buch mit dir führst,",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "kannst du eine magische Aktion ausführen, um Worte seiner Seiten in einer verdorbenen, toten Sprache zu rezitieren. Wann immer du dies tust, erleidest du 1W12 psychischen Schaden, und alle Kreaturen im Abstand von bis zu 4,5 Metern von dir außer Unholden und Untaten erleiden 3W6 psychischen Schaden. Böses Wissen: Du kannst"
+        },
+        {
+          "type": "table",
+          "raw": "auf das Buch der Bösen Dunkelheit",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "zurückgreifen, wann immer du einen Intelligenzwurf ausführst, um dich an Informationen über Aspekte des Bösen zu erinnern, beispielsweise über Dämonen. In diesem Fall bist du beim Wurf im Vorteil. Nach dem Ermessen des SL könnte das Buch Geheimnisse enthalten, die kein Sterblicher wissen darf: den wahren Namen mächtiger Unholde, böse Riten, die Verwandlungen in Todesritter oder Liehe erlauben, oder verschollene Zauber von Wesen, die so böse sind, dass ihre Namen nicht ausgesprochen werden dürfen. Unermüdliche Form: Wenn"
+        },
+        {
+          "type": "table",
+          "raw": "du das Buch mit dir führst,",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "bist du gegen den Zustand Erschöpft immun. BucH DER 86SEN DUNKELHEIT. KAPITEL 7 1 SCHÄTZE 237 Zauber: Wenn du das Buch in Händen hältst, kannst du die folgenden Zauber (Rettungswurf-SG 18) damit wirken Finger des Todes Monster beherrschen Todeskreis Tote beleben Wurde das Buch zum Wirken eines Zaubers verwendet, so kann dieser Zauber erst ab dem nächsten Morgengrauen erneut gewirkt werden. Zufällige Eigenschaften: Das Buch der Bösen Dunkelheit hat folgende zufällige Eigenschaften (siehe „Artefakte\" in diesem Kapitel) : 3 kleinere vorteilhafte Eigenschaften 1 größere vorteilhafte Eigenschaft 3 kleinere nachteilige Eigenschaften 2 größere nachteilige Eigenschaften Das Buch zerstören: Es ist möglich, Seiten aus dem Buch der Bösen Dunkelheit zu reißen, doch jedes böse Wissen auf diesen Seiten findet irgendwann den Weg zurück ins Buch (indem beispielsweise ein Autor neue Seiten hinzufügt). Wenn ein Solar das Buch entzweireißt, ist das Buch lWlO0 Jahre lang zerstört . Danach entsteht es in einem fernen Winkel des Multiversums neu. Eine Kreatur, die seit 100 Jahren auf das Buch eingestimmt ist, kann dem Text einen verborgenen Satz entnehmen. Wenn dieser Satz ins Celestische übersetzt und laut ausgesprochen wird, werden sowohl der Sprecher"
+        },
+        {
+          "type": "table",
+          "raw": "als auch das Buch in einem",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "gleißenden Blitz zerstört. Solange allerdings das Böse im Multiversum existiert, entsteht das Buch nach lWlO x 100 Jahren wieder neu. BUCH DER ÜBERSCHWÄNGLICHEN TATEN Wundersamer Gegenstand , Artefakt (erfordert Einstimmung) Als endgültige Abhandlung über alles Gute im Multiversum spielt das Buch der Überschwänglichen Taten in vielen Religionen eine wichtige Rolle. Es ist keinem bestimmten Glauben gewidmet. Die Autoren beschreiben ihre Vorstellungen von wahrer Tugend und bieten eine Anleitung zum Bekämpfen des Bösen. Das Buch der Überschwänglich en Taten bleibt selten länger an einem Ort. Sobald es gelesen wurde, verschwindet es und taucht in einem anderen Winkel des Multiversums wieder auf, wo seine moralischen Ratschläge Hoffnung in eine gefährdete Welt tragen können . Versuche, das Werk zu kopieren, können weder seine magische Natur noch seine Vorzüge für jene erfassen, die reinen Herzens und zielstrebig sind. Ein schwerer Verschluss in Form von Engelsflügeln schützt den Inhalt"
+        },
+        {
+          "type": "table",
+          "raw": "des Buchs . Nur eine Kreatur,",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "die auf das Buch eingestimmt ist, kann den Verschluss öffnen. Hat sie dies geschafft, so muss sie 80 Stunden damit verbringen,"
+        },
+        {
+          "type": "table",
+          "raw": "das Buch zu lesen und zu studieren,",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "um seinen Inhalt zu erfassen und seine Vorzüge zu erhalten. Andere Kreaturen, die das Buch zufällig geöffnet sehen , können zwar den Text lesen, doch weder dessen tiefere Bedeutung erfassen noch die Vorzüge nutzen. Wenn Unholde, Untote oder Diener von Göttern der Unteren Ebenen versuchen, das Buch zu lesen, erleiden sie 24W6 gleißenden Schaden . Dieser Schaden ignoriert 238 KAPITEL 7 1 SCHÄTZE Resistenzen und Immunitäten"
+        },
+        {
+          "type": "table",
+          "raw": ", und er kann unter keinen",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": ": Umständen vermieden oder auch nur verringert werden . Eine Kreatur, deren Trefferpunkte durch diesen Schaden auf 0 sinken, verschwindet mit einem Blitz und ist zerstört, wobei ihr Besitz zurückbleibt. Dann verschwindet das Buch, und die Einstimmung der Kreatur darauf endet. Die Vorzüge, die das Buch der Überschwänglichen Taten gewährt, wirken nur, solange du Gutes zu tun versuchst. Wenn du innerhalb von zehn Tagen nicht mindestens einen gütigen oder großzügigen Akt vollziehst oder wenn du sogar eine böse Tat begehst, verlierst du alle Vorzüge, die das Buch gewährt hat. Celestische Ruhe: Wenn du auf das Buch eingestimmt bist , bist du gegen die Zustände Bezaubert und Verängstigt immun und gegen psy chischen Schaden resistent . Wenn du die erforderliche Zeit damit verbracht hast, das Buch zu lesen und zu studieren, werden diese Vorzüge dauerhaft . Erleuchtete Magie: Wenn du die erforderliche Zeit damit verbracht hast, das"
+        },
+        {
+          "type": "table",
+          "raw": "Buch zu lesen und zu studieren,",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "zählt jeder Zauberplatz, den du zum Wirken eines Zaubers verbrauchst, als Zauberplatz des nächsthöheren Grades. Göttliche Weisheit: Wenn du die erforderliche Zeit damit verbracht"
+        },
+        {
+          "type": "table",
+          "raw": "hast, das Buch zu lesen und zu studieren,",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "wird dein Weisheitswert um 2 erhöht (auf höchstens 24) . Du kannst diesen Vorzug des Buchs höchstens einmal erhalten. Heiligenschein: Wenn du die erforderliche Zeit damit verbracht hast, das"
+        },
+        {
+          "type": "table",
+          "raw": "Buch zu lesen und zu studieren,",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "erhältst du einen schützenden Heiligenschein. Dieser spendet in einem Radius von drei Metern helles Licht und in einem Radius von weiteren drei Metern dämmriges Licht. Du kannst den Heiligenschein als Bonusaktion verwerfen oder manifestieren. Solange er manifestiert ist, bist du bei Charismawürfen (Überzeugen) im Vorteil. Außerdem sind Angriffswürfe von Unholden und Untoten, die diese im hellen Licht des Heiligenscheins gegen dich ausführen, im Nachteil. Zufällige Eigenschaften: Das Buch der Überschwänglichen Taten hat folgende zufällige Eigenschaften (siehe „Artefakte\" in diesem Kapitel): 2 kleinere vorteilhafte Eigenschaften • 2 größere vorteilhafte Eigenschaften Das Buch zerstören: Das Buch der Überschwänglichen Taten kann nicht zerstört werden. Wenn es allerdings in den Fluss Styx eingetaucht wird, werden alle Texte und Bilder von seinen Seiten entfernt, und das Buch wird lWlO0 Jahre lang seiner Kräfte beraubt. DAERNS"
+        }
+      ],
+      "raw": {
+        "title": "BRUNNEN DER VIELEN WELTEN",
+        "meta_line": "DER VIELEN WELTEN Wundersamer Gegenstand, legendär",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "BUCH DER BÖSEN DUNKELHEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 238,
+      "end_page_physical": 241
+    }
+  },
+  {
+    "name": "BUCH DER ÜBERSCHWÄNGLICHEN TATEN"
+  },
+  {
+    "name": "DAERNS FLOTTE FESTUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 239,
+      "end_page_physical": 240
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Einstimmung) Als magische Aktion kannst du diese 2,5 Zentimeter große Adamant-Statuette auf den Boden stellen und mithilfe eines Befehlsworts rasch zu einem quadratischen Turm aus Adamant wachsen lassen. Wenn du das Befehlswort wiederholst, nimmt der Turm wieder seine Statuettenform an, sofern er leer ist. Jede Kreatur im Bereich, in dem der Turm erscheint, wird in einen freien Bereich neben dem Turm geschoben. Gegenstände im Bereich, die nicht getragen oder gehalten werden, werden ebenfalls aus dem Turm geschoben. Die Seiten des Turms sindjeweils sechs Meter breit. Der Turm ist neun Meter hoch , hat Schießscharten in alle Richtungen und eine Zinnenkrone auf dem Dach. Das Innere des Turms ist in zwei Etagen unterteilt, die über eine Leiter, Treppe ode r Rampe (nach deiner Wahl) verbunden sind. Diese Leiter, Treppe oder Rampe endet an einer Falltür, die aufs Dach führt. Wenn der Turm entsteht, hat er eine einzige Tür auf Bodenniveau, die in deine Richtung weist. Die Tür öffnet sich nur auf deinen Befehl hin, den du als Bonusaktion erteilen kannst. Sie ist immun gegen den Zauber Klopfen und ähnliche Magie. Der Turm wird auf magische Weise stabilisiert, sodass er nicht umkippen kann . Dach , Tür und Wände besitzen jeweils"
+        },
+        {
+          "type": "table",
+          "raw": "eine RK von 20, 100 Trefferpunkte",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "und sind gegen Hieb-, Stichund Wuchtschaden (außer solchem durch Belagerungsausrüstung) immun und gegen alle anderen Schadensarten resistent. Wenn der Turm wieder seine Statuettenform annimmt, werden Schäden an ihm dadurch nicht repariert. Nur der Zauber Wunsch kann den Turm reparieren (diese Verwendung des Zaubers gilt als Replikat eines Zaubers des höchstens 8. Grades). Wann immer der Zauber Wunsch auf den Turm gewirkt wird, erhält dieser all seine Trefferpunkte zurück. D ÄMONEN RÜSTUNG Rüstung (beliebige"
+        }
+      ],
+      "raw": {
+        "title": "DAERNS FLOTTE FESTUNG",
+        "meta_line": "FLOTTE FESTUNG Wundersamer Gegenstand, selten (erfordert",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "DÄMONENRÜSTUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "DÄMONOMIKON VON IGGWILV"
+  },
+  {
+    "name": "DIADEM DES VERSENGENS"
+  },
+  {
+    "name": "DIEB DER NEUN LEBEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 241,
+      "end_page_physical": 241
+    },
+    "magic": {
+      "category": "Waffe",
+      "rarity": "sehr selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) Du erhältst einen Bonus von +2 auf Angriffsund Schadenswürfe mit dieser magischen Waffe. Lebensentzug: Die Waffe hat 1W8+1 Ladungen. Wenn du mit ihr eine Kreatur angreifst, die weniger als 100 Trefferpunkte hat, und beim Angriffswurf eine 20 würfelst, muss die Kreatur einen SG-15-Konstitutionsrettungswurf bestehen, oder sie stirbt sofort, da das Schwert ihr die Lebenskraft entreißt. Konstrukte und Untote bestehen den Rettungswurf automatisch. Wenn die Kreatur getötet wird, verliert die Waffe eine Ladung. Hat sie keine Ladungen mehr, so verliert sie diese Eigenschaft."
+        }
+      ],
+      "raw": {
+        "title": "DIEB DER NEUN LEBEN",
+        "meta_line": "LEBEN Waffe (beliebige einfache Waffe oder Kriegswaffe), sehr selten",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "DIMENSIONSFESSELN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "DOLCH DES GIFTS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 329,
+      "end_page_physical": 329
+    }
+  },
+  {
+    "name": "DONNERNDER ZWEIHANDKNÜPPEL"
+  },
+  {
+    "name": "DRACHENSCHUPPENPANZER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 242,
+      "end_page_physical": 243
+    }
+  },
+  {
+    "name": "DRACHENTÖTER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 243,
+      "end_page_physical": 243
+    }
+  },
+  {
+    "name": "DREIZACK DER FISCHHERRSCHAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 243,
+      "end_page_physical": 243
+    }
+  },
+  {
+    "name": "DUNKELSCHERBENAMULETT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 243,
+      "end_page_physical": 243
+    }
+  },
+  {
+    "name": "EDELSTEIN DER HELLIGKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 243,
+      "end_page_physical": 243
+    }
+  },
+  {
+    "name": "EDELSTEIN DES SEHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 243,
+      "end_page_physical": 244
+    }
+  },
+  {
+    "name": "EISENBÄNDER VON BILARRO",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 244,
+      "end_page_physical": 244
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Diese rostige Eisenkugel hat einen Durchmesser von 7,5 Zentimetern und wiegt 0,5 Kilogramm. Du kannst eine magische Aktion ausführen , um die Kugel auf eine Kreatur von höchstens riesiger Größe im Abstand von bis zu 18 Metern von dir zu werfen, die du sehen kannst . Während die Kugel in der Luft ist, öffnet sie sich zu einem Gewirr aus Metallbändern. Führe einen Fernkampfangriff aus, bei dem der Angriffsbonus deinem Geschicklichkeitsmodifikator plus deinem Übungsbonus entspricht. Bei einem Treffer ist das Ziel festgesetzt, bis du eine Bonusaktion ausführst, um ihre Freilassung zu befehlen. Dies oder ein fehlgeschlagener Angriff führt dazu, dass die Bänder sich wieder zu einer Kugel zusammenziehen. Eine Kreatur, die die Eisenbänder berühren kann (auch die festgesetzte), kann eine Aktion und einen SG-20-Stärkewurf (Athletik) ausführen, um die Bänder zu sprengen. Bei einem Erfolg wird der Gegenstand zerstört, und die festgesetzte Kreatur wird befreit. Misslingt der Wurf, so scheitern automatisch alle weiteren Versuche der Kreatur in den nächsten 24 Stunden. Wurden die Bänder verwendet, so können sie erst ab dem nächsten Morgengrauen erneut verwendet werden."
+        }
+      ],
+      "raw": {
+        "title": "EISENBÄNDER VON BILARRO",
+        "meta_line": "VON BILARRO Wundersamer Gegenstand, selten",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "EISERNE FLASCHE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 244,
+      "end_page_physical": 244
+    }
+  },
+  {
+    "name": "ELEMENTARER EDELSTEIN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 245,
+      "end_page_physical": 245
+    }
+  },
+  {
+    "name": "ELFENRÜSTUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 329,
+      "end_page_physical": 329
+    }
+  },
+  {
+    "name": "ELIXIER DER GESUNDHEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 245,
+      "end_page_physical": 245
+    }
+  },
+  {
+    "name": "ENERGIEBOGEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 245,
+      "end_page_physical": 246
+    }
+  },
+  {
+    "name": "ERSATZAUGE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 246,
+      "end_page_physical": 246
+    }
+  },
+  {
+    "name": "EWIGER LEIM",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 246,
+      "end_page_physical": 246
+    }
+  },
+  {
+    "name": "FALTBOOT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 246,
+      "end_page_physical": 246
+    }
+  },
+  {
+    "name": "FESSELSEIL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 246,
+      "end_page_physical": 246
+    }
+  },
+  {
+    "name": "FEUERSCHALE DER FEUERELEMENTAR-HERRSCHAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 247,
+      "end_page_physical": 249
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Wenn du dich im Abstand von bis zu 1,5 Metern von dieser Feuerschale befindest, kannst du eine magische Aktion ausführen, um einen Feuerelementar herbeizurufen. Der Elementar erscheint in einem freien Bereich so nahe wie möglich bei der Feuerschale. Er versteht deine Sprachen, gehorcht deinen Befehlen und ist bei deinem Initiativewert unmittelbar"
+        },
+        {
+          "type": "table",
+          "raw": "nach dir am Zug. Der Elementar",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "verschwindet, wenn eine Stunde vergangen"
+        },
+        {
+          "type": "table",
+          "raw": "ist, er stirbt oder du ihn als",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Bonusaktion verwirfst. Wurde die Feuerschale verwendet,"
+        },
+        {
+          "type": "table",
+          "raw": "so kann sie erst ab dem nächsten",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Morgengrauen erneut auf diese Weise verwendet werden. FIGUR DER WUNDERSA M EN KRA F T Wundersamer Gegenstand, Seltenheit variiert Eine Figur der wundersamen Kraft ist eine Statuette, die klein genug ist, um in eine Tasche zu passen. Wenn du eine magische Aktion ausführst,"
+        },
+        {
+          "type": "table",
+          "raw": "um die Figur auf einen Punkt",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "auf dem Boden im Abstand von bis zu 18 Metern von dir zu werfen, wird die Figur zu einer lebendigen Kreatur, wie in der jeweiligen Beschreibung unten angegeben. Wenn der Bereich, an der die Kreatur erscheinen würde, von anderen Kreaturen oder Gegenständen besetzt ist oder nicht genügend Platz für die Kreatur bietet, wird die Figur nicht zu einer Kreatur. Die Kreatur ist dir und deinen Verbündeten gegenüber freundlich gesinnt. Sie versteht deine Sprachen, gehorcht deinen Befehlen und ist bei deinem Initiativewert unmittelbar nach dir am Zug. Wenn du keine Befehle erteilst, verteidigt die Kreatur sich, führt aber keine anderen Aktionen aus. KAPITEL 7 1 SCHÄTZE FIGUR DER WUNDERSAMEN KRAFT (ÜNYX·i1UND). FIGUREN DER Die Kreatur existiert für eine für jede Figur spezifische Wirkungsdauer. Am Ende der jeweiligen Dauer wird die Kreatur wieder zur Figur. Sie wird vorzeitig wieder zur Figur, wenn die Trefferpunkte der Kreaturenform auf O sinken oder du eine magische Aktion ausführst, während du die Kreatur berührst, damit sie wieder zur Figur wird. Wenn die Kreatur wieder zur Figur geworden ist, kann diese Eigenschaft erst nach der jeweils angegebenen Dauer erneut verwendet werden. Bronze-Greif (selten): Dies ist die Bronzestatue eines wilden Greifs."
+        },
+        {
+          "type": "table",
+          "raw": "Sie kann bis zu sechs Stunden",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "lang zu einem Greif werden. Nachdem sie verwendet wurde, kann sie erst nach fünf Tagen erneut verwendet werden. Ebenholz-Fliege (selten): Diese Statuette aus Ebenholz ist wie eine Stechfliege geschnitzt. Sie kann bis zu zwölf Stunden lang zu einer Riesenfliege (siehe begleitender Wertekasten) werden und als Reittier dienen. Wenn sie verwendet wurde, kann sie erst nach zwei Tagen erneut verwendet werden. Elfenbein-Ziegen (selten): Diese Ziegenstatuetten aus Elfenbein werden immer zu dritt erschaffen. Jede Ziege sieht einzigartig aus und hat spezielle Eigenschaften. Die Eigenschaften sind: RIESENFLIEGE Großes Tier, gesinnungslos RK 11 Initiative +l (11) TP 19 (3Wl0+3) Bewegungsrate 9 m, Fliegen 18 m MOD RW MOD RW MOD RW STÄ 14 +2 +2"
+        },
+        {
+          "type": "table",
+          "raw": "GEs 13 +1 +l KoN 13 +1 +1\nINT 2 - 4 -4 WEI 10 +0 +0 CHA 3 - 4 -4",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Sinne Dunkelsicht 18 m, Passive Wahrnehmung 10 Sprachen"
+        },
+        {
+          "type": "table",
+          "raw": "HG 0 (EP 0, ÜB +2)",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "FIGUREN DER WUNDERSAMEN KRAFT (ELFENBEIN ·ZIEGEN). Ziege der Mühsal: Diese Figur kann bis zu drei Stunden lang zu einer Riesenziege werden. Wenn sie verwendet wurde, kann sie erst nach 30 Tagen erneut verwendet werden. Ziege des Reisens: Diese Figur kann zu einer großen Ziege mit den Spielwerten eines Reitpferds werden. Sie hat 24 Ladungen, und für jede angebrochene Stunde in Ziegengestalt wird eine Ladung verbraucht. Solange die Figur Ladungen hat, kannst du sie beliebig oft verwenden. Sind ihre Ladungen verbraucht, so wird sie wieder zur Figur und kann erst nach sieben Tagen erneut verwendet werden. Sie erhält dann alle Ladungen zurück. Ziege des Schreckens: Diese Figur kann bis zu drei Stunden lang zu einer Riesenziege werden. Die Ziege kann nicht angreifen, aber du kannst ihre Hörner abnehmen (ohne ihr zu schaden) und als Waffen verwenden. Ein Horn wird"
+        },
+        {
+          "type": "table",
+          "raw": "zu einer Lanze +1, das andere",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "zu einem Langschwert +2. Es erfordert eine magische Aktion, ein Horn abzunehmen. Die Waffen verschwinden und werden wieder zu Hörnern, wenn die Ziege wieder zu einer Figur wird. Wenn du auf der Ziege reitest, muss jede feindlich gesinnte Kreatur, die ihren Zug innerhalb einer Ausströmung von neun Metern beginnt, die von der Ziege ausgeht, einen SG-15-Weisheitsrettungswurfbestehen, oder sie ist verängstigt, bis eine Minute vergangen ist, du nicht mehr auf der Ziege reitest oder diese wieder zur Figur wird. Die verängstigte Kreatur wiederholt den Rettungswurf am Ende jedes ihrer Züge. Bei einem Erfolg endet der Effekt bei ihr. Bei einem Erfolg ist die Kreatur in den nächsten 24 Stunden gegen diesen Effekt immun. Wenn die Figur verwendet wurde, kann sie erst nach 15 Tagen erneut verwendet werden. Goldene Löwen (selten): Diese Goldstatuetten zweier Löwen werden immer als Paar erschaffen. Du kannst die Figuren einzeln oder gemeinsam verwenden. Jede kann für bis zu eine Stunde zu einem Löwen werden. Wenn ein Löwe verwendet wurde, kann er erst nach sieben Tagen erneut verwendet werden. FEUERSCHALE DER FEUERELEMENTAR· /iERRSCHAFT. WUNDERSAMEN KRAFT (SERPENTIN-EULE). Marmor-Elefant (selten): Diese Marmorstatuette sieht wie ein trompetender Elefant"
+        },
+        {
+          "type": "table",
+          "raw": "aus. Sie kann bis zu 24 Stunden",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "lang zu einem Elefanten werden. Wenn sie verwendet wurde, kann sie erst nach sieben Tagen erneut verwendet werden. Obsidian-Pferd (sehr selten): Dieses polierte"
+        },
+        {
+          "type": "table",
+          "raw": "ObsidianPferd kann bis zu 24 Stunden",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "lang zu einem Nachtmahr werden. Der Nachtmahr kämpft nur, um sich zu verteidigen. Nachdem sie verwendet wurde, kann sie erst nach fünf Tagen erneut verwendet werden. Wann immer du die Figur verwendest, besteht ein Risiko von zehn Prozent, dass der Nachtmahr deine Befehle ignoriert - auch den Befehl, wieder zur Figur zu werden. Wenn du auf den Nachtmahr aufsitzt, während er deine Befehle ignoriert, werdet du und der Nachtmahr sofort an einen zufälligen Ort auf der Ebene Hades transportiert, wo der Nachtmahr sich wieder in eine Figur verwandelt. Onyx-Hund (selten): Diese Onyx-Statuette kann bis zu sechs Stunden lang zu einer Dogge werden. Die Dogge hat einen Intelligenzwert"
+        },
+        {
+          "type": "table",
+          "raw": "von 8 und kann die Gemeinsprache",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "sprechen. Sie hat außerdem Blindsicht mit einer Reichweite von 18 Metern. Wenn sie verwendet wurde, kann sie erst nach sieben Tagen erneut verwendet werden. Serpentin-Eule (selten): Diese Serpentin-Statuette einer Eule kann bis zu acht Stunden lang zu einer Rieseneule werden. Solange du dich auf derselben Existenzebene wie die Eule befindest, kann sie auf unbegrenzte Reichweite telepathisch mit dir kommunizieren. Wenn sie verwendet wurde, kann sie erst nach zwei Tagen erneut verwendet werden. Silberrabe (ungewöhnlich): Diese silberne Statuette eines Raben kann bis zu zwölf Stunden lang zu einem Raben werden. Wenn sie verwendet wurde, kann sie erst nach zwei Tagen erneut verwendet werden. In ihrer Rabenform gewährt die Figur dir die Fähigkeit, Tierbote auf sie zu wirken. KAP[TEL 7 J SCHÄTZE 247 F°L A MMEN 1 iJNGE (LANGSC:HWERT). FLIEGENDER TEPPICH. 1 1 1"
+        }
+      ],
+      "raw": {
+        "title": "FEUERSCHALE DER FEUERELEMENTAR-HERRSCHAFT",
+        "meta_line": "DER F EUERELEMENTARHERRSCHAFT Wundersamer Gegenstand, selten",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "FIGUR DER WUNDERSAMEN KRAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 247,
+      "end_page_physical": 257
+    }
+  },
+  {
+    "name": "HAND VON VECNA"
+  },
+  {
+    "name": "MANTEL DER ZAUBERRESISTENZ",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 274,
+      "end_page_physical": 274
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung durch einen Druiden oder Waldläufer) Dieser Umhang ändert Farbe und Gewebe, um sich an das Gelände um dich herum anzupassen. Wenn du den Umhang trägst, kannst du ihn als Zauberfokus für deine Druidenund Waldläuferzauber verwenden. Befindest du dich in einem leicht verschleierten Bereich, so kannst du dich als Bonusaktion verstecken, selbst wenn du direkt beobachtest wirst. MANTEL OER NATUR KAPITEL 7 J SCHÄTZE 273"
+        }
+      ],
+      "raw": {
+        "title": "MANTEL DER ZAUBERRESISTENZ",
+        "meta_line": "DER NATU R Wundersamer Gegenstand, ungewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "MEDAILLON DER GEDANKEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 275,
+      "end_page_physical": 275
+    }
+  },
+  {
+    "name": "MITHRALRÜSTUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 275,
+      "end_page_physical": 276
+    }
+  },
+  {
+    "name": "MONDKLINGE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "MÜTZE DER WASSERATMUNG"
+  },
+  {
+    "name": "MYSTERIENSCHLÜSSEL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "NACHTBRILLE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 276,
+      "end_page_physical": 276
+    }
+  },
+  {
+    "name": "NIMMERVOLLER BEUTEL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 276,
+      "end_page_physical": 276
+    }
+  },
+  {
+    "name": "NOLZURS WUNDERFARBEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 277,
+      "end_page_physical": 277
+    }
+  },
+  {
+    "name": "ÖL DER GLÄTTE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 277,
+      "end_page_physical": 277
+    }
+  },
+  {
+    "name": "ÖL DER KÖRPERLOSIGKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 277,
+      "end_page_physical": 277
+    }
+  },
+  {
+    "name": "ÖL DER SCHÄRFE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 277,
+      "end_page_physical": 278
+    }
+  },
+  {
+    "name": "PANZERHANDSCHUHE DER OGERKRAFT"
+  },
+  {
+    "name": "PARFÜM DES VERHEXENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 278,
+      "end_page_physical": 278
+    }
+  },
+  {
+    "name": "PERLE DER ERFRISCHUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 278,
+      "end_page_physical": 278
+    }
+  },
+  {
+    "name": "PERLE DER ERNÄHRUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 278,
+      "end_page_physical": 278
+    }
+  },
+  {
+    "name": "PERLE DER KRAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 328,
+      "end_page_physical": 328
+    }
+  },
+  {
+    "name": "PERLE DER MACHT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 278,
+      "end_page_physical": 278
+    }
+  },
+  {
+    "name": "PFEIFE DER RAUCHMONSTER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 278,
+      "end_page_physical": 278
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "gewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Wenn du diese Pfeife rauchst, kannst du eine magische Aktion ausführen, um eine Rauchwolke in Form einer Kreatur auszustoßen, beispielsweise eines Drachen, eines Flumphs oder Slaads . Die Rauchwolke muss klein genug sein, um in einen Würfel von 30 Zentimeter Kantenlänge zu passen. Nach ein paar Sekunden verliert sie ihre Form"
+        },
+        {
+          "type": "table",
+          "raw": "und wird . zu einer gewöhnlichen",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Rauchwolke."
+        }
+      ],
+      "raw": {
+        "title": "PFEIFE DER RAUCHMONSTER",
+        "meta_line": "DER RAUCHMONSTER Wundersamer Gegenstand, gewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "PFEILFANGENDER SCHILD"
+  },
+  {
+    "name": "PROTHESE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 279,
+      "end_page_physical": 279
+    }
+  },
+  {
+    "name": "PRÜGELMUNITION",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 279,
+      "end_page_physical": 280
+    }
+  },
+  {
+    "name": "QUAALS FEDER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 279,
+      "end_page_physical": 280
+    }
+  },
+  {
+    "name": "RAUCHFASS DER LUFTELEMENTAR-HERRSCHAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 230,
+      "end_page_physical": 230
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) An dieser feinen Silberkette hängt ein schwarzer Edelsteinanhänger im Brillantschliff. Solange du ihn trägst, bist du gegen den Zustand Vergiftet sowie gegen Giftschaden immun."
+        }
+      ],
+      "raw": {
+        "title": "RAUCHFASS DER LUFTELEMENTAR-HERRSCHAFT",
+        "meta_line": "ANHÄNGER DES GIFTSCHUTZES Wundersamer Gegenstand , selten",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "RAUCHFLASCHE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 280,
+      "end_page_physical": 281
+    }
+  },
+  {
+    "name": "RIESENTÖTER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 281,
+      "end_page_physical": 281
+    }
+  },
+  {
+    "name": "RING DER DSCHINNI-BESCHWÖRUNG"
+  },
+  {
+    "name": "RING DER DURCHSICHT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 281,
+      "end_page_physical": 281
+    }
+  },
+  {
+    "name": "RING DER ELEMENTAR-HERRSCHAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 281,
+      "end_page_physical": 282
+    }
+  },
+  {
+    "name": "RING DER GEDANKENABSCHIRMUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 327,
+      "end_page_physical": 327
+    }
+  },
+  {
+    "name": "RING DER REGENERATION",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 283,
+      "end_page_physical": 283
+    }
+  },
+  {
+    "name": "RING DER RESISTENZ",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 283,
+      "end_page_physical": 283
+    }
+  },
+  {
+    "name": "RING DER STERNSCHNUPPEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 283,
+      "end_page_physical": 284
+    }
+  },
+  {
+    "name": "RING DES AUSWEICHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 281,
+      "end_page_physical": 281
+    }
+  },
+  {
+    "name": "RING DES FEDERFALLS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 282,
+      "end_page_physical": 283
+    }
+  },
+  {
+    "name": "RING DES SCHUTZES",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 283,
+      "end_page_physical": 283
+    }
+  },
+  {
+    "name": "RING DES SCHWIMMENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 283,
+      "end_page_physical": 283
+    }
+  },
+  {
+    "name": "RING DES SPRINGENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 283,
+      "end_page_physical": 283
+    }
+  },
+  {
+    "name": "RING DER TELEKINESE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 284,
+      "end_page_physical": 284
+    }
+  },
+  {
+    "name": "RING DES TIERUMGANGS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 284,
+      "end_page_physical": 284
+    }
+  },
+  {
+    "name": "RING DER UNSICHTBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 284,
+      "end_page_physical": 284
+    }
+  },
+  {
+    "name": "RING DER WÄRME",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 284,
+      "end_page_physical": 285
+    }
+  },
+  {
+    "name": "RING DES WASSERWANDELNS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "RING DES WIDDERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 285,
+      "end_page_physical": 285
+    }
+  },
+  {
+    "name": "RING DES ZAUBERSPEICHERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 284,
+      "end_page_physical": 284
+    },
+    "magic": {
+      "category": "Ring",
+      "rarity": "selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Juwelierwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Dieser Ring hat drei Ladungen und erhält täglich im Morgengrauen 1W3 verbrauchte Ladungen zurück. Wenn du den Ring trägst, kannst du eine Ladung verbrauchen, um einen der folgenden Zauber (Rettungswurf-SG 13) damit zu wirken: Tierfreundschaft Furcht (wirkt nur auf Tiere)"
+        }
+      ],
+      "raw": {
+        "title": "RING DES ZAUBERSPEICHERS",
+        "meta_line": "WASSERWANDELNS. UNSICHTBARKEIT RING DES TIERUMGANGS Ring, selten",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "RING DES ZAUBERWENDENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 285,
+      "end_page_physical": 286
+    }
+  },
+  {
+    "name": "RITTERRÜSTUNG DER KÖRPERLOSIGKEIT"
+  },
+  {
+    "name": "RIVALENMÜNZE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 286,
+      "end_page_physical": 286
+    }
+  },
+  {
+    "name": "ROBE DER AUGEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 328,
+      "end_page_physical": 328
+    }
+  },
+  {
+    "name": "ROBE DER ERZMAGIER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 329,
+      "end_page_physical": 329
+    }
+  },
+  {
+    "name": "ROBE DER NÜTZLICHEN DINGE"
+  },
+  {
+    "name": "ROBE DER SCHILLERNDEN FARBEN"
+  },
+  {
+    "name": "ROBE DER STERNE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 328,
+      "end_page_physical": 328
+    }
+  },
+  {
+    "name": "RUBIN DES KRIEGSMAGIERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 288,
+      "end_page_physical": 288
+    }
+  },
+  {
+    "name": "RÜSTUNG +1"
+  },
+  {
+    "name": "RÜSTUNG +2"
+  },
+  {
+    "name": "RÜSTUNG +3",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 288,
+      "end_page_physical": 288
+    },
+    "magic": {
+      "category": "Rüstung",
+      "rarity": "sehr selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Weberwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(+3) Wenn du diese Rüstung trägst, hast du einen Bonus auf deine Rüstungsklasse. Der Bonus wird durch ihre Seltenheit bestimmt. RÜSTUNG DER MAKELLOSIGKEIT Rüstung (beliebige"
+        }
+      ],
+      "raw": {
+        "title": "RÜSTUNG +3",
+        "meta_line": "(beliebige leichte, mittelschwere oder schwere Rüstung), selten (+1), sehr selten (+2) oder legendär",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "RÜSTUNG DER MAKELLOSIGKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 288,
+      "end_page_physical": 288
+    }
+  },
+  {
+    "name": "RÜSTUNG DER RESISTENZ",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 288,
+      "end_page_physical": 289
+    }
+  },
+  {
+    "name": "RÜSTUNG DES SCHWELENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 289,
+      "end_page_physical": 289
+    }
+  },
+  {
+    "name": "RÜSTUNG DER UNVERWUNDBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 289,
+      "end_page_physical": 289
+    },
+    "magic": {
+      "category": "Rüstung",
+      "rarity": "legendär",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Weberwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) Wenn du diese Rüstung trägst, bist du gegen Hieb-, Stichund Wuchtschaden resistent. Metallpanzer: Du kannst eine magische Aktion ausführen, um gegen Hieb-, Stichund Wuchtschaden immun zu werden. Die Immunität bleibt bestehen, bis zehn Minuten vergangen sind oder du die Rüstung nicht mehr trägst. Wurde diese Eigenschaft verwendet, so kann sie erst ab dem nächsten Morgengrauen erneut verwendet werden. RÜSTUNG DER VERWUNDBARKEIT Rüstung (beliebige"
+        }
+      ],
+      "raw": {
+        "title": "RÜSTUNG DER UNVERWUNDBARKEIT",
+        "meta_line": "U N G DER UNVERWUNDBARKEIT Rüstung (Ritterrüstung), legendär",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "RÜSTUNG DER VERWUNDBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 289,
+      "end_page_physical": 289
+    }
+  },
+  {
+    "name": "RÜSTUNG DES WASSERMANNS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 289,
+      "end_page_physical": 289
+    }
+  },
+  {
+    "name": "SATTEL DES KAVALIERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 290,
+      "end_page_physical": 290
+    }
+  },
+  {
+    "name": "SCHALE DER WASSERELEMENTAR-HERRSCHAFT"
+  },
+  {
+    "name": "SCHILD DER GESCHOSSANZIEHUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 290,
+      "end_page_physical": 290
+    },
+    "magic": {
+      "category": "Rüstung",
+      "rarity": "gewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Weberwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Die Front dieses Schildes ist wie ein Gesicht geformt. Wenn du den Schild hältst, kannst du eine Bonusaktion ausführen, um den Ausdruck des Gesichts zu verändern."
+        }
+      ],
+      "raw": {
+        "title": "SCHILD DER GESCHOSSANZIEHUNG",
+        "meta_line": "DES GESICHTSAUSDRUCK S Rüstung (Schild), gewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "SCHILD +1"
+  },
+  {
+    "name": "SCHILD +2"
+  },
+  {
+    "name": "SCHILD +3",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "SCHILD DES GESICHTSAUSDRUCKS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "SCHILD DES KAVALIERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "SCHLÜPFRÜSTUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 291,
+      "end_page_physical": 291
+    },
+    "magic": {
+      "category": "Rüstung",
+      "rarity": "gewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Weberwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Du kannst diese Rüstung als magische Aktion"
+        }
+      ],
+      "raw": {
+        "title": "SCHLÜPFRÜSTUNG",
+        "meta_line": "leichte, mittelschwere oder schwere Rüstung), gewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "SCHRECKENSHELM",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 291,
+      "end_page_physical": 291
+    }
+  },
+  {
+    "name": "SCHRIFTROLLE DES SCHUTZES"
+  },
+  {
+    "name": "SCHRIFTROLLE DER TITANENBESCHWÖRUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 291,
+      "end_page_physical": 292
+    }
+  },
+  {
+    "name": "SCHUHE DES SPINNENKLETTERNS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 292,
+      "end_page_physical": 292
+    }
+  },
+  {
+    "name": "SCHWARZKLINGE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 292,
+      "end_page_physical": 292
+    }
+  },
+  {
+    "name": "SCHWEBEKUGEL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 293,
+      "end_page_physical": 293
+    }
+  },
+  {
+    "name": "SCHWERT DER ANTWORT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 293,
+      "end_page_physical": 294
+    }
+  },
+  {
+    "name": "SCHWERT VON KAS"
+  },
+  {
+    "name": "SCHWERT DES LEBENSENTZUGS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 294,
+      "end_page_physical": 294
+    },
+    "magic": {
+      "category": "Waffe",
+      "rarity": "sehr selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Einstimmung) Wenn du mit dieser magischen Waffe einen Gegenstand angreifst und triffst, maximierst du die Waffenschadenswürfel gegen das Ziel. Wenn du eine Kreatur mit dieser Waffe angreifst und beim Angriffswurf eine 20 würfelst, erleidet das Ziel zusätzlich 14 Hiebschaden und erhält eine Erschöpfungsstufe. SC H WERT DER VERGE L TUNG Waffe (Glefe, Krummsäbel, Kurzschwert, Langschwert, Rapier oder Zweihandschwert), ungewöhnlich (erfordert Einstimmung) Du erhältst einen Bonus von +1 auf Angriffsund Schadenswürfe, die du mit dieser magischen Waffe ausführst. Fluch: Diese Waffe ist verflucht und von einem rachsüchtigen Geist besessen. Wenn du dich auf sie einstimmst, ergreift der Fluch auch dich. Solange du verflucht bist, bist du nicht bereit, dich von der Waffe zu trennen. Du führst"
+        },
+        {
+          "type": "table",
+          "raw": "sie stets mit dir. Auf diese Waffe",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "eingestimmt, bist du bei Angriffswürfen mit anderen Waffen im Nachteil. Solange du die Waffe außerdem mit dir führst, musst du einen SG-15-Weisheitsrettungswurf bestehen, wann immer du im Kampf Schaden durch eine andere Kreatur erleidest. Misslingt der Wurf, so musst du diese Kreatur angreifen, bis deine Trefferpunkte oder die der Kreatur auf 0 sinken oder du die Kreatur nicht mehr in Nahkampfreichweite hast. Du kannst den Fluch auf die üblichen Arten brechen. Alternativ kann der Zauber Verbannung auf die Waffe gewirkt werden, um den rachsüchtigen Geist auszutreiben. In diesem Fall wird die Waffe zu einer Waffe +1 ohne weitere Eigenschaften. SCHWERT DER VERWUNDUNG Waffe (Glefe, Krummsäbel, Kurzschwert, Langschwert, Rapier oder Zweihandschwert), selten (erfordert Einstimmung) Wenn du mit dieser magischen Waffe eine Kreatur angreifst und triffst, erleidet das Ziel zusätzlich 2W6 nekrotischen Schaden und muss einen SG-15-Konstitutionsrettungswurf bestehen, oder es kann eine Stunde lang keine Trefferpunkte zurückerhalten. Das Ziel wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt"
+        }
+      ],
+      "raw": {
+        "title": "SCHWERT DES LEBENSENTZUGS",
+        "meta_line": "DER SCHÄRFE Waffe (Glefe, Krummsäbel, Langschwert oder Zweihandschwert), sehr selten (erfordert",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "SCHWERT DER MONDBERÜHRUNG"
+  },
+  {
+    "name": "SCHWERT DER SCHÄRFE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 294,
+      "end_page_physical": 294
+    }
+  },
+  {
+    "name": "SCHWERT DER VERGELTUNG"
+  },
+  {
+    "name": "SCHWERT DER VERWUNDUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 294,
+      "end_page_physical": 294
+    }
+  },
+  {
+    "name": "SCHWURBOGEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 294,
+      "end_page_physical": 295
+    }
+  },
+  {
+    "name": "SEELENSPIEGEL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 295,
+      "end_page_physical": 296
+    }
+  },
+  {
+    "name": "SEIL DES FLICKENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "SEIL DES KLETTERNS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "SKARABÄUS DES SCHUTZES",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 296,
+      "end_page_physical": 296
+    }
+  },
+  {
+    "name": "SONNENKLINGE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 296,
+      "end_page_physical": 296
+    }
+  },
+  {
+    "name": "SPRECHENDE PUPPE"
+  },
+  {
+    "name": "STAB DER BEZAUBERUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 297,
+      "end_page_physical": 297
+    }
+  },
+  {
+    "name": "STAB DER BLUMEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 297,
+      "end_page_physical": 297
+    }
+  },
+  {
+    "name": "STAB DES BLITZES UND DONNERS"
+  },
+  {
+    "name": "STAB DES FEUERS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 297,
+      "end_page_physical": 297
+    }
+  },
+  {
+    "name": "STAB DES FROSTS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 297,
+      "end_page_physical": 299
+    }
+  },
+  {
+    "name": "STAB DER HEILUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 332,
+      "end_page_physical": 332
+    }
+  },
+  {
+    "name": "STAB DER INSEKTENSCHWÄRME",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 332,
+      "end_page_physical": 332
+    }
+  },
+  {
+    "name": "STAB DER KREUZOTTER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 299,
+      "end_page_physical": 299
+    }
+  },
+  {
+    "name": "STAB DER MACHT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 299,
+      "end_page_physical": 299
+    }
+  },
+  {
+    "name": "STAB DER MAGIER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 299,
+      "end_page_physical": 300
+    }
+  },
+  {
+    "name": "STAB DER PYTHON",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 300,
+      "end_page_physical": 301
+    }
+  },
+  {
+    "name": "STAB DES SCHLAGENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 301,
+      "end_page_physical": 301
+    }
+  },
+  {
+    "name": "STAB DER VERKÜMMERUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 301,
+      "end_page_physical": 301
+    }
+  },
+  {
+    "name": "STAB DER VOGELRUFE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "STAB DER WALDLANDE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 301,
+      "end_page_physical": 302
+    }
+  },
+  {
+    "name": "STANGE DES ANGELNS"
+  },
+  {
+    "name": "STANGE DES SCHRUMPFENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 301,
+      "end_page_physical": 301
+    },
+    "magic": {
+      "category": "Stab",
+      "rarity": "sehr selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Einstimmung) Dieser Stab kann als magischer Kampfstab geführt werden. Der Kampfstab gewährt einen Bonus von +3 auf Angriffsund Schadenswürfe, die mit ihm ausgeführt werden. Der Stab hat zehn Ladungen. Wenn du bei einem Nahkampfangriff mit ihm triffst, kannst du bis zu drei Ladungen verbrauchen. Das Ziel erleidet für jede verbrauchte Ladung zusätzlich 1W6 Energieschaden. Ladungen zurückerhalten: Der Stab erhält täglich im Morgengrauen 1W6+4 verbrauchte Ladungen zurück. Wenn du die letzte Ladung verbraucht hast, würfle mit 1W20."
+        },
+        {
+          "type": "table",
+          "raw": "Bei einer 1 wird der Stab zu einem",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "nichtmagischen"
+        }
+      ],
+      "raw": {
+        "title": "STANGE DES SCHRUMPFENS",
+        "meta_line": "SCHRUMPFENS. 300 STAB DES SCHLAGENS Stab, sehr selten (erfordert",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "STAUB DES NIESENS UND ERSTICKENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 302,
+      "end_page_physical": 303
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Dieses Pulver ähnelt feinem Sand. Es ist ausreichend für einen Einsatz. Wenn du eine Verwenden-Aktion ausführst, um den Staub in die Luft zu werfen, seid du und alle Kreaturen und Gegenstände innerhalb einer Ausströmung von drei Metern, die von dir ausgeht, 2W4 Minuten lang unsichtbar. Die Dauer gilt für alle Ziele gleichermaßen. Der Staub wird verbraucht, wenn seine Magie wirkt. Wenn eine betroffene Kreatur einen Angriffswurf ausführt, der Schaden bewirkt, oder wenn sie einen Zauber wirkt, endet der Zustand Unsichtbar bei ihr sofort. KAPITEL 7 1 SCHATZE 301 STEINE DER STEIN"
+        }
+      ],
+      "raw": {
+        "title": "STAUB DES NIESENS UND ERSTICKENS",
+        "meta_line": "DES VERSCHW I NDENS Wundersamer Gegenstand, ungewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "STAUB DER TROCKENHEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 302,
+      "end_page_physical": 303
+    }
+  },
+  {
+    "name": "STAUB DES VERSCHWINDENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 327,
+      "end_page_physical": 327
+    }
+  },
+  {
+    "name": "STEIN DER ERDELEMENTAR-HERRSCHAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 303,
+      "end_page_physical": 303
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) Wenn du diesen polierten Achat mit dir führst, erhältst du einen Bonus von +1 auf Attributsund Rettungswürfe."
+        }
+      ],
+      "raw": {
+        "title": "STEIN DER ERDELEMENTAR-HERRSCHAFT",
+        "meta_line": "DES GLÜCKS (GLÜCKSSTEIN) Wundersamer Gegenstand, ungewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "STEIN DES GLÜCKS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 303,
+      "end_page_physical": 303
+    }
+  },
+  {
+    "name": "STEINE DER VERSTÄNDIGUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 303,
+      "end_page_physical": 303
+    }
+  },
+  {
+    "name": "STIEFEL DER ELFEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 303,
+      "end_page_physical": 303
+    }
+  },
+  {
+    "name": "STIEFEL DER FALSCHEN FÄHRTE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 303,
+      "end_page_physical": 304
+    }
+  },
+  {
+    "name": "STIEFEL DER GESCHWINDIGKEIT"
+  },
+  {
+    "name": "STIEFEL DES SCHREITENS UND SPRINGENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 303,
+      "end_page_physical": 303
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "gewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) Wenn du diese Stiefel trägst, kannst du bewirken, dass sie Spuren eines beliebigen Humanoiden deiner Größe"
+        }
+      ],
+      "raw": {
+        "title": "STIEFEL DES SCHREITENS UND SPRINGENS",
+        "meta_line": "DER FALSCHEN FÄHRTE Wundersamer Gegenstand, gewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "STIEFEL DES SCHWEBENS"
+  },
+  {
+    "name": "STIEFEL DER WINTERLANDE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 304,
+      "end_page_physical": 304
+    }
+  },
+  {
+    "name": "STIRNBAND DER INTELLIGENZ",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 304,
+      "end_page_physical": 304
+    }
+  },
+  {
+    "name": "STREITKOLBEN DES NIEDERSTRECKENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 304,
+      "end_page_physical": 304
+    }
+  },
+  {
+    "name": "STREITKOLBEN DES TERRORS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 304,
+      "end_page_physical": 304
+    }
+  },
+  {
+    "name": "STREITKOLBEN DES ZUSAMMENBRUCHS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 304,
+      "end_page_physical": 305
+    }
+  },
+  {
+    "name": "SYLVANISCHE KRALLE"
+  },
+  {
+    "name": "TALISMAN DES ABSOLUT BÖSEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 305,
+      "end_page_physical": 305
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "legendär",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung durch einen Kleriker oder Paladin) Dieser Talisman ist ein mächtiges Symbol des Guten. Unholde und Untote, die ihn berühren, erleiden 304 KAPITEL 7 1 SCHÄTZE 8W6 gleißenden Schaden. Solange sie den Talisman tragen oder halten, erleiden sie den Schaden am Ende jedes ihrer Züge erneut. Heiliges Symbol: Du kannst den Talisman als heiliges Symbol verwenden. Wenn du ihn trägst oder hältst, erhältst du einen Bonus von +2 auf Zauberangriffswürfe. Reiner Tadel: Der Talisman hat sieben Ladungen. Wenn du den Talisman trägst oder hältst, kannst du eine magische Aktion ausführen und eine Ladung verbrauchen, um auf eine Kreatur auf dem Boden im Abstand von bis zu 36 Metern von dir zu zielen, die du sehen kannst. Unter dem Ziel öffnet sich ein feuriger Erdspalt, und das Ziel führt einen SG-20-Geschicklichkeitsrettungswurf aus. Wenn das Ziel ein Unhold oder ein Untoter ist, so ist es beim Rettungswurf im Nachteil. Misslingt der Wurf, so fällt"
+        },
+        {
+          "type": "table",
+          "raw": "das Ziel in den Spalt, wird zerstört",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "und hinterlässt keinerlei Überreste. Bei einem erfolgreichen Rettungswurf stürzt das Ziel nicht in den Spalt, erleidet durch das Martyrium jedoch 4W6 psychischen Schaden. In jedem Fall schließt sich der Spalt danach und hinterlässt seinerseits keine Spuren. Wenn du die letzte Ladung verbraucht hast, löst sich der Talisman in goldene Lichtfunken auf und ist zerstört. TANZENDES SCHWERT Waffe (Krummsäbel, Kurzschwert, Langschwert, Rapier oder Zweihandschwert), sehr selten (erfordert Einstimmung) Du kannst eine Bonusaktion ausführen, um diese magische Waffe in die Luft zu werfen. In diesem Fall beginnt sie zu schweben, fliegt bis zu neun Meter weit und greift eine Kreatur deiner Wahl im Abstand von bis zu 1,5 Metern von sich an. Die Waffe verwendet deinen Angriffswurf und fügt Schadenswürfen deinen Attributsmodifikator hinzu. Solange die Waffe schwebt, kannst du eine Bonusaktion ausführen,"
+        },
+        {
+          "type": "table",
+          "raw": "um sie bis zu neun Meter",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "weit an einen anderen Ort im Abstand von bis zu neun Metern von dir fliegen zu lassen. Als Teil derselben Bonusaktion kannst du die Waffe eine Kreatur im Abstand von bis zu 1,5 Metern von sich angreifen lassen. Wenn die schwebende Waffe viermal angegriffen"
+        },
+        {
+          "type": "table",
+          "raw": "hat, fliegt sie zu dir und versucht,",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "in deine Hand zurückzukehren. Falls du keine Hand frei hast, fällt die Waffe in deinem Bereich zu Boden. Falls die Waffe keinen freien Weg zu dir finden kann, bewegt sie sich so weit wie möglich in deine Richtung und fällt dann zu Boden."
+        },
+        {
+          "type": "table",
+          "raw": "Sie hört auch auf zu schweben,",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "wenn du sie ergreifst oder dich weiter"
+        }
+      ],
+      "raw": {
+        "title": "TALISMAN DES ABSOLUT BÖSEN",
+        "meta_line": "DES REINEN GUTEN Wundersamer Gegenstand, legendär",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "TALISMAN DES NICHTS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 305,
+      "end_page_physical": 305
+    }
+  },
+  {
+    "name": "TALISMAN DES REINEN GUTEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 305,
+      "end_page_physical": 305
+    }
+  },
+  {
+    "name": "TANZENDES SCHWERT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 305,
+      "end_page_physical": 305
+    }
+  },
+  {
+    "name": "TENTAKELZEPTER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 332,
+      "end_page_physical": 355
+    }
+  },
+  {
+    "name": "TOPF DES ERWACHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 332
+    }
+  },
+  {
+    "name": "TRAGBARES LOCH",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 306,
+      "end_page_physical": 307
+    }
+  },
+  {
+    "name": "TRANK DER FAUSTKAMPFS"
+  },
+  {
+    "name": "TRANK DES FEUERATEMS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 307,
+      "end_page_physical": 307
+    }
+  },
+  {
+    "name": "TRANK DES FLIEGENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "TRANK DER GASFÖRMIGEN GESTALT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 307,
+      "end_page_physical": 307
+    }
+  },
+  {
+    "name": "TRANK DES GEDANKENLESENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 307,
+      "end_page_physical": 307
+    }
+  },
+  {
+    "name": "TRANK DER GESCHWINDIGKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 307,
+      "end_page_physical": 308
+    }
+  },
+  {
+    "name": "TRANK DER LANGLEBIGKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 308,
+      "end_page_physical": 308
+    }
+  },
+  {
+    "name": "TRANK DER MÄCHTIGEN UNSICHTBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 308,
+      "end_page_physical": 308
+    }
+  },
+  {
+    "name": "TRANK DER RESISTENZ",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 308,
+      "end_page_physical": 308
+    }
+  },
+  {
+    "name": "TRANK DER RIESENSTÄRKE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 308,
+      "end_page_physical": 308
+    },
+    "magic": {
+      "category": "Trank",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Alchemistenausrüstung",
+          "Kräuterkundeausrüstung"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Wenn du diesen Trank zu dir nimmst , kannst du den Zauber Tierfreundschaft (Rettungswurf-SG 13) des 3. Grades wirken. Wird dieser schlammfarbene Tr ank geschüttelt, so werden kleine Stücke sichtbar: eine Fischschuppe, eine Kolibrifeder, eine Katzenkralle oder ein Eichhörnchenhaar. TR ANK DER UNSICHTBARKEIT Trank, seltrn Der Behälter für diesen Trank sieht leer aus, fühlt sich aber an, als wäre Flüssigkeit darin. Wenn du diesen Trank zu dir nimmst, bist du eine Stunde lang unsichtbar. Der Effekt endet vorzeitig, wenn du einen Angriffswurf ausführst, Schaden bewirkst"
+        }
+      ],
+      "raw": {
+        "title": "TRANK DER RIESENSTÄRKE",
+        "meta_line": "29 Legendär TRANK DER TIERFREUNDSCHAFT Trank, ungewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "TRANK DER TIERFREUNDSCHAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 308,
+      "end_page_physical": 308
+    }
+  },
+  {
+    "name": "TRANK DER UNSICHTBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 328,
+      "end_page_physical": 328
+    }
+  },
+  {
+    "name": "TRANK DER UNVERWUNDBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 308,
+      "end_page_physical": 308
+    }
+  },
+  {
+    "name": "TRANK DER VERKLEINERUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 309
+    }
+  },
+  {
+    "name": "TRANK DES VERSTEHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 309
+    }
+  },
+  {
+    "name": "TRANK DER VITALITÄT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 309
+    }
+  },
+  {
+    "name": "TRANK DES WACHSTUMS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 309
+    }
+  },
+  {
+    "name": "TRANK DER WASSERATMUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 309
+    }
+  },
+  {
+    "name": "TRICKBEUTEL",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 309
+    }
+  },
+  {
+    "name": "TRICKSCHLOSS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 310
+    }
+  },
+  {
+    "name": "ÜBERSCHUTT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 310
+    }
+  },
+  {
+    "name": "UHRWERKAMULETT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 310,
+      "end_page_physical": 310
+    }
+  },
+  {
+    "name": "UMHANG DES AUFBLÄHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 310,
+      "end_page_physical": 310
+    }
+  },
+  {
+    "name": "UMHANG DER ELFEN"
+  },
+  {
+    "name": "UMHANG DER FLEDERMAUS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 311,
+      "end_page_physical": 311
+    }
+  },
+  {
+    "name": "UMHANG DES MANTAROCHENS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 311,
+      "end_page_physical": 311
+    }
+  },
+  {
+    "name": "UMHANG DES SCHARLATANS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 311,
+      "end_page_physical": 311
+    }
+  },
+  {
+    "name": "UMHANG DES SCHUTZES"
+  },
+  {
+    "name": "UMHANG DER SPINNENTIERE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 328,
+      "end_page_physical": 329
+    }
+  },
+  {
+    "name": "UMHANG DER UNSICHTBARKEIT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 312,
+      "end_page_physical": 312
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "gewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Wenn du diesen Umhang trägst, kannst du eine Bonusaktion ausführen, um seinen Stil, seine Farbe und die augenscheinliche Materialqualität zu ändern . Das Gewicht des Umhangs wird dabei nicht geändert. Der Umhang bleibt unabhängig von seinem Erscheinungsbild stets nur ein Umhang. Er kann zwar aussehen wie andere magische Umhänge, erhält dadurch aber nicht deren magische Eigenschaften."
+        },
+        {
+          "type": "table",
+          "raw": "LJ N IV E R SHLES",
+          "columns": null,
+          "rows": null
+        }
+      ],
+      "raw": {
+        "title": "UMHANG DER UNSICHTBARKEIT",
+        "meta_line": "DER VIELEN MODEN Wundersamer Gegenstand, gewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "UMHANG DER VERLAGERUNG"
+  },
+  {
+    "name": "UMHANG DER VIELEN MODEN",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 312,
+      "end_page_physical": 313
+    }
+  },
+  {
+    "name": "UNBEWEGLICHES ZEPTER"
+  },
+  {
+    "name": "UNIVERSELLES LÖSUNGSMITTEL"
+  },
+  {
+    "name": "UNVERWÜSTLICHES ZAUBERBUCH"
+  },
+  {
+    "name": "VERSILBERTE WAFFE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 313,
+      "end_page_physical": 313
+    },
+    "magic": {
+      "category": "Waffe",
+      "rarity": "gewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Diese magische Waffe wurde in einem alchemistischen Prozess mit Silber überzogen. Wenn du mit ihr einen kritischen Treffer gegen eine gestaltgewandelte Kreatur erzielst, bewirkt die Waffe zusätzlichen Schaden in Höhe"
+        }
+      ],
+      "raw": {
+        "title": "VERSILBERTE WAFFE",
+        "meta_line": "WAFFE Waffe (beliebige einfache Waffe oder Kriegswaffe), gewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "VERTEIDIGER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 313,
+      "end_page_physical": 313
+    }
+  },
+  {
+    "name": "VERZAUBERTES BESCHLAGENES LEDER"
+  },
+  {
+    "name": "VETTELAUGE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 331,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "WÄCHTERSCHILD",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 314,
+      "end_page_physical": 314
+    }
+  },
+  {
+    "name": "WAFFE +1",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 314,
+      "end_page_physical": 314
+    },
+    "magic": {
+      "category": "Waffe",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(+1), selten (+2) oder sehr selten (+3) Du hast einen Bonus auf Angriffsund Schadenswürfe mit dieser magischen Waffe. Der Bonus hängt von der Seltenheit der Waffe ab. WAFFE"
+        }
+      ],
+      "raw": {
+        "title": "WAFFE +1",
+        "meta_line": "+3 Waffe (beliebige einfache Waffe oder Kriegswaffe), ungewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "WAFFE +2",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 329,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "WAFFE +3",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 330
+    }
+  },
+  {
+    "name": "WAFFE DER WARNUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 314,
+      "end_page_physical": 314
+    },
+    "magic": {
+      "category": "Waffe",
+      "rarity": "ungewöhnlich",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Ledererwerkzeug",
+          "Schmiedewerkzeug",
+          "Holzschnitzwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "(erfordert Einstimmung) Wenn sich diese Waffe in deiner Reichweite befindet und du auf sie eingestimmt bist, erhaltet du und deine Verbündeten im Abstand von bis zu neun Metern von dir die folgenden Vorzüge: Alarm: Die Waffe weckt auf magische Art jede betroffene Kreatur, die auf natürliche Art schläft, sobald es zu einem Kampf kommt. Dieser Vorzug weckt keine Kreaturen, die auf magische Art zum Einschlafen gebracht wurden. Übernatürliche Bereitschaft: Betroffene Kreaturen sind bei ihren Initiativewürfen im Vorteil. WELLE Waffe (Dreizack), Artefakt (erfordert Einstimmung) Welle wird im Gewölbe des Weißfederbergs verwahrt. Die Waffe ist mit stilisierten Wellen, Muscheln und Meereskreaturen verziert. Du erhältst einen Bonus von +3 auf Angriffsund Schadenswürfe, die du mit dieser magischen Waffe ausführst. Wenn du bei einem Angriffswurf mit dieser Waffe eine 20 würfelst, erleidet das Ziel zusätzlich 21 nekrotischen Schaden. Wenn du Welle hältst, erhältst du die folgenden Vorzüge: Kampfbereit: Du bist bei Initiativewürfen im Vorteil. Anpassung an Wasser: Wenn du unter Wasser bist, umgibt eine Luftblase deinen Kopf, sodass du in dieser Umgebung normal atmen kannst. Aquatische Herrschaft: Welle hat drei Ladungen und erhält täglich im Morgengrauen 1W3 verbrauchte Ladungen zurück. Wenn du die Waffe trägst, kannst du eine Ladung verbrauchen, um Tier beherrschen (Rettungswurf-SG 20) mit der Waffe auf ein Tier zu wirken, das über eine Schwimmbewegungsrate verfügt. Kugel der Unverwundbarkeit: Wenn du Welle hältst, kannst du den Zauber Kugel der Unverwundbarkeit auf dem 9. Grad damit wirken. Wurde diese Eigenschaft verwendet,"
+        },
+        {
+          "type": "table",
+          "raw": "so kann sie erst ab dem nächsten",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Morgengrauen erneut verwendet werden. +,; Intelligenz: Welle ist eine intelligente, neutrale Waffe mit einem Intelligenzwert von 14, einem Weisheitswert von 10 und einem Charismawert von 18. Sie hat Gehör und Dunkelsicht auf bis zu 36 Meter. Die Waffe kommuniziert telepathisch mit ihrem Träger und spricht Aqual. Persönlichkeit: Welle ermuntert Sterbliche eifrig zur Verehrung von Meeresgöttern und hat die Angewohnheit, Seemannslieder zu summen. Wenn der Träger die Ziele der Waffe in der Welt nicht voranbringt, kommt es zum Konflikt. Welle zerstören:"
+        },
+        {
+          "type": "table",
+          "raw": "Welle kann nur auf der Insel",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Donnerschmiede zerstört werden, wo sie geschmiedet wurde. Die Waffe muss von einem Sturmriesen oder jemandem mit der Stärke von Sturmriesen eingeschmolzen werden. Wird Welle zerstört, so erzürnt dies einen Meeresgott, der mächtige Diener aussendet, um die Insel anzugreifen und die Zerstörer"
+        }
+      ],
+      "raw": {
+        "title": "WAFFE DER WARNUNG",
+        "meta_line": "DER WARNUNG Waffe (beliebige einfache Waffe oder Kriegswaffe), ungewöhnlich",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "WELLE",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 314,
+      "end_page_physical": 314
+    }
+  },
+  {
+    "name": "WINDFÄCHER",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 314,
+      "end_page_physical": 314
+    }
+  },
+  {
+    "name": "WÜRFEL DER EBENEN"
+  },
+  {
+    "name": "WÜRFEL DER HERBEIRUFUNG",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 314,
+      "end_page_physical": 315
+    }
+  },
+  {
+    "name": "WÜRFEL DER KRAFT",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 315,
+      "end_page_physical": 315
+    }
+  },
+  {
+    "name": "WÜRFEL DES SCHARLATANS",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 330,
+      "end_page_physical": 331
+    }
+  },
+  {
+    "name": "Malutensilien"
+  },
+  {
+    "name": "Materialkomponentenbeutel"
+  },
+  {
+    "name": "Maurerwerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 350,
+      "end_page_physical": 355
+    }
+  },
+  {
+    "name": "Metallkügelchen"
+  },
+  {
+    "name": "Musikinstrument",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 263,
+      "end_page_physical": 264
+    }
+  },
+  {
+    "name": "Navigationswerkzeug"
+  },
+  {
+    "name": "Netz"
+  },
+  {
+    "name": "Priesterausrüstung"
+  },
+  {
+    "name": "Rammbock (tragbar)"
+  },
+  {
+    "name": "Rationen",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 341,
+      "end_page_physical": 347
+    }
+  },
+  {
+    "name": "Robe",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 288,
+      "end_page_physical": 288
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "sehr selten",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Einstimmung) Diese Robe hat drei Ladungen und erhält täglich im Morgengrauen 1W3 verbrauchte Ladungen zurück. Wenn du sie trägst, kannst du eine magische Aktion ausführen und eine Ladung verbrauchen. Daraufhin zeigt die Robe bis zum Ende deines nächsten Zugs ein wechselndes Muster aus schillernden Farben. Während dieser Dauer spendet die Robe in einem Radius von neun Metern helles Licht und in einem Radius von weiteren neun Metern dämmriges Licht. Kreaturen, die dich sehen können, sind bei Angriffswürfen gegen dich im Nachteil. Jede Kreatur im hellen Licht, die dich sehen kann, wenn der Effekt der Robe aktiviert wird, muss einen SG-15-Weisheitsrettungswurfbestehen, oder sie ist betäubt, bis der Effekt endet."
+        }
+      ],
+      "raw": {
+        "title": "Robe",
+        "meta_line": "DER SCHILLERNDEN FARBEN Wundersamer Gegenstand, sehr selten (erfordert",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "Rucksack",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 257,
+      "end_page_physical": 274
+    }
+  },
+  {
+    "name": "Sack",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 287,
+      "end_page_physical": 287
+    }
+  },
+  {
+    "name": "Schaufel"
+  },
+  {
+    "name": "Schlafsack"
+  },
+  {
+    "name": "Schloss",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 309,
+      "end_page_physical": 310
+    }
+  },
+  {
+    "name": "Schmiedewerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 348,
+      "end_page_physical": 350
+    }
+  },
+  {
+    "name": "Schreinerwerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 350,
+      "end_page_physical": 350
+    }
+  },
+  {
+    "name": "Schusterwerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 350,
+      "end_page_physical": 350
+    }
+  },
+  {
+    "name": "Seil",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 296,
+      "end_page_physical": 296
+    }
+  },
+  {
+    "name": "Spiegel",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 295,
+      "end_page_physical": 296
+    }
+  },
+  {
+    "name": "Spielset"
+  },
+  {
+    "name": "Stachel, Eisen"
+  },
+  {
+    "name": "Stange",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 302,
+      "end_page_physical": 302
+    }
+  },
+  {
+    "name": "Säure",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 242,
+      "end_page_physical": 243
+    }
+  },
+  {
+    "name": "Tinte"
+  },
+  {
+    "name": "Tintenfüller"
+  },
+  {
+    "name": "Topf, Eisen"
+  },
+  {
+    "name": "Trinkschlauch"
+  },
+  {
+    "name": "Truhe",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 287,
+      "end_page_physical": 288
+    }
+  },
+  {
+    "name": "Töpferwerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 350,
+      "end_page_physical": 350
+    }
+  },
+  {
+    "name": "Tüftlerwerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 350,
+      "end_page_physical": 350
+    }
+  },
+  {
+    "name": "Unterhaltungskünstler-Ausrüstung",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 265,
+      "end_page_physical": 268
+    },
+    "magic": {
+      "category": "Wundersamer Gegenstand",
+      "rarity": "legendär",
+      "requires_attunement": false,
+      "attunement": {
+        "required": false,
+        "condition": null
+      },
+      "crafting": {
+        "tools": [
+          "Tüftlerwerkzeug"
+        ],
+        "tool_basis": "category_mapping",
+        "tool_note": null
+      },
+      "tags": [
+        "magisch"
+      ],
+      "facts": {
+        "bonuses": {
+          "ac": null,
+          "attack_roll": null,
+          "damage_roll": null,
+          "save_dc": null,
+          "spell_attack": null
+        },
+        "charges": {
+          "max": null,
+          "recharge": null
+        },
+        "activation": {
+          "time": null,
+          "action_type": null,
+          "trigger": null,
+          "command_word": null
+        },
+        "duration": null,
+        "range": null,
+        "area": null,
+        "saving_throw": {
+          "ability": null,
+          "dc": null
+        },
+        "spells_granted": [],
+        "requirements": []
+      },
+      "text_blocks": [
+        {
+          "type": "paragraph",
+          "text": "Dieser Satz Karten ist meist in einer Schatulle oder einem Beutel zu finden. Die Karten sind aus Elfenbein oder Pergament gefertigt. Die meisten (75 Prozent) dieser Kartensätze haben 13 Karten, und einige haben 22. Verwende die entsprechende Spalte der Tabelle „Karten des Schicksals\", wenn du die gezogenen Karten zufällig bestimmst. Zunächst musst du ansagen, wie viele Karten du ziehen möchtest. Dann ziehst du diese Anzahl zufällig. Karten, die über die angesagte Anzahl hinaus gezogen werden, haben keinen Effekt. Anderenfalls wirkt die Magie einer Karte, sobald diese gezogen wurde. Zwischen dem Ziehen jeder Karte darf nicht mehr als eine Stunde vergehen. Wenn du weniger als die angesagte Anzahl von Karten ziehst, fliegen die übrigen Karten von selbst aus dem Stapel und entfalten ihre Effekte gleichzeitig. Sobald eine Karte gezogen wurde, verschwindet sie. Sofern"
+        },
+        {
+          "type": "table",
+          "raw": "es sich nicht um den Narren",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "oder den Hofnarren handelt, erscheint die Karte wieder im Ziehstapel, sodass dieselbe Karte zweimal gezogen werden kann. (Wenn sich der Narr oder der Hofnarr nicht mehr im Stapel befinden, jedoch als Würfelergebnis auftauchen, würfle erneut anhand der Tabelle.) KARTEN DES SCHICKSALS lWlOO lWlOO (Stapel mit 13 Karten) (Stapel mit 22 Karten) Karte 1-5 Balance 6-10 Edelstein 1-8 11-14 Euryale 9-16 15-18 Flammen 17-24 19-23 Hofnarr 24-28 Komet 29-32 Krallen 25-28 33-36 leere 29-36 37-41 Mond 42-45 Narr 46-49 Rätsel 37-44 50-54 Ritter 45-52 55-58 Ruin 59-63 Schicksale 53-60 64-68 Schlüssel 61-68 69-72 Schurke 69-76 73-77 Sonne 77-84 78-82 Stern 85-92 83-87 Thron 7 93-100 88-91 Totenschädel 92-95 Turm 96-100 Weiser EINIGE KARTEN KAPITEL 7 1 SCHÄTZE 265 Die Effekte der Karten sind nachfolgend beschrieben. Balance: Du kannst einen deiner Attributswerte um 2 erhöhen (auf höchstens 22), sofern du einen anderen Attributswert um 2 verringerst. Du kannst keinen Attributswert verringern, der höchstens 5 beträgt. Alternativ kannst du beschließen, deine Attributswerte nicht zu verändern. In diesem Fall hat die Karte keinen Effekt. Edelstein: Zu deinen Füßen erscheinen 25 Schmuckstücke im Wert von jeweils 2.000 GM oder 50 Edelsteine im Wert von jeweils 1.000 GM. Euryale: Das medusenähnliche Antlitz auf dieser Karte verflucht dich. Du erhältst einen Malus von -2 auf Rettungswürfe, solange du auf diese Weise verflucht bist."
+        },
+        {
+          "type": "table",
+          "raw": "Nur ein Gott oder die Magie",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "der Karte „Schicksale\" kann diesen Fluch aufheben. Flammen: Ein mächtiger Teufel wird dein Feind. Der Teufel trachtet nach deinem Untergang und martert dich. Er genießt dein Leiden, bevor er schließlich versucht, dich zu töten. Diese Feindschaft dauert an, bis du stirbst oder der Teufel tot ist. Hofnarr: Du bist in den nächsten 72 Stunden bei W20-Prüfungen im Vorteil, oder du kannst zwei Karten"
+        },
+        {
+          "type": "table",
+          "raw": "mehr als die von dir angesagte",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Anzahl ziehen. Komet: Wenn du das nächste Mal gegen mindestens eine feindlich gesinnte Kreatur kämpfst, kannst du eine davon als deinen Feind auswählen, wenn du die Initiative auswürfelst. Verringerst du in diesem Kampf die Trefferpunkte deines Feindes"
+        },
+        {
+          "type": "table",
+          "raw": "auf 0, so bist du ein Jahr lang",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "bei Todesrettungswürfen im Vorteil. Wennjemand anders die Trefferpunkte deines Feindes auf O verringert oder du keinen Feind auswählst, hat diese Karte keinen Effekt. Krallen: Jeder magische Gegenstand, den du trägst oder mitführst, zerfällt. Artefakte in deinem Besitz verschwinden stattdessen. Leere: Deine Seele wird dem Körper entrissen und an einem"
+        },
+        {
+          "type": "table",
+          "raw": "Ort nach Wahl des SL in einen Gegenstand",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "gesperrt. Mindestens ein mächtiges Wesen bewacht den Ort. Solange deine Seele auf diese Art gefangen ist, verharrt dein Körper reglos, altert nicht und braucht weder Wasser und Nahrung noch Luft. Der Zauber Wunsch kann deine Seele zwar nicht in deinen Körper zurückbringen, doch er kann enthüllen, an welchem Ort EINE FRAGE DER FEINDSCHAFT Zwei der Karten des Schicksals können einem Charakter die Feindschaft einer anderen Kreatur einhandeln. Bei der Karte „Flammen\" ist die Feindschaft offenkundig. Der Charakter sollte die Bosheit des Teufels bei mehreren Gelegenheiten zu spüren kriegen. Es sollte keine Kleinigkeit sein, den Unhold aufzuspüren, und der Abenteurer sollte einige Zusammenstöße mit den Verbündeten und Anhängern des Teufels haben, ehe er den Teufel selbst stellen kann. Bei der Karte „Schurke\" ist die Feindschaft verdeckt und sollte von jemandem ausgehen, der für einen Freund oder Verbündeten gehalten wird. Als Spielleiter solltest du auf einen dramatisch passenden Moment warten, um diese Feindschaft zu enthüllen, und den Abenteurer bis dahin raten lassen, wer wohl der Verräter ist. ~66 KAPITEL 7 1 SCHÄTZE sich der Gegenstand mit deiner Seele befindet. Du ziehst keine weiteren Karten. Mond: Du erhältst die Fähigkeit, 1W3-mal den Zauber Wunsch zu wirken."
+        },
+        {
+          "type": "table",
+          "raw": "Narr: Du bist in den nächsten",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "72 Stunden bei W20-Prüfungen im Nachteil. Ziehe eine weitere Karte (die aktuelle zählt nicht als einer deiner angesagten Züge). Rätsel: Dein Intelligenzoder dein Weisheitswert wird dauerhaft um 1W4+1 verringert (Minimum: 1). Du kannst eine Karte"
+        },
+        {
+          "type": "table",
+          "raw": "mehr als die von dir angesagte",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Anzahl ziehen. Ritter: Ein Ritter erscheint auf magische Art in einem freien Bereich deiner Wahl im Abstand von bis zu neun Metern"
+        },
+        {
+          "type": "table",
+          "raw": "von dir und tritt in deine Dienste.",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Der Ritter hat dieselbe Gesinnung"
+        },
+        {
+          "type": "table",
+          "raw": "wie du und dient dir treu bis zum Tod,",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "da er euch vom Schicksal verbunden glaubt. Arbeite mit deinem SL einen Namen und eine Hintergrundgeschichte für diesen"
+        },
+        {
+          "type": "table",
+          "raw": "NSC aus. Der SL kann nach Wunsch",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "einen anderen Wertekasten verwenden, um den Ritter darzustellen. Ruin: Du verlierst außer magischen Gegenständen alles, was du bei dir trägst oder besitzt. Bewegliches Eigentum verschwindet. Geschäfte, Gebäude und Grundstücke in deinem Besitz gehen auf eine Weise verloren, welche die Realität am wenigsten verändert. Wenn du eine Bastion (siehe Kapitel 8) hast, wird sie durch eine Katastrophe außerhalb deiner Kontrolle zerstört. Eigentumsnachweise für etwas, was du durch diese Karte verlierst, verschwinden ebenfalls. Schicksale: Die Realität gerät aus den Fugen und wird neu zusammengesetzt. Du kannst ein Ereignis vermeiden oder löschen, als wäre es niemals passiert. Du kannst die Magie der Karte sofort nach dem Ziehen nutzen oder zu jedem anderen Zeitpunkt, ehe du stirbst. Schlüssel: Eine seltene oder seltenere magische Waffe erscheint in deinen Händen. Du hast Übung im Umgang mit ihr. Der SL wählt die Waffe aus. Schurke:"
+        },
+        {
+          "type": "table",
+          "raw": "Ein NSC nach Wahl des SL wird dir gegenüber",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "feindlich gesinnt. Du weißt nicht, wer dieser NSC ist, bis er oder jemand anders dies enthüllt. Diese feindliche Einstellung des NSC kann nur durch den Zauber Wunsch oder durch göttliche Intervention beendet werden. Sonne: Ein magischer Gegenstand (nach Wahl des SL) erscheint bei dir. Außerdem erhältst du täglich im Morgengrauen zehn temporäre Trefferpunkte, bis du stirbst. Stern: Erhöhe einen deiner Attributswerte um 2 (auf höchstens 24). Thron: Du erhältst Übung und Expertise in Geschichte, Motiv erkennen, Einschüchtern oder Überzeugen (nach deiner Wahl). Außerdem erhältst du die Besitzrechte an einem kleinen Bergfried irgendwo auf der Welt. Allerdings beherbergt dieser aktuell mindestens ein Monster, das besiegt oder vertrieben werden muss, damit du den Bergfried beanspruchen kannst. Totenschädel: Ein Avatar des Todes (siehe begleitender Wertekasten) erscheint in einem freien Bereich so nahe wie möglich bei dir. Er erscheint als geisterhaftes Skelett in zerrissener schwarzer Robe, das eine Sense schwingt und seine Angriffe nur auf dich richtet. Der Avatar verschwindet, wenn seine Trefferpunkte auf O sinken oder du stirbst. Wenn einer deiner Verbündeten dem Avatar Schaden zufügt, beschwört dieser Verbündete einen weiteren Avatar des Todes. Der neue Avatar erscheint in einem freien Bereich so nahe wie möglich beim Verbündeten und richtet seine Angriffe nur auf den Verbündeten. Du und deine Verbündeten könnt infolge der Kartenziehung nur jeweils einen Avatar herbeirufen. Eine Kreatur, die von einem Avatar getötet wird, kann nicht wiederbelebt werden. Turm: Du verschwindest und wirst in einem scheintoten Zustand in einer extradimensionalen Sphäre eingekerkert. Was du trägst und mit dir führst, verschwindet mit dir. Nur Artefakte bleiben in dem Bereich zurück, den du verlässt. Du bist gefangen, bis du gefunden und aus der Sphäre befreit wirst. Erkenntnismagie kann dich nicht aufspüren. Der Zauber Wunsch kann allerdings enthüllen, wo du eingekerkert bist. Du ziehst keine weiteren Karten. Weiser: Du kannst zu einem beliebigen Zeitpunkt innerhalb eines Jahres nach dem Ziehen dieser Karte meditieren und dabei eine Frage stellen. Eine innere Stimme gibt dir eine wahrheitsgemäße Antwort auf diese Frage. r ÄVATAR DES TODES II Mitte/großer Untoter, neutral böse J RK 20 Initiative +3 (13) ·1 TP Hälfte des TP-Maximums des Beschwörers II Bewegungsrate 18 m, Fliegen 18 m (Schweben) 1 MOD RW MOD RW MOD RW"
+        },
+        {
+          "type": "table",
+          "raw": "STÄ 16 +3 +3 GES 16 +3 +3 KON 16 +3 +3",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "INT 16 +3 +3"
+        },
+        {
+          "type": "table",
+          "raw": "WEI 16 +3 +3 CHA 16 +3 +3",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "lmmunitäten Gift, Nekrotisch; Bewusstlos, Bezaubert, Erschöpft, Gelähmt, Verängstigt, Vergiftet , Versteinert Sinne Wahrer Blick 18 m, Passive Wahrnehmung l3 Sprachen Alle Sprachen, die sein Beschwörer kennt"
+        },
+        {
+          "type": "table",
+          "raw": "HG - (EP O; ÜB wie der seines",
+          "columns": null,
+          "rows": null
+        },
+        {
+          "type": "paragraph",
+          "text": "Beschwörers) MERKMALE Körperlose Bewegung: Der Avatar kann sich durch andere Kreaturen und Gegenstände bewegen, als wären sie schwieriges Gelände. Er erleidet 5 (lWlO) Energieschaden, wenn er den Zug in einem Gegenstand beendet. ÄK TI ONEN Mehrfachangriffi Der Avatar führt eine Anzahl von Sense-schwingen-Angriffen in Höhe der Hälfte des Übungsbonus (aufgerundet) des Beschwörers aus. Sense schwingen: Nahkampfangriffswurf Automatischer Treffer, Reichweite 1,5 m. Treffer: 7 (lW8+3) Hiebschaden plus 4 (lW8) nekrotischer Schaden."
+        }
+      ],
+      "raw": {
+        "title": "Unterhaltungskünstler-Ausrüstung",
+        "meta_line": "KARTEN DES SCHICKSALS Wundersamer Gegenstand, legendär",
+        "notes": []
+      }
+    }
+  },
+  {
+    "name": "Verkleidungsausrüstung"
+  },
+  {
+    "name": "Weberwerkzeug",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 350,
+      "end_page_physical": 350
+    }
+  },
+  {
+    "name": "Weihwasser",
+    "source": {
+      "book": "2024_D&D Spielleiterhandbuch (2024).pdf",
+      "start_page_physical": 347,
+      "end_page_physical": 348
+    }
+  },
+  {
+    "name": "Zelt"
+  },
+  {
+    "name": "Zunderkästchen"
+  }
+]

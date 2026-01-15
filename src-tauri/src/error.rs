@@ -48,6 +48,7 @@ pub enum AppError {
 pub type AppResult<T> = Result<T, AppError>;
 
 /// Helper trait to convert common error patterns to AppError
+#[allow(dead_code)]
 pub trait ToAppError<T> {
     fn to_app_error(self) -> AppResult<T>;
 }

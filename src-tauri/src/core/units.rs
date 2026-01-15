@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 pub fn convert_to_metric(value: f32, unit: &str) -> f32 {
     match unit {
         "ft" => value * 0.3,

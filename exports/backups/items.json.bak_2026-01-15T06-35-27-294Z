@@ -1,0 +1,845 @@
+[
+  {
+    "name": "ADAMANTRÜSTUNG"
+  },
+  {
+    "name": "AMETHYST-STIRNBAND DER INTELLIGENZ"
+  },
+  {
+    "name": "AMETHYST-PLATTENPANZER (+3)"
+  },
+  {
+    "name": "MITHRAL-PLATTENPANZER (+3)"
+  },
+  {
+    "name": "ADAMANTWAFFE"
+  },
+  {
+    "name": "ALCHEMIEKRUG"
+  },
+  {
+    "name": "AMULETT DER EBENEN"
+  },
+  {
+    "name": "AMULETT DER GESUNDHEIT"
+  },
+  {
+    "name": "AMULETT DER WARNUNG"
+  },
+  {
+    "name": "AMULETT DES SCHUTZES GEGEN ORTUNG UND AUSSPÄHUNG"
+  },
+  {
+    "name": "ANHÄNGER DER GESUNDHEIT"
+  },
+  {
+    "name": "ANHÄNGER DES GIFTSCHUTZES"
+  },
+  {
+    "name": "ANHÄNGER DER WUNDHEILUNG"
+  },
+  {
+    "name": "APPARAT VON KWALISH"
+  },
+  {
+    "name": "ARMSCHIENEN DES BOGENSCHÜTZEN"
+  },
+  {
+    "name": "ARMSCHIENEN DER VERTEIDIGUNG"
+  },
+  {
+    "name": "AUGE VON VECNA"
+  },
+  {
+    "name": "AUGEN DER BEZAUBERUNG"
+  },
+  {
+    "name": "AUGEN DES ADLERS"
+  },
+  {
+    "name": "AUGEN DES PRÄZISEN SEHENS"
+  },
+  {
+    "name": "AXT DER ZWERGENFÜRSTEN"
+  },
+  {
+    "name": "AXT DES HENKERS"
+  },
+  {
+    "name": "BABA YAGAS TANZENDER BESEN"
+  },
+  {
+    "name": "BANDAGEN DER WAFFENLOSEN KRAFT"
+  },
+  {
+    "name": "BARDENINSTRUMENT"
+  },
+  {
+    "name": "BELEBTER SCHILD"
+  },
+  {
+    "name": "BERSERKERAXT"
+  },
+  {
+    "name": "BOHNENBEUTEL"
+  },
+  {
+    "name": "BÖSARTIGE WAFFE"
+  },
+  {
+    "name": "BROSCHE DES ABSCHIRMENS"
+  },
+  {
+    "name": "BRUNNEN DER VIELEN WELTEN"
+  },
+  {
+    "name": "BUCH DER BÖSEN DUNKELHEIT"
+  },
+  {
+    "name": "BUCH DER ÜBERSCHWÄNGLICHEN TATEN"
+  },
+  {
+    "name": "DAERNS FLOTTE FESTUNG"
+  },
+  {
+    "name": "DÄMONENRÜSTUNG"
+  },
+  {
+    "name": "DÄMONOMIKON VON IGGWILV"
+  },
+  {
+    "name": "DIADEM DES VERSENGENS"
+  },
+  {
+    "name": "DIEB DER NEUN LEBEN"
+  },
+  {
+    "name": "DIMENSIONSFESSELN"
+  },
+  {
+    "name": "DOLCH DES GIFTS"
+  },
+  {
+    "name": "DONNERNDER ZWEIHANDKNÜPPEL"
+  },
+  {
+    "name": "DRACHENSCHUPPENPANZER"
+  },
+  {
+    "name": "DRACHENTÖTER"
+  },
+  {
+    "name": "DREIZACK DER FISCHHERRSCHAFT"
+  },
+  {
+    "name": "DUNKELSCHERBENAMULETT"
+  },
+  {
+    "name": "EDELSTEIN DER HELLIGKEIT"
+  },
+  {
+    "name": "EDELSTEIN DES SEHENS"
+  },
+  {
+    "name": "EISENBÄNDER VON BILARRO"
+  },
+  {
+    "name": "EISERNE FLASCHE"
+  },
+  {
+    "name": "ELEMENTARER EDELSTEIN"
+  },
+  {
+    "name": "ELFENRÜSTUNG"
+  },
+  {
+    "name": "ELIXIER DER GESUNDHEIT"
+  },
+  {
+    "name": "ENERGIEBOGEN"
+  },
+  {
+    "name": "ERSATZAUGE"
+  },
+  {
+    "name": "EWIGER LEIM"
+  },
+  {
+    "name": "FALTBOOT"
+  },
+  {
+    "name": "FESSELSEIL"
+  },
+  {
+    "name": "FEUERSCHALE DER FEUERELEMENTAR-HERRSCHAFT"
+  },
+  {
+    "name": "FIGUR DER WUNDERSAMEN KRAFT"
+  },
+  {
+    "name": "HAND VON VECNA"
+  },
+  {
+    "name": "MANTEL DER ZAUBERRESISTENZ"
+  },
+  {
+    "name": "MEDAILLON DER GEDANKEN"
+  },
+  {
+    "name": "MITHRALRÜSTUNG"
+  },
+  {
+    "name": "MONDKLINGE"
+  },
+  {
+    "name": "MÜTZE DER WASSERATMUNG"
+  },
+  {
+    "name": "MYSTERIENSCHLÜSSEL"
+  },
+  {
+    "name": "NACHTBRILLE"
+  },
+  {
+    "name": "NIMMERVOLLER BEUTEL"
+  },
+  {
+    "name": "NOLZURS WUNDERFARBEN"
+  },
+  {
+    "name": "ÖL DER GLÄTTE"
+  },
+  {
+    "name": "ÖL DER KÖRPERLOSIGKEIT"
+  },
+  {
+    "name": "ÖL DER SCHÄRFE"
+  },
+  {
+    "name": "PANZERHANDSCHUHE DER OGERKRAFT"
+  },
+  {
+    "name": "PARFÜM DES VERHEXENS"
+  },
+  {
+    "name": "PERLE DER ERFRISCHUNG"
+  },
+  {
+    "name": "PERLE DER ERNÄHRUNG"
+  },
+  {
+    "name": "PERLE DER KRAFT"
+  },
+  {
+    "name": "PERLE DER MACHT"
+  },
+  {
+    "name": "PFEIFE DER RAUCHMONSTER"
+  },
+  {
+    "name": "PFEILFANGENDER SCHILD"
+  },
+  {
+    "name": "PROTHESE"
+  },
+  {
+    "name": "PRÜGELMUNITION"
+  },
+  {
+    "name": "QUAALS FEDER"
+  },
+  {
+    "name": "RAUCHFASS DER LUFTELEMENTAR-HERRSCHAFT"
+  },
+  {
+    "name": "RAUCHFLASCHE"
+  },
+  {
+    "name": "RIESENTÖTER"
+  },
+  {
+    "name": "RING DER DSCHINNI-BESCHWÖRUNG"
+  },
+  {
+    "name": "RING DER DURCHSICHT"
+  },
+  {
+    "name": "RING DER ELEMENTAR-HERRSCHAFT"
+  },
+  {
+    "name": "RING DER GEDANKENABSCHIRMUNG"
+  },
+  {
+    "name": "RING DER REGENERATION"
+  },
+  {
+    "name": "RING DER RESISTENZ"
+  },
+  {
+    "name": "RING DER STERNSCHNUPPEN"
+  },
+  {
+    "name": "RING DES AUSWEICHENS"
+  },
+  {
+    "name": "RING DES FEDERFALLS"
+  },
+  {
+    "name": "RING DES SCHUTZES"
+  },
+  {
+    "name": "RING DES SCHWIMMENS"
+  },
+  {
+    "name": "RING DES SPRINGENS"
+  },
+  {
+    "name": "RING DER TELEKINESE"
+  },
+  {
+    "name": "RING DES TIERUMGANGS"
+  },
+  {
+    "name": "RING DER UNSICHTBARKEIT"
+  },
+  {
+    "name": "RING DER WÄRME"
+  },
+  {
+    "name": "RING DES WASSERWANDELNS"
+  },
+  {
+    "name": "RING DES WIDDERS"
+  },
+  {
+    "name": "RING DES ZAUBERSPEICHERS"
+  },
+  {
+    "name": "RING DES ZAUBERWENDENS"
+  },
+  {
+    "name": "RITTERRÜSTUNG DER KÖRPERLOSIGKEIT"
+  },
+  {
+    "name": "RIVALENMÜNZE"
+  },
+  {
+    "name": "ROBE DER AUGEN"
+  },
+  {
+    "name": "ROBE DER ERZMAGIER"
+  },
+  {
+    "name": "ROBE DER NÜTZLICHEN DINGE"
+  },
+  {
+    "name": "ROBE DER SCHILLERNDEN FARBEN"
+  },
+  {
+    "name": "ROBE DER STERNE"
+  },
+  {
+    "name": "RUBIN DES KRIEGSMAGIERS"
+  },
+  {
+    "name": "RÜSTUNG +1"
+  },
+  {
+    "name": "RÜSTUNG +2"
+  },
+  {
+    "name": "RÜSTUNG +3"
+  },
+  {
+    "name": "RÜSTUNG DER MAKELLOSIGKEIT"
+  },
+  {
+    "name": "RÜSTUNG DER RESISTENZ"
+  },
+  {
+    "name": "RÜSTUNG DES SCHWELENS"
+  },
+  {
+    "name": "RÜSTUNG DER UNVERWUNDBARKEIT"
+  },
+  {
+    "name": "RÜSTUNG DER VERWUNDBARKEIT"
+  },
+  {
+    "name": "RÜSTUNG DES WASSERMANNS"
+  },
+  {
+    "name": "SATTEL DES KAVALIERS"
+  },
+  {
+    "name": "SCHALE DER WASSERELEMENTAR-HERRSCHAFT"
+  },
+  {
+    "name": "SCHILD DER GESCHOSSANZIEHUNG"
+  },
+  {
+    "name": "SCHILD +1"
+  },
+  {
+    "name": "SCHILD +2"
+  },
+  {
+    "name": "SCHILD +3"
+  },
+  {
+    "name": "SCHILD DES GESICHTSAUSDRUCKS"
+  },
+  {
+    "name": "SCHILD DES KAVALIERS"
+  },
+  {
+    "name": "SCHLÜPFRÜSTUNG"
+  },
+  {
+    "name": "SCHRECKENSHELM"
+  },
+  {
+    "name": "SCHRIFTROLLE DES SCHUTZES"
+  },
+  {
+    "name": "SCHRIFTROLLE DER TITANENBESCHWÖRUNG"
+  },
+  {
+    "name": "SCHUHE DES SPINNENKLETTERNS"
+  },
+  {
+    "name": "SCHWARZKLINGE"
+  },
+  {
+    "name": "SCHWEBEKUGEL"
+  },
+  {
+    "name": "SCHWERT DER ANTWORT"
+  },
+  {
+    "name": "SCHWERT VON KAS"
+  },
+  {
+    "name": "SCHWERT DES LEBENSENTZUGS"
+  },
+  {
+    "name": "SCHWERT DER MONDBERÜHRUNG"
+  },
+  {
+    "name": "SCHWERT DER SCHÄRFE"
+  },
+  {
+    "name": "SCHWERT DER VERGELTUNG"
+  },
+  {
+    "name": "SCHWERT DER VERWUNDUNG"
+  },
+  {
+    "name": "SCHWURBOGEN"
+  },
+  {
+    "name": "SEELENSPIEGEL"
+  },
+  {
+    "name": "SEIL DES FLICKENS"
+  },
+  {
+    "name": "SEIL DES KLETTERNS"
+  },
+  {
+    "name": "SKARABÄUS DES SCHUTZES"
+  },
+  {
+    "name": "SONNENKLINGE"
+  },
+  {
+    "name": "SPRECHENDE PUPPE"
+  },
+  {
+    "name": "STAB DER BEZAUBERUNG"
+  },
+  {
+    "name": "STAB DER BLUMEN"
+  },
+  {
+    "name": "STAB DES BLITZES UND DONNERS"
+  },
+  {
+    "name": "STAB DES FEUERS"
+  },
+  {
+    "name": "STAB DES FROSTS"
+  },
+  {
+    "name": "STAB DER HEILUNG"
+  },
+  {
+    "name": "STAB DER INSEKTENSCHWÄRME"
+  },
+  {
+    "name": "STAB DER KREUZOTTER"
+  },
+  {
+    "name": "STAB DER MACHT"
+  },
+  {
+    "name": "STAB DER MAGIER"
+  },
+  {
+    "name": "STAB DER PYTHON"
+  },
+  {
+    "name": "STAB DES SCHLAGENS"
+  },
+  {
+    "name": "STAB DER VERKÜMMERUNG"
+  },
+  {
+    "name": "STAB DER VOGELRUFE"
+  },
+  {
+    "name": "STAB DER WALDLANDE"
+  },
+  {
+    "name": "STANGE DES ANGELNS"
+  },
+  {
+    "name": "STANGE DES SCHRUMPFENS"
+  },
+  {
+    "name": "STAUB DES NIESENS UND ERSTICKENS"
+  },
+  {
+    "name": "STAUB DER TROCKENHEIT"
+  },
+  {
+    "name": "STAUB DES VERSCHWINDENS"
+  },
+  {
+    "name": "STEIN DER ERDELEMENTAR-HERRSCHAFT"
+  },
+  {
+    "name": "STEIN DES GLÜCKS"
+  },
+  {
+    "name": "STEINE DER VERSTÄNDIGUNG"
+  },
+  {
+    "name": "STIEFEL DER ELFEN"
+  },
+  {
+    "name": "STIEFEL DER FALSCHEN FÄHRTE"
+  },
+  {
+    "name": "STIEFEL DER GESCHWINDIGKEIT"
+  },
+  {
+    "name": "STIEFEL DES SCHREITENS UND SPRINGENS"
+  },
+  {
+    "name": "STIEFEL DES SCHWEBENS"
+  },
+  {
+    "name": "STIEFEL DER WINTERLANDE"
+  },
+  {
+    "name": "STIRNBAND DER INTELLIGENZ"
+  },
+  {
+    "name": "STREITKOLBEN DES NIEDERSTRECKENS"
+  },
+  {
+    "name": "STREITKOLBEN DES TERRORS"
+  },
+  {
+    "name": "STREITKOLBEN DES ZUSAMMENBRUCHS"
+  },
+  {
+    "name": "SYLVANISCHE KRALLE"
+  },
+  {
+    "name": "TALISMAN DES ABSOLUT BÖSEN"
+  },
+  {
+    "name": "TALISMAN DES NICHTS"
+  },
+  {
+    "name": "TALISMAN DES REINEN GUTEN"
+  },
+  {
+    "name": "TANZENDES SCHWERT"
+  },
+  {
+    "name": "TENTAKELZEPTER"
+  },
+  {
+    "name": "TOPF DES ERWACHENS"
+  },
+  {
+    "name": "TRAGBARES LOCH"
+  },
+  {
+    "name": "TRANK DER FAUSTKAMPFS"
+  },
+  {
+    "name": "TRANK DES FEUERATEMS"
+  },
+  {
+    "name": "TRANK DES FLIEGENS"
+  },
+  {
+    "name": "TRANK DER GASFÖRMIGEN GESTALT"
+  },
+  {
+    "name": "TRANK DES GEDANKENLESENS"
+  },
+  {
+    "name": "TRANK DER GESCHWINDIGKEIT"
+  },
+  {
+    "name": "TRANK DER LANGLEBIGKEIT"
+  },
+  {
+    "name": "TRANK DER MÄCHTIGEN UNSICHTBARKEIT"
+  },
+  {
+    "name": "TRANK DER RESISTENZ"
+  },
+  {
+    "name": "TRANK DER RIESENSTÄRKE"
+  },
+  {
+    "name": "TRANK DER TIERFREUNDSCHAFT"
+  },
+  {
+    "name": "TRANK DER UNSICHTBARKEIT"
+  },
+  {
+    "name": "TRANK DER UNVERWUNDBARKEIT"
+  },
+  {
+    "name": "TRANK DER VERKLEINERUNG"
+  },
+  {
+    "name": "TRANK DES VERSTEHENS"
+  },
+  {
+    "name": "TRANK DER VITALITÄT"
+  },
+  {
+    "name": "TRANK DES WACHSTUMS"
+  },
+  {
+    "name": "TRANK DER WASSERATMUNG"
+  },
+  {
+    "name": "TRICKBEUTEL"
+  },
+  {
+    "name": "TRICKSCHLOSS"
+  },
+  {
+    "name": "ÜBERSCHUTT"
+  },
+  {
+    "name": "UHRWERKAMULETT"
+  },
+  {
+    "name": "UMHANG DES AUFBLÄHENS"
+  },
+  {
+    "name": "UMHANG DER ELFEN"
+  },
+  {
+    "name": "UMHANG DER FLEDERMAUS"
+  },
+  {
+    "name": "UMHANG DES MANTAROCHENS"
+  },
+  {
+    "name": "UMHANG DES SCHARLATANS"
+  },
+  {
+    "name": "UMHANG DES SCHUTZES"
+  },
+  {
+    "name": "UMHANG DER SPINNENTIERE"
+  },
+  {
+    "name": "UMHANG DER UNSICHTBARKEIT"
+  },
+  {
+    "name": "UMHANG DER VERLAGERUNG"
+  },
+  {
+    "name": "UMHANG DER VIELEN MODEN"
+  },
+  {
+    "name": "UNBEWEGLICHES ZEPTER"
+  },
+  {
+    "name": "UNIVERSELLES LÖSUNGSMITTEL"
+  },
+  {
+    "name": "UNVERWÜSTLICHES ZAUBERBUCH"
+  },
+  {
+    "name": "VERSILBERTE WAFFE"
+  },
+  {
+    "name": "VERTEIDIGER"
+  },
+  {
+    "name": "VERZAUBERTES BESCHLAGENES LEDER"
+  },
+  {
+    "name": "VETTELAUGE"
+  },
+  {
+    "name": "WÄCHTERSCHILD"
+  },
+  {
+    "name": "WAFFE +1"
+  },
+  {
+    "name": "WAFFE +2"
+  },
+  {
+    "name": "WAFFE +3"
+  },
+  {
+    "name": "WAFFE DER WARNUNG"
+  },
+  {
+    "name": "WELLE"
+  },
+  {
+    "name": "WINDFÄCHER"
+  },
+  {
+    "name": "WÜRFEL DER EBENEN"
+  },
+  {
+    "name": "WÜRFEL DER HERBEIRUFUNG"
+  },
+  {
+    "name": "WÜRFEL DER KRAFT"
+  },
+  {
+    "name": "WÜRFEL DES SCHARLATANS"
+  },
+  {
+    "name": "Malutensilien"
+  },
+  {
+    "name": "Materialkomponentenbeutel"
+  },
+  {
+    "name": "Maurerwerkzeug"
+  },
+  {
+    "name": "Metallkügelchen"
+  },
+  {
+    "name": "Musikinstrument"
+  },
+  {
+    "name": "Navigationswerkzeug"
+  },
+  {
+    "name": "Netz"
+  },
+  {
+    "name": "Priesterausrüstung"
+  },
+  {
+    "name": "Rammbock (tragbar)"
+  },
+  {
+    "name": "Rationen"
+  },
+  {
+    "name": "Robe"
+  },
+  {
+    "name": "Rucksack"
+  },
+  {
+    "name": "Sack"
+  },
+  {
+    "name": "Schaufel"
+  },
+  {
+    "name": "Schlafsack"
+  },
+  {
+    "name": "Schloss"
+  },
+  {
+    "name": "Schmiedewerkzeug"
+  },
+  {
+    "name": "Schreinerwerkzeug"
+  },
+  {
+    "name": "Schusterwerkzeug"
+  },
+  {
+    "name": "Seil"
+  },
+  {
+    "name": "Spiegel"
+  },
+  {
+    "name": "Spielset"
+  },
+  {
+    "name": "Stachel, Eisen"
+  },
+  {
+    "name": "Stange"
+  },
+  {
+    "name": "Säure"
+  },
+  {
+    "name": "Tinte"
+  },
+  {
+    "name": "Tintenfüller"
+  },
+  {
+    "name": "Topf, Eisen"
+  },
+  {
+    "name": "Trinkschlauch"
+  },
+  {
+    "name": "Truhe"
+  },
+  {
+    "name": "Töpferwerkzeug"
+  },
+  {
+    "name": "Tüftlerwerkzeug"
+  },
+  {
+    "name": "Unterhaltungskünstler-Ausrüstung"
+  },
+  {
+    "name": "Verkleidungsausrüstung"
+  },
+  {
+    "name": "Weberwerkzeug"
+  },
+  {
+    "name": "Weihwasser"
+  },
+  {
+    "name": "Zelt"
+  },
+  {
+    "name": "Zunderkästchen"
+  }
+]

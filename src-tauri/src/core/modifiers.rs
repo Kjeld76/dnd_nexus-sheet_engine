@@ -1,5 +1,6 @@
 use crate::core::types::{Modifier, ModifierType};
 
+#[allow(dead_code)]
 pub fn apply_modifiers(base: i32, modifiers: &[Modifier]) -> i32 {
     let mut total = base;
 
