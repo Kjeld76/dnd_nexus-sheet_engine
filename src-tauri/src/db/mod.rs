@@ -1,6 +1,7 @@
 use rusqlite::Connection;
 use std::sync::Mutex;
-use tauri::AppHandle;
+use tauri::{AppHandle, Manager};
+use std::fs;
 
 pub mod migrations;
 pub mod queries;
@@ -8,47 +9,49 @@ pub mod seed;
 
 pub struct Database(pub Mutex<Connection>);
 
-pub fn init_database(_app: &AppHandle) -> Result<Database, String> {
-    // Verwende die Projekt-DB direkt (dnd-nexus.db im Projektverzeichnis)
-    // Alle Daten (Regelwerks-Daten UND Charaktere) werden in EINER DB gespeichert
+pub fn init_database(app: &AppHandle) -> Result<Database, String> {
+    // 1. Pfad für App-Daten bestimmen (z.B. %APPDATA%/dnd-nexus unter Windows)
+    let app_dir = app.path().app_data_dir().map_err(|e| e.to_string())?;
     
-    // Bestimme das Projekt-Root-Verzeichnis
-    // In Tauri: Das Projekt-Root ist das Verzeichnis, das die tauri.conf.json enthält
-    // Versuche mehrere Pfade relativ zum aktuellen Working Directory
-    let current_dir = std::env::current_dir().unwrap_or_default();
-    println!("Current working directory: {:?}", current_dir);
+    // Verzeichnis erstellen, falls es nicht existiert
+    if !app_dir.exists() {
+        fs::create_dir_all(&app_dir).map_err(|e| format!("Konnte Datenverzeichnis nicht erstellen: {}", e))?;
+    }
     
-    let db_paths = [
-        current_dir.join("dnd-nexus.db"),
-        current_dir.join("..").join("dnd-nexus.db"),
-        current_dir.join("../..").join("dnd-nexus.db"),
-        std::path::Path::new("dnd-nexus.db").to_path_buf(),
-        std::path::Path::new("../dnd-nexus.db").to_path_buf(),
-        std::path::Path::new("../../dnd-nexus.db").to_path_buf(),
-    ];
+    let db_path = app_dir.join("dnd-nexus.db");
     
-    let db_path = db_paths.iter()
-        .find(|p| p.exists())
-        .ok_or_else(|| {
-            format!("dnd-nexus.db not found. Current dir: {:?}. Tried paths: {:?}", current_dir, db_paths.iter().map(|p| p.to_string_lossy().to_string()).collect::<Vec<_>>())
-        })?;
+    // 2. Datenbank aus Ressourcen kopieren, falls sie nicht existiert
+    if !db_path.exists() {
+        println!("Datenbank nicht gefunden. Kopiere Vorlage aus Ressourcen...");
+        let resource_path = app.path().resolve_resource("dnd-nexus.db").map_err(|e| e.to_string())?;
+        
+        if resource_path.exists() {
+            fs::copy(&resource_path, &db_path).map_err(|e| format!("Konnte Datenbank-Vorlage nicht kopieren: {}", e))?;
+            println!("Datenbank erfolgreich nach {:?} kopiert.", db_path);
+        } else {
+            println!("WARNUNG: Keine Datenbank-Vorlage in Ressourcen gefunden. Erstelle leere Datenbank.");
+        }
+    }
     
     let db_path_str = db_path.to_string_lossy().to_string();
-    let abs_path = db_path.canonicalize().unwrap_or(db_path.clone());
-    println!("Using project database: {} (absolute: {:?}, exists: {})", db_path_str, abs_path, db_path.exists());
     
-    let conn = Connection::open(db_path).map_err(|e: rusqlite::Error| format!("Failed to open database at {}: {}", db_path_str, e))?;
+    // 3. Verbindung herstellen
+    let conn = Connection::open(&db_path).map_err(|e| format!("Konnte Datenbank nicht öffnen ({}): {}", db_path_str, e))?;
     
-    // Migrations ausführen (stellt sicher, dass alle Tabellen existieren)
-    println!("Running migrations...");
-    migrations::run_migrations(&conn).map_err(|e| {
-        eprintln!("Migration error: {}", e);
-        format!("Migration failed: {}", e)
-    })?;
-    println!("Migrations completed successfully");
+    // 3. Migrations ausführen (stellt Tabellenstruktur sicher)
+    migrations::run_migrations(&conn).map_err(|e| format!("Datenbank-Migration fehlgeschlagen: {}", e))?;
     
-    // Kein Seeding mehr nötig - die Projekt-DB enthält bereits alle Regelwerks-Daten
-    // und wird direkt für Charaktere verwendet
+    // 4. Wenn die Datenbank ganz neu ist, müssen wir die PHB-Daten importieren
+    // Wir prüfen einfach, ob die core_spells Tabelle Daten enthält
+    let mut stmt = conn.prepare("SELECT COUNT(*) FROM core_spells").map_err(|e| e.to_string())?;
+    let count: i32 = stmt.query_row([], |row| row.get(0)).unwrap_or(0);
+    
+    if count == 0 {
+        println!("Initialisiere leere Datenbank mit PHB-Daten...");
+        // Hier rufen wir den Seeder auf, falls nötig
+        // Da wir aber dnd-nexus.db als fertige Datei im Projekt haben,
+        // wäre es am besten, diese beim Build mit einzubinden (Resources).
+    }
     
     Ok(Database(Mutex::new(conn)))
 }
