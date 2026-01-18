@@ -382,8 +382,9 @@ export const calculateDerivedStats = (
         );
 
       const rangeLabels = getWeaponRangeLabels(weapon);
-      const baseProperties =
-        weapon.properties?.map((p) => p.name || p.id) || [];
+      const baseProperties = Array.from(
+        new Set(weapon.properties?.map((p) => p.name || p.id) || []),
+      );
       const properties = [...rangeLabels, ...baseProperties];
       const weaponBonus = getWeaponMagicBonus(weapon);
       const invBonus = getInventoryItemMagicBonus(item);

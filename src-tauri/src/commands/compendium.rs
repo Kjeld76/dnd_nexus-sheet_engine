@@ -321,8 +321,11 @@ pub async fn get_all_weapons(db: State<'_, Database>) -> Result<Vec<Weapon>, Str
                 let param_value = prop_param_value.and_then(|s| from_str(&s).ok());
 
                 // Prüfe ob Property bereits hinzugefügt wurde (verhindere Duplikate)
-                // WICHTIG: Prüfe sowohl auf ID als auch auf Name, um sicherzustellen
-                let is_duplicate = weapon.properties.iter().any(|p| p.id == prop_id);
+                // WICHTIG: Prüfe sowohl auf ID als auch auf Name (normalisiert), um sicherzustellen
+                let prop_name_lower = prop_name.to_lowercase().trim().to_string();
+                let is_duplicate = weapon.properties.iter().any(|p| {
+                    p.id == prop_id || p.name.to_lowercase().trim() == prop_name_lower
+                });
                 
                 if !is_duplicate {
                     weapon.properties.push(WeaponProperty {
