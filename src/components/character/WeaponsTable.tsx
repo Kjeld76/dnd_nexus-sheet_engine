@@ -309,6 +309,17 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                       ? "Du brauchst eine zweite leichte Nahkampfwaffe (ausgerüstet)"
                       : "Als Nebenhand markieren";
 
+              const hasHeavy =
+                hasWeaponProperty(weapon, "heavy") ||
+                hasWeaponProperty(weapon, "schwer");
+              const isRanged =
+                hasWeaponProperty(weapon, "ammunition") ||
+                normalize(weapon.category).includes("ranged");
+              const heavyAttr = isRanged
+                ? character.attributes.dex
+                : character.attributes.str;
+              const showHeavyWarning = hasHeavy && heavyAttr < 13;
+
               return (
                 <div
                   key={invItem.id}
@@ -326,6 +337,14 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                       {isEquipped && (
                         <span className="text-xs font-black text-primary uppercase tracking-wider whitespace-nowrap shrink-0">
                           Ausgerüstet
+                        </span>
+                      )}
+                      {showHeavyWarning && (
+                        <span
+                          className="text-xs font-black text-amber-600 uppercase tracking-wider whitespace-nowrap shrink-0 border border-amber-600/30 px-1.5 py-0.5 rounded"
+                          title={`Schwere Waffe: Nachteil bei Angriffswürfen wenn ${isRanged ? "DEX" : "STR"} < 13 (aktuell: ${heavyAttr})`}
+                        >
+                          ⚠ Nachteil
                         </span>
                       )}
                     </div>
@@ -348,7 +367,18 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                       {weapon.properties && weapon.properties.length > 0 && (
                         <span className="break-words">
                           {weapon.properties
-                            .map((p) => p.name || p.id)
+                            .map((p) => {
+                              const propName = p.name || p.id;
+                              const propNameLower = normalize(propName);
+                              // Ergänze Reach-Hinweis
+                              if (
+                                propNameLower.includes("reach") ||
+                                propNameLower.includes("weitreichend")
+                              ) {
+                                return `${propName} (+1,5m Reichweite)`;
+                              }
+                              return propName;
+                            })
                             .join(", ")}
                         </span>
                       )}
