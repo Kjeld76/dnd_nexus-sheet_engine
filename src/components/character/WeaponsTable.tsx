@@ -234,6 +234,16 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                 string,
                 unknown
               >;
+              const versatileDamage =
+                typeof (weapon.data as { versatile_damage?: unknown })
+                  ?.versatile_damage === "string"
+                  ? ((
+                      weapon.data as {
+                        versatile_damage?: string;
+                      }
+                    ).versatile_damage?.trim() ?? "")
+                  : "";
+              const isVersatile = versatileDamage.length > 0;
               const hand = typeof custom.hand === "string" ? custom.hand : "";
               const isOffhand =
                 hand === "offhand" ||
@@ -337,45 +347,47 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                     >
                       NH
                     </button>
-                    <button
-                      onClick={() =>
-                        updateItemCustomData(invItem.id, (prev) => {
-                          const next = { ...prev };
-                          const currentlyTwoHanded =
-                            next.two_handed === true ||
-                            next.twoHanded === true ||
-                            next.is_two_handed === true;
-                          if (currentlyTwoHanded) {
-                            delete next.two_handed;
-                            delete next.twoHanded;
-                            delete next.is_two_handed;
-                          } else {
-                            next.two_handed = true;
-                            next.twoHanded = true;
-                            next.is_two_handed = true;
-                            // Nebenhand macht hier keinen Sinn
-                            delete next.hand;
-                            delete next.offhand;
-                            delete next.two_weapon_fighting;
-                            delete next.twoWeaponFighting;
-                            delete next.add_ability_to_offhand_damage;
-                          }
-                          return next;
-                        })
-                      }
-                      className={`px-2 py-1 rounded border text-[10px] font-black uppercase tracking-wider transition-all shrink-0 ${
-                        isTwoHanded
-                          ? "bg-primary text-primary-foreground border-primary"
-                          : "bg-muted/50 text-muted-foreground border-border hover:bg-primary/20 hover:border-primary/30"
-                      }`}
-                      title={
-                        isTwoHanded
-                          ? "Zweihändig deaktivieren"
-                          : "Zweihändig markieren (für Versatile)"
-                      }
-                    >
-                      2H
-                    </button>
+                    {isVersatile && (
+                      <button
+                        onClick={() =>
+                          updateItemCustomData(invItem.id, (prev) => {
+                            const next = { ...prev };
+                            const currentlyTwoHanded =
+                              next.two_handed === true ||
+                              next.twoHanded === true ||
+                              next.is_two_handed === true;
+                            if (currentlyTwoHanded) {
+                              delete next.two_handed;
+                              delete next.twoHanded;
+                              delete next.is_two_handed;
+                            } else {
+                              next.two_handed = true;
+                              next.twoHanded = true;
+                              next.is_two_handed = true;
+                              // Nebenhand macht hier keinen Sinn
+                              delete next.hand;
+                              delete next.offhand;
+                              delete next.two_weapon_fighting;
+                              delete next.twoWeaponFighting;
+                              delete next.add_ability_to_offhand_damage;
+                            }
+                            return next;
+                          })
+                        }
+                        className={`px-2 py-1 rounded border text-[10px] font-black uppercase tracking-wider transition-all shrink-0 ${
+                          isTwoHanded
+                            ? "bg-primary text-primary-foreground border-primary"
+                            : "bg-muted/50 text-muted-foreground border-border hover:bg-primary/20 hover:border-primary/30"
+                        }`}
+                        title={
+                          isTwoHanded
+                            ? "Zweihändig deaktivieren"
+                            : `Zweihändig (Vielseitig: ${versatileDamage})`
+                        }
+                      >
+                        2H
+                      </button>
+                    )}
                     {isOffhand && (
                       <button
                         onClick={() =>
