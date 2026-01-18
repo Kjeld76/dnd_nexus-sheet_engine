@@ -318,7 +318,7 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
               const heavyAttr = isRanged
                 ? character.attributes.dex
                 : character.attributes.str;
-              const showHeavyWarning = hasHeavy && heavyAttr < 13;
+              const showHeavyWarning = isEquipped && hasHeavy && heavyAttr < 13;
 
               return (
                 <div
