@@ -15,6 +15,7 @@
   - Angriffsbonus = Attributsmodifikator + Übungsbonus + Waffenmodifikatoren
   - Schadensbonus = Attributsmodifikator + Waffenmodifikatoren
   - Waffeneigenschaften berücksichtigen (z.B. Finesse, Two-Handed)
+  - Referenz: `docs/KAMPF_FORMELSAMMLUNG.md`
 
 ### **P1 — Datenmigration (Compendium)**
 - [x] **Magische Gegenstände (Spielleiterhandbuch):** „Magische Gegenstände" aus dem Spielleiterhandbuch in die Datenbank migrieren
