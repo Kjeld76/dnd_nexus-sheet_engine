@@ -142,9 +142,64 @@ export const calculateDerivedStats = (
 
     return { attack, damage };
   };
+  const getWeaponRangeLabels = (weapon: Weapon): string[] => {
+    const data = (weapon.data ?? {}) as Record<string, unknown>;
+    const range = data.range as { normal?: unknown; max?: unknown } | undefined;
+    const thrown = data.thrown_range as
+      | { normal?: unknown; max?: unknown }
+      | undefined;
+
+    const labels: string[] = [];
+    const normal = parseNumber(range?.normal);
+    const max = parseNumber(range?.max);
+    if (normal !== null && max !== null)
+      labels.push(`Reichweite ${normal}/${max}`);
+
+    const tNormal = parseNumber(thrown?.normal);
+    const tMax = parseNumber(thrown?.max);
+    if (tNormal !== null && tMax !== null)
+      labels.push(`Wurf ${tNormal}/${tMax}`);
+
+    return labels;
+  };
+  const getVersatileDice = (weapon: Weapon): string | null => {
+    const data = (weapon.data ?? {}) as Record<string, unknown>;
+    const versatile = data.versatile_damage;
+    return typeof versatile === "string" && versatile.trim().length > 0
+      ? versatile.trim()
+      : null;
+  };
+  const getOffhandFlags = (inv: { custom_data?: Record<string, unknown> }) => {
+    const obj = inv.custom_data ?? {};
+    const hand = typeof obj.hand === "string" ? normalize(obj.hand) : "";
+    const isOffhand =
+      hand === "off" ||
+      hand === "offhand" ||
+      hand === "nebenhand" ||
+      obj.offhand === true;
+
+    const twoWeaponFighting =
+      obj.two_weapon_fighting === true ||
+      obj.twoWeaponFighting === true ||
+      obj.add_ability_to_offhand_damage === true;
+
+    const twoHanded =
+      obj.two_handed === true ||
+      obj.twoHanded === true ||
+      obj.is_two_handed === true;
+
+    return { isOffhand, twoWeaponFighting, twoHanded };
+  };
   const isWeaponRanged = (weapon: Weapon) => {
     // bevorzugt strukturierte Infos
-    if (weapon.data?.range) return true;
+    // range != thrown_range → echtes Fernkampf-Attribut (DEX)
+    const data = (weapon.data ?? {}) as Record<string, unknown>;
+    if (
+      data.range &&
+      (hasWeaponProperty(weapon, "ammunition") ||
+        normalize(weapon.weapon_subtype ?? "").includes("fernkampf"))
+    )
+      return true;
     const subtype = weapon.weapon_subtype
       ? normalize(weapon.weapon_subtype)
       : "";
@@ -316,6 +371,7 @@ export const calculateDerivedStats = (
       const isProficient = isWeaponProficient(weapon);
       const isRanged = isWeaponRanged(weapon);
       const isFinesse = hasWeaponProperty(weapon, "finesse");
+      const flags = getOffhandFlags(item);
 
       let abilityMod = calculateModifier(attributes.str);
       if (isRanged) abilityMod = calculateModifier(attributes.dex);
@@ -325,18 +381,30 @@ export const calculateDerivedStats = (
           calculateModifier(attributes.dex),
         );
 
-      const properties = weapon.properties?.map((p) => p.name || p.id) || [];
+      const rangeLabels = getWeaponRangeLabels(weapon);
+      const baseProperties =
+        weapon.properties?.map((p) => p.name || p.id) || [];
+      const properties = [...rangeLabels, ...baseProperties];
       const weaponBonus = getWeaponMagicBonus(weapon);
       const invBonus = getInventoryItemMagicBonus(item);
       const attackBonus = weaponBonus.attack + invBonus.attack;
       const damageBonus = weaponBonus.damage + invBonus.damage;
-      const totalDamageMod = abilityMod + damageBonus;
+      const addAbilityToDamage =
+        !flags.isOffhand || (flags.isOffhand && flags.twoWeaponFighting);
+      const abilityDamageMod = addAbilityToDamage ? abilityMod : 0;
+      const totalDamageMod = abilityDamageMod + damageBonus;
+
+      const versatileDice = getVersatileDice(weapon);
+      const baseDice =
+        versatileDice && flags.twoHanded ? versatileDice : weapon.damage_dice;
+      const versatileSuffix =
+        versatileDice && !flags.twoHanded ? ` (2H: ${versatileDice})` : "";
 
       return {
         weapon_id: weapon.id,
         name: weapon.name,
         attack_bonus: abilityMod + (isProficient ? profBonus : 0) + attackBonus,
-        damage: `${weapon.damage_dice}${totalDamageMod >= 0 ? "+" : ""}${totalDamageMod} ${weapon.damage_type}`,
+        damage: `${baseDice}${totalDamageMod >= 0 ? "+" : ""}${totalDamageMod} ${weapon.damage_type}${versatileSuffix}`,
         properties: properties,
       };
     });
