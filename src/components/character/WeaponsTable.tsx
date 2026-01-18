@@ -9,6 +9,8 @@ import {
   Trash2,
 } from "lucide-react";
 import { useCharacterStore } from "../../lib/store";
+import { calculateDerivedStats } from "../../lib/characterLogic";
+import { formatModifier } from "../../lib/math";
 
 const addToEquipmentList = (
   currentItems:
@@ -56,6 +58,12 @@ interface Props {
 export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
   const { updateInventory, saveCharacter, updateMeta } = useCharacterStore();
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const attackByWeaponId = React.useMemo(() => {
+    const stats = calculateDerivedStats(character, undefined, weapons);
+    const map = new Map<string, (typeof stats.weapon_attacks)[number]>();
+    stats.weapon_attacks.forEach((a) => map.set(a.weapon_id, a));
+    return map;
+  }, [character, weapons]);
 
   const handleToggleEquip = (weaponId: string) => {
     const { currentCharacter } = useCharacterStore.getState();
@@ -201,6 +209,7 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
             </div>
             {inventoryWeapons.map(({ weapon, ...invItem }) => {
               const isEquipped = invItem.is_equipped;
+              const atk = attackByWeaponId.get(weapon.id);
 
               return (
                 <div
@@ -223,9 +232,21 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                       )}
                     </div>
                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
-                      <span className="whitespace-nowrap">
-                        {weapon.damage_dice} {weapon.damage_type}
-                      </span>
+                      {atk ? (
+                        <>
+                          <span className="whitespace-nowrap">
+                            Angriff {formatModifier(atk.attack_bonus)}
+                          </span>
+                          <span className="whitespace-nowrap">·</span>
+                          <span className="break-words">
+                            Schaden {atk.damage}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="whitespace-nowrap">
+                          {weapon.damage_dice} {weapon.damage_type}
+                        </span>
+                      )}
                       {weapon.properties && weapon.properties.length > 0 && (
                         <span className="break-words">
                           {weapon.properties

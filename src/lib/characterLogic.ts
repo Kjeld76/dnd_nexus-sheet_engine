@@ -19,6 +19,7 @@ export interface DerivedStats {
 }
 
 export interface WeaponAttack {
+  weapon_id: string;
   name: string;
   attack_bonus: number;
   damage: string;
@@ -332,6 +333,7 @@ export const calculateDerivedStats = (
       const totalDamageMod = abilityMod + damageBonus;
 
       return {
+        weapon_id: weapon.id,
         name: weapon.name,
         attack_bonus: abilityMod + (isProficient ? profBonus : 0) + attackBonus,
         damage: `${weapon.damage_dice}${totalDamageMod >= 0 ? "+" : ""}${totalDamageMod} ${weapon.damage_type}`,
