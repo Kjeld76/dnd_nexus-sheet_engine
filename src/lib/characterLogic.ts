@@ -59,6 +59,49 @@ export const calculateDerivedStats = (
     if (typeof v !== "object" || v === null) return false;
     return (v as { damage_dice?: unknown }).damage_dice !== undefined;
   };
+  const normalize = (v: string) => v.trim().toLowerCase();
+  const hasWeaponProperty = (weapon: Weapon, propertyId: string) => {
+    const wanted = normalize(propertyId);
+    return (
+      weapon.properties?.some(
+        (p) => normalize(p.id) === wanted || normalize(p.name) === wanted,
+      ) ?? false
+    );
+  };
+  const isWeaponRanged = (weapon: Weapon) => {
+    // bevorzugt strukturierte Infos
+    if (weapon.data?.range) return true;
+    const subtype = weapon.weapon_subtype
+      ? normalize(weapon.weapon_subtype)
+      : "";
+    if (subtype.includes("fernkampf")) return true;
+
+    // Fallbacks
+    const cat = weapon.category ? normalize(weapon.category) : "";
+    if (cat.includes("ranged") || cat.includes("fernkampf")) return true;
+    if (hasWeaponProperty(weapon, "ammunition")) return true;
+    return false;
+  };
+  const isWeaponProficient = (weapon: Weapon) => {
+    const profs = character.proficiencies?.weapons ?? [];
+    if (profs.length === 0) return false;
+
+    const weaponKeys = [
+      weapon.name,
+      weapon.category,
+      weapon.category_label ?? "",
+      weapon.weapon_subtype ?? "",
+    ]
+      .map((v) => normalize(v))
+      .filter(Boolean);
+
+    return profs.some((p) => {
+      const prof = normalize(p);
+      return weaponKeys.some(
+        (k) => k === prof || k.includes(prof) || prof.includes(k),
+      );
+    });
+  };
   const level = character.meta.level;
   const attributes = character.attributes;
   const conMod = calculateModifier(attributes.con);
@@ -196,17 +239,9 @@ export const calculateDerivedStats = (
     .filter((item) => item.is_equipped && isWeapon(item.data))
     .map((item) => {
       const weapon = item.data as Weapon;
-      const isProficient =
-        character.proficiencies?.weapons?.includes(weapon.name) ||
-        character.proficiencies?.weapons?.includes(weapon.category);
-
-      const isRanged =
-        (weapon.category?.toLowerCase() || "").includes("ranged") ||
-        (weapon.category?.toLowerCase() || "").includes("fernkampf");
-      const isFinesse =
-        weapon.properties?.some(
-          (p) => p.name?.toLowerCase() === "finesse" || p.id === "finesse",
-        ) ?? false;
+      const isProficient = isWeaponProficient(weapon);
+      const isRanged = isWeaponRanged(weapon);
+      const isFinesse = hasWeaponProperty(weapon, "finesse");
 
       let abilityMod = calculateModifier(attributes.str);
       if (isRanged) abilityMod = calculateModifier(attributes.dex);
