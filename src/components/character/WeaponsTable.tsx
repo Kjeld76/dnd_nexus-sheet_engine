@@ -484,11 +484,11 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                         }`}
                         title={
                           twf
-                            ? "Two-Weapon Fighting deaktivieren (Nebenhand ohne Attribut-Mod)"
-                            : "Two-Weapon Fighting aktivieren (Nebenhand mit Attribut-Mod)"
+                            ? "Zwei-Waffen-Kampf deaktivieren (Nebenhand ohne Attribut-Mod)"
+                            : "Zwei-Waffen-Kampf aktivieren (Nebenhand mit Attribut-Mod)"
                         }
                       >
-                        TWF
+                        ZWF
                       </button>
                     )}
                     <button

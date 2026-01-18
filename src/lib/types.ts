@@ -15,7 +15,7 @@ export interface CharacterMeta {
   name: string;
   player_name?: string;
   level: number;
-  fighting_styles?: string[]; // z.B. ["two-weapon-fighting"]
+  fighting_styles?: string[]; // z.B. ["zwei-waffen-kampf"] - Kampfstil-IDs aus der DB
   species_id?: string;
   class_id?: string;
   subclass_id?: string;
