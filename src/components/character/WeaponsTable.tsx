@@ -65,6 +65,26 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
     return map;
   }, [character, weapons]);
 
+  const updateItemCustomData = (
+    inventoryItemId: string,
+    updater: (prev: Record<string, unknown>) => Record<string, unknown>,
+  ) => {
+    const { currentCharacter } = useCharacterStore.getState();
+    if (!currentCharacter) return;
+
+    const nextInventory = currentCharacter.inventory.map((it) => {
+      if (it.id !== inventoryItemId) return it;
+      const prev =
+        (it.custom_data as Record<string, unknown> | undefined) ?? {};
+      return { ...it, custom_data: updater(prev) };
+    });
+
+    useCharacterStore.setState({
+      currentCharacter: { ...currentCharacter, inventory: nextInventory },
+    });
+    saveCharacter();
+  };
+
   const handleToggleEquip = (weaponId: string) => {
     const { currentCharacter } = useCharacterStore.getState();
     if (!currentCharacter) return;
@@ -210,6 +230,23 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
             {inventoryWeapons.map(({ weapon, ...invItem }) => {
               const isEquipped = invItem.is_equipped;
               const atk = attackByWeaponId.get(weapon.id);
+              const custom = (invItem.custom_data ?? {}) as Record<
+                string,
+                unknown
+              >;
+              const hand = typeof custom.hand === "string" ? custom.hand : "";
+              const isOffhand =
+                hand === "offhand" ||
+                hand === "nebenhand" ||
+                custom.offhand === true;
+              const isTwoHanded =
+                custom.two_handed === true ||
+                custom.twoHanded === true ||
+                custom.is_two_handed === true;
+              const twf =
+                custom.two_weapon_fighting === true ||
+                custom.twoWeaponFighting === true ||
+                custom.add_ability_to_offhand_damage === true;
 
               return (
                 <div
@@ -262,6 +299,118 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                     </div>
                   </div>
                   <div className="absolute bottom-2 right-2 flex items-center gap-1">
+                    <button
+                      onClick={() =>
+                        updateItemCustomData(invItem.id, (prev) => {
+                          const next = { ...prev };
+                          const currentlyOffhand =
+                            next.hand === "offhand" ||
+                            next.hand === "nebenhand" ||
+                            next.offhand === true;
+                          if (currentlyOffhand) {
+                            delete next.hand;
+                            delete next.offhand;
+                            delete next.two_weapon_fighting;
+                            delete next.twoWeaponFighting;
+                            delete next.add_ability_to_offhand_damage;
+                          } else {
+                            next.hand = "offhand";
+                            next.offhand = true;
+                            // 2H macht hier keinen Sinn
+                            delete next.two_handed;
+                            delete next.twoHanded;
+                            delete next.is_two_handed;
+                          }
+                          return next;
+                        })
+                      }
+                      className={`px-2 py-1 rounded border text-[10px] font-black uppercase tracking-wider transition-all shrink-0 ${
+                        isOffhand
+                          ? "bg-primary text-primary-foreground border-primary"
+                          : "bg-muted/50 text-muted-foreground border-border hover:bg-primary/20 hover:border-primary/30"
+                      }`}
+                      title={
+                        isOffhand
+                          ? "Nebenhand deaktivieren"
+                          : "Als Nebenhand markieren"
+                      }
+                    >
+                      NH
+                    </button>
+                    <button
+                      onClick={() =>
+                        updateItemCustomData(invItem.id, (prev) => {
+                          const next = { ...prev };
+                          const currentlyTwoHanded =
+                            next.two_handed === true ||
+                            next.twoHanded === true ||
+                            next.is_two_handed === true;
+                          if (currentlyTwoHanded) {
+                            delete next.two_handed;
+                            delete next.twoHanded;
+                            delete next.is_two_handed;
+                          } else {
+                            next.two_handed = true;
+                            next.twoHanded = true;
+                            next.is_two_handed = true;
+                            // Nebenhand macht hier keinen Sinn
+                            delete next.hand;
+                            delete next.offhand;
+                            delete next.two_weapon_fighting;
+                            delete next.twoWeaponFighting;
+                            delete next.add_ability_to_offhand_damage;
+                          }
+                          return next;
+                        })
+                      }
+                      className={`px-2 py-1 rounded border text-[10px] font-black uppercase tracking-wider transition-all shrink-0 ${
+                        isTwoHanded
+                          ? "bg-primary text-primary-foreground border-primary"
+                          : "bg-muted/50 text-muted-foreground border-border hover:bg-primary/20 hover:border-primary/30"
+                      }`}
+                      title={
+                        isTwoHanded
+                          ? "Zweihändig deaktivieren"
+                          : "Zweihändig markieren (für Versatile)"
+                      }
+                    >
+                      2H
+                    </button>
+                    {isOffhand && (
+                      <button
+                        onClick={() =>
+                          updateItemCustomData(invItem.id, (prev) => {
+                            const next = { ...prev };
+                            const currently =
+                              next.two_weapon_fighting === true ||
+                              next.twoWeaponFighting === true ||
+                              next.add_ability_to_offhand_damage === true;
+                            if (currently) {
+                              delete next.two_weapon_fighting;
+                              delete next.twoWeaponFighting;
+                              delete next.add_ability_to_offhand_damage;
+                            } else {
+                              next.two_weapon_fighting = true;
+                              next.twoWeaponFighting = true;
+                              next.add_ability_to_offhand_damage = true;
+                            }
+                            return next;
+                          })
+                        }
+                        className={`px-2 py-1 rounded border text-[10px] font-black uppercase tracking-wider transition-all shrink-0 ${
+                          twf
+                            ? "bg-primary text-primary-foreground border-primary"
+                            : "bg-muted/50 text-muted-foreground border-border hover:bg-primary/20 hover:border-primary/30"
+                        }`}
+                        title={
+                          twf
+                            ? "Two-Weapon Fighting deaktivieren (Nebenhand ohne Attribut-Mod)"
+                            : "Two-Weapon Fighting aktivieren (Nebenhand mit Attribut-Mod)"
+                        }
+                      >
+                        TWF
+                      </button>
+                    )}
                     <button
                       onClick={() => handleToggleEquip(weapon.id)}
                       className={`p-1 rounded border transition-all shrink-0 ${
