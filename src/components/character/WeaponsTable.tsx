@@ -85,6 +85,31 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
     saveCharacter();
   };
 
+  const normalize = (v: string) => v.trim().toLowerCase();
+  const hasWeaponProperty = (weapon: Weapon, prop: string) => {
+    const wanted = normalize(prop);
+    return (
+      weapon.properties?.some((p) => {
+        const id = typeof p.id === "string" ? normalize(p.id) : "";
+        const name = typeof p.name === "string" ? normalize(p.name) : "";
+        return id === wanted || name === wanted || name.includes(wanted);
+      }) ?? false
+    );
+  };
+  const isMeleeWeapon = (weapon: Weapon) => {
+    const cat =
+      typeof weapon.category === "string" ? normalize(weapon.category) : "";
+    if (cat.includes("melee") || cat.includes("nahkampf")) return true;
+    if (hasWeaponProperty(weapon, "ammunition")) return false;
+    return true;
+  };
+  const isLightWeapon = (weapon: Weapon) =>
+    hasWeaponProperty(weapon, "light") || hasWeaponProperty(weapon, "leicht");
+
+  const hasTWFStyle = (character.meta.fighting_styles ?? []).includes(
+    "two-weapon-fighting",
+  );
+
   const handleToggleEquip = (weaponId: string) => {
     const { currentCharacter } = useCharacterStore.getState();
     if (!currentCharacter) return;
@@ -258,6 +283,26 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                 custom.twoWeaponFighting === true ||
                 custom.add_ability_to_offhand_damage === true;
 
+              const canBeOffhand =
+                isLightWeapon(weapon) && isMeleeWeapon(weapon);
+              const otherEquippedLight = inventoryWeapons.some((w) => {
+                if (w.id === invItem.id) return false;
+                if (!w.is_equipped) return false;
+                return isLightWeapon(w.weapon) && isMeleeWeapon(w.weapon);
+              });
+              const canEnableOffhand =
+                isEquipped && canBeOffhand && otherEquippedLight;
+              const nhDisabled = !isOffhand && !canEnableOffhand;
+              const nhTitle = isOffhand
+                ? "Nebenhand deaktivieren"
+                : !isEquipped
+                  ? "Erst ausrüsten"
+                  : !canBeOffhand
+                    ? "Nur leichte Nahkampfwaffen können Nebenhand sein"
+                    : !otherEquippedLight
+                      ? "Du brauchst eine zweite leichte Nahkampfwaffe (ausgerüstet)"
+                      : "Als Nebenhand markieren";
+
               return (
                 <div
                   key={invItem.id}
@@ -310,40 +355,57 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                   </div>
                   <div className="absolute bottom-2 right-2 flex items-center gap-1">
                     <button
-                      onClick={() =>
-                        updateItemCustomData(invItem.id, (prev) => {
-                          const next = { ...prev };
-                          const currentlyOffhand =
-                            next.hand === "offhand" ||
-                            next.hand === "nebenhand" ||
-                            next.offhand === true;
-                          if (currentlyOffhand) {
+                      disabled={nhDisabled}
+                      onClick={() => {
+                        if (nhDisabled) return;
+
+                        const { currentCharacter } =
+                          useCharacterStore.getState();
+                        if (!currentCharacter) return;
+
+                        const enabling = !isOffhand;
+                        const nextInventory = currentCharacter.inventory.map(
+                          (it) => {
+                            const prev =
+                              (it.custom_data as
+                                | Record<string, unknown>
+                                | undefined) ?? {};
+                            const next = { ...prev };
+
+                            // Offhand global: nur 1 Item darf Offhand sein
                             delete next.hand;
                             delete next.offhand;
                             delete next.two_weapon_fighting;
                             delete next.twoWeaponFighting;
                             delete next.add_ability_to_offhand_damage;
-                          } else {
-                            next.hand = "offhand";
-                            next.offhand = true;
-                            // 2H macht hier keinen Sinn
-                            delete next.two_handed;
-                            delete next.twoHanded;
-                            delete next.is_two_handed;
-                          }
-                          return next;
-                        })
-                      }
-                      className={`px-2 py-1 rounded border text-[10px] font-black uppercase tracking-wider transition-all shrink-0 ${
+
+                            if (enabling && it.id === invItem.id) {
+                              next.hand = "offhand";
+                              next.offhand = true;
+                              // 2H macht hier keinen Sinn
+                              delete next.two_handed;
+                              delete next.twoHanded;
+                              delete next.is_two_handed;
+                            }
+
+                            return { ...it, custom_data: next };
+                          },
+                        );
+
+                        useCharacterStore.setState({
+                          currentCharacter: {
+                            ...currentCharacter,
+                            inventory: nextInventory,
+                          },
+                        });
+                        saveCharacter();
+                      }}
+                      className={`px-2 py-1 rounded border text-[10px] font-black uppercase tracking-wider transition-all shrink-0 disabled:opacity-40 disabled:cursor-not-allowed ${
                         isOffhand
                           ? "bg-primary text-primary-foreground border-primary"
                           : "bg-muted/50 text-muted-foreground border-border hover:bg-primary/20 hover:border-primary/30"
                       }`}
-                      title={
-                        isOffhand
-                          ? "Nebenhand deaktivieren"
-                          : "Als Nebenhand markieren"
-                      }
+                      title={nhTitle}
                     >
                       NH
                     </button>
@@ -388,7 +450,7 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                         2H
                       </button>
                     )}
-                    {isOffhand && (
+                    {isOffhand && hasTWFStyle && (
                       <button
                         onClick={() =>
                           updateItemCustomData(invItem.id, (prev) => {

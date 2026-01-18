@@ -26,6 +26,8 @@ pub struct Character {
 pub struct CharacterMeta {
     pub name: String,
     pub level: i32,
+    #[serde(default)]
+    pub fighting_styles: Option<Vec<String>>,
     pub species_id: Option<String>,
     pub class_id: Option<String>,
     pub subclass_id: Option<String>,
