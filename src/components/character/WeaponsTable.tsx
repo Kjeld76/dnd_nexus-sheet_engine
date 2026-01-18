@@ -106,9 +106,15 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
   const isLightWeapon = (weapon: Weapon) =>
     hasWeaponProperty(weapon, "light") || hasWeaponProperty(weapon, "leicht");
 
-  const hasTWFStyle = (character.meta.fighting_styles ?? []).includes(
-    "two-weapon-fighting",
-  );
+  const hasTWFStyle = (character.meta.fighting_styles ?? []).some((style) => {
+    const normalized = style.toLowerCase().replace(/[_-]/g, "");
+    return (
+      normalized.includes("twoweapon") ||
+      normalized.includes("zweiwaffen") ||
+      normalized.includes("two_weapon_fighting") ||
+      style.toLowerCase() === "two-weapon-fighting"
+    );
+  });
 
   const handleToggleEquip = (weaponId: string) => {
     const { currentCharacter } = useCharacterStore.getState();

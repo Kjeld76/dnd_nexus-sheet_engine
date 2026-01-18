@@ -58,7 +58,23 @@ export const CharacterSheetLayout: React.FC<Props> = ({
   const speed = characterSpecies?.data?.speed || 9;
   const { updateProficiency } = useCharacterStore();
   const fightingStyles = character.meta.fighting_styles ?? [];
-  const hasTWF = fightingStyles.includes("two-weapon-fighting");
+
+  const classesWithFightingStyles = [
+    "kämpfer",
+    "waldläufer",
+    "paladin",
+    "fighter",
+    "ranger",
+  ];
+  const canHaveFightingStyles = characterClass?.id
+    ? classesWithFightingStyles.includes(characterClass.id.toLowerCase())
+    : false;
+
+  const availableFightingStyles = feats.filter(
+    (feat) =>
+      feat.category?.toLowerCase().includes("fighting_style") ||
+      feat.category?.toLowerCase().includes("kampfstil"),
+  );
 
   return (
     <div className="w-full min-h-screen p-4 space-y-4">
@@ -135,35 +151,46 @@ export const CharacterSheetLayout: React.FC<Props> = ({
             </div>
           </div>
 
-          {/* Kampfstile (minimal) */}
-          <div className="bg-card p-2 rounded-lg border-2 border-border shadow-lg h-fit">
-            <label className="text-xs font-black uppercase tracking-wider text-muted-foreground block mb-2">
-              Kampfstil
-            </label>
-            <label className="flex items-center justify-between gap-3 border border-border rounded px-3 py-2 bg-muted/20">
-              <span className="text-sm font-bold text-foreground">
-                Two-Weapon Fighting
-              </span>
-              <input
-                type="checkbox"
-                className="w-4 h-4"
-                checked={hasTWF}
-                onChange={(e) => {
-                  const next = e.target.checked
-                    ? Array.from(
-                        new Set([...fightingStyles, "two-weapon-fighting"]),
-                      )
-                    : fightingStyles.filter((s) => s !== "two-weapon-fighting");
-                  onUpdateMeta({ fighting_styles: next });
-                  onSaveCharacter();
-                }}
-              />
-            </label>
-            <p className="text-[11px] text-muted-foreground mt-2">
-              Steuert, ob bei Nebenhand-Angriffen der Attributsmodifikator zum
-              Schaden addiert wird.
-            </p>
-          </div>
+          {/* Kampfstile (dynamisch aus DB) */}
+          {canHaveFightingStyles && availableFightingStyles.length > 0 && (
+            <div className="bg-card p-2 rounded-lg border-2 border-border shadow-lg h-fit">
+              <label className="text-xs font-black uppercase tracking-wider text-muted-foreground block mb-2">
+                Kampfstil
+              </label>
+              <div className="space-y-2">
+                {availableFightingStyles.map((feat) => {
+                  const featId = feat.id.toLowerCase();
+                  const isActive = fightingStyles.some(
+                    (style) => style.toLowerCase() === featId,
+                  );
+                  return (
+                    <label
+                      key={feat.id}
+                      className="flex items-center justify-between gap-3 border border-border rounded px-3 py-2 bg-muted/20"
+                    >
+                      <span className="text-sm font-bold text-foreground">
+                        {feat.name}
+                      </span>
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4"
+                        checked={isActive}
+                        onChange={(e) => {
+                          const next = e.target.checked
+                            ? Array.from(new Set([...fightingStyles, feat.id]))
+                            : fightingStyles.filter(
+                                (s) => s.toLowerCase() !== featId,
+                              );
+                          onUpdateMeta({ fighting_styles: next });
+                          onSaveCharacter();
+                        }}
+                      />
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {/* Fertigkeiten */}
           <div className="bg-card p-2 rounded-lg border-2 border-border shadow-lg h-fit">
