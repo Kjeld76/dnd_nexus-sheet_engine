@@ -51,6 +51,10 @@
 - [ ] **Tauri-Titlebar:** Dark-Mode sicherstellen (via window.shadow)
 - [ ] **Empty States:** Hintergrund-Pattern mit Drachen/Runen-Line-Art
 - [ ] **Loading Spinner:** W20 Ikosaeder (optional, benötigt Framer Motion)
+- [ ] **Design-Schema-Polish (Low Prio):** kleinere Konsistenz-Fixes aus `DESIGN_SCHEMA.md`
+  - `tailwind.config.js`: `accent` doppelt definiert → aufräumen
+  - `src/index.css` Tokens: Alpha im Token **oder** in Tailwind-Utility (Double-Alpha vermeiden)
+  - Optional: `.light { color-scheme: light; }` ergänzen (Determinismus)
 
 ### ✅ Abgeschlossen
 - [x] Species Workflow implementiert (automatische Anwendung von Traits, Sprachen)
