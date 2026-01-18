@@ -6,16 +6,19 @@
 
 ### **P1 — Stabilität & Qualität (Backend / Build)**
 - [ ] **Rust/Clippy-Runde (Backend):** `cargo clippy` in `src-tauri/` ausführen und alle Warnungen beheben
-  - `.unwrap()`/`.expect()` entfernen, wo sinnvoll → saubere Fehlerpfade mit `AppError`
-  - Lock-/DB-Fehler konsistent über `AppResult`/`map_lock_error` (falls noch Lücken existieren)
+  - [x] `cargo clippy --all-targets` ist clean
+  - [ ] `.unwrap()`/`.expect()` entfernen, wo sinnvoll → saubere Fehlerpfade mit `AppError`
+    - Hinweis: aktuell existieren `.unwrap()`/`.expect()` noch v.a. in `src-tauri/src/bin/*` (Tooling)
+  - [ ] Lock-/DB-Fehler konsistent über `AppResult`/`map_lock_error` (falls noch Lücken existieren)
   - Ergebnis: weniger Runtime-Risiko + stabilere CI
 
 ### **P1 — Core-Gameplay (Combat)**
 - [ ] **Angriffs-Berechnung:** Angriffswerte mit Waffeneigenschaften und Modifikatoren
-  - Angriffsbonus = Attributsmodifikator + Übungsbonus + Waffenmodifikatoren
-  - Schadensbonus = Attributsmodifikator + Waffenmodifikatoren
-  - Waffeneigenschaften berücksichtigen (z.B. Finesse, Two-Handed)
   - Referenz: `docs/KAMPF_FORMELSAMMLUNG.md`
+  - [x] Grundformel (Attribut + Übungsbonus falls geübt) inkl. Finesse/Fernkampf
+  - [x] Magische Boni (+1/+2/+3) werden in Angriff **und** Schaden eingerechnet
+  - [x] Anzeige in Waffenliste (Inventar) + Angriffe-Box nutzt berechnete Werte
+  - [ ] Spezialfälle ergänzen: Nebenhand (Two-Weapon Fighting), Versatile/Two-Handed, Wurfwaffen-Range, weitere Property-Effekte
 
 ### **P1 — Datenmigration (Compendium)**
 - [x] **Magische Gegenstände (Spielleiterhandbuch):** „Magische Gegenstände" aus dem Spielleiterhandbuch in die Datenbank migrieren
