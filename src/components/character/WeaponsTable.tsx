@@ -488,7 +488,7 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                             : "Zwei-Waffen-Kampf aktivieren (Nebenhand mit Attribut-Mod)"
                         }
                       >
-                        ZWF
+                        ZWK
                       </button>
                     )}
                     <button
