@@ -1,6 +1,8 @@
 # Design-Schema (deutlich tiefgehend)
 
-Dieses Dokument beschreibt das Design-/Theme-Schema im Projekt: Token-Architektur, Theme-Umschaltung, `color-scheme`, Tailwind-Mapping (inkl. Alpha-Mechanik), Baselines, Typografie, Effekte, Motion und reale Usage-Patterns.
+Dieses Dokument ist die **gebündelte IST-Beschreibung** des aktuellen Design-/Theme-Systems (Tokens, Theme-Umschaltung, `color-scheme`, Tailwind-Mapping inkl. Alpha-Mechanik, Baselines, Typografie, Effekte, Motion, reale Usage-Patterns).
+
+**Ziel:** Auf dieser Grundlage ein **besseres, konsistenteres ZIEL-Design** ableiten (konkrete Maßnahmen/Iterations), ohne dass die aktuelle Implementierung „verloren“ geht.
 
 ## 1) Architektur-Prinzip: Token-first + Theme via Root-Class
 - **Single Source of Truth**: Design-Tokens sind CSS-Variablen in `src/index.css`.
