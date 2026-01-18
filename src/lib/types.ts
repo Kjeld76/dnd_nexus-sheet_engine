@@ -302,7 +302,10 @@ export interface Weapon {
   id: string;
   name: string;
   category: string;
-  weapon_type: string;
+  category_label?: string; // Lesbare deutsche Bezeichnung (z.B. "Einfache Waffen", "Kriegswaffen")
+  weapon_type?: string; // DEPRECATED, bleibt für Rückwärtskompatibilität
+  weapon_subtype?: string; // NEU: Stangenwaffen, Fernkampfwaffen, Wurfwaffen, Nahkampfwaffen
+  mastery_id?: string; // NEU
   damage_dice: string;
   damage_type: string;
   weight_kg: number;
@@ -311,6 +314,9 @@ export interface Weapon {
     id: string;
     name: string;
     description?: string;
+    has_parameter?: boolean;
+    parameter_type?: string;
+    parameter_value?: unknown;
     [key: string]: unknown;
   }>;
   mastery?: {
@@ -327,6 +333,7 @@ export interface Armor {
   id: string;
   name: string;
   category: string;
+  category_label?: string; // Lesbare deutsche Bezeichnung (z.B. "Leichte Rüstung", "Schilde")
   base_ac: number | null; // NULL für Formeln
   ac_bonus: number; // Für Schilde (+2)
   ac_formula: string | null; // z.B. "11 + DEX", "12 + DEX (max. 2)", "14"

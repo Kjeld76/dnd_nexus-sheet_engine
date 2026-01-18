@@ -137,17 +137,6 @@ export function CompendiumEditor({
     JSON.stringify(initialData || {}, null, 2),
   );
 
-  const getDataDescription = (fd: EditorFormData): string => {
-    // Immer formData.description verwenden, auch wenn leer (für Bearbeitung)
-    if (typeof fd.description === "string") {
-      return fd.description;
-    }
-    // Fallback nur beim ersten Laden, nicht während der Bearbeitung
-    const d = fd.data;
-    if (!d) return "";
-    return typeof d.description === "string" ? d.description : "";
-  };
-
   const handleSave = async () => {
     try {
       const parsed =
@@ -210,37 +199,67 @@ export function CompendiumEditor({
           is_homebrew: magicItemData.is_homebrew as boolean | undefined,
         } as CustomMagicItem);
       } else if (type === "species") {
+        const speciesData = finalData as EditorFormData;
         await homebrewApi.upsertSpecies({
-          id: finalData.id as string | undefined,
-          name: finalData.name as string,
-          data: finalData.data as import("../lib/types").SpeciesData,
+          id:
+            (speciesData.id as string | undefined) ||
+            (finalData.id as string | undefined),
+          name: (speciesData.name as string) || "",
+          data: (speciesData.data as import("../lib/types").SpeciesData) || {},
           parent_id: finalData.parent_id as string | undefined,
-          is_homebrew: finalData.is_homebrew as boolean | undefined,
+          is_homebrew:
+            (speciesData.is_homebrew as boolean | undefined) ||
+            ((finalData as Record<string, unknown>).is_homebrew as
+              | boolean
+              | undefined),
         } as CustomSpecies);
       } else if (type === "classes") {
+        const classData = finalData as EditorFormData;
         await homebrewApi.upsertClass({
-          id: finalData.id as string | undefined,
-          name: finalData.name as string,
-          data: finalData.data as import("../lib/types").ClassData,
+          id:
+            (classData.id as string | undefined) ||
+            (finalData.id as string | undefined),
+          name: (classData.name as string) || "",
+          data: (classData.data as import("../lib/types").ClassData) || {},
           parent_id: finalData.parent_id as string | undefined,
-          is_homebrew: finalData.is_homebrew as boolean | undefined,
+          is_homebrew:
+            (classData.is_homebrew as boolean | undefined) ||
+            ((finalData as Record<string, unknown>).is_homebrew as
+              | boolean
+              | undefined),
         } as CustomClass);
       } else if (type === "feats") {
+        const featData = finalData as EditorFormData;
         await homebrewApi.upsertFeat({
-          id: finalData.id as string | undefined,
-          name: finalData.name as string,
-          category: finalData.category as string,
-          data: finalData.data as Record<string, unknown>,
+          id:
+            (featData.id as string | undefined) ||
+            (finalData.id as string | undefined),
+          name: (featData.name as string) || "",
+          category: (featData.category as string) || "",
+          data: (featData.data as Record<string, unknown>) || {},
           parent_id: finalData.parent_id as string | undefined,
-          is_homebrew: finalData.is_homebrew as boolean | undefined,
+          is_homebrew:
+            (featData.is_homebrew as boolean | undefined) ||
+            ((finalData as Record<string, unknown>).is_homebrew as
+              | boolean
+              | undefined),
         } as CustomFeat);
       } else if (type === "backgrounds") {
+        const backgroundData = finalData as EditorFormData;
         await homebrewApi.upsertBackground({
-          id: finalData.id as string | undefined,
-          name: finalData.name as string,
-          data: finalData.data as import("../lib/types").Background["data"],
+          id:
+            (backgroundData.id as string | undefined) ||
+            (finalData.id as string | undefined),
+          name: (backgroundData.name as string) || "",
+          data:
+            (backgroundData.data as import("../lib/types").Background["data"]) ||
+            {},
           parent_id: finalData.parent_id as string | undefined,
-          is_homebrew: finalData.is_homebrew as boolean | undefined,
+          is_homebrew:
+            (backgroundData.is_homebrew as boolean | undefined) ||
+            ((finalData as Record<string, unknown>).is_homebrew as
+              | boolean
+              | undefined),
         } as CustomBackground);
       }
       onSave();

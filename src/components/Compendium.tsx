@@ -1953,41 +1953,44 @@ export function Compendium() {
                                       >
                                         <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
                                           {prop.name}
-                                          {prop.parameter_value != null && (
-                                            <span className="text-sm text-muted-foreground normal-case ml-2">
-                                              {(() => {
-                                                const param =
-                                                  prop.parameter_value;
-                                                const p = isRecord(param)
-                                                  ? (param as Record<
-                                                      string,
-                                                      unknown
-                                                    >)
-                                                  : null;
-                                                const strength =
-                                                  p?.["strength_requirement"];
-                                                if (
-                                                  typeof strength === "number"
-                                                ) {
-                                                  return `(STÄ ${strength})`;
-                                                }
-                                                const acBonus = p?.["ac_bonus"];
-                                                if (
-                                                  typeof acBonus === "number"
-                                                ) {
-                                                  return `(+${acBonus} RK)`;
-                                                }
-                                                const damageType =
-                                                  p?.["damage_type"];
-                                                if (
-                                                  typeof damageType === "string"
-                                                ) {
-                                                  return `(${damageType})`;
-                                                }
-                                                return "";
-                                              })()}
-                                            </span>
-                                          )}
+                                          {"parameter_value" in prop &&
+                                            prop.parameter_value != null && (
+                                              <span className="text-sm text-muted-foreground normal-case ml-2">
+                                                {(() => {
+                                                  const param =
+                                                    prop.parameter_value;
+                                                  const p = isRecord(param)
+                                                    ? (param as Record<
+                                                        string,
+                                                        unknown
+                                                      >)
+                                                    : null;
+                                                  const strength =
+                                                    p?.["strength_requirement"];
+                                                  if (
+                                                    typeof strength === "number"
+                                                  ) {
+                                                    return `(STÄ ${strength})`;
+                                                  }
+                                                  const acBonus =
+                                                    p?.["ac_bonus"];
+                                                  if (
+                                                    typeof acBonus === "number"
+                                                  ) {
+                                                    return `(+${acBonus} RK)`;
+                                                  }
+                                                  const damageType =
+                                                    p?.["damage_type"];
+                                                  if (
+                                                    typeof damageType ===
+                                                    "string"
+                                                  ) {
+                                                    return `(${damageType})`;
+                                                  }
+                                                  return "";
+                                                })()}
+                                              </span>
+                                            )}
                                         </span>
                                         <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20 group-hover:border-primary transition-colors">
                                           {prop.description ||
@@ -2547,8 +2550,8 @@ export function Compendium() {
                                     if (newIsEnglish && !existingIsEnglish) {
                                       shouldReplace = true;
                                     } else if (
-                                      prop.description.length >
-                                      existing.description.length
+                                      (prop.description || "").length >
+                                      (existing.description || "").length
                                     ) {
                                       shouldReplace = true;
                                     }
@@ -2834,10 +2837,12 @@ export function Compendium() {
                                           return null;
                                         };
 
+                                        const weaponProp =
+                                          prop as import("../lib/types/weapons").WeaponProperty;
                                         const paramDisplay =
                                           formatParameterValue(
-                                            prop.parameter_value,
-                                            prop.id,
+                                            weaponProp.parameter_value,
+                                            weaponProp.id,
                                             weapon.data,
                                           );
 

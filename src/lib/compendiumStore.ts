@@ -49,7 +49,7 @@ interface CompendiumState {
   fetchMagicItems: () => Promise<void>;
 }
 
-export const useCompendiumStore = create<CompendiumState>((set, get) => ({
+export const useCompendiumStore = create<CompendiumState>((set, _get) => ({
   spells: [],
   species: [],
   classes: [],
