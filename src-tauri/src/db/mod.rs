@@ -130,7 +130,7 @@ pub fn init_database(app: &AppHandle) -> Result<Database, String> {
         let project_db_paths = [
             std::env::current_dir()
                 .ok()
-                .and_then(|p| Some(p.join("dnd-nexus.db"))),
+                .map(|p| p.join("dnd-nexus.db")),
             std::env::current_exe()
                 .ok()
                 .and_then(|p| p.parent().map(|p| p.join("dnd-nexus.db"))),
@@ -140,21 +140,19 @@ pub fn init_database(app: &AppHandle) -> Result<Database, String> {
         ];
         
         let mut project_db_found = false;
-        for path_opt in project_db_paths.iter() {
-            if let Some(path) = path_opt {
-                if path.exists() {
-                    println!("Gefundene Projekt-Datenbank zum Importieren: {:?}", path);
-                    // Importiere Daten aus der Projekt-Datenbank
-                    if let Err(e) = seed::seed_core_data(&mut conn) {
-                        eprintln!("WARNUNG: Fehler beim Importieren der Daten: {}", e);
-                    } else {
-                        project_db_found = true;
-                        println!("Daten erfolgreich importiert!");
-                    }
-                    break;
-                }
-            }
-        }
+         for path in project_db_paths.iter().flatten() {
+             if path.exists() {
+                 println!("Gefundene Projekt-Datenbank zum Importieren: {:?}", path);
+                 // Importiere Daten aus der Projekt-Datenbank
+                 if let Err(e) = seed::seed_core_data(&mut conn) {
+                     eprintln!("WARNUNG: Fehler beim Importieren der Daten: {}", e);
+                 } else {
+                     project_db_found = true;
+                     println!("Daten erfolgreich importiert!");
+                 }
+                 break;
+             }
+         }
         
         if !project_db_found {
             println!("WARNUNG: Keine Projekt-Datenbank gefunden. Die App wird mit leerer Datenbank gestartet.");

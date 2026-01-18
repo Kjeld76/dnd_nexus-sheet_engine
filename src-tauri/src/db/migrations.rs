@@ -1161,9 +1161,8 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         // Prüfe, ob die Spalte bereits existiert
         let mut stmt = conn.prepare(&format!("PRAGMA table_info({})", table))
             .map_err(|e| format!("Konnte table_info nicht abfragen: {}", e))?;
-        let columns: Vec<String> = stmt.query_map([], |row| {
-            Ok(row.get::<_, String>(1)?) // column name ist an Position 1
-        })
+        let columns: Vec<String> = stmt
+            .query_map([], |row| row.get::<_, String>(1)) // column name ist an Position 1
         .map_err(|e| format!("Fehler beim Abfragen der Spalten: {}", e))?
         .collect::<Result<Vec<_>, _>>()
         .map_err(|e| format!("Fehler beim Sammeln der Spalten: {}", e))?;
@@ -1196,9 +1195,8 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         // Prüfe, ob weapon_subtype Spalte existiert
         let mut stmt = conn.prepare(&format!("PRAGMA table_info({})", table))
             .map_err(|e| format!("Konnte table_info nicht abfragen: {}", e))?;
-        let columns: Vec<String> = stmt.query_map([], |row| {
-            Ok(row.get::<_, String>(1)?)
-        })
+        let columns: Vec<String> = stmt
+            .query_map([], |row| row.get::<_, String>(1))
         .map_err(|e| format!("Fehler beim Abfragen der Spalten: {}", e))?
         .collect::<Result<Vec<_>, _>>()
         .map_err(|e| format!("Fehler beim Sammeln der Spalten: {}", e))?;
