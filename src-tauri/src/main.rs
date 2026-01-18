@@ -12,7 +12,7 @@ mod error;
 use tauri::Manager;
 
 fn main() {
-    tauri::Builder::default()
+    let result = tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
         .setup(|app: &mut tauri::App| {
@@ -71,7 +71,11 @@ fn main() {
             db::seed::import_phb_data,
             tools::data_validator::validate_core_compendium,
         ])
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .run(tauri::generate_context!());
+
+    if let Err(e) = result {
+        eprintln!("Error while running tauri application: {}", e);
+        std::process::exit(1);
+    }
 }
 
