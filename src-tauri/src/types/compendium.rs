@@ -70,6 +70,7 @@ pub struct Armor {
     pub id: String,
     pub name: String,
     pub category: String,
+    pub category_label: String,
     pub base_ac: Option<i32>,  // NULL für Formeln
     pub ac_bonus: i32,  // Für Schilde (+2)
     pub ac_formula: Option<String>,  // z.B. "11 + DEX", "12 + DEX (max. 2)", "14"
@@ -150,3 +151,66 @@ pub struct Equipment {
     pub source: String,
 }
 
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct MagicItem {
+    pub id: String,
+    pub name: String,
+    pub rarity: String,
+    pub category: String,
+    pub source_book: Option<String>,
+    pub source_page: Option<i32>,
+    pub requires_attunement: bool,
+    pub facts_json: String,
+    pub data: Value,
+    pub source: String,
+}
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct CustomMagicItem {
+    pub id: Option<String>,
+    pub name: String,
+    pub rarity: String,
+    pub category: String,
+    pub source_book: Option<String>,
+    pub source_page: Option<i32>,
+    pub requires_attunement: bool,
+    pub facts_json: String,
+    pub parent_id: Option<String>,
+    pub is_homebrew: Option<bool>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct CustomSpecies {
+    pub id: Option<String>,
+    pub name: String,
+    pub data: Value,
+    pub parent_id: Option<String>,
+    pub is_homebrew: Option<bool>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct CustomClass {
+    pub id: Option<String>,
+    pub name: String,
+    pub data: Value,
+    pub parent_id: Option<String>,
+    pub is_homebrew: Option<bool>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct CustomFeat {
+    pub id: Option<String>,
+    pub name: String,
+    pub category: String,
+    pub data: Value,
+    pub parent_id: Option<String>,
+    pub is_homebrew: Option<bool>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct CustomBackground {
+    pub id: Option<String>,
+    pub name: String,
+    pub data: Value,
+    pub parent_id: Option<String>,
+    pub is_homebrew: Option<bool>,
+}

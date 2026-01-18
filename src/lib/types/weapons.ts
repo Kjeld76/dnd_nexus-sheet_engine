@@ -2,7 +2,9 @@ export interface Weapon {
   id: string;
   name: string;
   category: string;
+  category_label?: string; // Lesbare deutsche Bezeichnung (z.B. "Einfache Waffen", "Kriegswaffen")
   weapon_type?: string; // DEPRECATED, bleibt für Rückwärtskompatibilität
+  weapon_subtype?: string; // NEU: Stangenwaffen, Fernkampfwaffen, Wurfwaffen, Nahkampfwaffen
   mastery_id: string; // NEU
   damage_dice: string;
   damage_type: string;

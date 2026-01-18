@@ -59,14 +59,17 @@ export const CharacterSheetLayout: React.FC<Props> = ({
   const { updateProficiency } = useCharacterStore();
 
   return (
-    <div className="w-full h-full p-4 space-y-4 overflow-y-auto">
-      {/* Main Grid: 3 Spalten - flexibleres Layout */}
-      <div className="flex flex-col lg:flex-row gap-3">
-        {/* Linke Spalte (10% der Breite, 25% kleiner als 13.33%) */}
-        <div className="w-full lg:w-[10%] space-y-3 min-w-0 flex-shrink-0">
+    <div className="w-full min-h-screen p-4 space-y-4">
+      {/* Main Grid: 3 Spalten → 2 Spalten → 1 Spalte */}
+      {/* Mobile: 1 Spalte (alle untereinander) */}
+      {/* Tablet: 2 Spalten (linke oben, mittlere+rechte darunter nebeneinander) */}
+      {/* Desktop: 3 Spalten (alle nebeneinander) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[280px_1fr_1fr] gap-4">
+        {/* Linke Spalte: Attribute (schmaler für mehr Platz in der Mitte) */}
+        <div className="space-y-3 w-full max-w-[280px] md:col-span-2 xl:col-span-1 xl:max-w-[280px]">
           {/* Attribute */}
-          <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg">
-            <h3 className="text-base font-black uppercase tracking-wider text-muted-foreground mb-3">
+          <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg h-fit">
+            <h3 className="text-sm md:text-base font-black uppercase tracking-wider text-muted-foreground mb-3">
               Attribute
             </h3>
             <div className="space-y-2">
@@ -109,7 +112,7 @@ export const CharacterSheetLayout: React.FC<Props> = ({
           </div>
 
           {/* Inspiration & Übungsbonus */}
-          <div className="bg-card p-2 rounded-lg border-2 border-border shadow-lg">
+          <div className="bg-card p-2 rounded-lg border-2 border-border shadow-lg h-fit">
             <div className="grid grid-cols-2 gap-2">
               <div>
                 <label className="text-sm font-black uppercase tracking-wider text-muted-foreground block mb-1">
@@ -131,8 +134,8 @@ export const CharacterSheetLayout: React.FC<Props> = ({
           </div>
 
           {/* Fertigkeiten */}
-          <div className="bg-card p-2 rounded-lg border-2 border-border shadow-lg">
-            <h3 className="text-base font-black uppercase tracking-wider text-muted-foreground mb-2">
+          <div className="bg-card p-2 rounded-lg border-2 border-border shadow-lg h-fit">
+            <h3 className="text-sm md:text-base font-black uppercase tracking-wider text-muted-foreground mb-2">
               Fertigkeiten
             </h3>
             <SkillList
@@ -143,14 +146,14 @@ export const CharacterSheetLayout: React.FC<Props> = ({
           </div>
         </div>
 
-        {/* Mittlere Spalte (55% der Breite) */}
-        <div className="w-full lg:w-[55%] space-y-3 flex-1">
+        {/* Mittlere Spalte: Kampfwerte */}
+        <div className="space-y-3 md:col-span-1 xl:col-span-1">
           {/* Kampfwerte */}
-          <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg">
-            <h3 className="text-base font-black uppercase tracking-wider text-muted-foreground mb-3">
+          <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg h-fit">
+            <h3 className="text-sm md:text-base font-black uppercase tracking-wider text-muted-foreground mb-3">
               Kampfwerte
             </h3>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1 mb-1">
                   <Shield size={16} className="text-primary" />
@@ -158,7 +161,7 @@ export const CharacterSheetLayout: React.FC<Props> = ({
                     RK
                   </label>
                 </div>
-                <div className="text-3xl font-black text-primary border-2 border-primary/30 rounded-lg py-2">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-primary border-2 border-primary/30 rounded-lg py-2">
                   {stats.ac}
                 </div>
               </div>
@@ -169,7 +172,7 @@ export const CharacterSheetLayout: React.FC<Props> = ({
                     Initiative
                   </label>
                 </div>
-                <div className="text-3xl font-black text-amber-500 border-2 border-amber-500/30 rounded-lg py-2">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-amber-500 border-2 border-amber-500/30 rounded-lg py-2">
                   {formatModifier(stats.initiative)}
                 </div>
               </div>
@@ -180,7 +183,7 @@ export const CharacterSheetLayout: React.FC<Props> = ({
                     Bewegung
                   </label>
                 </div>
-                <div className="text-3xl font-black text-blue-500 border-2 border-blue-500/30 rounded-lg py-2">
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-blue-500 border-2 border-blue-500/30 rounded-lg py-2">
                   {character.meta.use_metric
                     ? `${speed}m`
                     : `${Math.round(speed / 0.3)}ft`}
@@ -190,7 +193,7 @@ export const CharacterSheetLayout: React.FC<Props> = ({
           </div>
 
           {/* HP Management - Kompakt */}
-          <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg">
+          <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg h-fit">
             <HPManagement
               character={character}
               characterClass={characterClass}
@@ -199,36 +202,40 @@ export const CharacterSheetLayout: React.FC<Props> = ({
 
           {/* Angriffe */}
           {stats.weapon_attacks.length > 0 && (
-            <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg">
-              <h3 className="text-base font-black uppercase tracking-wider text-muted-foreground mb-3">
+            <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg h-fit">
+              <h3 className="text-sm md:text-base font-black uppercase tracking-wider text-muted-foreground mb-3">
                 Angriffe & Zauber
               </h3>
               <div className="space-y-2">
                 {stats.weapon_attacks.map((atk, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between p-2 border border-border rounded hover:border-primary/30 transition-colors"
+                    className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-2 border border-border rounded hover:border-primary/30 transition-colors"
                   >
-                    <div className="flex-1">
-                      <div className="font-bold text-sm">{atk.name}</div>
-                      <div className="text-sm text-muted-foreground">
+                    <div className="flex-1 min-w-0">
+                      <div className="font-bold text-sm break-words">
+                        {atk.name}
+                      </div>
+                      <div className="text-xs sm:text-sm text-muted-foreground break-words">
                         {atk.properties.join(", ")}
                       </div>
                     </div>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3 sm:gap-4 shrink-0">
                       <div className="text-center">
-                        <div className="text-sm font-black uppercase text-muted-foreground">
+                        <div className="text-xs sm:text-sm font-black uppercase text-muted-foreground">
                           Bonus
                         </div>
-                        <div className="text-lg font-black text-primary">
+                        <div className="text-sm sm:text-base md:text-lg font-black text-primary whitespace-nowrap">
                           {formatModifier(atk.attack_bonus)}
                         </div>
                       </div>
-                      <div className="text-center">
-                        <div className="text-sm font-black uppercase text-muted-foreground">
+                      <div className="text-center min-w-0">
+                        <div className="text-xs sm:text-sm font-black uppercase text-muted-foreground">
                           Schaden
                         </div>
-                        <div className="text-sm font-bold">{atk.damage}</div>
+                        <div className="text-xs sm:text-sm font-bold break-words">
+                          {atk.damage}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -238,26 +245,26 @@ export const CharacterSheetLayout: React.FC<Props> = ({
           )}
 
           {/* Waffen & Rüstungen - Kompakt */}
-          <div className="grid grid-cols-2 gap-3">
-            <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg h-fit">
               <WeaponsTable character={character} weapons={weapons} />
             </div>
-            <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg">
+            <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg h-fit">
               <ArmorTable character={character} armor={armor} />
             </div>
           </div>
         </div>
 
-        {/* Rechte Spalte (35% der Breite) */}
-        <div className="w-full lg:w-[35%] space-y-3 flex-shrink-0">
+        {/* Rechte Spalte: Persönlichkeit */}
+        <div className="space-y-3 md:col-span-1 xl:col-span-1">
           {/* Persönlichkeit */}
-          <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg">
-            <h3 className="text-base font-black uppercase tracking-wider text-muted-foreground mb-3">
+          <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg h-fit">
+            <h3 className="text-sm md:text-base font-black uppercase tracking-wider text-muted-foreground mb-3 break-words">
               Persönlichkeit
             </h3>
             <div className="space-y-3">
               <div>
-                <label className="text-sm font-black uppercase tracking-wider text-muted-foreground block mb-1">
+                <label className="text-xs sm:text-sm font-black uppercase tracking-wider text-muted-foreground block mb-1 break-words">
                   Persönlichkeitsmerkmale
                 </label>
                 <textarea
@@ -271,7 +278,7 @@ export const CharacterSheetLayout: React.FC<Props> = ({
                 />
               </div>
               <div>
-                <label className="text-sm font-black uppercase tracking-wider text-muted-foreground block mb-1">
+                <label className="text-xs sm:text-sm font-black uppercase tracking-wider text-muted-foreground block mb-1 break-words">
                   Ideale
                 </label>
                 <textarea
@@ -283,7 +290,7 @@ export const CharacterSheetLayout: React.FC<Props> = ({
                 />
               </div>
               <div>
-                <label className="text-sm font-black uppercase tracking-wider text-muted-foreground block mb-1">
+                <label className="text-xs sm:text-sm font-black uppercase tracking-wider text-muted-foreground block mb-1 break-words">
                   Bindungen
                 </label>
                 <textarea
@@ -295,7 +302,7 @@ export const CharacterSheetLayout: React.FC<Props> = ({
                 />
               </div>
               <div>
-                <label className="text-sm font-black uppercase tracking-wider text-muted-foreground block mb-1">
+                <label className="text-xs sm:text-sm font-black uppercase tracking-wider text-muted-foreground block mb-1 break-words">
                   Makel
                 </label>
                 <textarea
@@ -310,8 +317,8 @@ export const CharacterSheetLayout: React.FC<Props> = ({
           </div>
 
           {/* Merkmale & Fähigkeiten */}
-          <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg">
-            <h3 className="text-base font-black uppercase tracking-wider text-muted-foreground mb-3">
+          <div className="bg-card p-3 rounded-lg border-2 border-border shadow-lg h-fit">
+            <h3 className="text-sm md:text-base font-black uppercase tracking-wider text-muted-foreground mb-3">
               Merkmale & Fähigkeiten
             </h3>
             {characterSpecies && <SpeciesTraits species={characterSpecies} />}

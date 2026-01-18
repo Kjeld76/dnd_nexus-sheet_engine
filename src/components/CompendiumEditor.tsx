@@ -15,6 +15,11 @@ import {
   CustomWeapon,
   CustomArmor,
   CustomItem,
+  CustomMagicItem,
+  CustomSpecies,
+  CustomClass,
+  CustomFeat,
+  CustomBackground,
 } from "../lib/types";
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -37,7 +42,8 @@ type EditorType =
   | "backgrounds"
   | "items"
   | "equipment"
-  | "tool";
+  | "tool"
+  | "magic-items";
 
 type EditorInitialData = unknown;
 
@@ -88,32 +94,55 @@ export function CompendiumEditor({
       : undefined;
 
   const [viewMode, setViewMode] = useState<"form" | "json">("form");
-  const [formData, setFormData] = useState<EditorFormData>(() => ({
-    ...(initialObj || {}),
-    ...(initialData
-      ? {}
-      : {
-          name: "",
-          description: "",
-          level: 0,
-          school: "",
-          casting_time: "",
-          range: "",
-          components: "",
-          material_components: "",
-          duration: "",
-          classes: "",
-          is_homebrew: true,
-          data: {},
-        }),
-  }));
+  const [formData, setFormData] = useState<EditorFormData>(() => {
+    // Für Magic Items: extrahiere description aus data
+    if (type === "magic-items" && initialObj) {
+      const data = initialObj.data as Record<string, unknown> | undefined;
+      const facts = data || {};
+      const description = facts.description as string | undefined;
+      return {
+        ...initialObj,
+        description: description ?? "", // Verwende ?? statt ||, damit "" nicht überschrieben wird
+      };
+    }
+    // Für andere Typen: extrahiere description aus data oder initialObj
+    const baseData = initialObj || {};
+    const description =
+      typeof baseData.description === "string"
+        ? baseData.description
+        : (((baseData.data as Record<string, unknown> | undefined)
+            ?.description as string | undefined) ?? "");
+
+    return {
+      ...baseData,
+      description,
+      ...(initialData
+        ? {}
+        : {
+            name: "",
+            level: 0,
+            school: "",
+            casting_time: "",
+            range: "",
+            components: "",
+            material_components: "",
+            duration: "",
+            classes: "",
+            is_homebrew: true,
+            data: {},
+          }),
+    };
+  });
   const [jsonValue, setJsonValue] = useState(
     JSON.stringify(initialData || {}, null, 2),
   );
 
   const getDataDescription = (fd: EditorFormData): string => {
-    if (typeof fd.description === "string" && fd.description)
+    // Immer formData.description verwenden, auch wenn leer (für Bearbeitung)
+    if (typeof fd.description === "string") {
       return fd.description;
+    }
+    // Fallback nur beim ersten Laden, nicht während der Bearbeitung
     const d = fd.data;
     if (!d) return "";
     return typeof d.description === "string" ? d.description : "";
@@ -145,6 +174,74 @@ export function CompendiumEditor({
           ...finalData,
           item_type: type,
         } as CustomItem);
+      } else if (type === "magic-items") {
+        // Für Magic Items: facts_json aus data erstellen
+        const magicItemData = finalData as Record<string, unknown>;
+        const facts = (magicItemData.data as Record<string, unknown>) || {};
+
+        // Wenn description im formData ist, füge sie zu facts hinzu
+        if (
+          typeof magicItemData.description === "string" &&
+          magicItemData.description
+        ) {
+          facts.description = magicItemData.description;
+        }
+
+        // Stelle sicher, dass facts alle notwendigen Felder hat
+        if (!facts.bonuses) facts.bonuses = {};
+        if (!facts.charges) facts.charges = {};
+        if (!facts.activation) facts.activation = {};
+        if (!facts.spells_granted) facts.spells_granted = [];
+        if (!facts.requirements) facts.requirements = [];
+
+        const facts_json = JSON.stringify(facts);
+
+        await homebrewApi.upsertMagicItem({
+          id: magicItemData.id as string | undefined,
+          name: magicItemData.name as string,
+          rarity: magicItemData.rarity as string,
+          category: magicItemData.category as string,
+          source_book: magicItemData.source_book as string | undefined,
+          source_page: magicItemData.source_page as number | undefined,
+          requires_attunement:
+            (magicItemData.requires_attunement as boolean) || false,
+          facts_json,
+          parent_id: magicItemData.parent_id as string | undefined,
+          is_homebrew: magicItemData.is_homebrew as boolean | undefined,
+        } as CustomMagicItem);
+      } else if (type === "species") {
+        await homebrewApi.upsertSpecies({
+          id: finalData.id as string | undefined,
+          name: finalData.name as string,
+          data: finalData.data as import("../lib/types").SpeciesData,
+          parent_id: finalData.parent_id as string | undefined,
+          is_homebrew: finalData.is_homebrew as boolean | undefined,
+        } as CustomSpecies);
+      } else if (type === "classes") {
+        await homebrewApi.upsertClass({
+          id: finalData.id as string | undefined,
+          name: finalData.name as string,
+          data: finalData.data as import("../lib/types").ClassData,
+          parent_id: finalData.parent_id as string | undefined,
+          is_homebrew: finalData.is_homebrew as boolean | undefined,
+        } as CustomClass);
+      } else if (type === "feats") {
+        await homebrewApi.upsertFeat({
+          id: finalData.id as string | undefined,
+          name: finalData.name as string,
+          category: finalData.category as string,
+          data: finalData.data as Record<string, unknown>,
+          parent_id: finalData.parent_id as string | undefined,
+          is_homebrew: finalData.is_homebrew as boolean | undefined,
+        } as CustomFeat);
+      } else if (type === "backgrounds") {
+        await homebrewApi.upsertBackground({
+          id: finalData.id as string | undefined,
+          name: finalData.name as string,
+          data: finalData.data as import("../lib/types").Background["data"],
+          parent_id: finalData.parent_id as string | undefined,
+          is_homebrew: finalData.is_homebrew as boolean | undefined,
+        } as CustomBackground);
       }
       onSave();
     } catch (error) {
@@ -162,7 +259,15 @@ export function CompendiumEditor({
     if (!initialId || initialSource === "core") return;
     if (!confirm("Eintrag wirklich löschen?")) return;
     try {
-      const tableType = type.endsWith("s") ? type.slice(0, -1) : type;
+      let tableType = type.endsWith("s") ? type.slice(0, -1) : type;
+      // Spezialbehandlung für bestimmte Typen
+      if (type === "magic-items") {
+        tableType = "magic_item";
+      } else if (type === "classes") {
+        tableType = "class";
+      } else if (type === "backgrounds") {
+        tableType = "background";
+      }
       await homebrewApi.deleteEntry(initialId, tableType);
       onSave();
     } catch (error) {
@@ -319,7 +424,11 @@ export function CompendiumEditor({
                 <div className="relative group">
                   <textarea
                     className="w-full bg-muted/30 border-2 border-border rounded-[2.5rem] px-10 py-8 text-lg h-64 outline-none focus:border-primary transition-all resize-none custom-scrollbar leading-relaxed italic font-medium"
-                    value={getDataDescription(formData)}
+                    value={
+                      typeof formData.description === "string"
+                        ? formData.description
+                        : ""
+                    }
                     onChange={(e) =>
                       setFormData({ ...formData, description: e.target.value })
                     }

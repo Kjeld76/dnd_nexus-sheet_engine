@@ -5,6 +5,9 @@ node_modules
 # Production build
 dist
 
+# Archive
+archive/
+
 # Rust artifacts
 target
 src-tauri/target

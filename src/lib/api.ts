@@ -15,8 +15,14 @@ import {
   CustomWeapon,
   CustomArmor,
   CustomItem,
+  CustomMagicItem,
+  CustomSpecies,
+  CustomClass,
+  CustomFeat,
+  CustomBackground,
   Item,
   Equipment,
+  MagicItem,
 } from "./types";
 
 export const characterApi = {
@@ -74,6 +80,9 @@ export const compendiumApi = {
   async getAllEquipment(): Promise<Equipment[]> {
     return await invoke("get_all_equipment");
   },
+  async getMagicItems(): Promise<MagicItem[]> {
+    return await invoke("get_all_magic_items");
+  },
   async importPhbData(): Promise<void> {
     return await invoke("import_phb_data");
   },
@@ -106,6 +115,21 @@ export const homebrewApi = {
   },
   async upsertItem(item: CustomItem): Promise<string> {
     return await invoke("upsert_custom_item", { item });
+  },
+  async upsertMagicItem(item: CustomMagicItem): Promise<string> {
+    return await invoke("upsert_custom_magic_item", { item });
+  },
+  async upsertSpecies(species: CustomSpecies): Promise<string> {
+    return await invoke("upsert_custom_species", { species });
+  },
+  async upsertClass(class_: CustomClass): Promise<string> {
+    return await invoke("upsert_custom_class", { class: class_ });
+  },
+  async upsertFeat(feat: CustomFeat): Promise<string> {
+    return await invoke("upsert_custom_feat", { feat });
+  },
+  async upsertBackground(background: CustomBackground): Promise<string> {
+    return await invoke("upsert_custom_background", { background });
   },
   async deleteEntry(id: string, tableType: string): Promise<void> {
     await invoke("delete_custom_entry", { id, tableType });

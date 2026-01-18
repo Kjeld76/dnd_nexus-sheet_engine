@@ -6,6 +6,8 @@ pub struct Weapon {
     pub id: String,
     pub name: String,
     pub category: String,
+    pub category_label: Option<String>,  // Lesbare deutsche Bezeichnung (z.B. "Einfache Waffen", "Kriegswaffen")
+    pub weapon_subtype: Option<String>,  // NEU: Stangenwaffen, Fernkampfwaffen, Wurfwaffen, Nahkampfwaffen
     pub mastery_id: String,  // NEU: Referenz zu weapon_masteries
     pub damage_dice: String,
     pub damage_type: String,

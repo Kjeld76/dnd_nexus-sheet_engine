@@ -8,14 +8,32 @@ pub fn seed_core_data(conn: &mut Connection) -> Result<(), String> {
     // Try to import from the project's master database
     // dnd-nexus.db is the project database (not in git) - has all data including Items/Equipment
     // sync.db is NOT used - it's only for transferring DB between machines
-    let master_db_paths = [
-        Path::new("dnd-nexus.db"),
-        Path::new("../dnd-nexus.db"),
-        Path::new("C:/Users/mario/.cursor/projects/dnd_nexus/dnd-nexus.db"),
+    let mut master_db_paths: Vec<std::path::PathBuf> = vec![
+        Path::new("dnd-nexus.db").to_path_buf(),
+        Path::new("../dnd-nexus.db").to_path_buf(),
+        Path::new("../../dnd-nexus.db").to_path_buf(),
     ];
-
+    
+    // Füge auch absolute Pfade hinzu, basierend auf dem aktuellen Arbeitsverzeichnis
+    if let Ok(cwd) = std::env::current_dir() {
+        master_db_paths.push(cwd.join("dnd-nexus.db"));
+        if let Some(parent) = cwd.parent() {
+            master_db_paths.push(parent.join("dnd-nexus.db"));
+        }
+    }
+    
+    // Füge auch den Pfad relativ zum Executable hinzu
+    if let Ok(exe_path) = std::env::current_exe() {
+        if let Some(exe_dir) = exe_path.parent() {
+            master_db_paths.push(exe_dir.join("dnd-nexus.db"));
+            if let Some(parent) = exe_dir.parent() {
+                master_db_paths.push(parent.join("dnd-nexus.db"));
+            }
+        }
+    }
+    
     let mut master_found = false;
-    for path in master_db_paths {
+    for path in &master_db_paths {
         if path.exists() {
             println!("Importing from master database: {:?}", path);
             import_all_from_master(conn, path)?;
@@ -188,6 +206,27 @@ fn import_all_from_master(target_conn: &mut Connection, master_path: &Path) -> R
         tx.execute("INSERT INTO core_equipment (id, name, description, total_cost_gp, total_weight_kg, items, tools, data) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", params![id, name, desc, total_cost, total_weight, items, tools, data]).map_err(|e| e.to_string())?;
     }
 
+    // 13. Magische Gegenstände
+    println!("Importing Magic Items...");
+    let mut stmt = source_conn.prepare("SELECT id, name, rarity, category, source_book, source_page, requires_attunement, facts_json FROM core_mag_items_base").map_err(|e| e.to_string())?;
+    let rows = stmt.query_map([], |row| Ok((
+        row.get::<_, String>(0)?,
+        row.get::<_, String>(1)?,
+        row.get::<_, String>(2)?,
+        row.get::<_, String>(3)?,
+        row.get::<_, Option<String>>(4)?,
+        row.get::<_, Option<i32>>(5)?,
+        row.get::<_, bool>(6)?,
+        row.get::<_, String>(7)?
+    ))).map_err(|e| e.to_string())?;
+    for r in rows {
+        let (id, name, rarity, category, source_book, source_page, requires_attunement, facts_json) = r.map_err(|e| e.to_string())?;
+        tx.execute(
+            "INSERT INTO core_mag_items_base (id, name, rarity, category, source_book, source_page, requires_attunement, facts_json) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            params![id, name, rarity, category, source_book, source_page, requires_attunement, facts_json]
+        ).map_err(|e| e.to_string())?;
+    }
+
     tx.commit().map_err(|e| e.to_string())?;
     println!("Transaction committed successfully.");
     Ok(())
@@ -206,6 +245,7 @@ pub fn clear_core_data(conn: &Connection) -> Result<(), String> {
     conn.execute("DELETE FROM core_backgrounds", []).map_err(|e| e.to_string())?;
     conn.execute("DELETE FROM core_items", []).map_err(|e| e.to_string())?;
     conn.execute("DELETE FROM core_equipment", []).map_err(|e| e.to_string())?;
+    conn.execute("DELETE FROM core_mag_items_base", []).map_err(|e| e.to_string())?;
     Ok(())
 }
 

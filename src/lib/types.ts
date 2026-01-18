@@ -260,6 +260,32 @@ export interface Item {
   source: "core" | "override" | "homebrew";
 }
 
+export interface MagicItem {
+  id: string;
+  name: string;
+  rarity: string;
+  category: string;
+  source_book?: string;
+  source_page?: number;
+  requires_attunement: boolean;
+  facts_json: string;
+  data: Record<string, unknown>;
+  source: "core" | "override" | "homebrew";
+}
+
+export interface CustomMagicItem {
+  id?: string;
+  name: string;
+  rarity: string;
+  category: string;
+  source_book?: string;
+  source_page?: number;
+  requires_attunement: boolean;
+  facts_json: string;
+  parent_id?: string;
+  is_homebrew?: boolean;
+}
+
 export interface Equipment {
   id: string;
   name: string;
@@ -378,5 +404,38 @@ export interface CustomItem {
   data: Record<string, unknown>;
   parent_id?: string;
   item_type: "gear" | "tool";
+  is_homebrew?: boolean;
+}
+
+export interface CustomSpecies {
+  id?: string;
+  name: string;
+  data: SpeciesData;
+  parent_id?: string;
+  is_homebrew?: boolean;
+}
+
+export interface CustomClass {
+  id?: string;
+  name: string;
+  data: ClassData;
+  parent_id?: string;
+  is_homebrew?: boolean;
+}
+
+export interface CustomFeat {
+  id?: string;
+  name: string;
+  category: string;
+  data: Record<string, unknown>;
+  parent_id?: string;
+  is_homebrew?: boolean;
+}
+
+export interface CustomBackground {
+  id?: string;
+  name: string;
+  data: Background["data"];
+  parent_id?: string;
   is_homebrew?: boolean;
 }

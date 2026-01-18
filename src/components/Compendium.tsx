@@ -20,6 +20,10 @@ import {
   Target,
   Clock,
   Compass,
+  X,
+  Wand2,
+  UserCircle,
+  Hammer,
 } from "lucide-react";
 import clsx, { type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -51,19 +55,79 @@ import type {
   IconType,
   SubclassWithFeatures,
   Tab,
+  MainCategory,
+  FilterChip,
 } from "./compendium/compendiumUtils";
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// Mapping: Hauptkategorie -> Sub-Tabs
+const CATEGORY_TABS: Record<MainCategory, Tab[]> = {
+  magic: ["spells", "magic-items"],
+  characters: ["classes", "species", "backgrounds", "feats", "skills"],
+  arsenal: ["weapons", "armor", "tools", "items", "equipment"],
+};
+
+// Mapping: Tab -> Hauptkategorie
+const TAB_TO_CATEGORY: Record<Tab, MainCategory> = {
+  spells: "magic",
+  "magic-items": "magic",
+  classes: "characters",
+  species: "characters",
+  backgrounds: "characters",
+  feats: "characters",
+  skills: "characters",
+  weapons: "arsenal",
+  armor: "arsenal",
+  tools: "arsenal",
+  items: "arsenal",
+  equipment: "arsenal",
+  gear: "arsenal",
+};
+
 export function Compendium() {
+  const [activeCategory, setActiveCategory] = useState<MainCategory>("magic");
   const [activeTab, setActiveTab] = useState<Tab>("spells");
+  const categoryChangeRef = useRef(false); // Verhindert Endlosschleife
   const [searchTerm, setSearchTerm] = useState("");
+  const [sidebarSearchTerm, setSidebarSearchTerm] = useState("");
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedSubclass, setSelectedSubclass] =
     useState<SubclassWithFeatures | null>(null);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+  const [selectedMagicCategory, setSelectedMagicCategory] = useState<
+    string | null
+  >(null);
+  const [selectedFeatCategory, setSelectedFeatCategory] = useState<
+    string | null
+  >(null);
+  const [selectedWeaponCategory, setSelectedWeaponCategory] = useState<
+    string | null
+  >(null);
+  const [selectedWeaponType, setSelectedWeaponType] = useState<
+    "Nahkampf" | "Fernkampf" | null
+  >(null);
+  const [selectedWeaponSubtype, setSelectedWeaponSubtype] = useState<
+    string | null
+  >(null);
+  const [selectedArmorCategory, setSelectedArmorCategory] = useState<
+    string | null
+  >(null);
+  const [spellSortMode, setSpellSortMode] = useState<
+    "level" | "alphabetical" | "school" | "class"
+  >("level");
+  const [selectedSpellLevel, setSelectedSpellLevel] = useState<number | null>(
+    null,
+  );
+  const [selectedSpellSchool, setSelectedSpellSchool] = useState<string | null>(
+    null,
+  );
+  const [selectedSpellClass, setSelectedSpellClass] = useState<string | null>(
+    null,
+  );
+  const [activeFilters, setActiveFilters] = useState<FilterChip[]>([]);
   const parentRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -78,7 +142,9 @@ export function Compendium() {
     backgrounds,
     items,
     equipment,
+    magicItems,
     isLoading,
+    error,
     fetchSpells,
     fetchSpecies,
     fetchClasses,
@@ -90,7 +156,42 @@ export function Compendium() {
     fetchBackgrounds,
     fetchItems,
     fetchEquipment,
+    fetchMagicItems,
   } = useCompendiumStore();
+
+  // Setze ersten Tab der Kategorie, wenn Kategorie wechselt
+  useEffect(() => {
+    const tabs = CATEGORY_TABS[activeCategory];
+    if (tabs.length > 0) {
+      // Wenn die Kategorie-Änderung von einem Klick kommt, setze immer den ersten Tab
+      if (categoryChangeRef.current) {
+        categoryChangeRef.current = false;
+        setActiveTab(tabs[0]);
+        return;
+      }
+      // Sonst nur setzen, wenn Tab nicht zur Kategorie gehört
+      if (!tabs.includes(activeTab)) {
+        setActiveTab(tabs[0]);
+      }
+    }
+  }, [activeCategory]);
+
+  // Synchronisiere activeCategory mit activeTab (nur wenn Tab nicht zur aktuellen Kategorie gehört)
+  // WICHTIG: Nur wenn categoryChangeRef NICHT gesetzt ist (also nicht von Kategorie-Klick)
+  useEffect(() => {
+    // Kurze Verzögerung, damit der categoryChangeRef-Reset im anderen useEffect zuerst passiert
+    const timeoutId = setTimeout(() => {
+      if (categoryChangeRef.current) {
+        return; // Ignoriere, wenn Kategorie gerade geändert wurde
+      }
+      const category = TAB_TO_CATEGORY[activeTab];
+      if (category && category !== activeCategory) {
+        setActiveCategory(category);
+      }
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
+  }, [activeTab, activeCategory]);
 
   useEffect(() => {
     refreshData();
@@ -133,15 +234,128 @@ export function Compendium() {
       case "equipment":
         fetchEquipment();
         break;
+      case "magic-items":
+        fetchMagicItems();
+        break;
     }
   };
 
+  // Setze erste Kategorie für Magic Items automatisch
+  useEffect(() => {
+    if (
+      activeTab === "magic-items" &&
+      magicItems.length > 0 &&
+      !selectedMagicCategory
+    ) {
+      const categories = Array.from(
+        new Set(magicItems.map((mi) => mi.category)),
+      ).sort();
+      if (categories.length > 0) {
+        setSelectedMagicCategory(categories[0]);
+      }
+    }
+  }, [activeTab, magicItems, selectedMagicCategory]);
+
+  // Setze ersten Zaubergrad für Spells automatisch
+  useEffect(() => {
+    if (
+      activeTab === "spells" &&
+      spells.length > 0 &&
+      spellSortMode === "level" &&
+      selectedSpellLevel === null
+    ) {
+      const levels = Array.from(new Set(spells.map((s) => s.level))).sort(
+        (a, b) => a - b,
+      );
+      if (levels.length > 0) {
+        setSelectedSpellLevel(levels[0]);
+      }
+    }
+  }, [activeTab, spells, spellSortMode, selectedSpellLevel]);
+
+  // Setze erste Schule für Spells automatisch
+  useEffect(() => {
+    if (
+      activeTab === "spells" &&
+      spells.length > 0 &&
+      spellSortMode === "school" &&
+      selectedSpellSchool === null
+    ) {
+      const schools = Array.from(new Set(spells.map((s) => s.school))).sort();
+      if (schools.length > 0) {
+        setSelectedSpellSchool(schools[0]);
+      }
+    }
+  }, [activeTab, spells, spellSortMode, selectedSpellSchool]);
+
   const getFilteredData = () => {
     const s = searchTerm.toLowerCase();
+    const sidebarS = sidebarSearchTerm.toLowerCase();
     let baseData: CompendiumEntry[] = [];
     switch (activeTab) {
       case "spells":
         baseData = spells as CompendiumEntry[];
+        // Filter nach Zaubergrad, wenn nach Level sortiert
+        if (spellSortMode === "level" && selectedSpellLevel !== null) {
+          baseData = baseData.filter((x) => {
+            const spell = x as import("../lib/types").Spell;
+            return spell.level === selectedSpellLevel;
+          });
+        }
+        // Filter nach Schule, wenn nach Schule sortiert
+        if (spellSortMode === "school" && selectedSpellSchool !== null) {
+          baseData = baseData.filter((x) => {
+            const spell = x as import("../lib/types").Spell;
+            return spell.school === selectedSpellSchool;
+          });
+        }
+        // Filter nach Klasse, wenn nach Klasse sortiert
+        if (spellSortMode === "class" && selectedSpellClass !== null) {
+          baseData = baseData.filter((x) => {
+            const spell = x as import("../lib/types").Spell;
+            // Prüfe, ob die ausgewählte Klasse in der classes-String enthalten ist
+            return spell.classes.includes(selectedSpellClass);
+          });
+        }
+        // Sortiere alphabetisch, wenn gewünscht
+        if (spellSortMode === "alphabetical") {
+          baseData = [...baseData].sort((a, b) =>
+            a.name.localeCompare(b.name, "de"),
+          );
+        } else if (spellSortMode === "school") {
+          // Sortiere nach Schule, dann nach Level, dann alphabetisch
+          baseData = [...baseData].sort((a, b) => {
+            const spellA = a as import("../lib/types").Spell;
+            const spellB = b as import("../lib/types").Spell;
+            if (spellA.school !== spellB.school) {
+              return spellA.school.localeCompare(spellB.school, "de");
+            }
+            if (spellA.level !== spellB.level) {
+              return spellA.level - spellB.level;
+            }
+            return spellA.name.localeCompare(spellB.name, "de");
+          });
+        } else if (spellSortMode === "class") {
+          // Sortiere nach Level, dann alphabetisch (bei Klassen-Sortierung)
+          baseData = [...baseData].sort((a, b) => {
+            const spellA = a as import("../lib/types").Spell;
+            const spellB = b as import("../lib/types").Spell;
+            if (spellA.level !== spellB.level) {
+              return spellA.level - spellB.level;
+            }
+            return spellA.name.localeCompare(spellB.name, "de");
+          });
+        } else {
+          // Sortiere nach Level, dann alphabetisch
+          baseData = [...baseData].sort((a, b) => {
+            const spellA = a as import("../lib/types").Spell;
+            const spellB = b as import("../lib/types").Spell;
+            if (spellA.level !== spellB.level) {
+              return spellA.level - spellB.level;
+            }
+            return spellA.name.localeCompare(spellB.name, "de");
+          });
+        }
         break;
       case "species":
         baseData = species as CompendiumEntry[];
@@ -151,15 +365,89 @@ export function Compendium() {
         break;
       case "weapons":
         baseData = weapons as CompendiumEntry[];
+        // Filter nach Kategorie
+        if (selectedWeaponCategory) {
+          baseData = baseData.filter((x) => {
+            const weapon = x as import("../lib/types").Weapon;
+            const categoryLabel = weapon.category_label || weapon.category;
+            return categoryLabel === selectedWeaponCategory;
+          });
+        }
+        // Filter nach Typ (Nahkampf/Fernkampf)
+        if (selectedWeaponType) {
+          baseData = baseData.filter((x) => {
+            const weapon = x as import("../lib/types").Weapon;
+            return weapon.weapon_type === selectedWeaponType;
+          });
+        }
+        // Filter nach Subtyp (Stangenwaffen, Fernkampfwaffen, Wurfwaffen, Nahkampfwaffen)
+        if (selectedWeaponSubtype) {
+          baseData = baseData.filter((x) => {
+            const weapon = x as import("../lib/types").Weapon;
+            return weapon.weapon_subtype === selectedWeaponSubtype;
+          });
+        }
+        // Sortierung: Kategorie > Typ > Alphabetisch
+        baseData = [...baseData].sort((a, b) => {
+          const weaponA = a as import("../lib/types").Weapon;
+          const weaponB = b as import("../lib/types").Weapon;
+          const catA = weaponA.category_label || weaponA.category;
+          const catB = weaponB.category_label || weaponB.category;
+          if (catA !== catB) {
+            return catA.localeCompare(catB, "de");
+          }
+          const typeA = weaponA.weapon_type || "";
+          const typeB = weaponB.weapon_type || "";
+          if (typeA !== typeB) {
+            return typeA.localeCompare(typeB, "de");
+          }
+          return weaponA.name.localeCompare(weaponB.name, "de");
+        });
         break;
       case "armor":
         baseData = armor as CompendiumEntry[];
+        // Filter nach Kategorie
+        if (selectedArmorCategory) {
+          baseData = baseData.filter((x) => {
+            const armorItem = x as import("../lib/types").Armor;
+            const categoryLabel =
+              armorItem.category_label || armorItem.category;
+            return categoryLabel === selectedArmorCategory;
+          });
+        }
+        // Sortierung: Kategorie > AC (aufsteigend) > Alphabetisch
+        baseData = [...baseData].sort((a, b) => {
+          const armorA = a as import("../lib/types").Armor;
+          const armorB = b as import("../lib/types").Armor;
+          const catA = armorA.category_label || armorA.category;
+          const catB = armorB.category_label || armorB.category;
+          if (catA !== catB) {
+            return catA.localeCompare(catB, "de");
+          }
+          const parseAC = (formula: string | null): number => {
+            if (!formula) return 0;
+            const match = formula.match(/^(\d+)/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          const acA = armorA.base_ac ?? parseAC(armorA.ac_formula);
+          const acB = armorB.base_ac ?? parseAC(armorB.ac_formula);
+          if (acA !== acB) {
+            return acA - acB;
+          }
+          return armorA.name.localeCompare(armorB.name, "de");
+        });
         break;
       case "tools":
         baseData = tools as CompendiumEntry[];
         break;
       case "feats":
         baseData = feats as CompendiumEntry[];
+        if (selectedFeatCategory) {
+          baseData = baseData.filter((x) => {
+            const feat = x as import("../lib/types").Feat;
+            return feat.category === selectedFeatCategory;
+          });
+        }
         break;
       case "skills":
         baseData = skills as CompendiumEntry[];
@@ -173,8 +461,24 @@ export function Compendium() {
       case "equipment":
         baseData = equipment as CompendiumEntry[];
         break;
+      case "magic-items":
+        baseData = magicItems as CompendiumEntry[];
+        // Filter nach Kategorie, wenn eine ausgewählt ist
+        if (selectedMagicCategory) {
+          baseData = baseData.filter((x) => {
+            const mi = x as import("../lib/types").MagicItem;
+            return mi.category === selectedMagicCategory;
+          });
+        }
+        break;
     }
-    return baseData.filter((x) => x.name.toLowerCase().includes(s));
+    // Kombiniere globale und Sidebar-Suche
+    return baseData.filter((x) => {
+      const nameMatch = x.name.toLowerCase().includes(s);
+      const sidebarMatch =
+        sidebarS === "" || x.name.toLowerCase().includes(sidebarS);
+      return nameMatch && sidebarMatch;
+    });
   };
 
   const data = getFilteredData();
@@ -196,49 +500,262 @@ export function Compendium() {
     );
   };
 
-  const renderTabButton = (tab: Tab, label: string, Icon: IconType) => (
-    <button
-      onClick={() => setActiveTab(tab)}
-      className={cn(
-        "flex items-center gap-2.5 px-5 py-2.5 rounded-xl transition-all relative overflow-hidden group",
-        activeTab === tab
-          ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-105"
-          : "text-muted-foreground hover:bg-muted hover:text-foreground",
-      )}
-    >
-      <Icon
-        size={18}
+  // Helper: Tab-Labels und Icons
+  const TAB_CONFIG: Record<Tab, { label: string; icon: IconType }> = {
+    spells: { label: "Zauber", icon: Zap },
+    "magic-items": { label: "Magische Gegenstände", icon: Sparkles },
+    classes: { label: "Klassen", icon: Shield },
+    species: { label: "Spezies", icon: Users },
+    backgrounds: { label: "Hintergründe", icon: ScrollText },
+    feats: { label: "Talente", icon: Award },
+    skills: { label: "Fertigkeiten", icon: Brain },
+    weapons: { label: "Waffen", icon: Sword },
+    armor: { label: "Rüstungen", icon: Shield },
+    tools: { label: "Werkzeuge", icon: Package },
+    items: { label: "Gegenstände", icon: Book },
+    equipment: { label: "Ausrüstungspakete", icon: Package },
+    gear: { label: "Ausrüstung", icon: Package },
+  };
+
+  const CATEGORY_CONFIG: Record<
+    MainCategory,
+    { label: string; icon: IconType }
+  > = {
+    magic: { label: "Magie", icon: Wand2 },
+    characters: { label: "Charaktere", icon: UserCircle },
+    arsenal: { label: "Arsenal", icon: Hammer },
+  };
+
+  const renderCategoryButton = (category: MainCategory) => {
+    const config = CATEGORY_CONFIG[category];
+    const isActive = activeCategory === category;
+    return (
+      <button
+        key={category}
+        onClick={() => {
+          categoryChangeRef.current = true;
+          const tabs = CATEGORY_TABS[category];
+          if (tabs.length > 0) {
+            setActiveTab(tabs[0]);
+          }
+          setActiveCategory(category);
+        }}
         className={cn(
-          "transition-transform group-hover:scale-110",
-          activeTab === tab
-            ? "text-primary-foreground"
-            : "text-muted-foreground",
+          "flex items-center gap-2.5 px-5 py-2.5 rounded-xl transition-all relative overflow-hidden group",
+          isActive
+            ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-105"
+            : "text-muted-foreground hover:bg-muted hover:text-foreground",
         )}
-      />
-      <span className="text-xs font-black uppercase tracking-wider">
-        {label}
-      </span>
-    </button>
-  );
+      >
+        <config.icon
+          size={18}
+          className={cn(
+            "transition-transform group-hover:scale-110",
+            isActive ? "text-primary-foreground" : "text-muted-foreground",
+          )}
+        />
+        <span className="text-xs font-black uppercase tracking-wider">
+          {config.label}
+        </span>
+      </button>
+    );
+  };
+
+  const renderSubTabButton = (tab: Tab) => {
+    const config = TAB_CONFIG[tab];
+    const isActive = activeTab === tab;
+    return (
+      <button
+        key={tab}
+        onClick={() => setActiveTab(tab)}
+        className={cn(
+          "flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all text-xs font-medium",
+          isActive
+            ? "bg-primary/20 text-primary border border-primary/30"
+            : "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
+        )}
+      >
+        <config.icon size={14} />
+        <span>{config.label}</span>
+      </button>
+    );
+  };
+
+  // Breadcrumb generieren
+  const getBreadcrumb = () => {
+    const categoryConfig = CATEGORY_CONFIG[activeCategory];
+    const tabConfig = TAB_CONFIG[activeTab];
+    const parts = [categoryConfig.label, tabConfig.label];
+
+    // Zusätzliche Filter-Infos
+    if (activeTab === "spells" && selectedSpellLevel !== null) {
+      parts.push(`Grad ${selectedSpellLevel}`);
+    } else if (activeTab === "spells" && selectedSpellSchool !== null) {
+      parts.push(selectedSpellSchool);
+    } else if (activeTab === "spells" && selectedSpellClass !== null) {
+      parts.push(selectedSpellClass);
+    } else if (activeTab === "magic-items" && selectedMagicCategory) {
+      parts.push(selectedMagicCategory);
+    } else if (activeTab === "feats" && selectedFeatCategory) {
+      parts.push(selectedFeatCategory);
+    } else if (activeTab === "weapons" && selectedWeaponCategory) {
+      parts.push(selectedWeaponCategory);
+      if (selectedWeaponType) {
+        parts.push(selectedWeaponType);
+      }
+      if (selectedWeaponSubtype) {
+        parts.push(selectedWeaponSubtype);
+      }
+    } else if (activeTab === "armor" && selectedArmorCategory) {
+      parts.push(selectedArmorCategory);
+    }
+
+    return parts;
+  };
+
+  // Filter-Chips generieren
+  const updateFilterChips = () => {
+    const chips: FilterChip[] = [];
+
+    if (activeTab === "spells") {
+      if (selectedSpellLevel !== null) {
+        chips.push({
+          id: "spell-level",
+          label: `Grad ${selectedSpellLevel}`,
+          type: "level",
+          value: selectedSpellLevel,
+          onRemove: () => setSelectedSpellLevel(null),
+        });
+      }
+      if (selectedSpellSchool !== null) {
+        chips.push({
+          id: "spell-school",
+          label: selectedSpellSchool,
+          type: "school",
+          value: selectedSpellSchool,
+          onRemove: () => setSelectedSpellSchool(null),
+        });
+      }
+      if (selectedSpellClass !== null) {
+        chips.push({
+          id: "spell-class",
+          label: selectedSpellClass,
+          type: "class",
+          value: selectedSpellClass,
+          onRemove: () => setSelectedSpellClass(null),
+        });
+      }
+    } else if (activeTab === "magic-items" && selectedMagicCategory) {
+      chips.push({
+        id: "magic-category",
+        label: selectedMagicCategory,
+        type: "category",
+        value: selectedMagicCategory,
+        onRemove: () => setSelectedMagicCategory(null),
+      });
+    } else if (activeTab === "feats" && selectedFeatCategory) {
+      chips.push({
+        id: "feat-category",
+        label: selectedFeatCategory,
+        type: "category",
+        value: selectedFeatCategory,
+        onRemove: () => setSelectedFeatCategory(null),
+      });
+    } else if (activeTab === "weapons") {
+      if (selectedWeaponCategory) {
+        chips.push({
+          id: "weapon-category",
+          label: selectedWeaponCategory,
+          type: "category",
+          value: selectedWeaponCategory,
+          onRemove: () => setSelectedWeaponCategory(null),
+        });
+      }
+      if (selectedWeaponType) {
+        chips.push({
+          id: "weapon-type",
+          label: selectedWeaponType,
+          type: "itemType",
+          value: selectedWeaponType,
+          onRemove: () => setSelectedWeaponType(null),
+        });
+      }
+      if (selectedWeaponSubtype) {
+        chips.push({
+          id: "weapon-subtype",
+          label: selectedWeaponSubtype,
+          type: "itemType",
+          value: selectedWeaponSubtype,
+          onRemove: () => setSelectedWeaponSubtype(null),
+        });
+      }
+    } else if (activeTab === "armor" && selectedArmorCategory) {
+      chips.push({
+        id: "armor-category",
+        label: selectedArmorCategory,
+        type: "category",
+        value: selectedArmorCategory,
+        onRemove: () => setSelectedArmorCategory(null),
+      });
+    }
+
+    setActiveFilters(chips);
+  };
+
+  useEffect(() => {
+    updateFilterChips();
+  }, [
+    selectedSpellLevel,
+    selectedSpellSchool,
+    selectedSpellClass,
+    selectedMagicCategory,
+    selectedFeatCategory,
+    selectedWeaponCategory,
+    selectedWeaponType,
+    selectedWeaponSubtype,
+    selectedArmorCategory,
+    activeTab,
+  ]);
+
+  const breadcrumb = getBreadcrumb();
+  const currentSubTabs = CATEGORY_TABS[activeCategory];
 
   return (
     <div className="flex flex-col h-full bg-background text-foreground overflow-hidden">
       <header className="px-8 py-6 border-b border-border bg-card/80 backdrop-blur-xl shrink-0 z-20 sticky top-0 shadow-sm">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 px-1 max-w-full">
-            {renderTabButton("spells", "Zauber", Zap)}
-            {renderTabButton("classes", "Klassen", Shield)}
-            {renderTabButton("species", "Spezies", Users)}
-            {renderTabButton("weapons", "Waffen", Sword)}
-            {renderTabButton("armor", "Rüstungen", Shield)}
-            {renderTabButton("tools", "Werkzeuge", Package)}
-            {renderTabButton("items", "Gegenstände", Book)}
-            {renderTabButton("equipment", "Ausrüstungspakete", Package)}
-            {renderTabButton("feats", "Talente", Award)}
-            {renderTabButton("skills", "Fertigkeiten", Brain)}
-            {renderTabButton("backgrounds", "Hintergründe", ScrollText)}
+        {/* Hauptkategorien */}
+        <div className="flex items-center gap-2 mb-4">
+          {renderCategoryButton("magic")}
+          {renderCategoryButton("characters")}
+          {renderCategoryButton("arsenal")}
+        </div>
+
+        {/* Sub-Tabs */}
+        <div className="flex items-center gap-2 mb-4 overflow-x-auto no-scrollbar py-2 px-1">
+          {currentSubTabs.map((tab) => renderSubTabButton(tab))}
+        </div>
+
+        {/* Breadcrumb & Actions */}
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+          {/* Breadcrumb */}
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            {breadcrumb.map((part, idx) => (
+              <div key={idx} className="flex items-center gap-2">
+                {idx > 0 && <ChevronRight size={14} />}
+                <span
+                  className={
+                    idx === breadcrumb.length - 1
+                      ? "text-foreground font-medium"
+                      : ""
+                  }
+                >
+                  {part}
+                </span>
+              </div>
+            ))}
           </div>
 
+          {/* Actions & Global Search */}
           <div className="flex items-center gap-4 shrink-0 w-full lg:w-auto">
             <Button
               onClick={() => {
@@ -267,11 +784,660 @@ export function Compendium() {
             </div>
           </div>
         </div>
+
+        {/* Filter-Chips */}
+        {activeFilters.length > 0 && (
+          <div className="flex items-center gap-2 mt-4 flex-wrap">
+            {activeFilters.map((chip) => (
+              <button
+                key={chip.id}
+                onClick={chip.onRemove}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary border border-primary/20 rounded-lg text-xs font-medium hover:bg-primary/20 transition-all"
+              >
+                <span>{chip.label}</span>
+                <X size={12} />
+              </button>
+            ))}
+          </div>
+        )}
       </header>
 
       <main className="flex flex-1 overflow-hidden">
+        {/* Left: Spell Navigation (nur für spells) */}
+        {activeTab === "spells" &&
+          spells.length > 0 &&
+          (() => {
+            const levels = Array.from(new Set(spells.map((s) => s.level))).sort(
+              (a, b) => a - b,
+            );
+            const levelCounts = levels.reduce(
+              (acc, level) => {
+                acc[level] = spells.filter((s) => s.level === level).length;
+                return acc;
+              },
+              {} as Record<number, number>,
+            );
+            const schools = Array.from(
+              new Set(spells.map((s) => s.school)),
+            ).sort();
+            const schoolCounts = schools.reduce(
+              (acc, school) => {
+                acc[school] = spells.filter((s) => s.school === school).length;
+                return acc;
+              },
+              {} as Record<string, number>,
+            );
+
+            // Extrahiere alle eindeutigen Klassen
+            const allClasses = new Set<string>();
+            spells.forEach((spell) => {
+              const classes = spell.classes.split(",").map((c) => c.trim());
+              classes.forEach((cls) => allClasses.add(cls));
+            });
+            const sortedClasses = Array.from(allClasses).sort();
+            const classCounts = sortedClasses.reduce(
+              (acc, className) => {
+                acc[className] = spells.filter((s) =>
+                  s.classes.includes(className),
+                ).length;
+                return acc;
+              },
+              {} as Record<string, number>,
+            );
+
+            return (
+              <aside className="w-56 border-r border-border flex flex-col bg-muted/20 overflow-hidden">
+                <div className="p-4 border-b border-border">
+                  <h3 className="text-xs font-black text-primary uppercase tracking-widest mb-3">
+                    Sortierung
+                  </h3>
+                  <div className="grid grid-cols-2 gap-2 mb-3">
+                    <button
+                      onClick={() => {
+                        setSpellSortMode("level");
+                        const levels = Array.from(
+                          new Set(spells.map((s) => s.level)),
+                        ).sort((a, b) => a - b);
+                        if (levels.length > 0 && selectedSpellLevel === null) {
+                          setSelectedSpellLevel(levels[0]);
+                        }
+                      }}
+                      className={cn(
+                        "px-2 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all",
+                        spellSortMode === "level"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted/30 hover:bg-muted/50 text-foreground",
+                      )}
+                    >
+                      Grad
+                    </button>
+                    <button
+                      onClick={() => {
+                        setSpellSortMode("school");
+                        const schools = Array.from(
+                          new Set(spells.map((s) => s.school)),
+                        ).sort();
+                        if (
+                          schools.length > 0 &&
+                          selectedSpellSchool === null
+                        ) {
+                          setSelectedSpellSchool(schools[0]);
+                        }
+                        setSelectedSpellLevel(null);
+                        setSelectedSpellClass(null);
+                      }}
+                      className={cn(
+                        "px-2 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all",
+                        spellSortMode === "school"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted/30 hover:bg-muted/50 text-foreground",
+                      )}
+                    >
+                      Schule
+                    </button>
+                    <button
+                      onClick={() => {
+                        setSpellSortMode("class");
+                        const allClasses = new Set<string>();
+                        spells.forEach((spell) => {
+                          const classes = spell.classes
+                            .split(",")
+                            .map((c) => c.trim());
+                          classes.forEach((cls) => allClasses.add(cls));
+                        });
+                        const sortedClasses = Array.from(allClasses).sort();
+                        if (
+                          sortedClasses.length > 0 &&
+                          selectedSpellClass === null
+                        ) {
+                          setSelectedSpellClass(sortedClasses[0]);
+                        }
+                        setSelectedSpellLevel(null);
+                        setSelectedSpellSchool(null);
+                      }}
+                      className={cn(
+                        "px-2 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all",
+                        spellSortMode === "class"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted/30 hover:bg-muted/50 text-foreground",
+                      )}
+                    >
+                      Klasse
+                    </button>
+                    <button
+                      onClick={() => {
+                        setSpellSortMode("alphabetical");
+                        setSelectedSpellLevel(null);
+                        setSelectedSpellSchool(null);
+                        setSelectedSpellClass(null);
+                      }}
+                      className={cn(
+                        "px-2 py-1.5 rounded-lg text-[10px] font-black uppercase transition-all col-span-2",
+                        spellSortMode === "alphabetical"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted/30 hover:bg-muted/50 text-foreground",
+                      )}
+                    >
+                      A-Z
+                    </button>
+                  </div>
+                </div>
+                {spellSortMode === "level" && (
+                  <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
+                    <div className="mb-2 px-2">
+                      <p className="text-[10px] font-black text-primary/60 uppercase tracking-widest mb-2">
+                        Zaubergrad
+                      </p>
+                    </div>
+                    {levels.map((level) => (
+                      <button
+                        key={level}
+                        onClick={() => {
+                          setSelectedSpellLevel(level);
+                          setSelectedId(null);
+                        }}
+                        className={cn(
+                          "w-full text-left px-4 py-3 rounded-xl mb-2 transition-all text-sm font-medium",
+                          selectedSpellLevel === level
+                            ? "bg-primary text-primary-foreground shadow-lg"
+                            : "bg-muted/30 hover:bg-muted/50 text-foreground",
+                        )}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span>
+                            {level === 0 ? "Zaubertricks" : `Grad ${level}`}
+                          </span>
+                          <span
+                            className={cn(
+                              "text-[10px] px-2 py-0.5 rounded-full",
+                              selectedSpellLevel === level
+                                ? "bg-primary-foreground/20 text-primary-foreground"
+                                : "bg-muted text-muted-foreground",
+                            )}
+                          >
+                            {levelCounts[level]}
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {spellSortMode === "school" && (
+                  <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
+                    <div className="mb-2 px-2">
+                      <p className="text-[10px] font-black text-primary/60 uppercase tracking-widest mb-2">
+                        Schule
+                      </p>
+                    </div>
+                    {schools.map((school) => (
+                      <button
+                        key={school}
+                        onClick={() => {
+                          setSelectedSpellSchool(school);
+                          setSelectedId(null);
+                        }}
+                        className={cn(
+                          "w-full text-left px-4 py-3 rounded-xl mb-2 transition-all text-sm font-medium",
+                          selectedSpellSchool === school
+                            ? "bg-primary text-primary-foreground shadow-lg"
+                            : "bg-muted/30 hover:bg-muted/50 text-foreground",
+                        )}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span>{school}</span>
+                          <span
+                            className={cn(
+                              "text-[10px] px-2 py-0.5 rounded-full",
+                              selectedSpellSchool === school
+                                ? "bg-primary-foreground/20 text-primary-foreground"
+                                : "bg-muted text-muted-foreground",
+                            )}
+                          >
+                            {schoolCounts[school]}
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {spellSortMode === "class" && (
+                  <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
+                    <div className="mb-2 px-2">
+                      <p className="text-[10px] font-black text-primary/60 uppercase tracking-widest mb-2">
+                        Klasse
+                      </p>
+                    </div>
+                    {sortedClasses.map((className) => (
+                      <button
+                        key={className}
+                        onClick={() => {
+                          setSelectedSpellClass(className);
+                          setSelectedId(null);
+                        }}
+                        className={cn(
+                          "w-full text-left px-4 py-3 rounded-xl mb-2 transition-all text-sm font-medium",
+                          selectedSpellClass === className
+                            ? "bg-primary text-primary-foreground shadow-lg"
+                            : "bg-muted/30 hover:bg-muted/50 text-foreground",
+                        )}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span>{className}</span>
+                          <span
+                            className={cn(
+                              "text-[10px] px-2 py-0.5 rounded-full",
+                              selectedSpellClass === className
+                                ? "bg-primary-foreground/20 text-primary-foreground"
+                                : "bg-muted text-muted-foreground",
+                            )}
+                          >
+                            {classCounts[className]}
+                          </span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+                {spellSortMode === "alphabetical" && (
+                  <div className="flex-1 flex items-center justify-center p-8">
+                    <p className="text-sm text-muted-foreground/60 italic text-center">
+                      Alle Zauber werden alphabetisch sortiert angezeigt
+                    </p>
+                  </div>
+                )}
+              </aside>
+            );
+          })()}
+
+        {/* Left: Category Navigation (nur für magic-items) */}
+        {activeTab === "magic-items" &&
+          magicItems.length > 0 &&
+          (() => {
+            const categories = Array.from(
+              new Set(magicItems.map((mi) => mi.category)),
+            ).sort();
+            const categoryCounts = categories.reduce(
+              (acc, cat) => {
+                acc[cat] = magicItems.filter(
+                  (mi) => mi.category === cat,
+                ).length;
+                return acc;
+              },
+              {} as Record<string, number>,
+            );
+
+            return (
+              <aside className="w-56 border-r border-border flex flex-col bg-muted/20 overflow-hidden">
+                <div className="p-4 border-b border-border">
+                  <h3 className="text-xs font-black text-primary uppercase tracking-widest mb-3">
+                    Kategorien
+                  </h3>
+                </div>
+                <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => {
+                        setSelectedMagicCategory(category);
+                        setSelectedId(null);
+                      }}
+                      className={cn(
+                        "w-full text-left px-4 py-3 rounded-xl mb-2 transition-all text-sm font-medium",
+                        selectedMagicCategory === category
+                          ? "bg-primary text-primary-foreground shadow-lg"
+                          : "bg-muted/30 hover:bg-muted/50 text-foreground",
+                      )}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span>{category}</span>
+                        <span
+                          className={cn(
+                            "text-[10px] px-2 py-0.5 rounded-full",
+                            selectedMagicCategory === category
+                              ? "bg-primary-foreground/20 text-primary-foreground"
+                              : "bg-muted text-muted-foreground",
+                          )}
+                        >
+                          {categoryCounts[category]}
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </aside>
+            );
+          })()}
+
+        {/* Left: Category Navigation (nur für feats) */}
+        {activeTab === "feats" &&
+          feats.length > 0 &&
+          (() => {
+            const categories = Array.from(
+              new Set(feats.map((f) => f.category).filter(Boolean)),
+            ).sort();
+            const categoryCounts = categories.reduce(
+              (acc, cat) => {
+                acc[cat] = feats.filter((f) => f.category === cat).length;
+                return acc;
+              },
+              {} as Record<string, number>,
+            );
+
+            return (
+              <aside className="w-56 border-r border-border flex flex-col bg-muted/20 overflow-hidden">
+                <div className="p-4 border-b border-border">
+                  <h3 className="text-xs font-black text-primary uppercase tracking-widest mb-3">
+                    Kategorien
+                  </h3>
+                </div>
+                <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => {
+                        setSelectedFeatCategory(category);
+                        setSelectedId(null);
+                      }}
+                      className={cn(
+                        "w-full text-left px-4 py-3 rounded-xl mb-2 transition-all text-sm font-medium",
+                        selectedFeatCategory === category
+                          ? "bg-primary text-primary-foreground shadow-lg"
+                          : "bg-muted/30 hover:bg-muted/50 text-foreground",
+                      )}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span>{category}</span>
+                        <span
+                          className={cn(
+                            "text-[10px] px-2 py-0.5 rounded-full",
+                            selectedFeatCategory === category
+                              ? "bg-primary-foreground/20 text-primary-foreground"
+                              : "bg-muted text-muted-foreground",
+                          )}
+                        >
+                          {categoryCounts[category]}
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </aside>
+            );
+          })()}
+
+        {/* Left: Category Navigation (nur für weapons) */}
+        {activeTab === "weapons" &&
+          weapons.length > 0 &&
+          (() => {
+            // Gruppiere nach category_label
+            const categories = Array.from(
+              new Set(
+                weapons
+                  .map((w) => w.category_label || w.category)
+                  .filter(Boolean),
+              ),
+            ).sort();
+            const categoryCounts = categories.reduce(
+              (acc, cat) => {
+                acc[cat] = weapons.filter(
+                  (w) => (w.category_label || w.category) === cat,
+                ).length;
+                return acc;
+              },
+              {} as Record<string, number>,
+            );
+
+            // Für jede Kategorie: Nahkampf/Fernkampf Unterkategorien
+            const getWeaponTypesForCategory = (category: string) => {
+              const categoryWeapons = weapons.filter(
+                (w) => (w.category_label || w.category) === category,
+              );
+              const types = Array.from(
+                new Set(
+                  categoryWeapons.map((w) => w.weapon_type).filter(Boolean),
+                ),
+              ) as string[];
+              return types.sort();
+            };
+
+            // Für jede Kategorie: Subtypen (Stangenwaffen, etc.)
+            const getWeaponSubtypesForCategory = (category: string) => {
+              const categoryWeapons = weapons.filter(
+                (w) => (w.category_label || w.category) === category,
+              );
+              const subtypes = Array.from(
+                new Set(
+                  categoryWeapons.map((w) => w.weapon_subtype).filter(Boolean),
+                ),
+              ) as string[];
+              return subtypes.sort();
+            };
+
+            return (
+              <aside className="w-56 border-r border-border flex flex-col bg-muted/20 overflow-hidden">
+                <div className="p-4 border-b border-border">
+                  <h3 className="text-xs font-black text-primary uppercase tracking-widest mb-3">
+                    Kategorien
+                  </h3>
+                </div>
+                <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
+                  {categories.map((category) => {
+                    const types = getWeaponTypesForCategory(category);
+                    const isActive = selectedWeaponCategory === category;
+
+                    return (
+                      <div key={category} className="mb-2">
+                        <button
+                          onClick={() => {
+                            setSelectedWeaponCategory(category);
+                            setSelectedWeaponType(null);
+                            setSelectedWeaponSubtype(null);
+                            setSelectedId(null);
+                          }}
+                          className={cn(
+                            "w-full text-left px-4 py-3 rounded-xl transition-all text-sm font-medium",
+                            isActive
+                              ? "bg-primary text-primary-foreground shadow-lg"
+                              : "bg-muted/30 hover:bg-muted/50 text-foreground",
+                          )}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span>{category}</span>
+                            <span
+                              className={cn(
+                                "text-[10px] px-2 py-0.5 rounded-full",
+                                isActive
+                                  ? "bg-primary-foreground/20 text-primary-foreground"
+                                  : "bg-muted text-muted-foreground",
+                              )}
+                            >
+                              {categoryCounts[category]}
+                            </span>
+                          </div>
+                        </button>
+                        {isActive && (
+                          <>
+                            {types.length > 0 && (
+                              <div className="mt-2 ml-4 space-y-1">
+                                <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1 px-3">
+                                  Typ
+                                </div>
+                                {types.map((type) => (
+                                  <button
+                                    key={type}
+                                    onClick={() => {
+                                      setSelectedWeaponType(
+                                        type as "Nahkampf" | "Fernkampf",
+                                      );
+                                      setSelectedWeaponSubtype(null);
+                                      setSelectedId(null);
+                                    }}
+                                    className={cn(
+                                      "w-full text-left px-3 py-2 rounded-lg transition-all text-xs font-medium",
+                                      selectedWeaponType === type
+                                        ? "bg-primary/20 text-primary border border-primary/30"
+                                        : "bg-muted/20 hover:bg-muted/30 text-foreground",
+                                    )}
+                                  >
+                                    {type}
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                            {(() => {
+                              const subtypes =
+                                getWeaponSubtypesForCategory(category);
+                              return (
+                                subtypes.length > 0 && (
+                                  <div className="mt-2 ml-4 space-y-1">
+                                    <div className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1 px-3">
+                                      Unterkategorie
+                                    </div>
+                                    {subtypes.map((subtype) => (
+                                      <button
+                                        key={subtype}
+                                        onClick={() => {
+                                          setSelectedWeaponSubtype(subtype);
+                                          setSelectedWeaponType(null);
+                                          setSelectedId(null);
+                                        }}
+                                        className={cn(
+                                          "w-full text-left px-3 py-2 rounded-lg transition-all text-xs font-medium",
+                                          selectedWeaponSubtype === subtype
+                                            ? "bg-primary/20 text-primary border border-primary/30"
+                                            : "bg-muted/20 hover:bg-muted/30 text-foreground",
+                                        )}
+                                      >
+                                        {subtype}
+                                      </button>
+                                    ))}
+                                  </div>
+                                )
+                              );
+                            })()}
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </aside>
+            );
+          })()}
+
+        {/* Left: Category Navigation (nur für armor) */}
+        {activeTab === "armor" &&
+          armor.length > 0 &&
+          (() => {
+            const categories = Array.from(
+              new Set(
+                armor
+                  .map((a) => a.category_label || a.category)
+                  .filter(Boolean),
+              ),
+            ).sort();
+            const categoryCounts = categories.reduce(
+              (acc, cat) => {
+                acc[cat] = armor.filter(
+                  (a) => (a.category_label || a.category) === cat,
+                ).length;
+                return acc;
+              },
+              {} as Record<string, number>,
+            );
+
+            return (
+              <aside className="w-56 border-r border-border flex flex-col bg-muted/20 overflow-hidden">
+                <div className="p-4 border-b border-border">
+                  <h3 className="text-xs font-black text-primary uppercase tracking-widest mb-3">
+                    Kategorien
+                  </h3>
+                </div>
+                <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => {
+                        setSelectedArmorCategory(category);
+                        setSelectedId(null);
+                      }}
+                      className={cn(
+                        "w-full text-left px-4 py-3 rounded-xl mb-2 transition-all text-sm font-medium",
+                        selectedArmorCategory === category
+                          ? "bg-primary text-primary-foreground shadow-lg"
+                          : "bg-muted/30 hover:bg-muted/50 text-foreground",
+                      )}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span>{category}</span>
+                        <span
+                          className={cn(
+                            "text-[10px] px-2 py-0.5 rounded-full",
+                            selectedArmorCategory === category
+                              ? "bg-primary-foreground/20 text-primary-foreground"
+                              : "bg-muted text-muted-foreground",
+                          )}
+                        >
+                          {categoryCounts[category]}
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </aside>
+            );
+          })()}
+
         {/* Left: Sidebar List */}
-        <aside className="w-96 border-r border-border flex flex-col bg-muted/10 overflow-hidden">
+        <aside
+          className={cn(
+            "border-r border-border flex flex-col bg-muted/10 overflow-hidden",
+            activeTab === "magic-items" ||
+              activeTab === "feats" ||
+              activeTab === "spells" ||
+              activeTab === "weapons" ||
+              activeTab === "armor"
+              ? "w-80"
+              : "w-96",
+          )}
+        >
+          {/* Sidebar Suchleiste */}
+          <div className="p-4 border-b border-border bg-muted/20">
+            <div className="relative">
+              <Search
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60"
+                size={16}
+              />
+              <input
+                type="text"
+                placeholder="In Liste suchen..."
+                className="w-full pl-10 pr-4 py-2 bg-background border border-border rounded-lg text-sm focus:ring-2 focus:ring-primary/20 transition-all outline-none"
+                value={sidebarSearchTerm}
+                onChange={(e) => setSidebarSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+
           <div
             className="flex-1 overflow-y-auto custom-scrollbar p-6"
             ref={parentRef}
@@ -283,9 +1449,25 @@ export function Compendium() {
                   Rufe alte Schriften auf...
                 </p>
               </div>
+            ) : error ? (
+              <div className="p-12 text-center text-red-500/60 text-sm italic border-2 border-dashed border-red-500/20 rounded-[2rem]">
+                Fehler beim Laden: {error}
+              </div>
             ) : data.length === 0 ? (
               <div className="p-12 text-center text-muted-foreground/40 text-sm italic border-2 border-dashed border-border rounded-[2rem]">
                 Keine Einträge gefunden
+                {activeTab === "weapons" &&
+                  weapons.length === 0 &&
+                  " (Waffen werden geladen...)"}
+                {activeTab === "armor" &&
+                  armor.length === 0 &&
+                  " (Rüstungen werden geladen...)"}
+                {activeTab === "magic-items" &&
+                  magicItems.length === 0 &&
+                  " (Magische Gegenstände werden geladen...)"}
+                {activeTab === "equipment" &&
+                  equipment.length === 0 &&
+                  " (Ausrüstungspakete werden geladen...)"}
               </div>
             ) : (
               <VirtualizedList
@@ -379,6 +1561,48 @@ export function Compendium() {
                       <div className="absolute top-0 left-0 w-2 h-full bg-primary/10 group-hover:bg-primary transition-colors duration-700" />
                       <p className="text-foreground/90 leading-relaxed text-lg lg:text-xl whitespace-pre-wrap font-medium italic first-letter:text-3xl first-letter:font-black first-letter:text-primary first-letter:mr-2">
                         {(() => {
+                          // Für Magic Items: Suche in data.description (facts_json)
+                          if (activeTab === "magic-items") {
+                            const mi =
+                              selectedItem as import("../lib/types").MagicItem;
+                            const facts =
+                              typeof mi.data === "object" && mi.data !== null
+                                ? mi.data
+                                : {};
+                            const description = facts["description"];
+                            if (
+                              typeof description === "string" &&
+                              description
+                            ) {
+                              // Entferne Item-Name und Meta-Info am Anfang, falls vorhanden
+                              let cleanDesc = description;
+                              // Entferne Item-Name am Anfang (falls vorhanden)
+                              const itemNameUpper = mi.name.toUpperCase();
+                              if (
+                                cleanDesc
+                                  .toUpperCase()
+                                  .startsWith(itemNameUpper)
+                              ) {
+                                const lines = cleanDesc.split("\n");
+                                // Überspringe erste Zeile wenn sie nur der Item-Name ist
+                                if (
+                                  lines[0]?.trim().toUpperCase() ===
+                                  itemNameUpper
+                                ) {
+                                  cleanDesc = lines.slice(1).join("\n").trim();
+                                }
+                              }
+                              // Entferne Meta-Line (Kategorie, Seltenheit) am Anfang
+                              cleanDesc = cleanDesc
+                                .replace(
+                                  /^(Waffe|Wundersamer Gegenstand|Rüstung|Ring|Schriftrolle|Zauberstab|Stab|Zepter|Trank|Schild).*?$/m,
+                                  "",
+                                )
+                                .trim();
+                              return cleanDesc || description;
+                            }
+                          }
+
                           const direct = (
                             selectedItem as { description?: unknown }
                           ).description;
@@ -975,6 +2199,196 @@ export function Compendium() {
                           );
                         })()}
 
+                      {activeTab === "magic-items" &&
+                        (() => {
+                          const mi =
+                            selectedItem as import("../lib/types").MagicItem;
+                          const facts =
+                            typeof mi.data === "object" && mi.data !== null
+                              ? mi.data
+                              : {};
+                          const bonuses = facts.bonuses as
+                            | Record<string, number | null>
+                            | undefined;
+                          const charges = facts.charges as
+                            | { max?: number | null; recharge?: string | null }
+                            | undefined;
+                          const activation = facts.activation as
+                            | {
+                                time?: string | null;
+                                action_type?: string | null;
+                                trigger?: string | null;
+                                command_word?: string | null;
+                              }
+                            | undefined;
+                          const spellsGranted = facts.spells_granted as
+                            | Array<{
+                                name: string;
+                                frequency?: string | null;
+                                notes?: string | null;
+                              }>
+                            | undefined;
+
+                          return (
+                            <>
+                              <StatRow
+                                label="Seltenheit"
+                                value={mi.rarity}
+                                highlight
+                              />
+                              <StatRow label="Kategorie" value={mi.category} />
+                              {mi.requires_attunement && (
+                                <StatRow
+                                  label="Einstimmung"
+                                  value="Erforderlich"
+                                  highlight
+                                />
+                              )}
+                              {mi.source_book && (
+                                <StatRow
+                                  label="Quelle"
+                                  value={`${mi.source_book}${mi.source_page ? `, S. ${mi.source_page}` : ""}`}
+                                />
+                              )}
+                              {bonuses && (
+                                <>
+                                  {bonuses.ac !== null &&
+                                    bonuses.ac !== undefined && (
+                                      <StatRow
+                                        label="RK-Bonus"
+                                        value={`+${bonuses.ac}`}
+                                      />
+                                    )}
+                                  {bonuses.attack_roll !== null &&
+                                    bonuses.attack_roll !== undefined && (
+                                      <StatRow
+                                        label="Angriffsbonus"
+                                        value={`+${bonuses.attack_roll}`}
+                                      />
+                                    )}
+                                  {bonuses.damage_roll !== null &&
+                                    bonuses.damage_roll !== undefined && (
+                                      <StatRow
+                                        label="Schadensbonus"
+                                        value={`+${bonuses.damage_roll}`}
+                                      />
+                                    )}
+                                  {bonuses.save_dc !== null &&
+                                    bonuses.save_dc !== undefined && (
+                                      <StatRow
+                                        label="Rettungswurf-SG"
+                                        value={`${bonuses.save_dc}`}
+                                      />
+                                    )}
+                                  {bonuses.spell_attack !== null &&
+                                    bonuses.spell_attack !== undefined && (
+                                      <StatRow
+                                        label="Zauberangriffsbonus"
+                                        value={`+${bonuses.spell_attack}`}
+                                      />
+                                    )}
+                                </>
+                              )}
+                              {charges &&
+                                charges.max !== null &&
+                                charges.max !== undefined && (
+                                  <StatRow
+                                    label="Ladungen"
+                                    value={`${charges.max}${charges.recharge ? ` (${charges.recharge})` : ""}`}
+                                  />
+                                )}
+                              {activation && (
+                                <>
+                                  {activation.time && (
+                                    <StatRow
+                                      label="Aktivierungszeit"
+                                      value={activation.time}
+                                    />
+                                  )}
+                                  {activation.action_type && (
+                                    <StatRow
+                                      label="Aktionstyp"
+                                      value={activation.action_type}
+                                    />
+                                  )}
+                                  {activation.trigger && (
+                                    <StatRow
+                                      label="Auslöser"
+                                      value={activation.trigger}
+                                    />
+                                  )}
+                                  {activation.command_word && (
+                                    <StatRow
+                                      label="Befehlswort"
+                                      value={activation.command_word}
+                                    />
+                                  )}
+                                </>
+                              )}
+                              {facts.duration &&
+                                typeof facts.duration === "string" && (
+                                  <StatRow
+                                    label="Dauer"
+                                    value={facts.duration}
+                                  />
+                                )}
+                              {facts.range &&
+                                typeof facts.range === "string" && (
+                                  <StatRow
+                                    label="Reichweite"
+                                    value={facts.range}
+                                  />
+                                )}
+                              {facts.area && typeof facts.area === "string" && (
+                                <StatRow
+                                  label="Wirkungsbereich"
+                                  value={facts.area}
+                                />
+                              )}
+                              {spellsGranted && spellsGranted.length > 0 && (
+                                <div className="mt-4">
+                                  <p className="text-xs font-black text-primary uppercase tracking-widest mb-2">
+                                    Gewährte Zauber
+                                  </p>
+                                  <div className="space-y-2">
+                                    {spellsGranted.map((spell, idx) => (
+                                      <div
+                                        key={idx}
+                                        className="text-sm text-muted-foreground"
+                                      >
+                                        <span className="font-semibold">
+                                          {spell.name}
+                                        </span>
+                                        {spell.frequency && (
+                                          <span className="ml-2 text-xs">
+                                            ({spell.frequency})
+                                          </span>
+                                        )}
+                                        {spell.notes && (
+                                          <p className="text-xs mt-1 italic">
+                                            {spell.notes}
+                                          </p>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              {facts.description &&
+                                typeof facts.description === "string" && (
+                                  <div className="mt-4">
+                                    <p className="text-xs font-black text-primary uppercase tracking-widest mb-2">
+                                      Beschreibung
+                                    </p>
+                                    <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                                      {facts.description}
+                                    </p>
+                                  </div>
+                                )}
+                            </>
+                          );
+                        })()}
+
                       {activeTab === "backgrounds" &&
                         (() => {
                           const bg = selectedItem as Background;
@@ -1071,38 +2485,395 @@ export function Compendium() {
                         <>
                           {/* Property Details for Weapons */}
                           {weapon.properties &&
-                            weapon.properties.length > 0 && (
-                              <div className="glass-panel p-6 rounded-[2.5rem] space-y-6 animate-reveal">
-                                <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
-                                  <Info size={18} /> Eigenschaften
-                                </h4>
-                                <div className="space-y-8">
-                                  {weapon.properties.map((prop) => (
-                                    <div
-                                      key={prop.id}
-                                      className="space-y-3 group"
-                                    >
-                                      <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
-                                        {prop.name}
-                                        {prop.parameter_value != null && (
-                                          <span className="text-sm text-muted-foreground normal-case ml-2">
-                                            (
-                                            {JSON.stringify(
-                                              prop.parameter_value,
-                                            )}
-                                            )
-                                          </span>
-                                        )}
-                                      </span>
-                                      <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20 group-hover:border-primary transition-colors">
-                                        {prop.description ||
-                                          "Keine Beschreibung im PHB."}
-                                      </p>
-                                    </div>
-                                  ))}
+                            weapon.properties.length > 0 &&
+                            (() => {
+                              // KRITISCH: Entferne ALLE Duplikate - sowohl nach ID als auch nach Name
+                              // Problem: Es gibt sowohl deutsche ("leicht", "wurfwaffe") als auch englische ("light", "thrown") IDs
+                              // Lösung: Normalisiere auf englische IDs und entferne Duplikate nach Name
+
+                              // Mapping: Deutsche zu englische IDs
+                              const idNormalization: Record<string, string> = {
+                                leicht: "light",
+                                wurfwaffe: "thrown",
+                                zweihändig: "two-handed",
+                                geschosse: "ammunition",
+                                reichweite: "range",
+                                vielseitig: "versatile",
+                                finesse: "finesse", // bereits gleich
+                                schwer: "heavy",
+                                weitreichend: "reach",
+                                laden: "loading",
+                              };
+
+                              // Schritt 1: Normalisiere IDs und entferne Duplikate nach normalisierter ID
+                              const normalizedMap = new Map<
+                                string,
+                                (typeof weapon.properties)[0]
+                              >();
+                              const seenNormalizedIds = new Set<string>();
+
+                              for (const prop of weapon.properties) {
+                                // Normalisiere ID (deutsch -> englisch)
+                                const normalizedId =
+                                  idNormalization[prop.id.toLowerCase()] ||
+                                  prop.id.toLowerCase();
+
+                                if (seenNormalizedIds.has(normalizedId)) {
+                                  // Duplikat gefunden - wähle die beste Version
+                                  const existing =
+                                    normalizedMap.get(normalizedId)!;
+                                  const existingHasDesc =
+                                    existing.description &&
+                                    existing.description.trim() &&
+                                    existing.description !==
+                                      "Keine Beschreibung im PHB.";
+                                  const newHasDesc =
+                                    prop.description &&
+                                    prop.description.trim() &&
+                                    prop.description !==
+                                      "Keine Beschreibung im PHB.";
+
+                                  // Bevorzuge: 1) Mit Beschreibung, 2) Englische ID, 3) Mit Parameter
+                                  const existingIsEnglish =
+                                    !idNormalization[existing.id.toLowerCase()];
+                                  const newIsEnglish =
+                                    !idNormalization[prop.id.toLowerCase()];
+
+                                  let shouldReplace = false;
+                                  if (newHasDesc && !existingHasDesc) {
+                                    shouldReplace = true;
+                                  } else if (newHasDesc && existingHasDesc) {
+                                    // Beide haben Beschreibungen - bevorzuge englische ID oder längere Beschreibung
+                                    if (newIsEnglish && !existingIsEnglish) {
+                                      shouldReplace = true;
+                                    } else if (
+                                      prop.description.length >
+                                      existing.description.length
+                                    ) {
+                                      shouldReplace = true;
+                                    }
+                                  } else if (!newHasDesc && !existingHasDesc) {
+                                    // Beide ohne Beschreibung - bevorzuge englische ID
+                                    if (newIsEnglish && !existingIsEnglish) {
+                                      shouldReplace = true;
+                                    }
+                                  }
+
+                                  if (shouldReplace) {
+                                    normalizedMap.set(normalizedId, prop);
+                                  }
+                                } else {
+                                  // Erste Property mit dieser normalisierten ID
+                                  normalizedMap.set(normalizedId, prop);
+                                  seenNormalizedIds.add(normalizedId);
+                                }
+                              }
+
+                              // Schritt 2: Finale Liste erstellen und IDs normalisieren
+                              let finalProperties = Array.from(
+                                normalizedMap.values(),
+                              ).map((prop) => {
+                                // Setze die ID auf die normalisierte Version
+                                const normalizedId =
+                                  idNormalization[prop.id.toLowerCase()] ||
+                                  prop.id.toLowerCase();
+                                return {
+                                  ...prop,
+                                  id: normalizedId, // Verwende immer die normalisierte (englische) ID
+                                };
+                              });
+
+                              // Schritt 3: ABSOLUTE Sicherheitsprüfung nach normalisierter ID
+                              const finalSeenIds = new Set<string>();
+                              finalProperties = finalProperties.filter(
+                                (prop) => {
+                                  if (finalSeenIds.has(prop.id)) {
+                                    console.error(
+                                      `[CRITICAL ERROR] Property '${prop.id}' still appears multiple times for ${weapon.name} after all deduplication steps!`,
+                                    );
+                                    return false;
+                                  }
+                                  finalSeenIds.add(prop.id);
+                                  return true;
+                                },
+                              );
+
+                              // Prüfe, ob Waffe "ammunition" hat (für range-Filterung)
+                              const hasAmmunition = finalProperties.some(
+                                (p) => p.id === "ammunition",
+                              );
+
+                              // Debug: Log final properties to check for duplicates
+                              const duplicateCheck = finalProperties.map(
+                                (p) => p.id,
+                              );
+                              const duplicates = duplicateCheck.filter(
+                                (id, index) =>
+                                  duplicateCheck.indexOf(id) !== index,
+                              );
+                              if (duplicates.length > 0) {
+                                console.error(
+                                  `[ERROR] Duplicate properties still found for ${weapon.name}:`,
+                                  duplicates,
+                                );
+                                console.error(
+                                  "All properties:",
+                                  finalProperties.map((p) => ({
+                                    id: p.id,
+                                    name: p.name,
+                                    desc: p.description?.substring(0, 50),
+                                  })),
+                                );
+                              }
+
+                              // Debug: Log weapon data to console
+                              console.log("Weapon data:", {
+                                name: weapon.name,
+                                data: weapon.data,
+                                dataType: typeof weapon.data,
+                                dataRange: (weapon.data as any)?.range,
+                                dataAmmunitionType: (weapon.data as any)
+                                  ?.ammunition_type,
+                                dataThrownRange: (weapon.data as any)
+                                  ?.thrown_range,
+                                properties: weapon.properties.map((p) => ({
+                                  id: p.id,
+                                  name: p.name,
+                                  parameter_value: p.parameter_value,
+                                  has_parameter: p.has_parameter,
+                                })),
+                                hasAmmunitionProperty: weapon.properties.some(
+                                  (p) => p.id === "ammunition",
+                                ),
+                                hasRangeProperty: weapon.properties.some(
+                                  (p) => p.id === "range",
+                                ),
+                              });
+
+                              return (
+                                <div className="glass-panel p-6 rounded-[2.5rem] space-y-6 animate-reveal">
+                                  <h4 className="text-[11px] font-black text-muted-foreground/50 uppercase tracking-[0.4em] mb-6 flex items-center gap-4">
+                                    <Info size={18} /> Eigenschaften
+                                  </h4>
+                                  <div className="space-y-8">
+                                    {finalProperties
+                                      .map((prop) => {
+                                        // Formatiere Parameter-Werte lesbar
+                                        // Prüfe auch weapon.data für Reichweiten und Geschoss-Typen
+                                        const formatParameterValue = (
+                                          paramValue: unknown,
+                                          propId: string,
+                                          weaponData: any,
+                                        ): string | null => {
+                                          // Versuche zuerst parameter_value
+                                          let parsed: any = null;
+
+                                          if (paramValue != null) {
+                                            try {
+                                              parsed =
+                                                typeof paramValue === "string"
+                                                  ? JSON.parse(paramValue)
+                                                  : paramValue;
+                                            } catch {
+                                              parsed = paramValue;
+                                            }
+                                          }
+
+                                          // Debug: Log für Entwicklung
+                                          if (
+                                            process.env.NODE_ENV ===
+                                              "development" &&
+                                            propId === "ammunition"
+                                          ) {
+                                            console.log(
+                                              "Formatting ammunition:",
+                                              {
+                                                propId,
+                                                paramValue,
+                                                parsed,
+                                                weaponData: weaponData,
+                                                weaponDataRange:
+                                                  weaponData?.range,
+                                                weaponDataAmmoType:
+                                                  weaponData?.ammunition_type,
+                                              },
+                                            );
+                                          }
+
+                                          // Für Wurfwaffen (thrown) - Reichweite aus data.thrown_range oder parameter_value
+                                          if (propId === "thrown") {
+                                            // Prüfe zuerst parameter_value, dann weaponData.thrown_range
+                                            let range = null;
+                                            if (parsed?.range) {
+                                              range = parsed.range;
+                                            } else if (
+                                              parsed &&
+                                              typeof parsed === "object" &&
+                                              "normal" in parsed &&
+                                              "max" in parsed
+                                            ) {
+                                              range = parsed;
+                                            } else if (
+                                              weaponData?.thrown_range
+                                            ) {
+                                              range = weaponData.thrown_range;
+                                            }
+
+                                            if (
+                                              range &&
+                                              (range.normal || range.max)
+                                            ) {
+                                              const normal = range.normal || 0;
+                                              const max = range.max || 0;
+                                              return `${normal}/${max} m`;
+                                            }
+                                          }
+
+                                          // Für Fernkampfwaffen (range) - Reichweite aus data.range oder parameter_value
+                                          // WICHTIG: Nur anzeigen, wenn nicht bereits bei "ammunition" angezeigt
+                                          if (propId === "range") {
+                                            // Wenn Waffe auch "ammunition" hat, wird Reichweite dort angezeigt
+                                            if (hasAmmunition) {
+                                              return null; // Wird bereits bei "ammunition" angezeigt
+                                            }
+
+                                            const range =
+                                              parsed?.range ||
+                                              parsed ||
+                                              weaponData?.range;
+                                            if (
+                                              range &&
+                                              (range.normal || range.max)
+                                            ) {
+                                              const normal = range.normal || 0;
+                                              const max = range.max || 0;
+                                              return `${normal}/${max} m`;
+                                            }
+                                          }
+
+                                          // Für Geschosse (ammunition) - Geschoss-Typ und Reichweite
+                                          // Format: "Geschoss-Typ, normal/max m" oder "normal/max m" (wenn kein Typ)
+                                          if (propId === "ammunition") {
+                                            const parts: string[] = [];
+
+                                            // Geschoss-Typ (Bolzen, Pfeil, Kugel) aus parameter_value oder data.ammunition_type
+                                            const ammoType =
+                                              parsed?.ammunition_type ||
+                                              weaponData?.ammunition_type;
+                                            if (ammoType) {
+                                              parts.push(ammoType);
+                                            }
+
+                                            // Reichweite aus parameter_value oder data.range
+                                            // Prüfe zuerst parameter_value, dann weaponData.range
+                                            let range = null;
+                                            if (parsed?.range) {
+                                              range = parsed.range;
+                                            } else if (
+                                              parsed &&
+                                              typeof parsed === "object" &&
+                                              "normal" in parsed &&
+                                              "max" in parsed
+                                            ) {
+                                              range = parsed;
+                                            } else if (weaponData?.range) {
+                                              range = weaponData.range;
+                                            }
+
+                                            if (
+                                              range &&
+                                              (range.normal || range.max)
+                                            ) {
+                                              const normal = range.normal || 0;
+                                              const max = range.max || 0;
+                                              parts.push(`${normal}/${max} m`);
+                                            }
+
+                                            return parts.length > 0
+                                              ? parts.join(", ")
+                                              : null;
+                                          }
+
+                                          // Für versatile - Schaden aus data.versatile_damage oder parameter_value
+                                          if (propId === "versatile") {
+                                            const damage =
+                                              parsed?.damage ||
+                                              weaponData?.versatile_damage;
+                                            if (damage) {
+                                              return damage;
+                                            }
+                                          }
+
+                                          // Fallback: JSON formatieren, aber lesbarer
+                                          if (
+                                            parsed &&
+                                            typeof parsed === "object"
+                                          ) {
+                                            const entries =
+                                              Object.entries(parsed);
+                                            if (entries.length > 0) {
+                                              return entries
+                                                .map(([k, v]) => {
+                                                  if (
+                                                    k === "normal" ||
+                                                    k === "max"
+                                                  )
+                                                    return `${k}: ${v}`;
+                                                  if (k === "unit") return null;
+                                                  return `${k}: ${v}`;
+                                                })
+                                                .filter(Boolean)
+                                                .join(", ");
+                                            }
+                                          }
+
+                                          if (parsed) {
+                                            return String(parsed);
+                                          }
+
+                                          return null;
+                                        };
+
+                                        const paramDisplay =
+                                          formatParameterValue(
+                                            prop.parameter_value,
+                                            prop.id,
+                                            weapon.data,
+                                          );
+
+                                        // Überspringe "range" Property komplett, wenn bereits bei "ammunition" angezeigt
+                                        if (
+                                          prop.id === "range" &&
+                                          hasAmmunition
+                                        ) {
+                                          return null;
+                                        }
+
+                                        return (
+                                          <div
+                                            key={prop.id}
+                                            className="space-y-3 group"
+                                          >
+                                            <span className="text-base font-black text-primary uppercase tracking-widest block group-hover:translate-x-1 transition-transform">
+                                              {prop.name}
+                                              {paramDisplay && (
+                                                <span className="text-sm text-muted-foreground normal-case ml-2 font-medium">
+                                                  ({paramDisplay})
+                                                </span>
+                                              )}
+                                            </span>
+                                            <p className="text-sm text-muted-foreground italic leading-relaxed pl-6 border-l-2 border-primary/20 group-hover:border-primary transition-colors">
+                                              {prop.description ||
+                                                "Keine Beschreibung im PHB."}
+                                            </p>
+                                          </div>
+                                        );
+                                      })
+                                      .filter(Boolean)}
+                                  </div>
                                 </div>
-                              </div>
-                            )}
+                              );
+                            })()}
 
                           {/* Mastery Details for Weapons */}
                           {weapon.mastery && (
@@ -1316,6 +3087,18 @@ function VirtualizedList({
         return eq.total_cost_gp !== undefined
           ? `${eq.total_cost_gp} GM`
           : "PHB";
+      }
+      case "magic-items": {
+        const mi = item as import("../lib/types").MagicItem;
+        const rarityMap: Record<string, string> = {
+          gewöhnlich: "G",
+          ungewöhnlich: "U",
+          selten: "S",
+          "sehr selten": "SS",
+          legendär: "L",
+          artefakt: "A",
+        };
+        return rarityMap[mi.rarity.toLowerCase()] || mi.rarity;
       }
       case "tools":
         return (item as import("../lib/types").Tool).category || "PHB";

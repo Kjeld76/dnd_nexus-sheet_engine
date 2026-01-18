@@ -3,7 +3,7 @@ use crate::db::Database;
 use crate::error::{AppError, AppResult, map_lock_error};
 use crate::types::spell::CustomSpell;
 use crate::types::weapons::CustomWeapon;
-use crate::types::compendium::{CustomArmor, CustomItem};
+use crate::types::compendium::{CustomArmor, CustomItem, CustomMagicItem, CustomSpecies, CustomClass, CustomFeat, CustomBackground};
 use uuid::Uuid;
 use rusqlite::params;
 
@@ -52,7 +52,7 @@ pub async fn upsert_custom_spell(
         Ok(id)
     })();
     
-    result.map_err(|e| e.to_string())
+    result.map_err(|e: AppError| e.to_string())
 }
 
 /// Creates or updates a custom weapon in the database.
@@ -95,7 +95,7 @@ pub async fn upsert_custom_weapon(
         Ok(id)
     })();
     
-    result.map_err(|e| e.to_string())
+    result.map_err(|e: AppError| e.to_string())
 }
 
 /// Creates or updates a custom armor in the database.
@@ -138,7 +138,7 @@ pub async fn upsert_custom_armor(
         Ok(id)
     })();
     
-    result.map_err(|e| e.to_string())
+    result.map_err(|e: AppError| e.to_string())
 }
 
 /// Creates or updates a custom item (gear or tool) in the database.
@@ -189,7 +189,7 @@ pub async fn upsert_custom_item(
         Ok(id)
     })();
     
-    result.map_err(|e| e.to_string())
+    result.map_err(|e: AppError| e.to_string())
 }
 
 /// Deletes a custom entry from the database.
@@ -219,6 +219,8 @@ pub async fn delete_custom_entry(
             "feat" => "custom_feats",
             "species" => "custom_species",
             "class" => "custom_classes",
+            "background" => "custom_backgrounds",
+            "magic_item" => "custom_mag_items_base",
             _ => return Err(AppError::InvalidInput(format!("Invalid table type: {}", table_type))),
         };
 
@@ -228,7 +230,152 @@ pub async fn delete_custom_entry(
         Ok(())
     })();
     
-    result.map_err(|e| e.to_string())
+    result.map_err(|e: AppError| e.to_string())
+}
+
+/// Creates or updates a custom magic item in the database.
+///
+/// # Arguments
+/// * `db` - Database connection state
+/// * `item` - Custom magic item data
+///
+/// # Returns
+/// The item ID (generated if not provided)
+///
+/// # Errors
+/// Returns `AppError` if database operation or serialization fails
+#[tauri::command]
+pub async fn upsert_custom_magic_item(
+    db: State<'_, Database>,
+    item: CustomMagicItem,
+) -> Result<String, String> {
+    let result: AppResult<String> = (|| {
+        let conn = map_lock_error(db.0.lock())?;
+        let id = item.id.clone().unwrap_or_else(|| Uuid::new_v4().to_string());
+        let is_homebrew = item.is_homebrew.unwrap_or(item.parent_id.is_none());
+
+        conn.execute(
+            "INSERT INTO custom_mag_items_base (
+                id, name, rarity, category, source_book, source_page, 
+                requires_attunement, facts_json, parent_id, is_homebrew, updated_at
+            ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, unixepoch())
+            ON CONFLICT(id) DO UPDATE SET
+                name=?2, rarity=?3, category=?4, source_book=?5, source_page=?6,
+                requires_attunement=?7, facts_json=?8, is_homebrew=?10, updated_at=unixepoch()",
+            params![
+                id, item.name, item.rarity, item.category, item.source_book, item.source_page,
+                item.requires_attunement, item.facts_json, item.parent_id, is_homebrew
+            ],
+        )?;
+
+        Ok(id)
+    })();
+    
+    result.map_err(|e: AppError| e.to_string())
 }
 
 
+
+/// Creates or updates a custom species in the database.
+#[tauri::command]
+pub async fn upsert_custom_species(
+    db: State<'_, Database>,
+    species: CustomSpecies,
+) -> Result<String, String> {
+    let result: AppResult<String> = (|| {
+        let conn = map_lock_error(db.0.lock())?;
+        let id = species.id.clone().unwrap_or_else(|| Uuid::new_v4().to_string());
+        let is_homebrew = species.is_homebrew.unwrap_or(species.parent_id.is_none());
+        let data_json = serde_json::to_string(&species.data)?;
+
+        conn.execute(
+            "INSERT INTO custom_species (id, name, data, parent_id, is_homebrew, updated_at)
+             VALUES (?1, ?2, ?3, ?4, ?5, unixepoch())
+             ON CONFLICT(id) DO UPDATE SET
+                name=?2, data=?3, is_homebrew=?5, updated_at=unixepoch()",
+            params![id, species.name, data_json, species.parent_id, is_homebrew],
+        )?;
+
+        Ok(id)
+    })();
+    
+    result.map_err(|e: AppError| e.to_string())
+}
+
+/// Creates or updates a custom class in the database.
+#[tauri::command]
+pub async fn upsert_custom_class(
+    db: State<'_, Database>,
+    class: CustomClass,
+) -> Result<String, String> {
+    let result: AppResult<String> = (|| {
+        let conn = map_lock_error(db.0.lock())?;
+        let id = class.id.clone().unwrap_or_else(|| Uuid::new_v4().to_string());
+        let is_homebrew = class.is_homebrew.unwrap_or(class.parent_id.is_none());
+        let data_json = serde_json::to_string(&class.data)?;
+
+        conn.execute(
+            "INSERT INTO custom_classes (id, name, data, parent_id, is_homebrew, updated_at)
+             VALUES (?1, ?2, ?3, ?4, ?5, unixepoch())
+             ON CONFLICT(id) DO UPDATE SET
+                name=?2, data=?3, is_homebrew=?5, updated_at=unixepoch()",
+            params![id, class.name, data_json, class.parent_id, is_homebrew],
+        )?;
+
+        Ok(id)
+    })();
+    
+    result.map_err(|e: AppError| e.to_string())
+}
+
+/// Creates or updates a custom feat in the database.
+#[tauri::command]
+pub async fn upsert_custom_feat(
+    db: State<'_, Database>,
+    feat: CustomFeat,
+) -> Result<String, String> {
+    let result: AppResult<String> = (|| {
+        let conn = map_lock_error(db.0.lock())?;
+        let id = feat.id.clone().unwrap_or_else(|| Uuid::new_v4().to_string());
+        let is_homebrew = feat.is_homebrew.unwrap_or(feat.parent_id.is_none());
+        let data_json = serde_json::to_string(&feat.data)?;
+
+        conn.execute(
+            "INSERT INTO custom_feats (id, name, category, data, parent_id, is_homebrew, updated_at)
+             VALUES (?1, ?2, ?3, ?4, ?5, ?6, unixepoch())
+             ON CONFLICT(id) DO UPDATE SET
+                name=?2, category=?3, data=?4, is_homebrew=?6, updated_at=unixepoch()",
+            params![id, feat.name, feat.category, data_json, feat.parent_id, is_homebrew],
+        )?;
+
+        Ok(id)
+    })();
+    
+    result.map_err(|e: AppError| e.to_string())
+}
+
+/// Creates or updates a custom background in the database.
+#[tauri::command]
+pub async fn upsert_custom_background(
+    db: State<'_, Database>,
+    background: CustomBackground,
+) -> Result<String, String> {
+    let result: AppResult<String> = (|| {
+        let conn = map_lock_error(db.0.lock())?;
+        let id = background.id.clone().unwrap_or_else(|| Uuid::new_v4().to_string());
+        let is_homebrew = background.is_homebrew.unwrap_or(background.parent_id.is_none());
+        let data_json = serde_json::to_string(&background.data)?;
+
+        conn.execute(
+            "INSERT INTO custom_backgrounds (id, name, data, parent_id, is_homebrew, updated_at)
+             VALUES (?1, ?2, ?3, ?4, ?5, unixepoch())
+             ON CONFLICT(id) DO UPDATE SET
+                name=?2, data=?3, is_homebrew=?5, updated_at=unixepoch()",
+            params![id, background.name, data_json, background.parent_id, is_homebrew],
+        )?;
+
+        Ok(id)
+    })();
+    
+    result.map_err(|e: AppError| e.to_string())
+}

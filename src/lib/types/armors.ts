@@ -2,6 +2,7 @@ export interface Armor {
   id: string;
   name: string;
   category: string;
+  category_label?: string; // Lesbare deutsche Bezeichnung (z.B. "Leichte Rüstung", "Schilde")
   base_ac: number | null; // NULL für Formeln
   ac_bonus: number; // Für Schilde (+2)
   ac_formula: string | null; // z.B. "11 + DEX", "12 + DEX (max. 2)", "14"

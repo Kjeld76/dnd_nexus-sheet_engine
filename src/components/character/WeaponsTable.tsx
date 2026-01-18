@@ -127,19 +127,19 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-3">
-        <Sword size={20} className="text-primary" />
-        <h3 className="text-lg font-black italic font-serif">Waffen</h3>
-        <div className="flex-1 h-px bg-border" />
+      <div className="space-y-2">
+        <div className="flex items-center gap-3">
+          <Sword size={20} className="text-primary" />
+          <h3 className="text-lg font-black italic font-serif">Waffen</h3>
+          <div className="flex-1 h-px bg-border" />
+        </div>
         <button
           onClick={() => setShowAddDialog(!showAddDialog)}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 transition-all text-xs font-black uppercase tracking-wider"
         >
-          <Plus size={16} />
-          <span className="text-xs font-black uppercase tracking-wider">
-            Hinzufügen
-          </span>
-          {showAddDialog ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+          <Plus size={14} />
+          <span>Hinzufügen</span>
+          {showAddDialog ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
         </button>
       </div>
 
@@ -193,16 +193,11 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
           </p>
         ) : (
           <>
-            {/* Header für Aktionen-Spalte */}
-            <div className="grid grid-cols-[1fr_auto] gap-4 px-2 pb-2 border-b-2 border-border/50">
+            {/* Header */}
+            <div className="px-2 pb-2 border-b-2 border-border/50">
               <span className="text-xs font-black text-muted-foreground/70 uppercase tracking-wider">
                 Waffe
               </span>
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-black text-muted-foreground/70 uppercase tracking-wider">
-                  Aktionen
-                </span>
-              </div>
             </div>
             {inventoryWeapons.map(({ weapon, ...invItem }) => {
               const isEquipped = invItem.is_equipped;
@@ -210,62 +205,60 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
               return (
                 <div
                   key={invItem.id}
-                  className={`bg-card p-4 rounded-xl border-2 transition-all group hover:border-primary/30 ${
+                  className={`bg-card p-3 rounded-lg border-2 transition-all group hover:border-primary/30 relative ${
                     isEquipped
                       ? "border-primary/50 bg-primary/5"
                       : "border-border"
                   }`}
                 >
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-1">
-                        <h4 className="text-sm font-bold text-foreground truncate">
-                          {weapon.name}
-                        </h4>
-                        {isEquipped && (
-                          <span className="text-xs font-black text-primary uppercase tracking-wider">
-                            Ausgerüstet
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                        <span>
-                          {weapon.damage_dice} {weapon.damage_type}
+                  <div className="space-y-1 pr-20 pb-6">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h4 className="text-sm font-bold text-foreground break-words">
+                        {weapon.name}
+                      </h4>
+                      {isEquipped && (
+                        <span className="text-xs font-black text-primary uppercase tracking-wider whitespace-nowrap shrink-0">
+                          Ausgerüstet
                         </span>
-                        {weapon.properties && weapon.properties.length > 0 && (
-                          <span className="truncate">
-                            {weapon.properties
-                              .map((p) => p.name || p.id)
-                              .join(", ")}
-                          </span>
-                        )}
-                        {weapon.mastery && (
-                          <span className="text-primary font-semibold">
-                            {weapon.mastery.name}
-                          </span>
-                        )}
-                      </div>
+                      )}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => handleToggleEquip(weapon.id)}
-                        className={`flex-shrink-0 p-2 rounded-lg border transition-all ${
-                          isEquipped
-                            ? "bg-primary text-primary-foreground border-primary"
-                            : "bg-muted/50 text-muted-foreground border-border hover:bg-primary/20 hover:border-primary/30"
-                        }`}
-                        title={isEquipped ? "Ablegen" : "Ausrüsten"}
-                      >
-                        <Check size={16} />
-                      </button>
-                      <button
-                        onClick={() => handleRemoveWeapon(invItem.id)}
-                        className="flex-shrink-0 p-2 rounded-lg border border-border bg-muted/50 text-muted-foreground hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500 transition-all"
-                        title="Aus Inventar entfernen"
-                      >
-                        <Trash2 size={16} />
-                      </button>
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
+                      <span className="whitespace-nowrap">
+                        {weapon.damage_dice} {weapon.damage_type}
+                      </span>
+                      {weapon.properties && weapon.properties.length > 0 && (
+                        <span className="break-words">
+                          {weapon.properties
+                            .map((p) => p.name || p.id)
+                            .join(", ")}
+                        </span>
+                      )}
+                      {weapon.mastery && (
+                        <span className="text-primary font-semibold whitespace-nowrap">
+                          {weapon.mastery.name}
+                        </span>
+                      )}
                     </div>
+                  </div>
+                  <div className="absolute bottom-2 right-2 flex items-center gap-1">
+                    <button
+                      onClick={() => handleToggleEquip(weapon.id)}
+                      className={`p-1 rounded border transition-all shrink-0 ${
+                        isEquipped
+                          ? "bg-primary text-primary-foreground border-primary"
+                          : "bg-muted/50 text-muted-foreground border-border hover:bg-primary/20 hover:border-primary/30"
+                      }`}
+                      title={isEquipped ? "Ablegen" : "Ausrüsten"}
+                    >
+                      <Check size={12} />
+                    </button>
+                    <button
+                      onClick={() => handleRemoveWeapon(invItem.id)}
+                      className="p-1 rounded border border-border bg-muted/50 text-muted-foreground hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-500 transition-all shrink-0"
+                      title="Aus Inventar entfernen"
+                    >
+                      <Trash2 size={12} />
+                    </button>
                   </div>
                 </div>
               );

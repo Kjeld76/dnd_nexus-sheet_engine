@@ -215,9 +215,56 @@ def find_tool_id(conn: sqlite3.Connection, tool_name: str) -> Optional[Tuple[str
 
 
 def extract_facts_json(item: Dict[str, Any]) -> str:
-    """Extrahiert das facts-Objekt als JSON-String."""
-    facts = item.get('magic', {}).get('facts', {})
+    """Extrahiert das facts-Objekt als JSON-String, inklusive Beschreibung aus text_blocks."""
+    magic = item.get('magic', {})
+    facts = magic.get('facts', {})
+    
+    # Extrahiere Beschreibung aus text_blocks
+    text_blocks = magic.get('text_blocks', [])
+    description_parts = []
+    
+    for block in text_blocks:
+        if isinstance(block, dict):
+            block_type = block.get('type', '')
+            block_text = block.get('text', '')
+            
+            if block_type == 'paragraph' and block_text:
+                description_parts.append(block_text)
+            elif block_type == 'table' and 'rows' in block:
+                # Tabellen als Text formatieren
+                table_text = format_table_as_text(block)
+                if table_text:
+                    description_parts.append(table_text)
+    
+    # Füge Beschreibung zu facts hinzu, falls vorhanden
+    if description_parts:
+        facts['description'] = '\n\n'.join(description_parts)
+    
+    # Füge auch raw-Daten hinzu, falls vorhanden
+    raw = magic.get('raw', {})
+    if raw:
+        facts['raw'] = raw
+    
     return json.dumps(facts, ensure_ascii=False)
+
+
+def format_table_as_text(table_block: Dict[str, Any]) -> str:
+    """Formatiert eine Tabelle als Text."""
+    rows = table_block.get('rows', [])
+    if not rows:
+        return ''
+    
+    lines = []
+    for row in rows:
+        if isinstance(row, list):
+            # Spalten mit | trennen
+            line = ' | '.join(str(cell) if cell else '' for cell in row)
+            lines.append(line)
+        elif isinstance(row, dict) and 'columns' in row:
+            line = ' | '.join(str(col) if col else '' for col in row['columns'])
+            lines.append(line)
+    
+    return '\n'.join(lines)
 
 
 def extract_bonuses(facts: Dict[str, Any]) -> Dict[str, Optional[int]]:

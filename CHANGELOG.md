@@ -5,6 +5,27 @@ Alle relevanten Änderungen an D&D Nexus werden in dieser Datei dokumentiert.
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.11] - 2026-01-17
+### Changed
+- **Responsive Design - Charakterblatt:** Vollständige Überarbeitung des Layouts für verschiedene Bildschirmgrößen
+  - Grid-Layout: Mobile (1 Spalte) → Tablet (2 Spalten) → Desktop (3 Spalten)
+  - Linke Spalte (Attribute): Fest 280px auf Desktop, volle Breite auf Mobile
+  - Mittlere Spalte rutscht bei schmalen Fenstern unter die linke Spalte (verhindert Stauchungen)
+  - Responsive Breakpoints: `md:768px`, `xl:1280px`
+- **Waffen & Rüstungen - UI-Optimierungen:**
+  - "+ Hinzufügen" Button unter Überschrift verschoben (verhindert Abtrennung)
+  - Action-Buttons (Aktivieren/Löschen) nach unten rechts in Karten positioniert
+  - Buttons überlappen nicht mehr den Text (Grid-Layout statt Flex)
+  - Kompakteres Design mit kleineren Buttons (`p-1`, `size={12}`)
+- **HP-Management - Kompaktes Layout:**
+  - Trefferwürfel und Todesrettungen in optimiertem 2-Spalten-Grid
+  - Bessere Abstände und responsive Schriftgrößen
+  - Flex-wrap für Controls, um Überlauf zu vermeiden
+
+### Fixed
+- **Layout-Stauchungen:** Mittlere Spalte rutscht jetzt korrekt unter die linke Spalte bei schmalen Fenstern
+- **Button-Überlappung:** Action-Buttons in Waffen/Rüstungen überlappen keine Textinhalte mehr
+
 ## [1.7.10] - 2026-01-15
 ### Added
 - **Datenbank-Normalisierung:** Vollständige Analyse und Optimierung der Datenbankstruktur (1NF, 2NF, 3NF)

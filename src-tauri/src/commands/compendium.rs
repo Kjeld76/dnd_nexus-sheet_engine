@@ -2,7 +2,7 @@ use tauri::State;
 use crate::db::Database;
 use crate::error::{AppResult, map_lock_error};
 use crate::types::spell::Spell;
-use crate::types::compendium::{Species, Class, Gear, Tool, Feat, Armor, ArmorProperty, Skill, Background, Item, Equipment};
+use crate::types::compendium::{Species, Class, Gear, Tool, Feat, Armor, ArmorProperty, Skill, Background, Item, Equipment, MagicItem};
 use crate::types::weapons::{Weapon, WeaponProperty, WeaponMastery};
 use serde_json::{from_str, json, Value};
 use rusqlite::params;
@@ -202,7 +202,7 @@ pub async fn get_all_weapons(db: State<'_, Database>) -> Result<Vec<Weapon>, Str
         // Optimiert: Alle Daten in einem Query mit LEFT JOINs
         let mut stmt = conn.prepare(
             "SELECT 
-                w.id, w.name, w.category, w.mastery_id, w.damage_dice, w.damage_type, 
+                w.id, w.name, w.category, w.category_label, w.weapon_subtype, w.mastery_id, w.damage_dice, w.damage_type, 
                 w.weight_kg, w.cost_gp, w.data, w.source,
                 wp.id as prop_id, wp.name as prop_name, wp.description as prop_desc,
                 wp.has_parameter as prop_has_param, wp.parameter_type as prop_param_type,
@@ -220,22 +220,24 @@ pub async fn get_all_weapons(db: State<'_, Database>) -> Result<Vec<Weapon>, Str
                 row.get::<_, String>(0)?,         // weapon id
                 row.get::<_, String>(1)?,         // weapon name
                 row.get::<_, String>(2)?,         // category
-                row.get::<_, Option<String>>(3)?, // mastery_id
-                row.get::<_, String>(4)?,         // damage_dice
-                row.get::<_, String>(5)?,         // damage_type
-                row.get::<_, f64>(6)?,            // weight_kg
-                row.get::<_, f64>(7)?,            // cost_gp
-                row.get::<_, String>(8)?,         // data
-                row.get::<_, String>(9)?,         // source
-                row.get::<_, Option<String>>(10)?, // prop_id
-                row.get::<_, Option<String>>(11)?, // prop_name
-                row.get::<_, Option<String>>(12)?, // prop_desc
-                row.get::<_, Option<i32>>(13)?,    // prop_has_param
-                row.get::<_, Option<String>>(14)?, // prop_param_type
-                row.get::<_, Option<String>>(15)?, // prop_param_value
-                row.get::<_, Option<String>>(16)?, // mastery_id_full
-                row.get::<_, Option<String>>(17)?, // mastery_name
-                row.get::<_, Option<String>>(18)?, // mastery_desc
+                row.get::<_, Option<String>>(3)?, // category_label
+                row.get::<_, Option<String>>(4)?, // weapon_subtype
+                row.get::<_, Option<String>>(5)?, // mastery_id
+                row.get::<_, String>(6)?,         // damage_dice
+                row.get::<_, String>(7)?,         // damage_type
+                row.get::<_, f64>(8)?,            // weight_kg
+                row.get::<_, f64>(9)?,            // cost_gp
+                row.get::<_, String>(10)?,         // data
+                row.get::<_, String>(11)?,        // source
+                row.get::<_, Option<String>>(12)?, // prop_id
+                row.get::<_, Option<String>>(13)?, // prop_name
+                row.get::<_, Option<String>>(14)?, // prop_desc
+                row.get::<_, Option<i32>>(15)?,    // prop_has_param
+                row.get::<_, Option<String>>(16)?, // prop_param_type
+                row.get::<_, Option<String>>(17)?, // prop_param_value
+                row.get::<_, Option<String>>(18)?, // mastery_id_full
+                row.get::<_, Option<String>>(19)?, // mastery_name
+                row.get::<_, Option<String>>(20)?, // mastery_desc
             ))
         })?;
 
@@ -248,6 +250,8 @@ pub async fn get_all_weapons(db: State<'_, Database>) -> Result<Vec<Weapon>, Str
                 weapon_id,
                 weapon_name,
                 category,
+                category_label,
+                weapon_subtype,
                 mastery_id_opt,
                 damage_dice,
                 damage_type,
@@ -268,7 +272,17 @@ pub async fn get_all_weapons(db: State<'_, Database>) -> Result<Vec<Weapon>, Str
 
             let weapon = weapons_map.entry(weapon_id.clone()).or_insert_with(|| {
                 let mastery_id = mastery_id_opt.clone().unwrap_or_default();
-                let data = from_str(&data_str).unwrap_or_default();
+                // Debug: Log data_str für Kurzbogen
+                if weapon_name == "Kurzbogen" {
+                    eprintln!("DEBUG Kurzbogen data_str: {}", data_str);
+                }
+                let data = match from_str::<Value>(&data_str) {
+                    Ok(v) => v,
+                    Err(e) => {
+                        eprintln!("ERROR deserializing weapon data for {}: {} | data_str: {}", weapon_name, e, data_str);
+                        serde_json::json!({"source_page": 0})
+                    }
+                };
 
                 let mastery = if let (Some(id), Some(name), Some(desc)) =
                     (mastery_id_full.clone(), mastery_name.clone(), mastery_desc.clone())
@@ -286,6 +300,8 @@ pub async fn get_all_weapons(db: State<'_, Database>) -> Result<Vec<Weapon>, Str
                     id: weapon_id.clone(),
                     name: weapon_name.clone(),
                     category: category.clone(),
+                    category_label: category_label.clone(),
+                    weapon_subtype: weapon_subtype.clone(),
                     mastery_id,
                     damage_dice: damage_dice.clone(),
                     damage_type: damage_type.clone(),
@@ -305,7 +321,10 @@ pub async fn get_all_weapons(db: State<'_, Database>) -> Result<Vec<Weapon>, Str
                 let param_value = prop_param_value.and_then(|s| from_str(&s).ok());
 
                 // Prüfe ob Property bereits hinzugefügt wurde (verhindere Duplikate)
-                if !weapon.properties.iter().any(|p| p.id == prop_id) {
+                // WICHTIG: Prüfe sowohl auf ID als auch auf Name, um sicherzustellen
+                let is_duplicate = weapon.properties.iter().any(|p| p.id == prop_id);
+                
+                if !is_duplicate {
                     weapon.properties.push(WeaponProperty {
                         id: prop_id,
                         name: prop_name,
@@ -314,6 +333,9 @@ pub async fn get_all_weapons(db: State<'_, Database>) -> Result<Vec<Weapon>, Str
                         parameter_type: prop_param_type,
                         parameter_value: param_value,
                     });
+                } else {
+                    // Debug: Log Duplikat
+                    eprintln!("WARNING: Duplicate property '{}' detected for weapon '{}' - skipping", prop_id, weapon.name);
                 }
             }
 
@@ -344,28 +366,29 @@ pub async fn get_all_armor(db: State<'_, Database>) -> Result<Vec<Armor>, String
 
         // 1. Rüstungen aus all_armors View laden
         let mut stmt = conn.prepare(
-            "SELECT id, name, category, base_ac, ac_bonus, ac_formula, strength_requirement, stealth_disadvantage, don_time_minutes, doff_time_minutes, weight_kg, cost_gp, data, source 
+            "SELECT id, name, category, category_label, base_ac, ac_bonus, ac_formula, strength_requirement, stealth_disadvantage, don_time_minutes, doff_time_minutes, weight_kg, cost_gp, data, source 
              FROM all_armors 
              ORDER BY name",
         )?;
 
         let armors_iter = stmt.query_map([], |row: &rusqlite::Row| {
-            let data_str: String = row.get(12)?;
+            let data_str: String = row.get(13)?;
             Ok((
                 row.get::<_, String>(0)?,         // id
                 row.get::<_, String>(1)?,         // name
                 row.get::<_, String>(2)?,         // category
-                row.get::<_, Option<i32>>(3)?,    // base_ac
-                row.get::<_, i32>(4)?,            // ac_bonus
-                row.get::<_, Option<String>>(5)?, // ac_formula
-                row.get::<_, Option<i32>>(6)?,    // strength_requirement
-                row.get::<_, i32>(7)? != 0,       // stealth_disadvantage
-                row.get::<_, Option<i32>>(8)?,    // don_time_minutes
-                row.get::<_, Option<i32>>(9)?,    // doff_time_minutes
-                row.get::<_, f64>(10)?,           // weight_kg
-                row.get::<_, f64>(11)?,           // cost_gp
+                row.get::<_, Option<String>>(3)?,  // category_label
+                row.get::<_, Option<i32>>(4)?,    // base_ac
+                row.get::<_, i32>(5)?,            // ac_bonus
+                row.get::<_, Option<String>>(6)?, // ac_formula
+                row.get::<_, Option<i32>>(7)?,    // strength_requirement
+                row.get::<_, i32>(8)? != 0,       // stealth_disadvantage
+                row.get::<_, Option<i32>>(9)?,    // don_time_minutes
+                row.get::<_, Option<i32>>(10)?,   // doff_time_minutes
+                row.get::<_, f64>(11)?,           // weight_kg
+                row.get::<_, f64>(12)?,           // cost_gp
                 from_str(&data_str).unwrap_or_default(), // data
-                row.get::<_, String>(13)?,        // source
+                row.get::<_, String>(14)?,        // source
             ))
         })?;
 
@@ -375,6 +398,7 @@ pub async fn get_all_armor(db: State<'_, Database>) -> Result<Vec<Armor>, String
                 id,
                 name,
                 category,
+                category_label_opt,
                 base_ac,
                 ac_bonus,
                 ac_formula,
@@ -413,10 +437,12 @@ pub async fn get_all_armor(db: State<'_, Database>) -> Result<Vec<Armor>, String
                 properties.push(prop?);
             }
 
+            let category_label = category_label_opt.unwrap_or_else(|| category.clone());
             armors.push(Armor {
                 id,
                 name,
                 category,
+                category_label,
                 base_ac,
                 ac_bonus,
                 ac_formula,
@@ -668,6 +694,53 @@ pub async fn get_all_equipment(db: State<'_, Database>) -> Result<Vec<Equipment>
         }
         Err(e) => {
             println!("[get_all_equipment] Error: {}", e);
+            Err(e.to_string())
+        }
+    }
+}
+
+#[tauri::command]
+pub async fn get_all_magic_items(db: State<'_, Database>) -> Result<Vec<MagicItem>, String> {
+    println!("[get_all_magic_items] Starting fetch");
+    let result: AppResult<Vec<MagicItem>> = (|| {
+        let conn = map_lock_error(db.0.lock())?;
+        let mut stmt = conn.prepare(
+            "SELECT id, name, rarity, category, source_book, source_page, requires_attunement, facts_json, source 
+             FROM all_mag_items_base 
+             ORDER BY rarity, name",
+        )?;
+
+        let iter = stmt.query_map([], |row: &rusqlite::Row| {
+            let facts_json: String = row.get(7)?;
+            let facts_data: Value = from_str(&facts_json).unwrap_or_default();
+            Ok(MagicItem {
+                id: row.get(0)?,
+                name: row.get(1)?,
+                rarity: row.get(2)?,
+                category: row.get(3)?,
+                source_book: row.get(4)?,
+                source_page: row.get(5)?,
+                requires_attunement: row.get::<_, i32>(6)? != 0,
+                facts_json,
+                data: facts_data,
+                source: row.get(8)?,
+            })
+        })?;
+
+        let mut results = Vec::new();
+        for item in iter {
+            results.push(item?);
+        }
+        Ok(results)
+    })();
+
+    match result {
+        Ok(items) => {
+            println!("[get_all_magic_items] Fetched {} items", items.len());
+            Ok(items)
+        }
+        Err(e) => {
+            println!("[get_all_magic_items] Error: {}", e);
             Err(e.to_string())
         }
     }

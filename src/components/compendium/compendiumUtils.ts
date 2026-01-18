@@ -6,6 +6,7 @@ import type {
   Equipment,
   Feat,
   Item,
+  MagicItem,
   Skill,
   Species,
   Spell,
@@ -14,6 +15,8 @@ import type {
 } from "../../lib/types";
 
 /** Shared helpers/types for `Compendium.tsx` to keep the component file readable. */
+
+export type MainCategory = "magic" | "characters" | "arsenal";
 
 export type Tab =
   | "spells"
@@ -27,7 +30,25 @@ export type Tab =
   | "skills"
   | "backgrounds"
   | "items"
-  | "equipment";
+  | "equipment"
+  | "magic-items";
+
+export type FilterChip = {
+  id: string;
+  label: string;
+  type:
+    | "level"
+    | "school"
+    | "class"
+    | "category"
+    | "rarity"
+    | "source"
+    | "price"
+    | "weight"
+    | "itemType";
+  value: string | number;
+  onRemove: () => void;
+};
 
 export type CompendiumEntry =
   | Spell
@@ -40,7 +61,8 @@ export type CompendiumEntry =
   | Equipment
   | Feat
   | Skill
-  | Background;
+  | Background
+  | MagicItem;
 
 export type Feature = { name: string; description: string };
 export type FeaturesByLevel = Record<string, Feature[]>;

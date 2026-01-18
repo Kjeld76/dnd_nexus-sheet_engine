@@ -21,6 +21,8 @@
   - Import/Mapping (Kategorien, Seltenheit, Attunement, Effekte)
   - Anzeige im Kompendium + Verknüpfung im Inventar (wie Items/Equipment)
   - ✅ 240 magische Gegenstände importiert, normalisierte Tabellenstruktur, Custom-Varianten erstellt
+  - ✅ Kompendium-Integration: Tab "Magische Gegenstände" mit Anzeige von Seltenheit, Kategorie, Einstimmung, Quelle und Beschreibung
+  - ✅ Inventar-Integration: Magische Gegenstände können jetzt zum Inventar hinzugefügt werden (analog zu normalen Items/Waffen)
 
 ### **P2 — Refactor & Wartbarkeit (Frontend)**
 - [ ] **CharacterSheet weiter entschlacken:** Helper aus `src/screens/CharacterSheet.tsx` nach `src/lib/character/*` auslagern

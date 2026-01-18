@@ -224,468 +224,398 @@ export const HPManagement: React.FC<Props> = ({
   const isCriticalHP = hpPercentage < 10;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-3">
-        <Heart size={20} className="text-red-500" />
-        <h3 className="text-base font-black italic font-serif">
+    <div className="bg-card p-4 md:p-5 rounded-lg border-2 border-border shadow-lg h-fit">
+      {/* Titel */}
+      <div className="flex items-center gap-2 mb-4 pb-2 border-b border-border">
+        <Heart size={18} className="text-red-500" />
+        <h3 className="text-sm md:text-base font-black uppercase tracking-wider text-muted-foreground">
           Trefferpunkte
         </h3>
-        <div className="flex-1 h-px bg-border" />
       </div>
 
-      <div
-        className="grid gap-4"
-        style={{ gridTemplateColumns: "2fr 1fr 1.2fr" }}
-      >
-        {/* HP Display */}
-        <div className="bg-card p-6 rounded-2xl border border-border shadow-xl shadow-foreground/[0.02]">
-          <div className="space-y-3">
-            {/* Current HP, Max HP and HP Calculation side by side */}
-            <div className="grid grid-cols-3 gap-4">
-              {/* Current HP */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-sm font-black text-muted-foreground/70 uppercase tracking-wider">
-                    Aktuelle TP
-                  </label>
-                  <div className="flex items-center gap-2">
-                    {editingField === "hp_current" ? (
-                      <>
-                        <input
-                          type="number"
-                          value={editValue}
-                          onChange={(e) => setEditValue(e.target.value)}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") confirmEdit("hp_current");
-                            if (e.key === "Escape") cancelEdit();
-                          }}
-                          className="w-20 px-2 py-1 text-sm font-bold border border-border rounded bg-muted/50 text-foreground"
-                          autoFocus
-                        />
-                        <button
-                          onClick={() => confirmEdit("hp_current")}
-                          className="p-1 rounded hover:bg-primary/20 text-primary"
-                        >
-                          <Check size={14} />
-                        </button>
-                        <button
-                          onClick={cancelEdit}
-                          className="p-1 rounded hover:bg-red-500/20 text-red-500"
-                        >
-                          <X size={14} />
-                        </button>
-                      </>
-                    ) : (
-                      <>
-                        <span
-                          className={`text-3xl font-black ${
-                            isCriticalHP
-                              ? "text-red-500"
-                              : isLowHP
-                                ? "text-amber-500"
-                                : "text-foreground"
-                          }`}
-                        >
-                          {health.current}
-                        </span>
-                        <button
-                          onClick={() =>
-                            startEdit("hp_current", health.current)
-                          }
-                          className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
-                          title="Bearbeiten"
-                        >
-                          <RotateCcw size={14} />
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Max HP */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-sm font-black text-muted-foreground/70 uppercase tracking-wider">
-                    Maximale TP
-                  </label>
-                  {editingField === "hp_max" ? (
-                    <div className="flex items-center gap-2">
-                      <input
-                        type="number"
-                        value={editValue}
-                        onChange={(e) => setEditValue(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") confirmEdit("hp_max");
-                          if (e.key === "Escape") cancelEdit();
-                        }}
-                        className="w-20 px-2 py-1 text-sm font-bold border border-border rounded bg-muted/50 text-foreground"
-                        autoFocus
-                      />
-                      <button
-                        onClick={() => confirmEdit("hp_max")}
-                        className="p-1 rounded hover:bg-primary/20 text-primary"
-                      >
-                        <Check size={14} />
-                      </button>
-                      <button
-                        onClick={cancelEdit}
-                        className="p-1 rounded hover:bg-red-500/20 text-red-500"
-                      >
-                        <X size={14} />
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl font-black text-foreground">
-                        {health.max}
-                      </span>
-                      <button
-                        onClick={() => startEdit("hp_max", health.max)}
-                        className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
-                        title="Bearbeiten"
-                      >
-                        <RotateCcw size={14} />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* HP Calculation Method Toggle */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <label className="text-xs font-black text-muted-foreground/70 uppercase tracking-wider">
-                    TP-Berechnung
-                  </label>
-                  <button
-                    onClick={toggleHPCalculationMethod}
-                    className={`px-3 py-1.5 rounded-lg border text-sm font-bold transition-all ${
-                      useRolledHP
-                        ? "bg-primary/20 border-primary text-primary"
-                        : "bg-muted/50 border-border text-muted-foreground hover:bg-muted"
-                    }`}
-                  >
-                    {useRolledHP ? "Gewürfelt" : "Durchschnitt"}
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* HP Slider */}
+      {/* Hauptbereich: HP Anzeige */}
+      <div className="mb-4 space-y-3">
+        {/* Große HP-Zahlen: 147 / 183 */}
+        <div className="flex items-center justify-center gap-3 flex-wrap">
+          {editingField === "hp_current" ? (
             <div className="flex items-center gap-2">
+              <input
+                type="number"
+                value={editValue}
+                onChange={(e) => setEditValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") confirmEdit("hp_current");
+                  if (e.key === "Escape") cancelEdit();
+                }}
+                className="w-24 px-2 py-1 text-xl font-bold border border-border rounded bg-muted/50 text-foreground text-center"
+                autoFocus
+              />
               <button
-                onClick={() => quickAdjustHP("current", -1)}
-                className="p-2 rounded-lg border border-border bg-muted/50 hover:bg-red-500/10 hover:border-red-500/30 transition-all"
-                title="TP -1"
+                onClick={() => confirmEdit("hp_current")}
+                className="p-1 rounded hover:bg-primary/20 text-primary"
               >
-                <Minus size={14} />
+                <Check size={14} />
               </button>
-              <div className="flex-1 h-3 bg-muted rounded-full overflow-hidden relative">
-                <div
-                  className={`h-full transition-all ${
-                    isCriticalHP
-                      ? "bg-red-500"
-                      : isLowHP
-                        ? "bg-amber-500"
-                        : "bg-primary"
-                  }`}
-                  style={{ width: `${hpPercentage}%` }}
-                />
-              </div>
               <button
-                onClick={() => quickAdjustHP("current", +1)}
-                className="p-2 rounded-lg border border-border bg-muted/50 hover:bg-primary/20 hover:border-primary/30 transition-all"
-                title="TP +1"
+                onClick={cancelEdit}
+                className="p-1 rounded hover:bg-red-500/20 text-red-500"
               >
-                <Plus size={14} />
+                <X size={14} />
               </button>
             </div>
+          ) : (
+            <span
+              className={`text-3xl sm:text-4xl md:text-5xl font-black whitespace-nowrap ${
+                isCriticalHP
+                  ? "text-red-500"
+                  : isLowHP
+                    ? "text-amber-500"
+                    : "text-foreground"
+              }`}
+            >
+              {health.current}
+            </span>
+          )}
 
-            {/* Temp HP */}
-            {health.temp > 0 && (
-              <div className="flex items-center justify-between pt-2 border-t border-border gap-4">
-                <label className="text-xs font-black text-muted-foreground/70 uppercase tracking-wider whitespace-nowrap">
-                  Temporäre TP
-                </label>
-                {editingField === "hp_temp" ? (
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="number"
-                      value={editValue}
-                      onChange={(e) => setEditValue(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") confirmEdit("hp_temp");
-                        if (e.key === "Escape") cancelEdit();
-                      }}
-                      className="w-16 px-2 py-1 text-sm font-bold border border-border rounded bg-muted/50 text-foreground"
-                      autoFocus
-                    />
-                    <button
-                      onClick={() => confirmEdit("hp_temp")}
-                      className="p-1 rounded hover:bg-primary/20 text-primary"
-                    >
-                      <Check size={14} />
-                    </button>
-                    <button
-                      onClick={cancelEdit}
-                      className="p-1 rounded hover:bg-red-500/20 text-red-500"
-                    >
-                      <X size={14} />
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg font-bold text-blue-500">
-                      {health.temp}
-                    </span>
-                    <button
-                      onClick={() => startEdit("hp_temp", health.temp)}
-                      className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
-                      title="Bearbeiten"
-                    >
-                      <RotateCcw size={14} />
-                    </button>
-                    <button
-                      onClick={() => quickAdjustHP("temp", -1)}
-                      className="p-1 rounded hover:bg-red-500/20 text-red-500"
-                      title="Temp TP -1"
-                    >
-                      <Minus size={14} />
-                    </button>
-                    <button
-                      onClick={() => quickAdjustHP("temp", +1)}
-                      className="p-1 rounded hover:bg-blue-500/20 text-blue-500"
-                      title="Temp TP +1"
-                    >
-                      <Plus size={14} />
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
+          <span className="text-2xl sm:text-3xl text-muted-foreground/50 font-bold">
+            /
+          </span>
 
-            {/* HP Breakdown (Transparency) */}
-            {!useRolledHP && (
-              <div className="pt-4 border-t border-border">
-                <details className="group">
-                  <summary className="text-sm font-black text-muted-foreground/70 uppercase tracking-wider cursor-pointer hover:text-foreground transition-colors">
-                    TP-Berechnung anzeigen
-                  </summary>
-                  <div className="mt-3 space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">
-                        Basis (Würfel):
-                      </span>
-                      <span className="font-semibold">{hpBreakdown.base}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">
-                        Konstitutionsmodifikator:
-                      </span>
-                      <span className="font-semibold">
-                        {hpBreakdown.conBonus >= 0 ? "+" : ""}
-                        {hpBreakdown.conBonus}
-                      </span>
-                    </div>
-                    {hpBreakdown.levelBonus > 0 && (
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">
-                          Stufen-Bonus ({character.meta.level - 1} Stufen):
-                        </span>
-                        <span className="font-semibold">
-                          +{hpBreakdown.levelBonus}
-                        </span>
-                      </div>
-                    )}
-                    <div className="flex justify-between pt-2 border-t border-border/50 font-bold">
-                      <span>Berechnete Max TP:</span>
-                      <span className="text-primary">
-                        {hpBreakdown.calculated}
-                      </span>
-                    </div>
-                  </div>
-                </details>
-              </div>
-            )}
-            {useRolledHP && (
-              <div className="pt-4 border-t border-border">
-                <p className="text-sm text-muted-foreground italic">
-                  Du verwendest gewürfelte TP. Die Max TP werden nicht
-                  automatisch berechnet.
-                </p>
-              </div>
-            )}
-          </div>
+          {editingField === "hp_max" ? (
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                value={editValue}
+                onChange={(e) => setEditValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") confirmEdit("hp_max");
+                  if (e.key === "Escape") cancelEdit();
+                }}
+                className="w-24 px-2 py-1 text-xl font-bold border border-border rounded bg-muted/50 text-foreground text-center"
+                autoFocus
+              />
+              <button
+                onClick={() => confirmEdit("hp_max")}
+                className="p-1 rounded hover:bg-primary/20 text-primary"
+              >
+                <Check size={14} />
+              </button>
+              <button
+                onClick={cancelEdit}
+                className="p-1 rounded hover:bg-red-500/20 text-red-500"
+              >
+                <X size={14} />
+              </button>
+            </div>
+          ) : (
+            <span className="text-3xl sm:text-4xl md:text-5xl font-black text-foreground whitespace-nowrap">
+              {health.max}
+            </span>
+          )}
+
+          <span className="text-xs sm:text-sm text-muted-foreground">TP</span>
+
+          {editingField !== "hp_current" && editingField !== "hp_max" && (
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => startEdit("hp_current", health.current)}
+                className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                title="Aktuell bearbeiten"
+              >
+                <RotateCcw size={12} />
+              </button>
+              <button
+                onClick={() => startEdit("hp_max", health.max)}
+                className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                title="Maximum bearbeiten"
+              >
+                <RotateCcw size={12} />
+              </button>
+            </div>
+          )}
         </div>
 
-        {/* Hit Dice */}
-        <div className="bg-card p-6 rounded-2xl border border-border shadow-xl shadow-foreground/[0.02]">
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <span className="text-sm font-black text-muted-foreground/70 uppercase tracking-wider">
-                Trefferwürfel
-              </span>
-              <div className="flex-1 h-px bg-border" />
+        {/* HP Slider */}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => quickAdjustHP("current", -1)}
+            className="p-2 rounded-lg border border-border bg-muted/50 hover:bg-red-500/10 hover:border-red-500/30 transition-all"
+            title="TP -1"
+          >
+            <Minus size={14} />
+          </button>
+          <div className="flex-1 h-3 bg-muted rounded-full overflow-hidden relative">
+            <div
+              className={`h-full transition-all ${
+                isCriticalHP
+                  ? "bg-red-500"
+                  : isLowHP
+                    ? "bg-amber-500"
+                    : "bg-primary"
+              }`}
+              style={{ width: `${hpPercentage}%` }}
+            />
+          </div>
+          <button
+            onClick={() => quickAdjustHP("current", +1)}
+            className="p-2 rounded-lg border border-border bg-muted/50 hover:bg-primary/20 hover:border-primary/30 transition-all"
+            title="TP +1"
+          >
+            <Plus size={14} />
+          </button>
+        </div>
+
+        {/* Temp HP & Berechnung kompakt */}
+        <div className="flex items-center justify-between gap-2 text-xs sm:text-sm">
+          {health.temp > 0 && (
+            <div className="flex items-center gap-1 text-blue-500">
+              <span className="font-bold">Temp:</span>
+              {editingField === "hp_temp" ? (
+                <div className="flex items-center gap-1">
+                  <input
+                    type="number"
+                    value={editValue}
+                    onChange={(e) => setEditValue(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") confirmEdit("hp_temp");
+                      if (e.key === "Escape") cancelEdit();
+                    }}
+                    className="w-12 px-1 py-0.5 text-xs font-bold border border-border rounded bg-muted/50 text-foreground text-center"
+                    autoFocus
+                  />
+                  <button
+                    onClick={() => confirmEdit("hp_temp")}
+                    className="p-0.5 rounded hover:bg-primary/20 text-primary"
+                  >
+                    <Check size={12} />
+                  </button>
+                  <button
+                    onClick={cancelEdit}
+                    className="p-0.5 rounded hover:bg-red-500/20 text-red-500"
+                  >
+                    <X size={12} />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1">
+                  <span className="font-bold">{health.temp}</span>
+                  <button
+                    onClick={() => startEdit("hp_temp", health.temp)}
+                    className="p-0.5 rounded hover:bg-muted"
+                    title="Bearbeiten"
+                  >
+                    <RotateCcw size={10} />
+                  </button>
+                </div>
+              )}
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl font-black text-foreground">
-                  W{hitDie}
-                </span>
-                <span className="text-muted-foreground">×</span>
-                {editingField === "hit_dice_used" ? (
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="number"
-                      value={editValue}
-                      onChange={(e) => setEditValue(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") confirmEdit("hit_dice_used");
-                        if (e.key === "Escape") cancelEdit();
-                      }}
-                      className="w-16 px-2 py-1 text-sm font-bold border border-border rounded bg-muted/50 text-foreground"
-                      autoFocus
-                    />
-                    <span className="text-sm text-muted-foreground">
-                      / {health.hit_dice_max}
-                    </span>
-                    <button
-                      onClick={() => confirmEdit("hit_dice_used")}
-                      className="p-1 rounded hover:bg-primary/20 text-primary"
-                    >
-                      <Check size={14} />
-                    </button>
-                    <button
-                      onClick={cancelEdit}
-                      className="p-1 rounded hover:bg-red-500/20 text-red-500"
-                    >
-                      <X size={14} />
-                    </button>
-                  </div>
-                ) : (
-                  <>
-                    <span
-                      className="text-2xl font-black text-foreground"
-                      onClick={() =>
-                        startEdit("hit_dice_used", health.hit_dice_used)
-                      }
-                    >
-                      {health.hit_dice_used}
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      / {health.hit_dice_max}
-                    </span>
-                    <button
-                      onClick={() =>
-                        startEdit("hit_dice_used", health.hit_dice_used)
-                      }
-                      className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors ml-2"
-                      title="Bearbeiten"
-                    >
-                      <RotateCcw size={14} />
-                    </button>
-                  </>
-                )}
-              </div>
-              <div className="flex items-center gap-2">
+          )}
+          <button
+            onClick={toggleHPCalculationMethod}
+            className={`px-2 py-1 rounded border text-xs font-bold transition-all ${
+              useRolledHP
+                ? "bg-primary/20 border-primary text-primary"
+                : "bg-muted/50 border-border text-muted-foreground hover:bg-muted"
+            }`}
+          >
+            {useRolledHP ? "Gewürfelt" : "Durchschnitt"}
+          </button>
+        </div>
+      </div>
+
+      {/* Sekundärbereich: Hit Dice & Death Saves */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-border">
+        {/* Hit Dice */}
+        <div className="space-y-2">
+          <label className="text-xs sm:text-sm font-black text-muted-foreground/70 uppercase tracking-wider block">
+            Trefferwürfel
+          </label>
+          {editingField === "hit_dice_used" ? (
+            <div className="flex items-center gap-2 flex-wrap">
+              <input
+                type="number"
+                value={editValue}
+                onChange={(e) => setEditValue(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") confirmEdit("hit_dice_used");
+                  if (e.key === "Escape") cancelEdit();
+                }}
+                className="w-14 px-2 py-1 text-sm font-bold border border-border rounded bg-muted/50 text-foreground text-center"
+                autoFocus
+              />
+              <span className="text-xs text-muted-foreground whitespace-nowrap">
+                / {health.hit_dice_max}
+              </span>
+              <button
+                onClick={() => confirmEdit("hit_dice_used")}
+                className="p-1 rounded hover:bg-primary/20 text-primary"
+              >
+                <Check size={14} />
+              </button>
+              <button
+                onClick={cancelEdit}
+                className="p-1 rounded hover:bg-red-500/20 text-red-500"
+              >
+                <X size={14} />
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-base sm:text-lg font-black text-foreground whitespace-nowrap">
+                W{hitDie} × {health.hit_dice_used}
+              </span>
+              <span className="text-xs text-muted-foreground whitespace-nowrap">
+                / {health.hit_dice_max}
+              </span>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() =>
+                    startEdit("hit_dice_used", health.hit_dice_used)
+                  }
+                  className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                  title="Bearbeiten"
+                >
+                  <RotateCcw size={12} />
+                </button>
                 <button
                   onClick={() => handleUpdateHitDice(health.hit_dice_used - 1)}
                   disabled={health.hit_dice_used <= 0}
-                  className="p-2 rounded-lg border border-border bg-muted/50 hover:bg-primary/20 hover:border-primary/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                  title="Verwendet -1"
+                  className="p-1.5 rounded border border-border bg-muted/50 hover:bg-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  title="-1"
                 >
-                  <Minus size={14} />
+                  <Minus size={12} />
                 </button>
                 <button
                   onClick={() => handleUpdateHitDice(health.hit_dice_used + 1)}
                   disabled={health.hit_dice_used >= health.hit_dice_max}
-                  className="p-2 rounded-lg border border-border bg-muted/50 hover:bg-primary/20 hover:border-primary/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                  title="Verwendet +1"
+                  className="p-1.5 rounded border border-border bg-muted/50 hover:bg-primary/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  title="+1"
                 >
-                  <Plus size={14} />
+                  <Plus size={12} />
                 </button>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Death Saves */}
-        <div className="bg-card p-6 rounded-2xl border border-border shadow-xl shadow-foreground/[0.02]">
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <span className="text-sm font-black text-muted-foreground/70 uppercase tracking-wider">
-                Todesrettungen
-              </span>
-              <div className="flex-1 h-px bg-border" />
-              {(health.death_saves.successes > 0 ||
-                health.death_saves.failures > 0) && (
-                <button
-                  onClick={resetDeathSaves}
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  title="Zurücksetzen"
-                >
-                  <RotateCcw size={14} />
-                </button>
-              )}
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              {/* Successes */}
-              <div className="space-y-2">
-                <label className="text-sm font-black text-green-500/70 uppercase tracking-wider">
-                  Erfolge
-                </label>
-                <div className="flex items-center gap-2">
-                  {[1, 2, 3].map((num) => (
-                    <button
-                      key={num}
-                      onClick={() =>
-                        handleUpdateDeathSave(
-                          "successes",
-                          health.death_saves.successes === num ? num - 1 : num,
-                        )
-                      }
-                      className={`flex-1 h-12 rounded-lg border-2 transition-all ${
-                        health.death_saves.successes >= num
-                          ? "bg-green-500/20 border-green-500 text-green-500"
-                          : "bg-muted/50 border-border text-muted-foreground hover:border-green-500/30"
-                      }`}
-                    >
-                      <Check size={20} className="mx-auto" />
-                    </button>
-                  ))}
-                </div>
+        <div className="space-y-2">
+          <div className="flex items-center justify-between gap-2">
+            <label className="text-xs sm:text-sm font-black text-muted-foreground/70 uppercase tracking-wider">
+              Todesrettungen
+            </label>
+            {(health.death_saves.successes > 0 ||
+              health.death_saves.failures > 0) && (
+              <button
+                onClick={resetDeathSaves}
+                className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
+                title="Zurücksetzen"
+              >
+                <RotateCcw size={12} />
+              </button>
+            )}
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <div className="text-xs font-black text-green-500/80">
+                Erfolge
               </div>
-              {/* Failures */}
-              <div className="space-y-2">
-                <label className="text-sm font-black text-red-500/70 uppercase tracking-wider">
-                  Fehlschläge
-                </label>
-                <div className="flex items-center gap-2">
-                  {[1, 2, 3].map((num) => (
-                    <button
-                      key={num}
-                      onClick={() =>
-                        handleUpdateDeathSave(
-                          "failures",
-                          health.death_saves.failures === num ? num - 1 : num,
-                        )
-                      }
-                      className={`flex-1 h-12 rounded-lg border-2 transition-all ${
-                        health.death_saves.failures >= num
-                          ? "bg-red-500/20 border-red-500 text-red-500"
-                          : "bg-muted/50 border-border text-muted-foreground hover:border-red-500/30"
-                      }`}
-                    >
-                      <X size={20} className="mx-auto" />
-                    </button>
-                  ))}
-                </div>
+              <div className="flex gap-1.5">
+                {[1, 2, 3].map((num) => (
+                  <button
+                    key={num}
+                    onClick={() =>
+                      handleUpdateDeathSave(
+                        "successes",
+                        health.death_saves.successes === num ? num - 1 : num,
+                      )
+                    }
+                    className={`flex-1 h-9 rounded border-2 transition-all ${
+                      health.death_saves.successes >= num
+                        ? "bg-green-500/20 border-green-500 text-green-500"
+                        : "bg-muted/50 border-border text-muted-foreground hover:border-green-500/30"
+                    }`}
+                  >
+                    <Check size={16} className="mx-auto" />
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="space-y-1.5">
+              <div className="text-xs font-black text-red-500/80">
+                Fehlschläge
+              </div>
+              <div className="flex gap-1.5">
+                {[1, 2, 3].map((num) => (
+                  <button
+                    key={num}
+                    onClick={() =>
+                      handleUpdateDeathSave(
+                        "failures",
+                        health.death_saves.failures === num ? num - 1 : num,
+                      )
+                    }
+                    className={`flex-1 h-9 rounded border-2 transition-all ${
+                      health.death_saves.failures >= num
+                        ? "bg-red-500/20 border-red-500 text-red-500"
+                        : "bg-muted/50 border-border text-muted-foreground hover:border-red-500/30"
+                    }`}
+                  >
+                    <X size={16} className="mx-auto" />
+                  </button>
+                ))}
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* HP Breakdown (optional, in Details) */}
+      {!useRolledHP && (
+        <div className="mt-3 pt-3 border-t border-border">
+          <details className="group">
+            <summary className="text-xs font-black text-muted-foreground/70 uppercase tracking-wider cursor-pointer hover:text-foreground transition-colors">
+              TP-Berechnung anzeigen
+            </summary>
+            <div className="mt-2 space-y-1 text-xs">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Basis (Würfel):</span>
+                <span className="font-semibold">{hpBreakdown.base}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">
+                  Konstitutionsmodifikator:
+                </span>
+                <span className="font-semibold">
+                  {hpBreakdown.conBonus >= 0 ? "+" : ""}
+                  {hpBreakdown.conBonus}
+                </span>
+              </div>
+              {hpBreakdown.levelBonus > 0 && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">
+                    Stufen-Bonus ({character.meta.level - 1} Stufen):
+                  </span>
+                  <span className="font-semibold">
+                    +{hpBreakdown.levelBonus}
+                  </span>
+                </div>
+              )}
+              <div className="flex justify-between pt-1 border-t border-border/50 font-bold">
+                <span>Berechnete Max TP:</span>
+                <span className="text-primary">{hpBreakdown.calculated}</span>
+              </div>
+            </div>
+          </details>
+        </div>
+      )}
+      {useRolledHP && (
+        <div className="mt-3 pt-3 border-t border-border">
+          <p className="text-xs text-muted-foreground italic">
+            Gewürfelte TP - Max TP werden nicht automatisch berechnet.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

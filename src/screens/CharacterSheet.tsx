@@ -120,6 +120,7 @@ const addItemToInventoryWithQuantity = (
   equipment: Equipment[],
   tools: Tool[],
   weapons: Weapon[],
+  magicItems: import("../lib/types").MagicItem[],
   currentCharacter: Character,
   updateInventory: (
     itemId: string,
@@ -139,6 +140,7 @@ const addItemToInventoryWithQuantity = (
     equipment,
     tools,
     weapons,
+    magicItems,
     currentCharacter,
     updateInventory,
     updateMeta,
@@ -156,6 +158,7 @@ const addItemToInventory = (
   equipment: Equipment[],
   tools: Tool[],
   weapons: Weapon[],
+  magicItems: import("../lib/types").MagicItem[],
   currentCharacter: Character,
   updateInventory: (
     itemId: string,
@@ -276,6 +279,29 @@ const addItemToInventory = (
       const bodyItemName = variant
         ? `${weapon.name} (${variant})`
         : weapon.name;
+      addToBodyItems(bodyItemName, quantity);
+      return;
+    }
+  }
+
+  // Try to find in magic items
+  const magicItem = findItemByName(baseNameForSearch, magicItems);
+  if (magicItem) {
+    const existingMagicItem = freshCharacter.inventory.find(
+      (inv) => inv.item_id === magicItem.id,
+    );
+    if (!existingMagicItem) {
+      updateInventory(magicItem.id, quantity, false);
+      const bodyItemName = variant
+        ? `${magicItem.name} (${variant})`
+        : magicItem.name;
+      addToBodyItems(bodyItemName, quantity);
+      saveCharacter();
+      return;
+    } else {
+      const bodyItemName = variant
+        ? `${magicItem.name} (${variant})`
+        : magicItem.name;
       addToBodyItems(bodyItemName, quantity);
       return;
     }
@@ -440,6 +466,7 @@ export function CharacterSheet() {
   const items = useCompendiumStore((state) => state.items);
   const equipment = useCompendiumStore((state) => state.equipment);
   const tools = useCompendiumStore((state) => state.tools);
+  const magicItems = useCompendiumStore((state) => state.magicItems);
   const species = useCompendiumStore((state) => state.species);
   const classes = useCompendiumStore((state) => state.classes);
   const backgrounds = useCompendiumStore((state) => state.backgrounds);
@@ -451,6 +478,7 @@ export function CharacterSheet() {
   const fetchItems = useCompendiumStore((state) => state.fetchItems);
   const fetchEquipment = useCompendiumStore((state) => state.fetchEquipment);
   const fetchTools = useCompendiumStore((state) => state.fetchTools);
+  const fetchMagicItems = useCompendiumStore((state) => state.fetchMagicItems);
   const fetchBackgrounds = useCompendiumStore(
     (state) => state.fetchBackgrounds,
   );
@@ -536,6 +564,7 @@ export function CharacterSheet() {
     fetchItems();
     fetchEquipment();
     fetchTools();
+    fetchMagicItems();
     fetchBackgrounds();
     fetchFeats();
   }, [
@@ -546,6 +575,7 @@ export function CharacterSheet() {
     fetchItems,
     fetchEquipment,
     fetchTools,
+    fetchMagicItems,
     fetchBackgrounds,
     fetchFeats,
   ]);
@@ -834,6 +864,7 @@ export function CharacterSheet() {
             equipment,
             tools,
             weapons,
+            magicItems,
             freshCharacter,
             updateInventory,
             updateMeta,
@@ -1161,7 +1192,7 @@ export function CharacterSheet() {
                   value={currentCharacter.meta.name}
                   onChange={(e) => updateMeta({ name: e.target.value })}
                   onBlur={() => saveCharacter()}
-                  className="w-full text-5xl font-black tracking-tighter truncate font-serif italic text-foreground leading-none mb-2 bg-transparent border-none outline-none focus:ring-2 focus:ring-primary/20 rounded-lg px-2 -ml-2 transition-all"
+                  className="w-full text-3xl md:text-4xl lg:text-5xl font-black tracking-tighter truncate font-serif italic text-foreground leading-none mb-2 bg-transparent border-none outline-none focus:ring-2 focus:ring-primary/20 rounded-lg px-2 -ml-2 transition-all"
                 />
                 <div className="flex flex-wrap items-center gap-3">
                   <div className="flex items-center gap-2 bg-primary/10 px-4 py-1 rounded-lg">
@@ -1288,244 +1319,236 @@ export function CharacterSheet() {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-3 px-4 pb-4 border-t border-border/30 pt-4">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70 w-32 shrink-0">
-                Spieler:
-              </label>
-              <input
-                type="text"
-                value={currentCharacter.meta.player_name || ""}
-                onChange={(e) => updateMeta({ player_name: e.target.value })}
-                onBlur={() => saveCharacter()}
-                placeholder="Spielername"
-                className="w-55 bg-transparent border-none outline-none text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70 w-32 shrink-0">
-                Alter:
-              </label>
-              <input
-                type="text"
-                value={currentCharacter.appearance?.age || ""}
-                onChange={(e) => updateAppearance({ age: e.target.value })}
-                onBlur={() => saveCharacter()}
-                placeholder="Alter"
-                className="w-55 bg-transparent border-none outline-none text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70 w-32 shrink-0">
-                Geschlecht:
-              </label>
-              <select
-                value={currentCharacter.meta.gender || ""}
-                onChange={(e) => {
-                  updateMeta({ gender: e.target.value || undefined });
-                  saveCharacter();
-                }}
-                className="w-55 bg-transparent border-none outline-none text-sm font-medium text-foreground/80 cursor-pointer hover:text-primary transition-colors focus:ring-1 focus:ring-primary/30 rounded px-2 py-1"
-              >
-                <option value="" className="bg-card">
-                  —
-                </option>
-                <option value="männlich" className="bg-card">
-                  Männlich
-                </option>
-                <option value="weiblich" className="bg-card">
-                  Weiblich
-                </option>
-                <option value="divers" className="bg-card">
-                  Divers
-                </option>
-              </select>
-            </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 px-4 pb-4 border-t border-border/30 pt-4">
+          <div className="flex flex-col min-w-[120px] space-y-1">
+            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+              Spieler
+            </label>
+            <input
+              type="text"
+              value={currentCharacter.meta.player_name || ""}
+              onChange={(e) => updateMeta({ player_name: e.target.value })}
+              onBlur={() => saveCharacter()}
+              placeholder="Spielername"
+              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+            />
           </div>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70 w-32 shrink-0">
-                Herkunft:
-              </label>
-              <select
-                value={currentCharacter.meta.background_id || ""}
-                onChange={(e) => {
-                  updateMeta({ background_id: e.target.value });
-                  setTimeout(saveCharacter, 100);
-                }}
-                className="w-55 bg-transparent text-sm font-medium text-foreground/80 outline-none border-none cursor-pointer hover:text-primary transition-colors"
-              >
-                <option value="" disabled className="bg-card">
-                  Hintergrund wählen
-                </option>
-                {backgrounds.map((bg) => (
-                  <option
-                    key={bg.id}
-                    value={bg.id}
-                    className="bg-card text-foreground"
-                  >
-                    {bg.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70 w-32 shrink-0">
-                Gesinnung:
-              </label>
-              <select
-                value={currentCharacter.meta.alignment || ""}
-                onChange={(e) => updateMeta({ alignment: e.target.value })}
-                onBlur={() => saveCharacter()}
-                className="w-55 bg-transparent border-none outline-none text-sm font-medium text-foreground/80 cursor-pointer hover:text-primary transition-colors focus:ring-1 focus:ring-primary/30 rounded px-2 py-1"
-              >
-                <option value="" className="bg-card">
-                  —
-                </option>
-                <option value="RG" className="bg-card">
-                  RG (Rechtschaffen Gut)
-                </option>
-                <option value="NG" className="bg-card">
-                  NG (Neutral Gut)
-                </option>
-                <option value="CG" className="bg-card">
-                  CG (Chaotisch Gut)
-                </option>
-                <option value="RN" className="bg-card">
-                  RN (Rechtschaffen Neutral)
-                </option>
-                <option value="N" className="bg-card">
-                  N (Neutral)
-                </option>
-                <option value="CN" className="bg-card">
-                  CN (Chaotisch Neutral)
-                </option>
-                <option value="RB" className="bg-card">
-                  RB (Rechtschaffen Böse)
-                </option>
-                <option value="NB" className="bg-card">
-                  NB (Neutral Böse)
-                </option>
-                <option value="CB" className="bg-card">
-                  CB (Chaotisch Böse)
-                </option>
-              </select>
-            </div>
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70 w-32 shrink-0">
-                Glaube:
-              </label>
-              <input
-                type="text"
-                value={currentCharacter.meta.faith || ""}
-                onChange={(e) => updateMeta({ faith: e.target.value })}
-                onBlur={() => saveCharacter()}
-                placeholder="Glaube/Religion"
-                className="w-55 bg-transparent border-none outline-none text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
-              />
-            </div>
+          <div className="flex flex-col min-w-[120px] space-y-1">
+            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+              Alter
+            </label>
+            <input
+              type="text"
+              value={currentCharacter.appearance?.age || ""}
+              onChange={(e) => updateAppearance({ age: e.target.value })}
+              onBlur={() => saveCharacter()}
+              placeholder="Alter"
+              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+            />
           </div>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70 w-32 shrink-0">
-                Augen:
-              </label>
-              <input
-                type="text"
-                value={currentCharacter.appearance?.eyes || ""}
-                onChange={(e) => updateAppearance({ eyes: e.target.value })}
-                onBlur={() => saveCharacter()}
-                placeholder="Augenfarbe"
-                className="w-55 bg-transparent border-none outline-none text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70 w-32 shrink-0">
-                Haare:
-              </label>
-              <input
-                type="text"
-                value={currentCharacter.appearance?.hair || ""}
-                onChange={(e) => updateAppearance({ hair: e.target.value })}
-                onBlur={() => saveCharacter()}
-                placeholder="Haarfarbe"
-                className="w-55 bg-transparent border-none outline-none text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70 w-32 shrink-0">
-                Haut:
-              </label>
-              <input
-                type="text"
-                value={currentCharacter.appearance?.skin || ""}
-                onChange={(e) => updateAppearance({ skin: e.target.value })}
-                onBlur={() => saveCharacter()}
-                placeholder="Hautfarbe"
-                className="w-55 bg-transparent border-none outline-none text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
-              />
-            </div>
+          <div className="flex flex-col min-w-[120px] space-y-1">
+            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+              Geschlecht
+            </label>
+            <select
+              value={currentCharacter.meta.gender || ""}
+              onChange={(e) => {
+                updateMeta({ gender: e.target.value || undefined });
+                saveCharacter();
+              }}
+              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 cursor-pointer hover:text-primary transition-colors focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 truncate"
+            >
+              <option value="" className="bg-card">
+                —
+              </option>
+              <option value="männlich" className="bg-card">
+                Männlich
+              </option>
+              <option value="weiblich" className="bg-card">
+                Weiblich
+              </option>
+              <option value="divers" className="bg-card">
+                Divers
+              </option>
+            </select>
           </div>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70 w-32 shrink-0">
-                Größe:
-              </label>
-              <input
-                type="text"
-                value={currentCharacter.appearance?.height || ""}
-                onChange={(e) => updateAppearance({ height: e.target.value })}
-                onBlur={() => saveCharacter()}
-                placeholder={
-                  currentCharacter.meta.use_metric
-                    ? "Größe (cm)"
-                    : "Größe (ft/in)"
-                }
-                className="w-55 bg-transparent border-none outline-none text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70 w-32 shrink-0">
-                Gewicht:
-              </label>
-              <input
-                type="text"
-                value={currentCharacter.appearance?.weight || ""}
-                onChange={(e) => updateAppearance({ weight: e.target.value })}
-                onBlur={() => saveCharacter()}
-                placeholder={
-                  currentCharacter.meta.use_metric
-                    ? "Gewicht (kg)"
-                    : "Gewicht (lbs)"
-                }
-                className="w-55 bg-transparent border-none outline-none text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all"
-              />
-            </div>
-            <div className="flex items-center gap-2">
-              <label className="text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70 w-32 shrink-0">
-                Größenkat.:
-              </label>
-              <span className="w-55 text-sm font-medium text-foreground/80 px-2 py-1">
-                {(() => {
-                  const size = currentSpecies?.data?.size;
-                  if (!size) return "Mittel";
-                  const sizeMap: Record<string, string> = {
-                    Small: "Klein",
-                    Medium: "Mittel",
-                    Large: "Groß",
-                    Tiny: "Winzig",
-                    Huge: "Riesig",
-                    Gargantuan: "Gigantisch",
-                  };
-                  return sizeMap[size] || size;
-                })()}
-              </span>
-            </div>
+          <div className="flex flex-col min-w-[120px] space-y-1">
+            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+              Herkunft
+            </label>
+            <select
+              value={currentCharacter.meta.background_id || ""}
+              onChange={(e) => {
+                updateMeta({ background_id: e.target.value });
+                setTimeout(saveCharacter, 100);
+              }}
+              className="w-full bg-transparent text-xs sm:text-sm font-medium text-foreground/80 outline-none border-none cursor-pointer hover:text-primary transition-colors truncate"
+            >
+              <option value="" disabled className="bg-card">
+                Hintergrund wählen
+              </option>
+              {backgrounds.map((bg) => (
+                <option
+                  key={bg.id}
+                  value={bg.id}
+                  className="bg-card text-foreground"
+                >
+                  {bg.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col min-w-[120px] space-y-1">
+            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+              Gesinnung
+            </label>
+            <select
+              value={currentCharacter.meta.alignment || ""}
+              onChange={(e) => updateMeta({ alignment: e.target.value })}
+              onBlur={() => saveCharacter()}
+              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 cursor-pointer hover:text-primary transition-colors focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 truncate"
+            >
+              <option value="" className="bg-card">
+                —
+              </option>
+              <option value="RG" className="bg-card">
+                RG (Rechtschaffen Gut)
+              </option>
+              <option value="NG" className="bg-card">
+                NG (Neutral Gut)
+              </option>
+              <option value="CG" className="bg-card">
+                CG (Chaotisch Gut)
+              </option>
+              <option value="RN" className="bg-card">
+                RN (Rechtschaffen Neutral)
+              </option>
+              <option value="N" className="bg-card">
+                N (Neutral)
+              </option>
+              <option value="CN" className="bg-card">
+                CN (Chaotisch Neutral)
+              </option>
+              <option value="RB" className="bg-card">
+                RB (Rechtschaffen Böse)
+              </option>
+              <option value="NB" className="bg-card">
+                NB (Neutral Böse)
+              </option>
+              <option value="CB" className="bg-card">
+                CB (Chaotisch Böse)
+              </option>
+            </select>
+          </div>
+          <div className="flex flex-col min-w-[120px] space-y-1">
+            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+              Glaube
+            </label>
+            <input
+              type="text"
+              value={currentCharacter.meta.faith || ""}
+              onChange={(e) => updateMeta({ faith: e.target.value })}
+              onBlur={() => saveCharacter()}
+              placeholder="Glaube/Religion"
+              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+            />
+          </div>
+          <div className="flex flex-col min-w-[120px] space-y-1">
+            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+              Augen
+            </label>
+            <input
+              type="text"
+              value={currentCharacter.appearance?.eyes || ""}
+              onChange={(e) => updateAppearance({ eyes: e.target.value })}
+              onBlur={() => saveCharacter()}
+              placeholder="Augenfarbe"
+              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+            />
+          </div>
+          <div className="flex flex-col min-w-[120px] space-y-1">
+            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+              Haare
+            </label>
+            <input
+              type="text"
+              value={currentCharacter.appearance?.hair || ""}
+              onChange={(e) => updateAppearance({ hair: e.target.value })}
+              onBlur={() => saveCharacter()}
+              placeholder="Haarfarbe"
+              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+            />
+          </div>
+          <div className="flex flex-col min-w-[120px] space-y-1">
+            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+              Haut
+            </label>
+            <input
+              type="text"
+              value={currentCharacter.appearance?.skin || ""}
+              onChange={(e) => updateAppearance({ skin: e.target.value })}
+              onBlur={() => saveCharacter()}
+              placeholder="Hautfarbe"
+              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+            />
+          </div>
+          <div className="flex flex-col min-w-[120px] space-y-1">
+            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+              Größe
+            </label>
+            <input
+              type="text"
+              value={currentCharacter.appearance?.height || ""}
+              onChange={(e) => updateAppearance({ height: e.target.value })}
+              onBlur={() => saveCharacter()}
+              placeholder={
+                currentCharacter.meta.use_metric
+                  ? "Größe (cm)"
+                  : "Größe (ft/in)"
+              }
+              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+            />
+          </div>
+          <div className="flex flex-col min-w-[120px] space-y-1">
+            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+              Gewicht
+            </label>
+            <input
+              type="text"
+              value={currentCharacter.appearance?.weight || ""}
+              onChange={(e) => updateAppearance({ weight: e.target.value })}
+              onBlur={() => saveCharacter()}
+              placeholder={
+                currentCharacter.meta.use_metric
+                  ? "Gewicht (kg)"
+                  : "Gewicht (lbs)"
+              }
+              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+            />
+          </div>
+          <div className="flex flex-col min-w-[120px] space-y-1">
+            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+              Größenkat.
+            </label>
+            <span className="w-full text-xs sm:text-sm font-medium text-foreground/80 px-2 py-1 truncate">
+              {(() => {
+                const size = currentSpecies?.data?.size;
+                if (!size) return "Mittel";
+                const sizeMap: Record<string, string> = {
+                  Small: "Klein",
+                  Medium: "Mittel",
+                  Large: "Groß",
+                  Tiny: "Winzig",
+                  Huge: "Riesig",
+                  Gargantuan: "Gigantisch",
+                };
+                return sizeMap[size] || size;
+              })()}
+            </span>
           </div>
         </div>
       </header>
-      <div className="w-full mb-6 flex items-center gap-3 overflow-x-auto no-scrollbar">
+      <div className="w-full mb-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
         <button
           onClick={() => setActiveTab("combat")}
           className={`flex items-center gap-3 px-6 py-4 rounded-2xl font-black uppercase text-sm tracking-wider transition-all whitespace-nowrap ${activeTab === "combat" ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20" : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground border border-border/50"}`}

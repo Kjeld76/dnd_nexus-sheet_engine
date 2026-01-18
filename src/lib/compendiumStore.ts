@@ -12,6 +12,7 @@ import {
   Background,
   Item,
   Equipment,
+  MagicItem,
 } from "./types";
 import { compendiumApi } from "./api";
 
@@ -28,6 +29,7 @@ interface CompendiumState {
   backgrounds: Background[];
   items: Item[];
   equipment: Equipment[];
+  magicItems: MagicItem[];
   isLoading: boolean;
   error: string | null;
 
@@ -44,6 +46,7 @@ interface CompendiumState {
   fetchBackgrounds: () => Promise<void>;
   fetchItems: () => Promise<void>;
   fetchEquipment: () => Promise<void>;
+  fetchMagicItems: () => Promise<void>;
 }
 
 export const useCompendiumStore = create<CompendiumState>((set, get) => ({
@@ -59,156 +62,162 @@ export const useCompendiumStore = create<CompendiumState>((set, get) => ({
   backgrounds: [],
   items: [],
   equipment: [],
+  magicItems: [],
   isLoading: false,
   error: null,
 
   fetchSpells: async () => {
-    const state = get();
-    if (state.spells.length > 0) return;
-    set({ isLoading: true });
+    set({ isLoading: true, error: null });
     try {
-      // Lade alle Spells (kein Limit für initial load)
       const spells = await compendiumApi.getSpells();
-      set({ spells, isLoading: false });
+      console.log("[CompendiumStore] Fetched spells:", spells.length);
+      set({ spells, isLoading: false, error: null });
     } catch (err) {
+      console.error("[CompendiumStore] Error fetching spells:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },
 
   fetchSpecies: async () => {
-    const state = get();
-    if (state.species.length > 0) return;
-    set({ isLoading: true });
+    set({ isLoading: true, error: null });
     try {
       const species = await compendiumApi.getSpecies();
-      set({ species, isLoading: false });
+      console.log("[CompendiumStore] Fetched species:", species.length);
+      set({ species, isLoading: false, error: null });
     } catch (err) {
+      console.error("[CompendiumStore] Error fetching species:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },
 
   fetchClasses: async () => {
-    const state = get();
-    if (state.classes.length > 0) return;
-    set({ isLoading: true });
+    set({ isLoading: true, error: null });
     try {
       const classes = await compendiumApi.getClasses();
-      set({ classes, isLoading: false });
+      console.log("[CompendiumStore] Fetched classes:", classes.length);
+      set({ classes, isLoading: false, error: null });
     } catch (err) {
+      console.error("[CompendiumStore] Error fetching classes:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },
 
   fetchGear: async () => {
-    const state = get();
-    if (state.gear.length > 0) return;
-    set({ isLoading: true });
+    set({ isLoading: true, error: null });
     try {
       const gear = await compendiumApi.getGear();
-      set({ gear, isLoading: false });
+      console.log("[CompendiumStore] Fetched gear:", gear.length);
+      set({ gear, isLoading: false, error: null });
     } catch (err) {
+      console.error("[CompendiumStore] Error fetching gear:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },
 
   fetchTools: async () => {
-    const state = get();
-    if (state.tools.length > 0) return;
-    set({ isLoading: true });
+    set({ isLoading: true, error: null });
     try {
       const tools = await compendiumApi.getTools();
-      set({ tools, isLoading: false });
+      console.log("[CompendiumStore] Fetched tools:", tools.length);
+      set({ tools, isLoading: false, error: null });
     } catch (err) {
+      console.error("[CompendiumStore] Error fetching tools:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },
 
   fetchWeapons: async () => {
-    const state = get();
-    if (state.weapons.length > 0) return;
-    set({ isLoading: true });
+    set({ isLoading: true, error: null });
     try {
       const weapons = await compendiumApi.getWeapons();
-      set({ weapons, isLoading: false });
+      console.log("[CompendiumStore] Fetched weapons:", weapons.length);
+      set({ weapons, isLoading: false, error: null });
     } catch (err) {
+      console.error("[CompendiumStore] Error fetching weapons:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },
 
   fetchArmor: async () => {
-    const state = get();
-    if (state.armor.length > 0) return;
-    set({ isLoading: true });
+    set({ isLoading: true, error: null });
     try {
       const armor = await compendiumApi.getArmor();
-      set({ armor, isLoading: false });
+      console.log("[CompendiumStore] Fetched armor:", armor.length);
+      set({ armor, isLoading: false, error: null });
     } catch (err) {
+      console.error("[CompendiumStore] Error fetching armor:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },
 
   fetchFeats: async () => {
-    const state = get();
-    if (state.feats.length > 0) return;
-    set({ isLoading: true });
+    set({ isLoading: true, error: null });
     try {
       const feats = await compendiumApi.getFeats();
-      set({ feats, isLoading: false });
+      console.log("[CompendiumStore] Fetched feats:", feats.length);
+      set({ feats, isLoading: false, error: null });
     } catch (err) {
+      console.error("[CompendiumStore] Error fetching feats:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },
 
   fetchSkills: async () => {
-    const state = get();
-    if (state.skills.length > 0) return;
-    set({ isLoading: true });
+    set({ isLoading: true, error: null });
     try {
       const skills = await compendiumApi.getSkills();
-      set({ skills, isLoading: false });
+      console.log("[CompendiumStore] Fetched skills:", skills.length);
+      set({ skills, isLoading: false, error: null });
     } catch (err) {
+      console.error("[CompendiumStore] Error fetching skills:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },
 
   fetchBackgrounds: async () => {
-    const state = get();
-    if (state.backgrounds.length > 0) return;
     set({ isLoading: true, error: null });
     try {
       const backgrounds = await compendiumApi.getBackgrounds();
-      console.log("Fetched backgrounds:", backgrounds.length);
+      console.log("[CompendiumStore] Fetched backgrounds:", backgrounds.length);
       set({ backgrounds, isLoading: false, error: null });
     } catch (err) {
-      console.error("Error fetching backgrounds:", err);
+      console.error("[CompendiumStore] Error fetching backgrounds:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },
 
   fetchItems: async () => {
-    const state = get();
-    if (state.items.length > 0) return;
     set({ isLoading: true, error: null });
     try {
       const items = await compendiumApi.getAllItems();
-      console.log("Fetched items:", items.length);
+      console.log("[CompendiumStore] Fetched items:", items.length);
       set({ items, isLoading: false, error: null });
     } catch (err) {
-      console.error("Error fetching items:", err);
+      console.error("[CompendiumStore] Error fetching items:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },
 
   fetchEquipment: async () => {
-    const state = get();
-    if (state.equipment.length > 0) return;
     set({ isLoading: true, error: null });
     try {
       const equipment = await compendiumApi.getAllEquipment();
-      console.log("Fetched equipment:", equipment.length);
+      console.log("[CompendiumStore] Fetched equipment:", equipment.length);
       set({ equipment, isLoading: false, error: null });
     } catch (err) {
-      console.error("Error fetching equipment:", err);
+      console.error("[CompendiumStore] Error fetching equipment:", err);
+      set({ error: (err as Error).message, isLoading: false });
+    }
+  },
+
+  fetchMagicItems: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const magicItems = await compendiumApi.getMagicItems();
+      console.log("[CompendiumStore] Fetched magic items:", magicItems.length);
+      set({ magicItems, isLoading: false, error: null });
+    } catch (err) {
+      console.error("[CompendiumStore] Error fetching magic items:", err);
       set({ error: (err as Error).message, isLoading: false });
     }
   },
