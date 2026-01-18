@@ -343,15 +343,34 @@ export const ArmorTable: React.FC<Props> = ({ character, armor }) => {
                       )}
                       {armorItem.stealth_disadvantage && (
                         <span className="text-amber-500 whitespace-nowrap">
-                          Stealth Nachteil
+                          Heimlichkeit Nachteil
                         </span>
                       )}
                       {armorItem.properties &&
                         armorItem.properties.length > 0 && (
                           <span className="break-words">
-                            {armorItem.properties
-                              .map((p) => p.name || p.id)
-                              .join(", ")}
+                            {Array.from(
+                              new Set(
+                                armorItem.properties
+                                  .filter((p) => {
+                                    // Filtere "Stealth Nachteil" aus properties, wenn es bereits als stealth_disadvantage angezeigt wird
+                                    if (armorItem.stealth_disadvantage) {
+                                      const propName = (
+                                        p.name ||
+                                        p.id ||
+                                        ""
+                                      ).toLowerCase();
+                                      return (
+                                        !propName.includes("stealth") &&
+                                        !propName.includes("heimlichkeit") &&
+                                        !propName.includes("nachteil")
+                                      );
+                                    }
+                                    return true;
+                                  })
+                                  .map((p) => p.name || p.id),
+                              ),
+                            ).join(", ")}
                           </span>
                         )}
                     </div>
