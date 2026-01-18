@@ -60,6 +60,30 @@ export const calculateDerivedStats = (
     return (v as { damage_dice?: unknown }).damage_dice !== undefined;
   };
   const normalize = (v: string) => v.trim().toLowerCase();
+  const parseNumber = (v: unknown): number | null => {
+    if (typeof v === "number" && Number.isFinite(v)) return v;
+    if (typeof v === "string") {
+      const trimmed = v.trim();
+      if (!trimmed) return null;
+      const parsed = Number(trimmed.replace(/^\+/, ""));
+      return Number.isFinite(parsed) ? parsed : null;
+    }
+    return null;
+  };
+  const parseJsonObject = (v: unknown): Record<string, unknown> | null => {
+    if (typeof v === "object" && v !== null)
+      return v as Record<string, unknown>;
+    if (typeof v === "string") {
+      try {
+        const parsed = JSON.parse(v) as unknown;
+        if (typeof parsed === "object" && parsed !== null)
+          return parsed as Record<string, unknown>;
+      } catch {
+        // ignore
+      }
+    }
+    return null;
+  };
   const hasWeaponProperty = (weapon: Weapon, propertyId: string) => {
     const wanted = normalize(propertyId);
     return (
@@ -67,6 +91,55 @@ export const calculateDerivedStats = (
         (p) => normalize(p.id) === wanted || normalize(p.name) === wanted,
       ) ?? false
     );
+  };
+  const getWeaponMagicBonus = (weapon: Weapon) => {
+    let attack = 0;
+    let damage = 0;
+
+    for (const prop of weapon.properties ?? []) {
+      if (normalize(prop.parameter_type ?? "") !== "bonus") continue;
+
+      const obj = parseJsonObject(prop.parameter_value);
+      if (!obj) continue;
+
+      // Schema (DB trigger): { bonus_type: 'flat'|'dice', attack_bonus: number, damage_bonus?: number }
+      const atk = parseNumber(obj.attack_bonus);
+      const dmg = parseNumber(obj.damage_bonus);
+      if (atk !== null) attack += atk;
+      if (dmg !== null) damage += dmg;
+      // Falls nur attack_bonus existiert (z.B. +1 Waffe), Damage standardmäßig gleich behandeln
+      if (atk !== null && dmg === null) damage += atk;
+    }
+
+    return { attack, damage };
+  };
+  const getInventoryItemMagicBonus = (
+    inv: { custom_data?: Record<string, unknown> } | null | undefined,
+  ) => {
+    const obj = inv?.custom_data;
+    if (!obj) return { attack: 0, damage: 0 };
+
+    // Unterstützte Keys (flexibel, damit wir keine harte Struktur voraussetzen)
+    const shared =
+      parseNumber(obj.magic_bonus) ??
+      parseNumber(obj.bonus) ??
+      parseNumber(obj.enhancement_bonus);
+
+    const attack =
+      (shared ?? 0) +
+      (parseNumber(obj.attack_bonus) ??
+        parseNumber(obj.to_hit_bonus) ??
+        parseNumber(obj.hit_bonus) ??
+        0);
+
+    const damage =
+      (shared ?? 0) +
+      (parseNumber(obj.damage_bonus) ??
+        parseNumber(obj.dmg_bonus) ??
+        parseNumber(obj.damage_mod) ??
+        0);
+
+    return { attack, damage };
   };
   const isWeaponRanged = (weapon: Weapon) => {
     // bevorzugt strukturierte Infos
@@ -252,11 +325,16 @@ export const calculateDerivedStats = (
         );
 
       const properties = weapon.properties?.map((p) => p.name || p.id) || [];
+      const weaponBonus = getWeaponMagicBonus(weapon);
+      const invBonus = getInventoryItemMagicBonus(item);
+      const attackBonus = weaponBonus.attack + invBonus.attack;
+      const damageBonus = weaponBonus.damage + invBonus.damage;
+      const totalDamageMod = abilityMod + damageBonus;
 
       return {
         name: weapon.name,
-        attack_bonus: abilityMod + (isProficient ? profBonus : 0),
-        damage: `${weapon.damage_dice}${abilityMod >= 0 ? "+" : ""}${abilityMod} ${weapon.damage_type}`,
+        attack_bonus: abilityMod + (isProficient ? profBonus : 0) + attackBonus,
+        damage: `${weapon.damage_dice}${totalDamageMod >= 0 ? "+" : ""}${totalDamageMod} ${weapon.damage_type}`,
         properties: properties,
       };
     });
