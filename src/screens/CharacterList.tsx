@@ -65,6 +65,7 @@ export function CharacterList() {
         languages: ["Common"],
       },
       inventory: [],
+      spells: [],
       modifiers: [],
       feats: [],
     };

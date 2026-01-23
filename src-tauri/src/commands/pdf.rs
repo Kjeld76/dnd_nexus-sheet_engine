@@ -1,8 +1,35 @@
 use tauri::{AppHandle, Manager, WebviewWindowBuilder, WebviewUrl};
+use tauri_plugin_dialog::DialogExt;
 use crate::core::types::Character;
 use crate::db::Database;
 use crate::error::{AppError, AppResult, map_lock_error};
 use std::fs;
+
+#[tauri::command]
+pub async fn save_pdf_bytes(
+    app: AppHandle,
+    name: String,
+    bytes: Vec<u8>
+) -> Result<String, String> {
+    let result: AppResult<String> = (|| {
+        let file_path = app.dialog()
+            .file()
+            .set_file_name(format!("{}_CharacterSheet.pdf", name))
+            .add_filter("PDF", &["pdf"])
+            .blocking_save_file();
+
+        if let Some(path) = file_path {
+            let path_buf = path.into_path().map_err(|e| AppError::Other(e.to_string()))?;
+            let path_str = path_buf.to_string_lossy().to_string();
+            fs::write(&path_str, bytes)?;
+            return Ok(path_str);
+        }
+        
+        Err(AppError::Other("Speichern abgebrochen".into()))
+    })();
+    
+    result.map_err(|e| e.to_string())
+}
 
 /// Exports a character to PDF by generating HTML and opening it in a hidden window.
 ///

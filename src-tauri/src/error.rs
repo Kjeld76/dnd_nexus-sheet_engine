@@ -10,7 +10,9 @@ use thiserror::Error;
 /// This enum represents all possible errors that can occur in the application,
 /// from database errors to serialization errors.
 #[derive(Debug, Error)]
+#[allow(dead_code)]
 pub enum AppError {
+
     /// Database-related errors
     #[error("Database error: {0}")]
     Database(#[from] rusqlite::Error),

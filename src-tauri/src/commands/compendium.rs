@@ -2,8 +2,8 @@ use tauri::State;
 use crate::db::Database;
 use crate::error::{AppResult, map_lock_error};
 use crate::types::spell::Spell;
-use crate::types::compendium::{Species, Class, Gear, Tool, Feat, Armor, ArmorProperty, Skill, Background, Item, Equipment, MagicItem};
-use crate::types::weapons::{Weapon, WeaponProperty, WeaponMastery};
+use crate::types::compendium::{Species, Class, Gear, Tool, Feat, Armor, ArmorProperty, Skill, Background, Item, Equipment, MagicItem, FeatureOption, ItemMinimal, SpellMinimal};
+use crate::types::weapons::{Weapon, WeaponProperty, WeaponMastery, WeaponMinimal};
 use serde_json::{from_str, json, Value};
 use rusqlite::params;
 
@@ -209,7 +209,7 @@ pub async fn get_all_weapons(db: State<'_, Database>) -> Result<Vec<Weapon>, Str
                 wpm.parameter_value as prop_param_value,
                 wm.id as mastery_id_full, wm.name as mastery_name, wm.description as mastery_desc
              FROM all_weapons_unified w
-             LEFT JOIN weapon_property_mappings wpm ON wpm.weapon_id = w.id
+             LEFT JOIN weapon_property_mappings_unified wpm ON wpm.weapon_id = w.id
              LEFT JOIN weapon_properties wp ON wpm.property_id = wp.id
              LEFT JOIN weapon_masteries wm ON wm.id = w.mastery_id
              ORDER BY w.name, wp.name",
@@ -417,11 +417,11 @@ pub async fn get_all_armor(db: State<'_, Database>) -> Result<Vec<Armor>, String
 
             // 2. Properties via JOIN laden
             let mut prop_stmt = conn.prepare(
-                "SELECT ap.id, ap.name, ap.description, ap.affects_field, apm.parameter_value
-                 FROM armor_property_mappings apm
-                 JOIN armor_properties ap ON apm.property_id = ap.id
+                "SELECT apm.property_id, p.name, p.description, p.affects_field, apm.parameter_value
+                 FROM armor_property_mappings_unified apm
+                 JOIN armor_properties p ON apm.property_id = p.id
                  WHERE apm.armor_id = ?
-                 ORDER BY ap.name",
+                 ORDER BY p.name",
             )?;
 
             let properties_iter = prop_stmt.query_map([&id], |row: &rusqlite::Row| {
@@ -708,14 +708,22 @@ pub async fn get_all_magic_items(db: State<'_, Database>) -> Result<Vec<MagicIte
     let result: AppResult<Vec<MagicItem>> = (|| {
         let conn = map_lock_error(db.0.lock())?;
         let mut stmt = conn.prepare(
-            "SELECT id, name, rarity, category, source_book, source_page, requires_attunement, facts_json, source 
+            "SELECT id, name, rarity, category, source_book, source_page, requires_attunement, facts_json, source, data 
              FROM all_mag_items_base 
              ORDER BY rarity, name",
         )?;
 
         let iter = stmt.query_map([], |row: &rusqlite::Row| {
             let facts_json: String = row.get(7)?;
-            let facts_data: Value = from_str(&facts_json).unwrap_or_default();
+            
+            // Fallback-Logik: Nutze data-Spalte falls vorhanden, sonst facts_json
+            let data_str: Option<String> = row.get(9)?;
+            let data_value: Value = data_str
+                .and_then(|s| serde_json::from_str(&s).ok())
+                .unwrap_or_else(|| {
+                    serde_json::from_str(&facts_json).unwrap_or_default()
+                });
+
             Ok(MagicItem {
                 id: row.get(0)?,
                 name: row.get(1)?,
@@ -725,7 +733,7 @@ pub async fn get_all_magic_items(db: State<'_, Database>) -> Result<Vec<MagicIte
                 source_page: row.get(5)?,
                 requires_attunement: row.get::<_, i32>(6)? != 0,
                 facts_json,
-                data: facts_data,
+                data: data_value,
                 source: row.get(8)?,
             })
         })?;
@@ -747,4 +755,206 @@ pub async fn get_all_magic_items(db: State<'_, Database>) -> Result<Vec<MagicIte
             Err(e.to_string())
         }
     }
+}
+
+#[tauri::command]
+pub async fn get_feature_options(
+    state: State<'_, Database>,
+    feature_id: String,
+) -> Result<Vec<FeatureOption>, String> {
+    let result: AppResult<Vec<FeatureOption>> = (|| {
+        let conn = map_lock_error(state.0.lock())?;
+        
+        let mut stmt = conn.prepare(
+            "SELECT id, feature_id, option_name, option_description, display_order, source 
+             FROM all_feature_options 
+             WHERE feature_id = ? 
+             ORDER BY display_order, option_name"
+        )?;
+        
+        let rows = stmt.query_map(
+            params![&feature_id],
+            |row| {
+                Ok(FeatureOption {
+                    id: row.get(0)?,
+                    feature_id: row.get(1)?,
+                    option_name: row.get(2)?,
+                    option_description: row.get(3)?,
+                    display_order: row.get(4)?,
+                    source: row.get(5)?,
+                })
+            }
+        )?;
+        
+        let mut result = Vec::new();
+        for row in rows {
+            result.push(row?);
+        }
+        
+        Ok(result)
+    })();
+    
+    result.map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub async fn get_all_feature_options(
+    state: State<'_, Database>,
+) -> Result<Vec<FeatureOption>, String> {
+    let result: AppResult<Vec<FeatureOption>> = (|| {
+        let conn = map_lock_error(state.0.lock())?;
+        
+        let mut stmt = conn.prepare(
+            "SELECT id, feature_id, option_name, option_description, display_order, source 
+             FROM all_feature_options 
+             ORDER BY feature_id, display_order, option_name"
+        )?;
+        
+        let rows = stmt.query_map(
+            [],
+            |row| {
+                Ok(FeatureOption {
+                    id: row.get(0)?,
+                    feature_id: row.get(1)?,
+                    option_name: row.get(2)?,
+                    option_description: row.get(3)?,
+                    display_order: row.get(4)?,
+                    source: row.get(5)?,
+                })
+            }
+        )?;
+        
+        let mut result = Vec::new();
+        for row in rows {
+            result.push(row?);
+        }
+        
+        Ok(result)
+    })();
+    
+    result.map_err(|e| e.to_string())
+}
+
+/// Retrieves minimal weapon data for list views (performance optimized).
+///
+/// # Arguments
+/// * `db` - Database connection state
+///
+/// # Returns
+/// Vector of minimal weapon data (id, name, category, damage_dice, damage_type, cost_gp, source)
+///
+/// # Errors
+/// Returns `AppError` if database operation fails
+#[tauri::command]
+pub async fn get_weapons_minimal(db: State<'_, Database>) -> Result<Vec<WeaponMinimal>, String> {
+    let result: AppResult<Vec<WeaponMinimal>> = (|| {
+        let conn = map_lock_error(db.0.lock())?;
+        let mut stmt = conn.prepare(
+            "SELECT id, name, category, damage_dice, damage_type, cost_gp, source 
+             FROM all_weapons_minimal 
+             ORDER BY name"
+        )?;
+
+        let iter = stmt.query_map([], |row: &rusqlite::Row| {
+            Ok(WeaponMinimal {
+                id: row.get(0)?,
+                name: row.get(1)?,
+                category: row.get(2)?,
+                damage_dice: row.get(3)?,
+                damage_type: row.get(4)?,
+                cost_gp: row.get(5)?,
+                source: row.get(6)?,
+            })
+        })?;
+
+        let mut results = Vec::new();
+        for weapon in iter {
+            results.push(weapon?);
+        }
+        Ok(results)
+    })();
+    
+    result.map_err(|e| e.to_string())
+}
+
+/// Retrieves minimal item data for list views (performance optimized).
+///
+/// # Arguments
+/// * `db` - Database connection state
+///
+/// # Returns
+/// Vector of minimal item data (id, name, category, cost_gp, weight_kg, source)
+///
+/// # Errors
+/// Returns `AppError` if database operation fails
+#[tauri::command]
+pub async fn get_items_minimal(db: State<'_, Database>) -> Result<Vec<ItemMinimal>, String> {
+    let result: AppResult<Vec<ItemMinimal>> = (|| {
+        let conn = map_lock_error(db.0.lock())?;
+        let mut stmt = conn.prepare(
+            "SELECT id, name, category, cost_gp, weight_kg, source 
+             FROM all_items_minimal 
+             ORDER BY name"
+        )?;
+
+        let iter = stmt.query_map([], |row: &rusqlite::Row| {
+            Ok(ItemMinimal {
+                id: row.get(0)?,
+                name: row.get(1)?,
+                category: row.get(2)?,
+                cost_gp: row.get(3)?,
+                weight_kg: row.get(4)?,
+                source: row.get(5)?,
+            })
+        })?;
+
+        let mut results = Vec::new();
+        for item in iter {
+            results.push(item?);
+        }
+        Ok(results)
+    })();
+    
+    result.map_err(|e| e.to_string())
+}
+
+/// Retrieves minimal spell data for list views (performance optimized).
+///
+/// # Arguments
+/// * `db` - Database connection state
+///
+/// # Returns
+/// Vector of minimal spell data (id, name, level, school, casting_time, source)
+///
+/// # Errors
+/// Returns `AppError` if database operation fails
+#[tauri::command]
+pub async fn get_spells_minimal(db: State<'_, Database>) -> Result<Vec<SpellMinimal>, String> {
+    let result: AppResult<Vec<SpellMinimal>> = (|| {
+        let conn = map_lock_error(db.0.lock())?;
+        let mut stmt = conn.prepare(
+            "SELECT id, name, level, school, casting_time, source 
+             FROM all_spells_minimal 
+             ORDER BY level, name"
+        )?;
+
+        let iter = stmt.query_map([], |row: &rusqlite::Row| {
+            Ok(SpellMinimal {
+                id: row.get(0)?,
+                name: row.get(1)?,
+                level: row.get(2)?,
+                school: row.get(3)?,
+                casting_time: row.get(4)?,
+                source: row.get(5)?,
+            })
+        })?;
+
+        let mut results = Vec::new();
+        for spell in iter {
+            results.push(spell?);
+        }
+        Ok(results)
+    })();
+    
+    result.map_err(|e| e.to_string())
 }

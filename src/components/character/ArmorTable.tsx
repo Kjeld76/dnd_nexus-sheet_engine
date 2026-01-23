@@ -9,44 +9,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { useCharacterStore } from "../../lib/store";
-
-const addToEquipmentList = (
-  currentItems:
-    | Array<{ id: string; name: string; quantity: number }>
-    | undefined,
-  itemName: string,
-  quantity: number = 1,
-): Array<{ id: string; name: string; quantity: number }> => {
-  const items = currentItems || [];
-  const existingItem = items.find((item) => item.name === itemName);
-
-  if (existingItem) {
-    return items.map((item) =>
-      item.id === existingItem.id
-        ? { ...item, quantity: item.quantity + quantity }
-        : item,
-    );
-  }
-
-  return [
-    ...items,
-    {
-      id: crypto.randomUUID(),
-      name: itemName,
-      quantity: quantity,
-    },
-  ];
-};
-
-const removeFromEquipmentList = (
-  currentItems:
-    | Array<{ id: string; name: string; quantity: number }>
-    | undefined,
-  itemName: string,
-): Array<{ id: string; name: string; quantity: number }> => {
-  const items = currentItems || [];
-  return items.filter((item) => item.name !== itemName);
-};
+import { characterApi } from "../../lib/api";
 
 interface Props {
   character: Character;
@@ -54,10 +17,10 @@ interface Props {
 }
 
 export const ArmorTable: React.FC<Props> = ({ character, armor }) => {
-  const { updateInventory, saveCharacter, updateMeta } = useCharacterStore();
+  const { updateInventory, refreshInventory } = useCharacterStore();
   const [showAddDialog, setShowAddDialog] = useState(false);
 
-  const handleToggleEquip = (armorId: string) => {
+  const handleToggleEquip = async (armorId: string) => {
     const { currentCharacter } = useCharacterStore.getState();
     if (!currentCharacter) return;
 
@@ -72,22 +35,16 @@ export const ArmorTable: React.FC<Props> = ({ character, armor }) => {
 
     const isShield = armorItem.category === "schild";
     const isCurrentlyEquipped = existingItem.is_equipped;
+    const itemType =
+      armorItem.source === "core" ? "core_armor" : "custom_armor";
 
     if (isCurrentlyEquipped) {
       // Unequip
-      updateInventory(armorId, existingItem.quantity, false);
-
-      const updatedCharacter = useCharacterStore.getState().currentCharacter;
-      const currentItems =
-        updatedCharacter?.meta.equipment_on_body_items ||
-        currentCharacter.meta.equipment_on_body_items ||
-        [];
-      const newItems = removeFromEquipmentList(currentItems, armorItem.name);
-      updateMeta({ equipment_on_body_items: newItems });
+      updateInventory(armorId, existingItem.quantity, false, itemType);
     } else {
       // Equip
       if (!isShield) {
-        // Rüstung: Prüfe ob bereits eine andere Rüstung ausgerüstet ist
+        // Unequip any other non-shield armor
         const otherEquippedArmor = currentCharacter.inventory
           .map((invItem) => {
             const a = armor.find((arm) => arm.id === invItem.item_id);
@@ -102,97 +59,80 @@ export const ArmorTable: React.FC<Props> = ({ character, armor }) => {
           );
 
         if (otherEquippedArmor) {
-          // Alte Rüstung ablegen
+          const otherItemType =
+            otherEquippedArmor.armor.source === "core"
+              ? "core_armor"
+              : "custom_armor";
           updateInventory(
             otherEquippedArmor.armor.id,
             otherEquippedArmor.invItem.quantity,
             false,
+            otherItemType,
           );
 
-          const updatedCharacter =
-            useCharacterStore.getState().currentCharacter;
-          let currentItems =
-            updatedCharacter?.meta.equipment_on_body_items ||
-            currentCharacter.meta.equipment_on_body_items ||
-            [];
-          currentItems = removeFromEquipmentList(
-            currentItems,
-            otherEquippedArmor.armor.name,
-          );
-          updateMeta({ equipment_on_body_items: currentItems });
+          // Persist the unequip of the other armor
+          const otherStoredItem = useCharacterStore
+            .getState()
+            .currentCharacter?.inventory.find(
+              (it) => it.item_id === otherEquippedArmor.armor.id,
+            );
+          if (otherStoredItem) {
+            await characterApi.updateInventoryItem(otherStoredItem);
+          }
         }
       }
-      // Neue Rüstung/Schild ausrüsten
-      updateInventory(armorId, existingItem.quantity, true);
 
-      const updatedCharacter = useCharacterStore.getState().currentCharacter;
-      const currentItems =
-        updatedCharacter?.meta.equipment_on_body_items ||
-        currentCharacter.meta.equipment_on_body_items ||
-        [];
-      const newItems = addToEquipmentList(
-        currentItems,
-        armorItem.name,
-        existingItem.quantity,
-      );
-      updateMeta({ equipment_on_body_items: newItems });
+      // Equip the new one
+      updateInventory(armorId, existingItem.quantity, true, itemType);
     }
-    saveCharacter();
+
+    // Persist the change for the target item
+    const updatedItem = useCharacterStore
+      .getState()
+      .currentCharacter?.inventory.find((it) => it.item_id === armorId);
+    if (updatedItem) {
+      await characterApi.updateInventoryItem(updatedItem);
+      await refreshInventory();
+    }
   };
 
-  const handleAddArmor = (armorId: string) => {
+  const handleAddArmor = async (armorId: string) => {
     const armorItem = armor.find((a) => a.id === armorId);
     if (!armorItem) return;
 
     const isShield = armorItem.category === "schild";
-    let willBeEquipped = false;
+    const itemType =
+      armorItem.source === "core" ? "core_armor" : "custom_armor";
 
-    // Prüfe ob bereits eine Rüstung ausgerüstet ist (nur für Rüstungen, nicht Schilde)
+    let willBeEquipped = false;
     if (!isShield) {
       const hasEquippedArmor = character.inventory.some((invItem) => {
         const a = armor.find((arm) => arm.id === invItem.item_id);
         return a && invItem.is_equipped && a.category !== "schild";
       });
-
-      if (hasEquippedArmor) {
-        // Kann nicht hinzugefügt werden, wenn bereits eine Rüstung ausgerüstet ist
-        // (kann aber im Inventar sein, nur nicht ausgerüstet)
-        updateInventory(armorId, 1, false);
-      } else {
-        // Keine Rüstung ausgerüstet, kann direkt ausgerüstet werden
-        updateInventory(armorId, 1, true);
-        willBeEquipped = true;
-      }
-    } else {
-      // Schild kann immer hinzugefügt werden
-      updateInventory(armorId, 1, false);
+      willBeEquipped = !hasEquippedArmor;
     }
 
-    // Wenn direkt ausgerüstet, in "Am Körper" eintragen
-    if (willBeEquipped) {
-      const { currentCharacter } = useCharacterStore.getState();
-      const currentItems = currentCharacter?.meta.equipment_on_body_items || [];
-      const newItems = addToEquipmentList(currentItems, armorItem.name, 1);
-      updateMeta({ equipment_on_body_items: newItems });
-    }
+    updateInventory(armorId, 1, willBeEquipped, itemType);
 
-    saveCharacter();
+    // Save to character blob (since adding new relational item might need full save if we don't have create_inventory_item)
+    // Actually, we use update_inventory_item which might handle upsert or we use saveCharacter.
+    // For now, saveCharacter is safer for additions.
+    await useCharacterStore.getState().saveCharacter();
     setShowAddDialog(false);
   };
 
-  const handleRemoveArmor = (itemId: string) => {
+  const handleRemoveArmor = async (itemId: string) => {
     const { currentCharacter } = useCharacterStore.getState();
     if (!currentCharacter) return;
 
     useCharacterStore.setState({
       currentCharacter: {
         ...currentCharacter,
-        inventory: currentCharacter.inventory.filter(
-          (item) => item.id !== itemId,
-        ),
+        inventory: currentCharacter.inventory.filter((it) => it.id !== itemId),
       },
     });
-    saveCharacter();
+    await useCharacterStore.getState().saveCharacter();
   };
 
   const getInventoryArmor = () => {
@@ -212,8 +152,6 @@ export const ArmorTable: React.FC<Props> = ({ character, armor }) => {
     );
     if (isInInventory) return false;
 
-    // Wenn es eine Rüstung ist (nicht Schild) und bereits eine Rüstung ausgerüstet ist,
-    // kann sie nicht hinzugefügt werden
     if (a.category !== "schild") {
       const hasEquippedArmor = character.inventory.some((invItem) => {
         const armorItem = armor.find((arm) => arm.id === invItem.item_id);
@@ -223,8 +161,7 @@ export const ArmorTable: React.FC<Props> = ({ character, armor }) => {
       });
       return !hasEquippedArmor;
     }
-
-    return true; // Schilde können immer hinzugefügt werden
+    return true;
   });
 
   const inventoryArmor = getInventoryArmor();
@@ -303,7 +240,6 @@ export const ArmorTable: React.FC<Props> = ({ character, armor }) => {
           </p>
         ) : (
           <>
-            {/* Header */}
             <div className="px-2 pb-2 border-b-2 border-border/50">
               <span className="text-xs font-black text-muted-foreground/70 uppercase tracking-wider">
                 Rüstung
@@ -353,7 +289,6 @@ export const ArmorTable: React.FC<Props> = ({ character, armor }) => {
                               new Set(
                                 armorItem.properties
                                   .filter((p) => {
-                                    // Filtere "Stealth Nachteil" aus properties, wenn es bereits als stealth_disadvantage angezeigt wird
                                     if (armorItem.stealth_disadvantage) {
                                       const propName = (
                                         p.name ||

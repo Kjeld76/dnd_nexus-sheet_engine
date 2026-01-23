@@ -9,6 +9,7 @@ export interface Character {
   modifiers: Modifier[];
   feats: string[]; // List of feat IDs
   inventory: CharacterItem[];
+  spells: CharacterSpell[];
 }
 
 export interface CharacterMeta {
@@ -30,7 +31,9 @@ export interface CharacterMeta {
   background_tool_choice?: string; // Tracks tool choice from background
   background_gold_granted?: number; // Tracks gold granted by background
   background_equipment_applied?: boolean; // Tracks if background equipment has been fully applied
+  currency_platinum?: number;
   currency_gold?: number;
+  currency_electrum?: number;
   currency_silver?: number;
   currency_copper?: number;
   equipment_on_body?: string;
@@ -63,6 +66,25 @@ export interface CharacterMeta {
   ideals?: string;
   bonds?: string;
   flaws?: string;
+  // Spell Slots
+  spell_slots_1?: number;
+  spell_slots_2?: number;
+  spell_slots_3?: number;
+  spell_slots_4?: number;
+  spell_slots_5?: number;
+  spell_slots_6?: number;
+  spell_slots_7?: number;
+  spell_slots_8?: number;
+  spell_slots_9?: number;
+  spell_slots_used_1?: number;
+  spell_slots_used_2?: number;
+  spell_slots_used_3?: number;
+  spell_slots_used_4?: number;
+  spell_slots_used_5?: number;
+  spell_slots_used_6?: number;
+  spell_slots_used_7?: number;
+  spell_slots_used_8?: number;
+  spell_slots_used_9?: number;
 }
 
 export interface CharacterAppearance {
@@ -72,6 +94,14 @@ export interface CharacterAppearance {
   eyes?: string;
   skin?: string;
   hair?: string;
+}
+
+export interface CharacterSpell {
+  id: string;
+  spell_id: string;
+  is_prepared: boolean;
+  is_always_prepared: boolean;
+  source?: string;
 }
 
 export interface CharacterSpellcasting {
@@ -106,11 +136,24 @@ export interface CharacterProficiencies {
 
 export interface CharacterItem {
   id: string;
+  character_id: string;
   item_id: string; // Reference to compendium
+  item_type: string;
   quantity: number;
   is_equipped: boolean;
-  custom_data?: Record<string, unknown>;
+  is_attuned: boolean;
+  location?: string;
+  source?: string; // "manual", "class", "background"
+  is_starting_equipment?: boolean;
+  container_id?: string;
+  custom_name?: string;
+  custom_description?: string;
+  data?: Record<string, unknown>;
+  created_at?: number;
+  updated_at?: number;
 }
+
+export type CharacterInventoryEntry = CharacterItem;
 
 export interface Attributes {
   str: number;

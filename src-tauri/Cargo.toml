@@ -22,6 +22,9 @@ dotext = "0.1"
 regex = "1.10"
 encoding_rs = "0.8"
 chrono = "0.4"
+pdf-extract = "0.7"
+
+
 
 [features]
 default = ["custom-protocol"]
@@ -49,5 +52,13 @@ path = "src/bin/migrate_background_equipment.rs"
 [[bin]]
 name = "query_background_equipment"
 path = "src/bin/query_background_equipment.rs"
+
+[[bin]]
+name = "import_class_data"
+path = "src/bin/import_class_data.rs"
+
+[[bin]]
+name = "test_class_equipment"
+path = "src/bin/test_class_equipment.rs"
 
 

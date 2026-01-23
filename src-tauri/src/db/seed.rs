@@ -8,10 +8,11 @@ pub fn seed_core_data(conn: &mut Connection) -> Result<(), String> {
     // Try to import from the project's master database
     // dnd-nexus.db is the project database (not in git) - has all data including Items/Equipment
     // sync.db is NOT used - it's only for transferring DB between machines
+    // NUR Root-Datenbank verwenden - KEINE DB in src-tauri
     let mut master_db_paths: Vec<std::path::PathBuf> = vec![
-        Path::new("dnd-nexus.db").to_path_buf(),
-        Path::new("../dnd-nexus.db").to_path_buf(),
+        Path::new("../dnd-nexus.db").to_path_buf(),  // Root-DB (Haupt-DB)
         Path::new("../../dnd-nexus.db").to_path_buf(),
+        Path::new("dnd-nexus.db").to_path_buf(),  // Fallback (sollte nicht existieren)
     ];
     
     // Füge auch absolute Pfade hinzu, basierend auf dem aktuellen Arbeitsverzeichnis

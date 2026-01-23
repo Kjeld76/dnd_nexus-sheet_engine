@@ -1,13 +1,11 @@
-import { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo, useCallback } from "react";
+import { invoke } from "@tauri-apps/api/core";
+import { listen } from "@tauri-apps/api/event";
 import { useCharacterStore } from "../lib/store";
 import {
   Species,
-  Character,
   CharacterMeta,
-  Item,
-  Equipment,
   Tool,
-  Weapon,
   Background,
   Attributes,
 } from "../lib/types";
@@ -28,9 +26,13 @@ import {
   Shield,
   Info,
 } from "lucide-react";
+import { PDFExportService } from "../lib/PDFExportService";
 import { calculateLevelFromXP, getXPForNextLevel } from "../lib/math";
 import { useCompendiumStore } from "../lib/compendiumStore";
-import { EquipmentList } from "../components/character/EquipmentList";
+import { InventoryTable } from "../components/character/InventoryTable";
+import { CurrencyTable } from "../components/character/CurrencyTable";
+import { EncumbranceBar } from "../components/character/EncumbranceBar";
+import { SpellbookTable } from "../components/character/SpellbookTable";
 
 // Helper function to extract tool name from tool data (handles multiple formats from Background data)
 const getToolName = (tool: unknown): string | null => {
@@ -111,301 +113,6 @@ const findItemByName = <T extends NamedItem>(
 
 // Helper function to add items to inventory
 // Helper function to add item with quantity, unit, and variant
-const addItemToInventoryWithQuantity = (
-  itemName: string,
-  quantity: number,
-  unit: string | null,
-  variant: string | null,
-  items: Item[],
-  equipment: Equipment[],
-  tools: Tool[],
-  weapons: Weapon[],
-  magicItems: import("../lib/types").MagicItem[],
-  currentCharacter: Character,
-  updateInventory: (
-    itemId: string,
-    quantity: number,
-    isEquipped: boolean,
-  ) => void,
-  updateMeta: (meta: Partial<CharacterMeta>) => void,
-  saveCharacter: () => void,
-) => {
-  addItemToInventory(
-    itemName,
-    quantity,
-    unit,
-    variant,
-    null,
-    items,
-    equipment,
-    tools,
-    weapons,
-    magicItems,
-    currentCharacter,
-    updateInventory,
-    updateMeta,
-    saveCharacter,
-  );
-};
-
-const addItemToInventory = (
-  itemName: string,
-  quantity: number = 1,
-  _unit: string | null = null,
-  variant: string | null = null,
-  displayName: string | null = null,
-  items: Item[],
-  equipment: Equipment[],
-  tools: Tool[],
-  weapons: Weapon[],
-  magicItems: import("../lib/types").MagicItem[],
-  currentCharacter: Character,
-  updateInventory: (
-    itemId: string,
-    quantity: number,
-    isEquipped: boolean,
-  ) => void,
-  updateMeta: (meta: Partial<CharacterMeta>) => void,
-  saveCharacter: () => void,
-) => {
-  // Get fresh state to avoid stale closures - MUST be done for each item
-  const freshState = useCharacterStore.getState().currentCharacter;
-  const freshCharacter = freshState || currentCharacter;
-  // Helper to add to body items with fresh state check
-  const addToToolItems = (nameToAdd: string, qty: number = 1) => {
-    const latestState = useCharacterStore.getState().currentCharacter;
-    const latestToolItems = latestState?.meta.equipment_tool_items || [];
-    const existingToolItem = latestToolItems.find(
-      (toolItem) =>
-        normalizeItemName(toolItem.name) === normalizeItemName(nameToAdd),
-    );
-    if (!existingToolItem) {
-      updateMeta({
-        equipment_tool_items: [
-          ...latestToolItems,
-          {
-            id: crypto.randomUUID(),
-            name: nameToAdd,
-            quantity: qty,
-          },
-        ],
-      });
-      return true;
-    }
-    return false;
-  };
-
-  const addToBodyItems = (nameToAdd: string, qty: number = 1) => {
-    const latestState = useCharacterStore.getState().currentCharacter;
-    const latestBodyItems = latestState?.meta.equipment_on_body_items || [];
-    const existingBodyItem = latestBodyItems.find(
-      (bodyItem) =>
-        normalizeItemName(bodyItem.name) === normalizeItemName(nameToAdd),
-    );
-    if (!existingBodyItem) {
-      updateMeta({
-        equipment_on_body_items: [
-          ...latestBodyItems,
-          {
-            id: crypto.randomUUID(),
-            name: nameToAdd,
-            quantity: qty,
-          },
-        ],
-      });
-      return true;
-    }
-    return false;
-  };
-
-  // Extract base name for search (remove variant if present)
-  const baseNameForSearch = variant
-    ? itemName.replace(` (${variant})`, "")
-    : itemName;
-
-  // Try to find in tools
-  const tool = findItemByName(baseNameForSearch, tools);
-  if (tool) {
-    const existingTool = freshCharacter.inventory.find(
-      (inv) => inv.item_id === tool.id,
-    );
-    if (!existingTool) {
-      updateInventory(tool.id, quantity, false);
-      const bodyItemName = variant ? `${tool.name} (${variant})` : tool.name;
-      addToToolItems(bodyItemName, quantity);
-      saveCharacter();
-      return;
-    } else {
-      const bodyItemName = variant ? `${tool.name} (${variant})` : tool.name;
-      addToToolItems(bodyItemName, quantity);
-      return;
-    }
-  }
-
-  // Try to find in items
-  const item = findItemByName(baseNameForSearch, items);
-  if (item) {
-    const existingItem = freshCharacter.inventory.find(
-      (inv) => inv.item_id === item.id,
-    );
-    if (!existingItem) {
-      updateInventory(item.id, quantity, false);
-      const bodyItemName = variant ? `${item.name} (${variant})` : item.name;
-      addToBodyItems(bodyItemName, quantity);
-      saveCharacter();
-      return;
-    } else {
-      const bodyItemName = variant ? `${item.name} (${variant})` : item.name;
-      addToBodyItems(bodyItemName, quantity);
-      return;
-    }
-  }
-
-  // Try to find in weapons
-  const weapon = findItemByName(baseNameForSearch, weapons);
-  if (weapon) {
-    const existingWeapon = freshCharacter.inventory.find(
-      (inv) => inv.item_id === weapon.id,
-    );
-    if (!existingWeapon) {
-      updateInventory(weapon.id, quantity, false);
-      const bodyItemName = variant
-        ? `${weapon.name} (${variant})`
-        : weapon.name;
-      addToBodyItems(bodyItemName, quantity);
-      saveCharacter();
-      return;
-    } else {
-      const bodyItemName = variant
-        ? `${weapon.name} (${variant})`
-        : weapon.name;
-      addToBodyItems(bodyItemName, quantity);
-      return;
-    }
-  }
-
-  // Try to find in magic items
-  const magicItem = findItemByName(baseNameForSearch, magicItems);
-  if (magicItem) {
-    const existingMagicItem = freshCharacter.inventory.find(
-      (inv) => inv.item_id === magicItem.id,
-    );
-    if (!existingMagicItem) {
-      updateInventory(magicItem.id, quantity, false);
-      const bodyItemName = variant
-        ? `${magicItem.name} (${variant})`
-        : magicItem.name;
-      addToBodyItems(bodyItemName, quantity);
-      saveCharacter();
-      return;
-    } else {
-      const bodyItemName = variant
-        ? `${magicItem.name} (${variant})`
-        : magicItem.name;
-      addToBodyItems(bodyItemName, quantity);
-      return;
-    }
-  }
-
-  // Try to find in equipment packages
-  const equip = findItemByName(itemName, equipment);
-  if (equip) {
-    const currentBodyItems =
-      currentCharacter.meta.equipment_on_body_items || [];
-
-    if (equip.items && Array.isArray(equip.items)) {
-      equip.items.forEach(
-        (equipItem: { item_id: string; quantity: number }) => {
-          const existingItem = currentCharacter.inventory.find(
-            (inv) => inv.item_id === equipItem.item_id,
-          );
-          if (!existingItem) {
-            updateInventory(equipItem.item_id, equipItem.quantity, false);
-            const foundItem = items.find((i) => i.id === equipItem.item_id);
-            if (foundItem) {
-              const existingBodyItem = currentBodyItems.find(
-                (bodyItem) =>
-                  normalizeItemName(bodyItem.name) ===
-                  normalizeItemName(foundItem.name),
-              );
-              if (!existingBodyItem) {
-                updateMeta({
-                  equipment_on_body_items: [
-                    ...currentBodyItems,
-                    {
-                      id: crypto.randomUUID(),
-                      name: foundItem.name,
-                      quantity: equipItem.quantity,
-                    },
-                  ],
-                });
-              }
-            }
-            saveCharacter();
-          }
-        },
-      );
-    }
-    if (equip.tools && Array.isArray(equip.tools)) {
-      equip.tools.forEach(
-        (equipTool: { tool_id: string; quantity: number }) => {
-          const existingTool = currentCharacter.inventory.find(
-            (inv) => inv.item_id === equipTool.tool_id,
-          );
-          if (!existingTool) {
-            updateInventory(equipTool.tool_id, equipTool.quantity, false);
-            const foundTool = tools.find((t) => t.id === equipTool.tool_id);
-            if (foundTool) {
-              const currentToolItems =
-                currentCharacter.meta.equipment_tool_items || [];
-              const existingToolItem = currentToolItems.find(
-                (toolItem) =>
-                  normalizeItemName(toolItem.name) ===
-                  normalizeItemName(foundTool.name),
-              );
-              if (!existingToolItem) {
-                updateMeta({
-                  equipment_tool_items: [
-                    ...currentToolItems,
-                    {
-                      id: crypto.randomUUID(),
-                      name: foundTool.name,
-                      quantity: equipTool.quantity,
-                    },
-                  ],
-                });
-              }
-            }
-            saveCharacter();
-          }
-        },
-      );
-    }
-    return;
-  }
-
-  // Fallback
-  const latestState = useCharacterStore.getState().currentCharacter;
-  const latestBodyItems = latestState?.meta.equipment_on_body_items || [];
-  const existingItem = latestBodyItems.find(
-    (item) =>
-      normalizeItemName(item.name) ===
-      normalizeItemName(displayName || itemName),
-  );
-  if (!existingItem) {
-    updateMeta({
-      equipment_on_body_items: [
-        ...latestBodyItems,
-        {
-          id: crypto.randomUUID(),
-          name: displayName || itemName,
-          quantity: quantity,
-        },
-      ],
-    });
-    saveCharacter();
-  }
-};
 
 const removeBackgroundItem = (
   itemName: string,
@@ -414,6 +121,28 @@ const removeBackgroundItem = (
   const latestState = useCharacterStore.getState().currentCharacter;
   if (!latestState) return;
 
+  const { items, tools, weapons, magicItems, armor } =
+    useCharacterStore.getState() as any;
+
+  // 1. Remove from new normalized inventory
+  const baseNameForSearch = itemName.includes(" (")
+    ? itemName.split(" (")[0]
+    : itemName;
+  const found =
+    findItemByName(baseNameForSearch, items) ||
+    findItemByName(baseNameForSearch, tools) ||
+    findItemByName(baseNameForSearch, weapons) ||
+    findItemByName(baseNameForSearch, magicItems) ||
+    findItemByName(baseNameForSearch, armor);
+
+  if (found && found.id) {
+    useCharacterStore.getState().removeInventoryItemByItemId(found.id);
+  } else {
+    // Fallback: remove by name (for custom items/labels)
+    useCharacterStore.getState().removeInventoryItemByName(itemName);
+  }
+
+  // 2. Remove from legacy meta lists (for fallback/safety)
   const normalizedTarget = normalizeItemName(itemName);
   const equipmentLists = [
     "equipment_on_body_items",
@@ -460,17 +189,34 @@ export function CharacterSheet() {
   };
   const updateInventory = useCharacterStore((state) => state.updateInventory);
   const isLoading = useCharacterStore((state) => state.isLoading);
+  const migrateLegacyInventory = useCharacterStore(
+    (state) => state.migrateLegacyInventory,
+  );
+  const migrateLegacySpells = useCharacterStore(
+    (state) => state.migrateLegacySpells,
+  );
+  const migrateLegacyStats = useCharacterStore(
+    (state) => state.migrateLegacyStats,
+  );
+  const migrateLegacyFeatures = useCharacterStore(
+    (state) => state.migrateLegacyFeatures,
+  );
+  const migrateLegacyModifiers = useCharacterStore(
+    (state) => state.migrateLegacyModifiers,
+  );
 
   const weapons = useCompendiumStore((state) => state.weapons);
   const armor = useCompendiumStore((state) => state.armor);
   const items = useCompendiumStore((state) => state.items);
   const equipment = useCompendiumStore((state) => state.equipment);
   const tools = useCompendiumStore((state) => state.tools);
+  const gear = useCompendiumStore((state) => state.gear);
   const magicItems = useCompendiumStore((state) => state.magicItems);
   const species = useCompendiumStore((state) => state.species);
   const classes = useCompendiumStore((state) => state.classes);
   const backgrounds = useCompendiumStore((state) => state.backgrounds);
   const feats = useCompendiumStore((state) => state.feats);
+  const spells = useCompendiumStore((state) => state.spells);
   const fetchClasses = useCompendiumStore((state) => state.fetchClasses);
   const fetchSpecies = useCompendiumStore((state) => state.fetchSpecies);
   const fetchWeapons = useCompendiumStore((state) => state.fetchWeapons);
@@ -478,63 +224,61 @@ export function CharacterSheet() {
   const fetchItems = useCompendiumStore((state) => state.fetchItems);
   const fetchEquipment = useCompendiumStore((state) => state.fetchEquipment);
   const fetchTools = useCompendiumStore((state) => state.fetchTools);
+  const fetchGear = useCompendiumStore((state) => state.fetchGear);
   const fetchMagicItems = useCompendiumStore((state) => state.fetchMagicItems);
   const fetchBackgrounds = useCompendiumStore(
     (state) => state.fetchBackgrounds,
   );
   const fetchFeats = useCompendiumStore((state) => state.fetchFeats);
+  const fetchSpells = useCompendiumStore((state) => state.fetchSpells);
 
   const calculateTotalWeight = useMemo(() => {
     if (!currentCharacter) return 0;
-    let totalWeight = 0;
-    const equippedItems = currentCharacter.inventory.filter(
-      (item) => item.is_equipped,
-    );
-    equippedItems.forEach((invItem) => {
-      const weapon = weapons.find((w) => w.id === invItem.item_id);
-      const armorItem = armor.find((a) => a.id === invItem.item_id);
-      if (weapon) totalWeight += weapon.weight_kg * invItem.quantity;
-      else if (armorItem) totalWeight += armorItem.weight_kg * invItem.quantity;
-    });
-    const equipmentLists = [
-      ...(currentCharacter.meta.equipment_on_body_items || []),
-      ...(currentCharacter.meta.equipment_in_backpack_items || []),
-      ...(currentCharacter.meta.equipment_tool_items || []),
-    ];
-    equipmentLists.forEach((equipItem) => {
-      if (!equipItem?.name) return;
-      const item = items.find(
-        (i) => i?.name && i.name.toLowerCase() === equipItem.name.toLowerCase(),
-      );
-      if (item) {
-        totalWeight += item.weight_kg * equipItem.quantity;
-        return;
+
+    return currentCharacter.inventory.reduce((total, invItem) => {
+      // Filter out non-encumbering locations
+      const loc = invItem.location || "Body";
+      if (loc === "Mount" || loc === "MagicContainer") return total;
+
+      // Find compendium item
+      const id = invItem.item_id;
+      const compendiumItem =
+        weapons.find((w) => w.id === id) ||
+        armor.find((a) => a.id === id) ||
+        items.find((i) => i.id === id) ||
+        tools.find((t) => t.id === id) ||
+        gear.find((g) => g.id === id) ||
+        magicItems.find((m) => m.id === id);
+
+      let weight = 0;
+      if (compendiumItem) {
+        // Check for weight_kg property safely
+        const w = (compendiumItem as any).weight_kg;
+        if (typeof w === "number") weight = w;
       }
-      const tool = tools.find(
-        (t) => t?.name && t.name.toLowerCase() === equipItem.name.toLowerCase(),
-      );
-      if (tool) {
-        totalWeight += tool.weight_kg * equipItem.quantity;
-        return;
-      }
-      const equip = equipment.find(
-        (e) => e?.name && e.name.toLowerCase() === equipItem.name.toLowerCase(),
-      );
-      if (equip && equip.total_weight_kg)
-        totalWeight += equip.total_weight_kg * equipItem.quantity;
-    });
-    return totalWeight;
+
+      return total + weight * invItem.quantity;
+    }, 0);
   }, [
     currentCharacter?.inventory,
-    currentCharacter?.meta.equipment_on_body_items,
-    currentCharacter?.meta.equipment_in_backpack_items,
-    currentCharacter?.meta.equipment_tool_items,
     weapons,
     armor,
     items,
     tools,
     equipment,
+    gear,
+    magicItems,
   ]);
+
+  useEffect(() => {
+    if (currentCharacter?.id) {
+      migrateLegacyInventory();
+      migrateLegacySpells();
+      migrateLegacyStats();
+      migrateLegacyFeatures();
+      migrateLegacyModifiers();
+    }
+  }, [currentCharacter?.id]);
 
   useEffect(() => {
     if (!currentCharacter) return;
@@ -564,6 +308,8 @@ export function CharacterSheet() {
     fetchItems();
     fetchEquipment();
     fetchTools();
+    fetchGear();
+    fetchSpells();
     fetchMagicItems();
     fetchBackgrounds();
     fetchFeats();
@@ -575,6 +321,8 @@ export function CharacterSheet() {
     fetchItems,
     fetchEquipment,
     fetchTools,
+    fetchGear,
+    fetchSpells,
     fetchMagicItems,
     fetchBackgrounds,
     fetchFeats,
@@ -629,6 +377,12 @@ export function CharacterSheet() {
   const [pendingStartingEquipment, setPendingStartingEquipment] = useState<
     StartingEquipmentOption[] | null
   >(null);
+  const [startingEquipmentSource, setStartingEquipmentSource] = useState<
+    "background" | "class"
+  >("background");
+  const prevClassIdRef = useRef<string | undefined>(
+    currentCharacter?.meta.class_id,
+  );
 
   const normalizeStartingEquipmentOptions = (
     options: unknown,
@@ -800,7 +554,13 @@ export function CharacterSheet() {
       const existingTool = currentCharacter.inventory.find(
         (i) => i.item_id === toolItem.id,
       );
-      if (!existingTool) updateInventory(toolItem.id, 1, false);
+      if (!existingTool)
+        updateInventory(
+          toolItem.id,
+          1,
+          false,
+          toolItem.source === "core" ? "core_tool" : "custom_tool",
+        );
       const latestToolItems = currentCharacter.meta.equipment_tool_items || [];
       if (
         !latestToolItems.find(
@@ -822,7 +582,7 @@ export function CharacterSheet() {
     setPendingToolCategory(null);
   };
 
-  const handleStartingEquipmentConfirm = (selectedOption: {
+  const handleStartingEquipmentConfirm = async (selectedOption: {
     label: string;
     items: Array<
       | string
@@ -836,60 +596,64 @@ export function CharacterSheet() {
     gold: number | null;
   }) => {
     if (!currentCharacter || !pendingStartingEquipment) return;
-    const itemsToAdd = selectedOption.items;
-    if (Array.isArray(itemsToAdd)) {
-      itemsToAdd.forEach((item) => {
-        let itemName: string;
-        let itemQuantity: number = 1;
-        let itemUnit: string | null = null;
-        let itemVariant: string | null = null;
-        if (typeof item === "string") itemName = item;
-        else if (typeof item === "object" && item !== null) {
-          if (item.name) {
-            itemName = item.name;
-            itemQuantity = item.quantity ?? 1;
-            itemUnit = item.unit ?? null;
-            itemVariant = item.variant ?? null;
-            if (itemVariant) itemName = `${item.name} (${itemVariant})`;
-          } else return;
-        } else itemName = String(item);
-        const freshCharacter = useCharacterStore.getState().currentCharacter;
-        if (freshCharacter)
-          addItemToInventoryWithQuantity(
-            itemName,
-            itemQuantity,
-            itemUnit,
-            itemVariant,
-            items,
-            equipment,
-            tools,
-            weapons,
-            magicItems,
-            freshCharacter,
-            updateInventory,
-            updateMeta,
-            saveCharacter,
-          );
-      });
-    }
-    if (selectedOption.gold && typeof selectedOption.gold === "number") {
-      const currentGold = currentCharacter.meta.currency_gold || 0;
-      updateMeta({
-        currency_gold: currentGold + selectedOption.gold,
-        background_gold_granted: selectedOption.gold,
-        background_equipment_applied: true,
-      });
+    const store = useCharacterStore.getState();
+
+    if (startingEquipmentSource === "class") {
+      // Handle Class Equipment via Backend
+      try {
+        await store.applyClassStartingEquipment(
+          currentCharacter.meta.class_id!,
+          selectedOption.label,
+        );
+      } catch (error) {
+        console.error("Failed to apply class starting equipment", error);
+      }
     } else {
-      updateMeta({
-        background_gold_granted: 0,
-        background_equipment_applied: true,
-      });
+      // Handle Background Equipment
+      try {
+        const itemsToAdd = selectedOption.items || [];
+        const formattedItems = itemsToAdd.map((item) => {
+          if (typeof item === "string") return { name: item, quantity: 1 };
+          return { name: item.name, quantity: item.quantity || 1 };
+        });
+
+        const gold = selectedOption.gold || 0;
+
+        await store.applyBackgroundStartingEquipment(formattedItems, gold);
+      } catch (error) {
+        console.error("Failed to apply background equipment", error);
+      }
     }
-    saveCharacter();
+
     setShowStartingEquipmentDialog(false);
     setPendingStartingEquipment(null);
     if (pendingBackground) setPendingBackground(null);
   };
+
+  // Class Change Effect
+  useEffect(() => {
+    if (!currentCharacter || !currentCharacter.meta.class_id) return;
+    const currentClassId = currentCharacter.meta.class_id;
+
+    if (prevClassIdRef.current && prevClassIdRef.current !== currentClassId) {
+      // Class Changed -> Fetch Options
+      invoke("get_class_starting_equipment_options", {
+        classId: currentClassId,
+      })
+        .then((options: any) => {
+          if (Array.isArray(options) && options.length > 0) {
+            // Cast to compatible type
+            setPendingStartingEquipment(options as StartingEquipmentOption[]);
+            setStartingEquipmentSource("class");
+            setShowStartingEquipmentDialog(true);
+          }
+        })
+        .catch((err) =>
+          console.error("Failed to fetch class equipment options", err),
+        );
+    }
+    prevClassIdRef.current = currentClassId;
+  }, [currentCharacter?.meta.class_id]);
 
   useEffect(() => {
     if (!currentCharacter || !backgrounds.length) return;
@@ -951,6 +715,11 @@ export function CharacterSheet() {
         });
       }
 
+      // Clear legacy/manual items
+      useCharacterStore
+        .getState()
+        .applyBackgroundStartingEquipment([], 0, false);
+
       const oldToolName = getToolName(previousBackground.data?.tool);
       const choiceToolName = currentCharacter.meta.background_tool_choice;
       const toolToRemove = choiceToolName || oldToolName;
@@ -990,6 +759,12 @@ export function CharacterSheet() {
     };
 
     const onBackgroundChanged = () => {
+      console.log(
+        "Background Changed Logic Triggered. Previous:",
+        previousBackgroundId,
+        "Current:",
+        currentBackgroundId,
+      );
       resetDialogs();
       const previousBackground = backgrounds.find(
         (bg) => bg.id === previousBackgroundId,
@@ -1150,6 +925,33 @@ export function CharacterSheet() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [saveCharacter]);
+
+  const handleExportPDF = useCallback(async () => {
+    if (!currentCharacter || !currentClass || !currentSpecies) return;
+
+    try {
+      const service = new PDFExportService(
+        currentCharacter,
+        currentClass,
+        currentSpecies,
+        spells,
+      );
+      const pdfBytes = await service.generatePDF();
+      await invoke("save_pdf_bytes", {
+        name: currentCharacter.meta.name,
+        bytes: Array.from(pdfBytes),
+      });
+    } catch (error) {
+      console.error("PDF Export failed:", error);
+    }
+  }, [currentCharacter, currentClass, currentSpecies, spells]);
+
+  useEffect(() => {
+    const unlisten = listen("menu-export-pdf", handleExportPDF);
+    return () => {
+      unlisten.then((f) => f());
+    };
+  }, [handleExportPDF]);
 
   if (!currentCharacter) {
     return (
@@ -1319,235 +1121,235 @@ export function CharacterSheet() {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 px-4 pb-4 border-t border-border/30 pt-4">
-          <div className="flex flex-col min-w-[120px] space-y-1">
-            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
-              Spieler
-            </label>
-            <input
-              type="text"
-              value={currentCharacter.meta.player_name || ""}
-              onChange={(e) => updateMeta({ player_name: e.target.value })}
-              onBlur={() => saveCharacter()}
-              placeholder="Spielername"
-              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
-            />
-          </div>
-          <div className="flex flex-col min-w-[120px] space-y-1">
-            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
-              Alter
-            </label>
-            <input
-              type="text"
-              value={currentCharacter.appearance?.age || ""}
-              onChange={(e) => updateAppearance({ age: e.target.value })}
-              onBlur={() => saveCharacter()}
-              placeholder="Alter"
-              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
-            />
-          </div>
-          <div className="flex flex-col min-w-[120px] space-y-1">
-            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
-              Geschlecht
-            </label>
-            <select
-              value={currentCharacter.meta.gender || ""}
-              onChange={(e) => {
-                updateMeta({ gender: e.target.value || undefined });
-                saveCharacter();
-              }}
-              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 cursor-pointer hover:text-primary transition-colors focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 truncate"
-            >
-              <option value="" className="bg-card">
-                —
-              </option>
-              <option value="männlich" className="bg-card">
-                Männlich
-              </option>
-              <option value="weiblich" className="bg-card">
-                Weiblich
-              </option>
-              <option value="divers" className="bg-card">
-                Divers
-              </option>
-            </select>
-          </div>
-          <div className="flex flex-col min-w-[120px] space-y-1">
-            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
-              Herkunft
-            </label>
-            <select
-              value={currentCharacter.meta.background_id || ""}
-              onChange={(e) => {
-                updateMeta({ background_id: e.target.value });
-                setTimeout(saveCharacter, 100);
-              }}
-              className="w-full bg-transparent text-xs sm:text-sm font-medium text-foreground/80 outline-none border-none cursor-pointer hover:text-primary transition-colors truncate"
-            >
-              <option value="" disabled className="bg-card">
-                Hintergrund wählen
-              </option>
-              {backgrounds.map((bg) => (
-                <option
-                  key={bg.id}
-                  value={bg.id}
-                  className="bg-card text-foreground"
-                >
-                  {bg.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="flex flex-col min-w-[120px] space-y-1">
-            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
-              Gesinnung
-            </label>
-            <select
-              value={currentCharacter.meta.alignment || ""}
-              onChange={(e) => updateMeta({ alignment: e.target.value })}
-              onBlur={() => saveCharacter()}
-              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 cursor-pointer hover:text-primary transition-colors focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 truncate"
-            >
-              <option value="" className="bg-card">
-                —
-              </option>
-              <option value="RG" className="bg-card">
-                RG (Rechtschaffen Gut)
-              </option>
-              <option value="NG" className="bg-card">
-                NG (Neutral Gut)
-              </option>
-              <option value="CG" className="bg-card">
-                CG (Chaotisch Gut)
-              </option>
-              <option value="RN" className="bg-card">
-                RN (Rechtschaffen Neutral)
-              </option>
-              <option value="N" className="bg-card">
-                N (Neutral)
-              </option>
-              <option value="CN" className="bg-card">
-                CN (Chaotisch Neutral)
-              </option>
-              <option value="RB" className="bg-card">
-                RB (Rechtschaffen Böse)
-              </option>
-              <option value="NB" className="bg-card">
-                NB (Neutral Böse)
-              </option>
-              <option value="CB" className="bg-card">
-                CB (Chaotisch Böse)
-              </option>
-            </select>
-          </div>
-          <div className="flex flex-col min-w-[120px] space-y-1">
-            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
-              Glaube
-            </label>
-            <input
-              type="text"
-              value={currentCharacter.meta.faith || ""}
-              onChange={(e) => updateMeta({ faith: e.target.value })}
-              onBlur={() => saveCharacter()}
-              placeholder="Glaube/Religion"
-              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
-            />
-          </div>
-          <div className="flex flex-col min-w-[120px] space-y-1">
-            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
-              Augen
-            </label>
-            <input
-              type="text"
-              value={currentCharacter.appearance?.eyes || ""}
-              onChange={(e) => updateAppearance({ eyes: e.target.value })}
-              onBlur={() => saveCharacter()}
-              placeholder="Augenfarbe"
-              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
-            />
-          </div>
-          <div className="flex flex-col min-w-[120px] space-y-1">
-            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
-              Haare
-            </label>
-            <input
-              type="text"
-              value={currentCharacter.appearance?.hair || ""}
-              onChange={(e) => updateAppearance({ hair: e.target.value })}
-              onBlur={() => saveCharacter()}
-              placeholder="Haarfarbe"
-              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
-            />
-          </div>
-          <div className="flex flex-col min-w-[120px] space-y-1">
-            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
-              Haut
-            </label>
-            <input
-              type="text"
-              value={currentCharacter.appearance?.skin || ""}
-              onChange={(e) => updateAppearance({ skin: e.target.value })}
-              onBlur={() => saveCharacter()}
-              placeholder="Hautfarbe"
-              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
-            />
-          </div>
-          <div className="flex flex-col min-w-[120px] space-y-1">
-            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
-              Größe
-            </label>
-            <input
-              type="text"
-              value={currentCharacter.appearance?.height || ""}
-              onChange={(e) => updateAppearance({ height: e.target.value })}
-              onBlur={() => saveCharacter()}
-              placeholder={
-                currentCharacter.meta.use_metric
-                  ? "Größe (cm)"
-                  : "Größe (ft/in)"
-              }
-              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
-            />
-          </div>
-          <div className="flex flex-col min-w-[120px] space-y-1">
-            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
-              Gewicht
-            </label>
-            <input
-              type="text"
-              value={currentCharacter.appearance?.weight || ""}
-              onChange={(e) => updateAppearance({ weight: e.target.value })}
-              onBlur={() => saveCharacter()}
-              placeholder={
-                currentCharacter.meta.use_metric
-                  ? "Gewicht (kg)"
-                  : "Gewicht (lbs)"
-              }
-              className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
-            />
-          </div>
-          <div className="flex flex-col min-w-[120px] space-y-1">
-            <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
-              Größenkat.
-            </label>
-            <span className="w-full text-xs sm:text-sm font-medium text-foreground/80 px-2 py-1 truncate">
-              {(() => {
-                const size = currentSpecies?.data?.size;
-                if (!size) return "Mittel";
-                const sizeMap: Record<string, string> = {
-                  Small: "Klein",
-                  Medium: "Mittel",
-                  Large: "Groß",
-                  Tiny: "Winzig",
-                  Huge: "Riesig",
-                  Gargantuan: "Gigantisch",
-                };
-                return sizeMap[size] || size;
-              })()}
-            </span>
-          </div>
-        </div>
       </header>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 px-4 pb-4 border-t border-border/30 pt-4">
+        <div className="flex flex-col min-w-[120px] space-y-1">
+          <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+            Spieler
+          </label>
+          <input
+            type="text"
+            value={currentCharacter.meta.player_name || ""}
+            onChange={(e) => updateMeta({ player_name: e.target.value })}
+            onBlur={() => saveCharacter()}
+            placeholder="Spielername"
+            className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+          />
+        </div>
+        <div className="flex flex-col min-w-[120px] space-y-1">
+          <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+            Alter
+          </label>
+          <input
+            type="text"
+            value={currentCharacter.appearance?.age || ""}
+            onChange={(e) => updateAppearance({ age: e.target.value })}
+            onBlur={() => saveCharacter()}
+            placeholder="Alter"
+            className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+          />
+        </div>
+        <div className="flex flex-col min-w-[120px] space-y-1">
+          <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+            Geschlecht
+          </label>
+          <select
+            value={currentCharacter.meta.gender || ""}
+            onChange={(e) => {
+              updateMeta({ gender: e.target.value || undefined });
+              saveCharacter();
+            }}
+            className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 cursor-pointer hover:text-primary transition-colors focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 truncate"
+          >
+            <option value="" className="bg-card">
+              —
+            </option>
+            <option value="männlich" className="bg-card">
+              Männlich
+            </option>
+            <option value="weiblich" className="bg-card">
+              Weiblich
+            </option>
+            <option value="divers" className="bg-card">
+              Divers
+            </option>
+          </select>
+        </div>
+        <div className="flex flex-col min-w-[120px] space-y-1">
+          <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+            Herkunft
+          </label>
+          <select
+            value={currentCharacter.meta.background_id || ""}
+            onChange={(e) => {
+              console.log("Background Selection Changed to:", e.target.value);
+              updateMeta({ background_id: e.target.value });
+              saveCharacter();
+            }}
+            className="w-full bg-transparent text-xs sm:text-sm font-medium text-foreground/80 outline-none border-none cursor-pointer hover:text-primary transition-colors truncate"
+          >
+            <option value="" disabled className="bg-card">
+              Hintergrund wählen
+            </option>
+            {backgrounds.map((bg) => (
+              <option
+                key={bg.id}
+                value={bg.id}
+                className="bg-card text-foreground"
+              >
+                {bg.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex flex-col min-w-[120px] space-y-1">
+          <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+            Gesinnung
+          </label>
+          <select
+            value={currentCharacter.meta.alignment || ""}
+            onChange={(e) => updateMeta({ alignment: e.target.value })}
+            onBlur={() => saveCharacter()}
+            className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 cursor-pointer hover:text-primary transition-colors focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 truncate"
+          >
+            <option value="" className="bg-card">
+              —
+            </option>
+            <option value="RG" className="bg-card">
+              RG (Rechtschaffen Gut)
+            </option>
+            <option value="NG" className="bg-card">
+              NG (Neutral Gut)
+            </option>
+            <option value="CG" className="bg-card">
+              CG (Chaotisch Gut)
+            </option>
+            <option value="RN" className="bg-card">
+              RN (Rechtschaffen Neutral)
+            </option>
+            <option value="N" className="bg-card">
+              N (Neutral)
+            </option>
+            <option value="CN" className="bg-card">
+              CN (Chaotisch Neutral)
+            </option>
+            <option value="RB" className="bg-card">
+              RB (Rechtschaffen Böse)
+            </option>
+            <option value="NB" className="bg-card">
+              NB (Neutral Böse)
+            </option>
+            <option value="CB" className="bg-card">
+              CB (Chaotisch Böse)
+            </option>
+          </select>
+        </div>
+        <div className="flex flex-col min-w-[120px] space-y-1">
+          <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+            Glaube
+          </label>
+          <input
+            type="text"
+            value={currentCharacter.meta.faith || ""}
+            onChange={(e) => updateMeta({ faith: e.target.value })}
+            onBlur={() => saveCharacter()}
+            placeholder="Glaube/Religion"
+            className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+          />
+        </div>
+        <div className="flex flex-col min-w-[120px] space-y-1">
+          <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+            Augen
+          </label>
+          <input
+            type="text"
+            value={currentCharacter.appearance?.eyes || ""}
+            onChange={(e) => updateAppearance({ eyes: e.target.value })}
+            onBlur={() => saveCharacter()}
+            placeholder="Augenfarbe"
+            className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+          />
+        </div>
+        <div className="flex flex-col min-w-[120px] space-y-1">
+          <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+            Haare
+          </label>
+          <input
+            type="text"
+            value={currentCharacter.appearance?.hair || ""}
+            onChange={(e) => updateAppearance({ hair: e.target.value })}
+            onBlur={() => saveCharacter()}
+            placeholder="Haarfarbe"
+            className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+          />
+        </div>
+        <div className="flex flex-col min-w-[120px] space-y-1">
+          <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+            Haut
+          </label>
+          <input
+            type="text"
+            value={currentCharacter.appearance?.skin || ""}
+            onChange={(e) => updateAppearance({ skin: e.target.value })}
+            onBlur={() => saveCharacter()}
+            placeholder="Hautfarbe"
+            className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+          />
+        </div>
+        <div className="flex flex-col min-w-[120px] space-y-1">
+          <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+            Größe
+          </label>
+          <input
+            type="text"
+            value={currentCharacter.appearance?.height || ""}
+            onChange={(e) => updateAppearance({ height: e.target.value })}
+            onBlur={() => saveCharacter()}
+            placeholder={
+              currentCharacter.meta.use_metric ? "Größe (cm)" : "Größe (ft/in)"
+            }
+            className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+          />
+        </div>
+        <div className="flex flex-col min-w-[120px] space-y-1">
+          <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+            Gewicht
+          </label>
+          <input
+            type="text"
+            value={currentCharacter.appearance?.weight || ""}
+            onChange={(e) => updateAppearance({ weight: e.target.value })}
+            onBlur={() => saveCharacter()}
+            placeholder={
+              currentCharacter.meta.use_metric
+                ? "Gewicht (kg)"
+                : "Gewicht (lbs)"
+            }
+            className="w-full bg-transparent border-none outline-none text-xs sm:text-sm font-medium text-foreground/80 placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary/30 rounded px-2 py-1 transition-all truncate"
+          />
+        </div>
+        <div className="flex flex-col min-w-[120px] space-y-1">
+          <label className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] text-muted-foreground/70">
+            Größenkat.
+          </label>
+          <span className="w-full text-xs sm:text-sm font-medium text-foreground/80 px-2 py-1 truncate">
+            {(() => {
+              const size = currentSpecies?.data?.size;
+              if (!size) return "Mittel";
+              const sizeMap: Record<string, string> = {
+                Small: "Klein",
+                Medium: "Mittel",
+                Large: "Groß",
+                Tiny: "Winzig",
+                Huge: "Riesig",
+                Gargantuan: "Gigantisch",
+              };
+              return sizeMap[size] || size;
+            })()}
+          </span>
+        </div>
+      </div>
       <div className="w-full mb-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
         <button
           onClick={() => setActiveTab("combat")}
@@ -1598,14 +1400,13 @@ export function CharacterSheet() {
           />
         )}
         {activeTab === "spells" && (
-          <div className="p-20 text-center bg-card rounded-[4rem] border-2 border-border animate-in fade-in duration-500">
-            <Wand2 size={80} className="mx-auto mb-8 text-primary opacity-20" />
-            <h2 className="text-4xl font-black italic font-serif mb-4 text-foreground">
-              Zauberbuch
-            </h2>
-            <p className="text-muted-foreground italic">
-              Hier werden bald alle deine arkane Künste gelistet.
-            </p>
+          <div className="space-y-6 animate-in fade-in duration-500 pb-20">
+            <div className="bg-card p-6 rounded-[2rem] border-2 border-border shadow-lg">
+              <h3 className="text-2xl font-black uppercase tracking-wider text-muted-foreground mb-6">
+                ZAUBERBUCH
+              </h3>
+              <SpellbookTable />
+            </div>
           </div>
         )}
         {activeTab === "inventory" && (
@@ -1614,88 +1415,13 @@ export function CharacterSheet() {
               <h3 className="text-2xl font-black uppercase tracking-wider text-muted-foreground mb-6">
                 AUSRÜSTUNG & INVENTAR
               </h3>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="space-y-6">
-                  <div className="bg-muted/20 border-2 border-border rounded-2xl p-5 shadow-md">
-                    <label className="text-sm font-black uppercase tracking-wider text-primary block mb-4 pb-2 border-b-2 border-primary/30">
-                      AM KÖRPER
-                    </label>
-                    <EquipmentList
-                      items={
-                        currentCharacter.meta.equipment_on_body_items || []
-                      }
-                      onChange={(items) => {
-                        updateMeta({ equipment_on_body_items: items });
-                        saveCharacter();
-                      }}
-                      placeholder="Item hinzufügen..."
-                    />
-                  </div>
-                  <div className="bg-muted/20 border-2 border-border rounded-2xl p-5 shadow-md">
-                    <label className="text-sm font-black uppercase tracking-wider text-primary block mb-4 pb-2 border-b-2 border-primary/30">
-                      IM RUCKSACK
-                    </label>
-                    <EquipmentList
-                      items={
-                        currentCharacter.meta.equipment_in_backpack_items || []
-                      }
-                      onChange={(items) => {
-                        updateMeta({ equipment_in_backpack_items: items });
-                        saveCharacter();
-                      }}
-                      placeholder="Item hinzufügen..."
-                    />
-                  </div>
-                  <div className="bg-muted/20 border-2 border-border rounded-2xl p-5 shadow-md">
-                    <label className="text-sm font-black uppercase tracking-wider text-primary block mb-4 pb-2 border-b-2 border-primary/30">
-                      WERKZEUGE
-                    </label>
-                    <EquipmentList
-                      items={currentCharacter.meta.equipment_tool_items || []}
-                      onChange={(items) => {
-                        updateMeta({ equipment_tool_items: items });
-                        saveCharacter();
-                      }}
-                      placeholder="Werkzeug hinzufügen..."
-                    />
-                  </div>
-                </div>
-                <div className="space-y-6">
-                  <div className="bg-muted/20 border-2 border-border rounded-2xl p-5 shadow-md">
-                    <label className="text-sm font-black uppercase tracking-wider text-primary block mb-4 pb-2 border-b-2 border-primary/30">
-                      AUF PACKTIER/LASTKARREN
-                    </label>
-                    <EquipmentList
-                      items={
-                        currentCharacter.meta.equipment_on_pack_animal_items ||
-                        []
-                      }
-                      onChange={(items) => {
-                        updateMeta({ equipment_on_pack_animal_items: items });
-                        saveCharacter();
-                      }}
-                      placeholder="Item hinzufügen..."
-                    />
-                  </div>
-                  <div className="bg-muted/20 border-2 border-border rounded-2xl p-5 shadow-md">
-                    <label className="text-sm font-black uppercase tracking-wider text-primary block mb-4 pb-2 border-b-2 border-primary/30">
-                      IM NIMMERVOLLEN BEUTEL
-                    </label>
-                    <EquipmentList
-                      items={
-                        currentCharacter.meta
-                          .equipment_in_bag_of_holding_items || []
-                      }
-                      onChange={(items) => {
-                        updateMeta({
-                          equipment_in_bag_of_holding_items: items,
-                        });
-                        saveCharacter();
-                      }}
-                      placeholder="Item hinzufügen..."
-                    />
-                  </div>
-                </div>
+              <div className="mt-8">
+                <InventoryTable
+                  character={currentCharacter}
+                  gear={gear}
+                  tools={tools}
+                  items={items}
+                />
               </div>
               <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 pt-6 border-t border-border">
                 <div className="lg:col-span-3 space-y-4">
@@ -1720,78 +1446,11 @@ export function CharacterSheet() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="number"
-                        min="0"
-                        step="0.1"
-                        value={currentCharacter.meta.total_weight_kg || 0}
-                        onChange={(e) =>
-                          updateMeta({
-                            total_weight_kg: parseFloat(e.target.value) || 0,
-                          })
-                        }
-                        onBlur={() => saveCharacter()}
-                        className="flex-1 h-10 border border-border rounded-lg p-2 text-sm focus:border-primary outline-none transition-colors bg-muted/30"
-                        readOnly
-                      />
-                      <span className="text-sm font-bold text-muted-foreground">
-                        {currentCharacter.meta.use_metric ? "kg" : "lbs"}
-                      </span>
+                    {/* Currency & Encumbrance Section */}
+                    <div className="bg-card/50 p-6 rounded-[2rem] border-2 border-border/50 shadow-sm space-y-8 animate-in slide-in-from-top-4 duration-500">
+                      <EncumbranceBar />
+                      <CurrencyTable />
                     </div>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-sm font-black uppercase tracking-wider text-muted-foreground block mb-2">
-                      GOLD
-                    </label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={currentCharacter.meta.currency_gold || 0}
-                      onChange={(e) =>
-                        updateMeta({
-                          currency_gold: parseInt(e.target.value) || 0,
-                        })
-                      }
-                      onBlur={() => saveCharacter()}
-                      className="w-full h-10 border border-border rounded-lg p-2 text-sm focus:border-primary outline-none transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm font-black uppercase tracking-wider text-muted-foreground block mb-2">
-                      SILBER
-                    </label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={currentCharacter.meta.currency_silver || 0}
-                      onChange={(e) =>
-                        updateMeta({
-                          currency_silver: parseInt(e.target.value) || 0,
-                        })
-                      }
-                      onBlur={() => saveCharacter()}
-                      className="w-full h-10 border border-border rounded-lg p-2 text-sm focus:border-primary outline-none transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm font-black uppercase tracking-wider text-muted-foreground block mb-2">
-                      KUPFER
-                    </label>
-                    <input
-                      type="number"
-                      min="0"
-                      value={currentCharacter.meta.currency_copper || 0}
-                      onChange={(e) =>
-                        updateMeta({
-                          currency_copper: parseInt(e.target.value) || 0,
-                        })
-                      }
-                      onBlur={() => saveCharacter()}
-                      className="w-full h-10 border border-border rounded-lg p-2 text-sm focus:border-primary outline-none transition-colors"
-                    />
                   </div>
                 </div>
               </div>
@@ -1812,7 +1471,7 @@ export function CharacterSheet() {
       </main>
       {showAbilityChoiceDialog && pendingSpecies && currentCharacter && (
         <AbilityScoreChoiceDialog
-          species={pendingSpecies}
+          species={pendingSpecies!}
           currentAttributes={currentCharacter.attributes}
           onConfirm={handleAbilityChoiceConfirm}
           onCancel={() => {
@@ -1827,7 +1486,7 @@ export function CharacterSheet() {
         pendingBackground.data?.ability_scores && (
           <BackgroundAbilityScoreDialog
             backgroundName={pendingBackground.name}
-            abilityScores={pendingBackground.data.ability_scores}
+            abilityScores={pendingBackground.data!.ability_scores!}
             currentAttributes={currentCharacter.attributes}
             onConfirm={handleBackgroundAbilityConfirm}
             onCancel={() => {
@@ -1839,7 +1498,7 @@ export function CharacterSheet() {
       {showToolChoiceDialog && pendingToolCategory && (
         <ToolChoiceDialog
           backgroundName={currentBackground?.name || ""}
-          toolCategory={pendingToolCategory}
+          toolCategory={pendingToolCategory!}
           availableTools={tools}
           onConfirm={handleToolChoiceConfirm}
           onCancel={() => {
@@ -1851,7 +1510,7 @@ export function CharacterSheet() {
       {showStartingEquipmentDialog && pendingStartingEquipment && (
         <StartingEquipmentDialog
           backgroundName={currentBackground?.name || ""}
-          options={pendingStartingEquipment}
+          options={pendingStartingEquipment!}
           onConfirm={handleStartingEquipmentConfirm}
           onCancel={() => {
             setShowStartingEquipmentDialog(false);

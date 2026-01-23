@@ -96,7 +96,9 @@ dnd_nexus-sheet_engine/
 │   │   ├── logger.ts             # Logging-Utilities
 │   │   ├── errors.ts             # Fehlerbehandlung
 │   │   ├── consoleExporter.ts    # Debug-Export
-│   │   └── types/
+│   │   ├── PDFExportService.ts   # PDF-Generierung (Frontend)
+│   │   ├── uiConstants.ts        # UI-Konstanten
+│   │   ├── types/
 │   │       ├── weapons.ts
 │   │       └── armors.ts
 │   ├── main.tsx                  # React Entry Point
@@ -116,12 +118,20 @@ dnd_nexus-sheet_engine/
 │   │   │   ├── settings.rs       # Einstellungen
 │   │   │   ├── files.rs          # Datei-Operationen
 │   │   │   ├── pdf.rs            # PDF-Export
+│   │   │   ├── features.rs       # Klassen-Features
+│   │   │   ├── subclasses.rs     # Subklassen
 │   │   │   └── logging.rs        # Logging
 │   │   ├── db/                   # Datenbank-Layer
 │   │   │   ├── mod.rs            # DB-Initialisierung
 │   │   │   ├── migrations.rs     # Schema-Migrationen
 │   │   │   ├── queries.rs        # SQL-Queries
-│   │   │   └── seed.rs           # Seed-Daten
+│   │   │   ├── seed.rs           # Seed-Daten
+│   │   │   ├── features.rs       # Feature-Daten
+│   │   │   ├── inventory.rs      # Inventar-Management
+│   │   │   ├── modifiers.rs      # Modifikatoren-Daten
+│   │   │   ├── spells.rs         # Zauber-Daten
+│   │   │   ├── stats.rs          # Statistik-Queries
+│   │   │   └── validation.rs     # Datenvalidierung
 │   │   ├── types/                # Rust-Typen
 │   │   │   ├── mod.rs
 │   │   │   ├── character.rs
@@ -207,6 +217,13 @@ dnd_nexus-sheet_engine/
 - `core_feats` / `custom_feats` - Talente
 - `core_skills` - Fertigkeiten (nur Core)
 - `core_gear` / `custom_gear` - Ausrüstung (Legacy)
+- `core_subclasses` / `custom_subclasses` - Subklassen
+- `core_class_features` / `custom_class_features` - Klassen-Features
+- `core_feature_options` / `custom_feature_options` - Feature-Optionen
+- `core_progression_tables` / `custom_progression_tables` - Aufstiegstabellen
+- `feature_prerequisites` - Feature-Voraussetzungen
+- `core_mag_items_base` / `custom_mag_items_base` - Magische Gegenstände (Basis)
+  - `*_armor`, `*_weapons`, `*_wondrous`, `*_jewelry`, `*_consumables`, `*_focus_items`
 
 #### Mapping-Tabellen
 - `weapon_property_mappings` - Waffen ↔ Eigenschaften
@@ -215,9 +232,14 @@ dnd_nexus-sheet_engine/
 - `weapon_masteries` - Waffen-Meisterschaften (Referenztabelle)
 - `armor_properties` - Rüstungs-Eigenschaften (Referenztabelle)
 - `background_starting_equipment` - Hintergrund-Ausrüstung
+- `class_starting_equipment` - Klassen-Ausrüstung
+- `core_equipment_items` / `custom_equipment_items` - Ausrüstungspaket-Inhalte (Items)
+- `core_equipment_tools` / `custom_equipment_tools` - Ausrüstungspaket-Inhalte (Tools)
+- `core_mag_item_crafting` / `custom_mag_item_crafting` - Crafting-Rezepte
 
 #### Anwendungs-Daten
 - `characters` - Charaktere (JSON-Speicher)
+- `character_inventory` - Charakter-Inventar
 - `settings` - Einstellungen (Key-Value)
 
 #### Views

@@ -51,6 +51,17 @@ pub struct CustomWeapon {
     pub is_homebrew: Option<bool>,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct WeaponMinimal {
+    pub id: String,
+    pub name: String,
+    pub category: String,
+    pub damage_dice: String,
+    pub damage_type: String,
+    pub cost_gp: f64,
+    pub source: String,
+}
+
 
 
 

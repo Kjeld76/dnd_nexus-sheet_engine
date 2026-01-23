@@ -9,13 +9,11 @@ fn main() {
     let cwd = env::current_dir().unwrap();
     println!("Current working directory: {:?}", cwd);
 
+    // NUR Root-Datenbank verwenden - KEINE DB in src-tauri
     let possible_paths = [
-        "dnd-nexus.db",
-        "../dnd-nexus.db",
+        "../dnd-nexus.db",  // Root-DB (Haupt-DB)
         "../../dnd-nexus.db",
-        "sync.db",
-        "../sync.db",
-        "C:/Users/mario/.cursor/projects/dnd_nexus/dnd-nexus.db",
+        "dnd-nexus.db",  // Fallback (sollte nicht existieren)
     ];
     
     let mut db_path = None;

@@ -1,32 +1,5 @@
-#![allow(dead_code)]
+pub const STR_CAPACITY_FACTOR_KG: f64 = 7.5;
+pub const STR_MAX_LIFT_FACTOR_KG: f64 = 15.0;
 
-pub fn convert_to_metric(value: f32, unit: &str) -> f32 {
-    match unit {
-        "ft" => value * 0.3,
-        "lbs" => value * 0.4535,
-        _ => value,
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_conversions() {
-        assert!((convert_to_metric(30.0, "ft") - 9.0).abs() < 0.001);
-        assert!((convert_to_metric(10.0, "lbs") - 4.535).abs() < 0.001);
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
+// MagicContainer code removed as it was unused and flagged by compiler.
+// See git history if restore is needed.

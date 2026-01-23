@@ -20,6 +20,8 @@ pub struct Character {
     pub feats: Vec<String>,
     #[serde(default)]
     pub inventory: Vec<CharacterItem>,
+    #[serde(default)]
+    pub spells: Vec<CharacterSpell>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -60,7 +62,11 @@ pub struct CharacterMeta {
     #[serde(default)]
     pub equipment_tool_items: Option<Vec<EquipmentListItem>>,
     #[serde(default)]
+    pub currency_platinum: Option<i32>,
+    #[serde(default)]
     pub currency_gold: Option<i32>,
+    #[serde(default)]
+    pub currency_electrum: Option<i32>,
     #[serde(default)]
     pub currency_silver: Option<i32>,
     #[serde(default)]
@@ -71,6 +77,43 @@ pub struct CharacterMeta {
     pub equipment_in_bag_of_holding: Option<String>,
     #[serde(default)]
     pub total_weight_kg: Option<f64>,
+    // Spell Slots
+    #[serde(default)]
+    pub spell_slots_1: i32,
+    #[serde(default)]
+    pub spell_slots_2: i32,
+    #[serde(default)]
+    pub spell_slots_3: i32,
+    #[serde(default)]
+    pub spell_slots_4: i32,
+    #[serde(default)]
+    pub spell_slots_5: i32,
+    #[serde(default)]
+    pub spell_slots_6: i32,
+    #[serde(default)]
+    pub spell_slots_7: i32,
+    #[serde(default)]
+    pub spell_slots_8: i32,
+    #[serde(default)]
+    pub spell_slots_9: i32,
+    #[serde(default)]
+    pub spell_slots_used_1: i32,
+    #[serde(default)]
+    pub spell_slots_used_2: i32,
+    #[serde(default)]
+    pub spell_slots_used_3: i32,
+    #[serde(default)]
+    pub spell_slots_used_4: i32,
+    #[serde(default)]
+    pub spell_slots_used_5: i32,
+    #[serde(default)]
+    pub spell_slots_used_6: i32,
+    #[serde(default)]
+    pub spell_slots_used_7: i32,
+    #[serde(default)]
+    pub spell_slots_used_8: i32,
+    #[serde(default)]
+    pub spell_slots_used_9: i32,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -119,9 +162,52 @@ pub struct CharacterProficiencies {
 pub struct CharacterItem {
     pub id: String,
     pub item_id: String,
+    #[serde(default)]
+    pub item_type: Option<String>,
     pub quantity: i32,
     pub is_equipped: bool,
+    #[serde(default)]
+    pub is_attuned: bool,
+    #[serde(default)]
+    pub location: Option<String>,
+    #[serde(default)]
+    pub source: Option<String>,
+    #[serde(default)]
+    pub is_starting_equipment: bool,
     pub custom_data: Option<Value>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct CharacterInventoryEntry {
+    pub id: String,
+    pub character_id: String,
+    pub item_id: String,
+    pub item_type: String,
+    pub quantity: i32,
+    pub is_equipped: bool,
+    pub is_attuned: bool,
+    pub container_id: Option<String>,
+    pub custom_name: Option<String>,
+    pub custom_description: Option<String>,
+    pub data: Option<Value>,
+    pub created_at: Option<i64>,
+    pub updated_at: Option<i64>,
+    #[serde(default)]
+    pub location: Option<String>,
+    #[serde(default)]
+    pub source: Option<String>,
+    #[serde(default)]
+    pub is_starting_equipment: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct CharacterSpell {
+    pub id: String,
+    pub spell_id: String,
+    pub is_prepared: bool,
+    #[serde(default)]
+    pub is_always_prepared: bool,
+    pub source: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]

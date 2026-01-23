@@ -11,44 +11,7 @@ import {
 import { useCharacterStore } from "../../lib/store";
 import { calculateDerivedStats } from "../../lib/characterLogic";
 import { formatModifier } from "../../lib/math";
-
-const addToEquipmentList = (
-  currentItems:
-    | Array<{ id: string; name: string; quantity: number }>
-    | undefined,
-  itemName: string,
-  quantity: number = 1,
-): Array<{ id: string; name: string; quantity: number }> => {
-  const items = currentItems || [];
-  const existingItem = items.find((item) => item.name === itemName);
-
-  if (existingItem) {
-    return items.map((item) =>
-      item.id === existingItem.id
-        ? { ...item, quantity: item.quantity + quantity }
-        : item,
-    );
-  }
-
-  return [
-    ...items,
-    {
-      id: crypto.randomUUID(),
-      name: itemName,
-      quantity: quantity,
-    },
-  ];
-};
-
-const removeFromEquipmentList = (
-  currentItems:
-    | Array<{ id: string; name: string; quantity: number }>
-    | undefined,
-  itemName: string,
-): Array<{ id: string; name: string; quantity: number }> => {
-  const items = currentItems || [];
-  return items.filter((item) => item.name !== itemName);
-};
+import { characterApi } from "../../lib/api";
 
 interface Props {
   character: Character;
@@ -56,10 +19,15 @@ interface Props {
 }
 
 export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
-  const { updateInventory, saveCharacter, updateMeta } = useCharacterStore();
+  const { updateInventory, refreshInventory } = useCharacterStore();
   const [showAddDialog, setShowAddDialog] = useState(false);
   const attackByWeaponId = React.useMemo(() => {
-    const stats = calculateDerivedStats(character, undefined, weapons);
+    const stats = calculateDerivedStats(
+      character,
+      undefined,
+      undefined,
+      weapons,
+    );
     const map = new Map<string, (typeof stats.weapon_attacks)[number]>();
     stats.weapon_attacks.forEach((a) => map.set(a.weapon_id, a));
     return map;
@@ -74,15 +42,19 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
 
     const nextInventory = currentCharacter.inventory.map((it) => {
       if (it.id !== inventoryItemId) return it;
-      const prev =
-        (it.custom_data as Record<string, unknown> | undefined) ?? {};
-      return { ...it, custom_data: updater(prev) };
+      const prev = (it.data as Record<string, unknown> | undefined) ?? {};
+      return { ...it, data: updater(prev) };
     });
 
     useCharacterStore.setState({
       currentCharacter: { ...currentCharacter, inventory: nextInventory },
     });
-    saveCharacter();
+
+    // Save the specific item
+    const item = nextInventory.find((it) => it.id === inventoryItemId);
+    if (item) {
+      characterApi.updateInventoryItem(item).then(() => refreshInventory());
+    }
   };
 
   const normalize = (v: string) => v.trim().toLowerCase();
@@ -127,28 +99,35 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
     if (existingItem) {
       const weapon = weapons.find((w) => w.id === weaponId);
       const newEquippedState = !existingItem.is_equipped;
+      const itemType =
+        weapon?.source === "core" ? "core_weapon" : "custom_weapon";
+      updateInventory(
+        weaponId,
+        existingItem.quantity,
+        newEquippedState,
+        itemType,
+      );
 
-      updateInventory(weaponId, existingItem.quantity, newEquippedState);
-
-      if (weapon) {
-        const updatedCharacter = useCharacterStore.getState().currentCharacter;
-        const currentItems =
-          updatedCharacter?.meta.equipment_on_body_items ||
-          currentCharacter.meta.equipment_on_body_items ||
-          [];
-        const newItems = newEquippedState
-          ? addToEquipmentList(currentItems, weapon.name, existingItem.quantity)
-          : removeFromEquipmentList(currentItems, weapon.name);
-        updateMeta({ equipment_on_body_items: newItems });
+      // Persist equipped state
+      const updatedItem = useCharacterStore
+        .getState()
+        .currentCharacter?.inventory.find((it) => it.item_id === weaponId);
+      if (updatedItem) {
+        characterApi
+          .updateInventoryItem(updatedItem)
+          .then(() => refreshInventory());
       }
-
-      saveCharacter();
     }
   };
 
   const handleAddWeapon = (weaponId: string) => {
-    updateInventory(weaponId, 1, false);
-    saveCharacter();
+    const weapon = weapons.find((w) => w.id === weaponId);
+    const itemType =
+      weapon?.source === "core" ? "core_weapon" : "custom_weapon";
+    updateInventory(weaponId, 1, false, itemType);
+
+    // We still call saveCharacter here because adding a new item affects the Character JSON blob too
+    useCharacterStore.getState().saveCharacter();
     setShowAddDialog(false);
   };
 
@@ -164,7 +143,7 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
         ),
       },
     });
-    saveCharacter();
+    useCharacterStore.getState().saveCharacter();
   };
 
   const getInventoryWeapons = () => {
@@ -261,10 +240,7 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
             {inventoryWeapons.map(({ weapon, ...invItem }) => {
               const isEquipped = invItem.is_equipped;
               const atk = attackByWeaponId.get(weapon.id);
-              const custom = (invItem.custom_data ?? {}) as Record<
-                string,
-                unknown
-              >;
+              const custom = (invItem.data ?? {}) as Record<string, unknown>;
               const versatileDamage =
                 typeof (weapon.data as { versatile_damage?: unknown })
                   ?.versatile_damage === "string"
@@ -403,7 +379,7 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                         const nextInventory = currentCharacter.inventory.map(
                           (it) => {
                             const prev =
-                              (it.custom_data as
+                              (it.data as
                                 | Record<string, unknown>
                                 | undefined) ?? {};
                             const next = { ...prev };
@@ -434,7 +410,7 @@ export const WeaponsTable: React.FC<Props> = ({ character, weapons }) => {
                             inventory: nextInventory,
                           },
                         });
-                        saveCharacter();
+                        useCharacterStore.getState().saveCharacter();
                       }}
                       className={`px-2 py-1 rounded border text-[10px] font-black uppercase tracking-wider transition-all shrink-0 disabled:opacity-40 disabled:cursor-not-allowed ${
                         isOffhand

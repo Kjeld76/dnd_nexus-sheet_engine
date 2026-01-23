@@ -4,7 +4,8 @@ import { Shield, Zap, Wind, Heart, Sparkles, Sword } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { formatModifier } from "../../lib/math";
 import { calculateDerivedStats } from "../../lib/characterLogic";
-import { DEFAULT_SPEED_M } from "../../lib/uiConstants";
+import { UI_LOCKED_FIELD_CLASS } from "../../lib/uiConstants";
+import { AutomatedHelper } from "../ui/AutomatedHelper";
 
 interface Props {
   character: Character;
@@ -22,11 +23,9 @@ export const CombatStats: React.FC<Props> = ({
   const stats = calculateDerivedStats(
     character,
     characterClass,
+    characterSpecies,
     inventoryItems,
   );
-
-  // Speed comes from species, not class (PHB 2024)
-  const speed = characterSpecies?.data?.speed || DEFAULT_SPEED_M;
 
   return (
     <div className="flex flex-col gap-3">
@@ -36,6 +35,7 @@ export const CombatStats: React.FC<Props> = ({
           label="Rüstungsklasse"
           value={stats.ac}
           color="primary"
+          isLocked
         />
 
         <StatCard
@@ -43,17 +43,15 @@ export const CombatStats: React.FC<Props> = ({
           label="Initiative"
           value={formatModifier(stats.initiative)}
           color="amber"
+          isLocked
         />
 
         <StatCard
           icon={Wind}
           label="Bewegung"
-          value={
-            character.meta.use_metric
-              ? `${speed}m`
-              : `${Math.round(speed / 0.3)}ft`
-          }
+          value={`${stats.movement_speed}${stats.speed_unit}`}
           color="blue"
+          isLocked
         />
 
         <StatCard
@@ -62,6 +60,7 @@ export const CombatStats: React.FC<Props> = ({
           value={stats.hp_max}
           color="red"
           isMain
+          isLocked
         />
       </div>
 
@@ -118,12 +117,14 @@ function StatCard({
   value,
   color,
   isMain = false,
+  isLocked = false,
 }: {
   icon: LucideIcon;
   label: string;
   value: React.ReactNode;
   color: string;
   isMain?: boolean;
+  isLocked?: boolean;
 }) {
   const colorMap: Record<string, string> = {
     primary: "text-primary bg-primary/10 border-primary/20",
@@ -137,8 +138,14 @@ function StatCard({
       className={cn(
         "bg-card p-3 rounded-lg border border-border flex flex-col items-center justify-center transition-all group relative overflow-hidden active:scale-95 shadow-lg shadow-foreground/[0.02]",
         isMain ? "border-b-2 border-b-red-500/20" : "",
+        isLocked ? UI_LOCKED_FIELD_CLASS : "",
       )}
     >
+      {isLocked && (
+        <div className="absolute top-2 right-2">
+          <AutomatedHelper />
+        </div>
+      )}
       <div
         className={cn(
           "absolute top-0 left-0 w-full h-1 opacity-20 transition-opacity group-hover:opacity-100",

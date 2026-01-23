@@ -3,6 +3,8 @@ import { calculateModifier, formatModifier } from "../../lib/math";
 import { Species } from "../../lib/types";
 import { getTraitEffectsForSpecies, TraitEffect } from "../../lib/traitParser";
 import { TrendingUp } from "lucide-react";
+import { UI_LOCKED_FIELD_CLASS } from "../../lib/uiConstants";
+import { AutomatedHelper } from "../ui/AutomatedHelper";
 
 interface Props {
   name: string;
@@ -73,10 +75,15 @@ const AttributeBlockComponent: React.FC<Props> = ({
 
       <div className="mt-2 w-full flex items-center justify-center gap-12">
         <div className="flex flex-col items-center gap-1">
-          <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground/70">
-            Mod
-          </span>
-          <div className="text-lg font-black text-primary bg-muted/50 px-3 py-1 rounded-lg border border-border min-w-[55px] text-center shadow-inner tracking-tight group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all duration-300">
+          <div className="flex items-center gap-1">
+            <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground/70">
+              Mod
+            </span>
+            <AutomatedHelper size={10} />
+          </div>
+          <div
+            className={`text-lg font-black text-primary px-3 py-1 rounded-lg border min-w-[55px] text-center shadow-inner tracking-tight transition-all duration-300 ${UI_LOCKED_FIELD_CLASS}`}
+          >
             {modifierText}
           </div>
         </div>

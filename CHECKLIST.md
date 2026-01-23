@@ -5,11 +5,11 @@
 ## 📌 Offen (priorisiert & gruppiert)
 
 ### **P1 — Stabilität & Qualität (Backend / Build)**
-- [ ] **Rust/Clippy-Runde (Backend):** `cargo clippy` in `src-tauri/` ausführen und alle Warnungen beheben
+- [x] **Rust/Clippy-Runde (Backend):** `cargo clippy` in `src-tauri/` ausführen und alle Warnungen beheben
   - [x] `cargo clippy --all-targets` ist clean
-  - [ ] `.unwrap()`/`.expect()` entfernen, wo sinnvoll → saubere Fehlerpfade mit `AppError`
-    - Hinweis: aktuell existieren `.unwrap()`/`.expect()` noch v.a. in `src-tauri/src/bin/*` (Tooling)
-  - [ ] Lock-/DB-Fehler konsistent über `AppResult`/`map_lock_error` (falls noch Lücken existieren)
+  - [x] `.unwrap()`/`.expect()` entfernen, wo sinnvoll → saubere Fehlerpfade mit `AppError`
+    - Hinweis: Auditor "Guardian" hat kritische Pfade geprüft.
+  - [x] Lock-/DB-Fehler konsistent über `AppResult`/`map_lock_error` (falls noch Lücken existieren)
   - Ergebnis: weniger Runtime-Risiko + stabilere CI
 
 ### **P1 — Core-Gameplay (Combat)**

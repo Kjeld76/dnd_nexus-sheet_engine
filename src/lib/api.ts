@@ -23,6 +23,8 @@ import {
   Item,
   Equipment,
   MagicItem,
+  CharacterItem,
+  CharacterSpell,
 } from "./types";
 
 export const characterApi = {
@@ -40,6 +42,29 @@ export const characterApi = {
   },
   async list(): Promise<Character[]> {
     return await invoke("list_characters");
+  },
+  async getInventory(characterId: string): Promise<CharacterItem[]> {
+    return await invoke("get_character_inventory", {
+      character_id: characterId,
+    });
+  },
+  async updateInventoryItem(item: CharacterItem): Promise<void> {
+    await invoke("update_inventory_item", { item });
+  },
+  async getSpells(characterId: string): Promise<CharacterSpell[]> {
+    return await invoke("get_character_spells", { character_id: characterId });
+  },
+  async updateSpellPreparation(
+    id: string,
+    is_prepared: boolean,
+  ): Promise<void> {
+    await invoke("update_spell_preparation", { id, is_prepared });
+  },
+  async invoke(
+    command: string,
+    args: Record<string, unknown> = {},
+  ): Promise<any> {
+    return await invoke(command, args);
   },
 };
 

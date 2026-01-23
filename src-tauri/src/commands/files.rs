@@ -18,7 +18,51 @@ use std::fs;
 #[tauri::command]
 pub async fn backup_database(app: AppHandle) -> Result<String, String> {
     let result: AppResult<String> = (|| {
-        let db_path = std::path::Path::new("dnd-nexus.db");
+        // Finde Root-Datenbank (gleiche Logik wie init_database)
+        let mut db_paths: Vec<std::path::PathBuf> = Vec::new();
+        
+        // Relativ zum Executable
+        if let Ok(exe) = std::env::current_exe() {
+            if let Some(exe_dir) = exe.parent() {
+                let mut current = exe_dir.to_path_buf();
+                for _ in 0..5 {
+                    let db_path = current.join("dnd-nexus.db");
+                    if db_path.exists() {
+                        db_paths.push(db_path);
+                    }
+                    if let Some(parent) = current.parent() {
+                        current = parent.to_path_buf();
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        
+        // Aktuelles Arbeitsverzeichnis
+        if let Ok(cwd) = std::env::current_dir() {
+            let db_path = cwd.join("dnd-nexus.db");
+            if db_path.exists() {
+                db_paths.push(db_path);
+            }
+            if let Some(parent) = cwd.parent() {
+                let db_path = parent.join("dnd-nexus.db");
+                if db_path.exists() {
+                    db_paths.push(db_path);
+                }
+            }
+        }
+        
+        #[cfg(debug_assertions)]
+        {
+            let hardcoded_path = std::path::PathBuf::from("/daten/projects/dnd_nexus-sheet_engine/dnd-nexus.db");
+            if hardcoded_path.exists() {
+                db_paths.push(hardcoded_path);
+            }
+        }
+        
+        let db_path = db_paths.first()
+            .ok_or_else(|| AppError::Other("Root-Datenbank (dnd-nexus.db) nicht gefunden!".into()))?;
         
         let file_path = app.dialog()
             .file()

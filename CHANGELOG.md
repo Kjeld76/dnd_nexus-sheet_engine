@@ -5,6 +5,58 @@ Alle relevanten Änderungen an D&D Nexus werden in dieser Datei dokumentiert.
 Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Fixed
+### Fixed
+- **Autonom:** Mathematische Integrität gegen PHB 2024 verifiziert & Backend Cleanup (via Swarm Agent)
+- **UI:** Versiegelung der UI-Komponenten gegen Layout-Regressionen (Magic Numbers in `uiConstants.ts` zentralisiert)
+
+### Added
+- **Projekt:** Cursor-Regeln (`.cursorrules`) für konsistentes AI-Assisting hinzugefügt
+- **Architecture:** Math-Registry (`docs/math_registry.md`) für zentrale Formel-Validation
+- **PDF-Engine:** High-Fidelity PDF Parser (`pdf-extract`) mit 2-Spalten-Support für Regel-Audits
+- **Agent:** "Sage" Agent Interface (`extract_rule_context`) für Echtzeit-Regelprüfungen gegen PHB 2024
+
+
+## [1.7.16] - 2026-01-18
+### Fixed
+- **TypeScript:** Type-Fehler behoben - `category_label` und `weapon_subtype` zu Weapon/Armor Types hinzugefügt
+- **UI:** Deduplizierung von Rüstungseigenschaften (Stealth Nachteil) + Übersetzung ins Deutsche
+- **UI:** Heavy-Warnung wird nur noch für ausgerüstete Waffen angezeigt
+
+### Changed
+- **Rust Backend:** `expect()` in `main` entfernt, um Abstürze zu vermeiden
+- **Clippy:** Rust-Warnungen behoben
+
+## [1.7.15] - 2026-01-18
+### Added
+- **Combat - Waffenangriffe & Schaden:**
+  - Angriffsbonus und Schaden werden jetzt in der Waffenliste angezeigt
+  - Verbesserte Waffenangriffs-Berechnung mit korrekter Attributs-Ermittlung (STR/DEX für Nahkampf/Fernkampf)
+  - Magische Boni (+1/+2/+3) werden in Angriff **und** Schaden eingerechnet
+  - Unterstützung für Vielseitig (Versatile), Nebenhand (Offhand) und Reichweiten-Labels
+- **Combat - Waffen-Optionen:**
+  - Toggle für Nebenhand (NH) - automatische Validierung, nur eine Waffe kann Nebenhand sein
+  - Toggle für Zweihändig (2H) - nur bei vielseitigen Waffen sichtbar
+  - Zwei-Waffen-Kampf (ZWK) Toggle - nur verfügbar bei Nebenhand-Waffen und wenn Kampfstil vorhanden
+- **Combat - Kampfstile:**
+  - Kampfstile werden nur noch für Klassen angezeigt, die sie haben können (Kämpfer, Paladin, etc.)
+  - Kampfstile werden aus der Datenbank geladen (Feats mit Kategorie "kampfstil")
+  - Deutsche Begriffe für Kampfstile (z.B. "Zwei-Waffen-Kampf" statt "Two-Weapon Fighting")
+  - Validierung: Zwei-Waffen-Kampf erfordert den entsprechenden Kampfstil
+- **UI - Waffenhinweise:**
+  - Heavy-Warnung: Hinweis bei schweren Waffen ohne ausreichendes Attribut
+  - Reach-Hinweis: Anzeige bei Waffen mit Weitreichend-Eigenschaft
+
+### Fixed
+- **Combat:** Deduplizierung von Waffeneigenschaften (Backend + Frontend)
+- **UI:** Responsive Design-Verbesserungen für Charakterblatt
+
+### Changed
+- **Dokumentation:** Kampf-Formelsammlung hinzugefügt (`docs/KAMPF_FORMELSAMMLUNG.md`)
+
+*Hinweis: Die Versionen 1.7.12, 1.7.13 und 1.7.14 wurden übersprungen.*
+
 ## [1.7.11] - 2026-01-17
 ### Changed
 - **Responsive Design - Charakterblatt:** Vollständige Überarbeitung des Layouts für verschiedene Bildschirmgrößen

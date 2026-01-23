@@ -21,6 +21,8 @@ import { calculateDerivedStats } from "../../lib/characterLogic";
 import { formatModifier } from "../../lib/math";
 import { Shield, Zap, Wind } from "lucide-react";
 import { useCharacterStore } from "../../lib/store";
+import { UI_LOCKED_FIELD_CLASS } from "../../lib/uiConstants";
+import { AutomatedHelper } from "../ui/AutomatedHelper";
 
 interface Props {
   character: Character;
@@ -51,10 +53,12 @@ export const CharacterSheetLayout: React.FC<Props> = ({
   onRemoveFeat,
   onRemoveModifier,
 }) => {
-  const stats = calculateDerivedStats(character, characterClass, [
-    ...weapons,
-    ...armor,
-  ]);
+  const stats = calculateDerivedStats(
+    character,
+    characterClass,
+    characterSpecies,
+    [...weapons, ...armor],
+  );
   const speed = characterSpecies?.data?.speed || 9;
   const { updateProficiency } = useCharacterStore();
   const fightingStyles = character.meta.fighting_styles ?? [];
@@ -141,10 +145,13 @@ export const CharacterSheetLayout: React.FC<Props> = ({
                 </div>
               </div>
               <div>
-                <label className="text-sm font-black uppercase tracking-wider text-muted-foreground block mb-1">
+                <label className="text-sm font-black uppercase tracking-wider text-muted-foreground block mb-1 flex items-center gap-1">
                   Übungsbonus
+                  <AutomatedHelper size={10} />
                 </label>
-                <div className="h-8 border border-border rounded flex items-center justify-center font-black text-lg">
+                <div
+                  className={`h-8 border rounded flex items-center justify-center font-black text-lg ${UI_LOCKED_FIELD_CLASS}`}
+                >
                   +{stats.proficiency_bonus}
                 </div>
               </div>

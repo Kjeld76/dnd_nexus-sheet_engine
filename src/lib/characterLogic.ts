@@ -1,4 +1,13 @@
-import { Character, Attributes, Modifier, Class, Armor, Weapon } from "./types";
+import {
+  Character,
+  Attributes,
+  Modifier,
+  Class,
+  Species,
+  Armor,
+  Weapon,
+  CharacterItem,
+} from "./types";
 import { calculateModifier, calculateProficiencyBonus } from "./math";
 
 export interface DerivedStats {
@@ -14,8 +23,11 @@ export interface DerivedStats {
   encumbrance: {
     max: number;
     current: number;
+    status?: string;
   };
   weapon_attacks: WeaponAttack[];
+  movement_speed: number;
+  speed_unit: string;
 }
 
 export interface WeaponAttack {
@@ -53,6 +65,7 @@ export const SKILL_MAP: Record<string, keyof Attributes> = {
 export const calculateDerivedStats = (
   character: Character,
   characterClass?: Class,
+  characterSpecies?: Species,
   inventoryItems: Array<Weapon | Armor> = [],
   activeModifiers: Modifier[] = [],
 ): DerivedStats => {
@@ -115,9 +128,9 @@ export const calculateDerivedStats = (
     return { attack, damage };
   };
   const getInventoryItemMagicBonus = (
-    inv: { custom_data?: Record<string, unknown> } | null | undefined,
+    inv: CharacterItem | null | undefined,
   ) => {
-    const obj = inv?.custom_data;
+    const obj = inv?.data as Record<string, unknown> | undefined;
     if (!obj) return { attack: 0, damage: 0 };
 
     // Unterstützte Keys (flexibel, damit wir keine harte Struktur voraussetzen)
@@ -169,8 +182,8 @@ export const calculateDerivedStats = (
       ? versatile.trim()
       : null;
   };
-  const getOffhandFlags = (inv: { custom_data?: Record<string, unknown> }) => {
-    const obj = inv.custom_data ?? {};
+  const getOffhandFlags = (inv: CharacterItem) => {
+    const obj = (inv.data ?? {}) as Record<string, unknown>;
     const hand = typeof obj.hand === "string" ? normalize(obj.hand) : "";
     const isOffhand =
       hand === "off" ||
@@ -255,11 +268,11 @@ export const calculateDerivedStats = (
   const equippedArmor = character.inventory
     .map((invItem) => ({
       ...invItem,
-      data: inventoryItems.find((i) => i.id === invItem.item_id),
+      compendiumData: inventoryItems.find((i) => i.id === invItem.item_id),
     }))
-    .filter((item) => item.is_equipped && item.data?.category)
+    .filter((item) => item.is_equipped && item.compendiumData?.category)
     .find((item) => {
-      const category = item.data?.category?.toLowerCase() || "";
+      const category = item.compendiumData?.category?.toLowerCase() || "";
       return (
         category !== "schild" &&
         (category.includes("ruestung") ||
@@ -272,14 +285,16 @@ export const calculateDerivedStats = (
   const equippedShield = character.inventory
     .map((invItem) => ({
       ...invItem,
-      data: inventoryItems.find((i) => i.id === invItem.item_id),
+      compendiumData: inventoryItems.find((i) => i.id === invItem.item_id),
     }))
-    .find((item) => item.is_equipped && item.data?.category === "schild");
+    .find(
+      (item) => item.is_equipped && item.compendiumData?.category === "schild",
+    );
 
   let ac = 10 + dexMod; // Base unarmored
 
-  if (equippedArmor && equippedArmor.data) {
-    const armor = equippedArmor.data as Armor;
+  if (equippedArmor && equippedArmor.compendiumData) {
+    const armor = equippedArmor.compendiumData as Armor;
     const category = armor.category?.toLowerCase() || "";
 
     // Use ac_formula if available, otherwise fall back to base_ac
@@ -312,8 +327,8 @@ export const calculateDerivedStats = (
   }
 
   // Add shield bonus
-  if (equippedShield && equippedShield.data) {
-    const shield = equippedShield.data as Armor;
+  if (equippedShield && equippedShield.compendiumData) {
+    const shield = equippedShield.compendiumData as Armor;
     ac += shield.ac_bonus || 2; // Default +2 for shields
   }
 
@@ -363,11 +378,11 @@ export const calculateDerivedStats = (
   const weapon_attacks: WeaponAttack[] = character.inventory
     .map((invItem) => ({
       ...invItem,
-      data: inventoryItems.find((i) => i.id === invItem.item_id),
+      compendiumData: inventoryItems.find((i) => i.id === invItem.item_id),
     }))
-    .filter((item) => item.is_equipped && isWeapon(item.data))
+    .filter((item) => item.is_equipped && isWeapon(item.compendiumData))
     .map((item) => {
-      const weapon = item.data as Weapon;
+      const weapon = item.compendiumData as Weapon;
       const isProficient = isWeaponProficient(weapon);
       const isRanged = isWeaponRanged(weapon);
       const isFinesse = hasWeaponProperty(weapon, "finesse");
@@ -411,13 +426,37 @@ export const calculateDerivedStats = (
     });
 
   // 9. Encumbrance
-  const maxWeight = character.meta.use_metric
-    ? attributes.str * 7.5
-    : attributes.str * 15;
+  // 9. Encumbrance
+  const capacityFactor = character.meta.use_metric ? 7.5 : 15;
+  const maxWeight = attributes.str * capacityFactor;
+
   const currentWeight = character.inventory.reduce((sum, item) => {
+    const loc = item.location || "Body";
+    // Items on Mount or inside MagicContainer do not contribute to character encumbrance
+    if (loc === "Mount" || loc === "MagicContainer") return sum;
+
     const data = inventoryItems.find((i) => i.id === item.item_id);
     return sum + (data?.weight_kg || 0) * item.quantity;
   }, 0);
+
+  // Status determination
+  const liftFactor = character.meta.use_metric ? 15 : 30;
+  const maxLift = attributes.str * liftFactor;
+  let status = "Normal";
+  if (currentWeight > maxLift) status = "Überladen";
+  else if (currentWeight > maxWeight) status = "Belastet";
+
+  // Note: We return raw numbers. Status usage is up to UI.
+  // Actually, let's expose status in encumbrance object if possible,
+  // but DerivedStats interface (lines 14-17) is strict.
+  // I will check if I can add it or if I should just imply it from current/max.
+  // The UI often needs explicit status. I'll stick to current/max for now as per interface.
+  // If I want to change interface, I need to update it in lines 14-17 too.
+  // I'll update the interface in a separate edit if needed, but for now max/current is enough for UI to derive it.
+
+  // Wait, I should double check DerivedStats interface in this file at top.
+  // Lines 14-17: encumbrance: { max: number; current: number; }
+  // I will stick to that for now. The UI can calculate percentages/colors.
 
   // Apply Modifiers
   activeModifiers.forEach((mod) => {
@@ -435,6 +474,14 @@ export const calculateDerivedStats = (
     }
   });
 
+  // --- Movement Speed ---
+  const DEFAULT_SPEED_M = 9;
+  const rawSpeed = characterSpecies?.data?.speed || DEFAULT_SPEED_M;
+  const speed = character.meta.use_metric
+    ? rawSpeed
+    : Math.round(rawSpeed / 0.3);
+  const speedUnit = character.meta.use_metric ? "m" : "ft";
+
   return {
     hp_max,
     ac,
@@ -448,7 +495,10 @@ export const calculateDerivedStats = (
     encumbrance: {
       max: maxWeight,
       current: currentWeight,
+      status,
     },
     weapon_attacks,
+    movement_speed: speed,
+    speed_unit: speedUnit,
   };
 };

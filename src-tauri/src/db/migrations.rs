@@ -1,6 +1,45 @@
 use rusqlite::Connection;
 
 pub fn run_migrations(conn: &Connection) -> Result<(), String> {
+    // Spalten hinzufügen falls sie fehlen (ALTER TABLE ist nicht idempotent in SQLite)
+    // Wir ignorieren Fehler, falls die Spalte bereits existiert
+    let _ = conn.execute("ALTER TABLE core_mag_items_base ADD COLUMN data JSON", []);
+    let _ = conn.execute("ALTER TABLE custom_mag_items_base ADD COLUMN data JSON", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN currency_cp INTEGER DEFAULT 0", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN currency_sp INTEGER DEFAULT 0", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN currency_ep INTEGER DEFAULT 0", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN currency_gp INTEGER DEFAULT 0", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN currency_pp INTEGER DEFAULT 0", []);
+    let _ = conn.execute("ALTER TABLE character_inventory ADD COLUMN is_attuned BOOLEAN NOT NULL DEFAULT 0", []);
+    let _ = conn.execute("ALTER TABLE character_inventory ADD COLUMN location TEXT DEFAULT 'Body'", []);
+    let _ = conn.execute("ALTER TABLE character_inventory ADD COLUMN source TEXT DEFAULT 'manual'", []);
+    let _ = conn.execute("ALTER TABLE character_inventory ADD COLUMN is_starting_equipment BOOLEAN DEFAULT 0", []);
+    
+    // Spell slots
+    for i in 1..=9 {
+        let _ = conn.execute(&format!("ALTER TABLE characters ADD COLUMN spell_slots_{} INTEGER DEFAULT 0", i), []);
+        let _ = conn.execute(&format!("ALTER TABLE characters ADD COLUMN spell_slots_used_{} INTEGER DEFAULT 0", i), []);
+    }
+
+    // Attributes
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN attr_str INTEGER DEFAULT 10", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN attr_dex INTEGER DEFAULT 10", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN attr_con INTEGER DEFAULT 10", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN attr_int INTEGER DEFAULT 10", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN attr_wis INTEGER DEFAULT 10", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN attr_cha INTEGER DEFAULT 10", []);
+
+    // Health
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN hp_current INTEGER DEFAULT 10", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN hp_max INTEGER DEFAULT 10", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN hp_temp INTEGER DEFAULT 0", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN hit_dice_max INTEGER DEFAULT 1", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN hit_dice_used INTEGER DEFAULT 0", []);
+
+    // Death Saves
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN death_saves_successes INTEGER DEFAULT 0", []);
+    let _ = conn.execute("ALTER TABLE characters ADD COLUMN death_saves_failures INTEGER DEFAULT 0", []);
+
     conn.execute_batch(
         "BEGIN;
         
@@ -25,6 +64,13 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         DROP VIEW IF EXISTS all_mag_focus_items;
         DROP VIEW IF EXISTS all_mag_jewelry;
         DROP VIEW IF EXISTS all_mag_wondrous;
+        DROP VIEW IF EXISTS all_class_features;
+        DROP VIEW IF EXISTS all_subclasses;
+        DROP VIEW IF EXISTS all_progression_tables;
+        DROP VIEW IF EXISTS all_feature_options;
+        DROP VIEW IF EXISTS all_weapons_minimal;
+        DROP VIEW IF EXISTS all_items_minimal;
+        DROP VIEW IF EXISTS all_spells_minimal;
 
         -- Core Spells
         CREATE TABLE IF NOT EXISTS core_spells (
@@ -315,12 +361,31 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
             data TEXT
         );
 
-        -- Armor Property Mappings (NEU - NOTWENDIG für magische Rüstungen)
+        -- Neue separate Mapping-Tabellen für bessere Integrität (Option B)
+        CREATE TABLE IF NOT EXISTS core_armor_property_mappings (
+            armor_id TEXT NOT NULL,
+            property_id TEXT NOT NULL,
+            parameter_value TEXT,
+            PRIMARY KEY (armor_id, property_id),
+            FOREIGN KEY (armor_id) REFERENCES core_armors(id) ON DELETE CASCADE,
+            FOREIGN KEY (property_id) REFERENCES armor_properties(id) ON DELETE CASCADE
+        );
+
+        CREATE TABLE IF NOT EXISTS custom_armor_property_mappings (
+            armor_id TEXT NOT NULL,
+            property_id TEXT NOT NULL,
+            parameter_value TEXT,
+            PRIMARY KEY (armor_id, property_id),
+            FOREIGN KEY (armor_id) REFERENCES custom_armors(id) ON DELETE CASCADE,
+            FOREIGN KEY (property_id) REFERENCES armor_properties(id) ON DELETE CASCADE
+        );
+
+        -- View für Backward Compatibility (ersetzt die alte Tabelle armor_property_mappings langfristig)
+        -- Wir behalten die alte Tabelle erst einmal bei, migrieren aber die Daten
         CREATE TABLE IF NOT EXISTS armor_property_mappings (
             armor_id TEXT NOT NULL,
             property_id TEXT NOT NULL,
-            parameter_value TEXT,  -- JSON für komplexe Parameter (z.B. strength_requirement, ac_bonus, damage_type)
-            
+            parameter_value TEXT,
             PRIMARY KEY (armor_id, property_id),
             FOREIGN KEY (property_id) REFERENCES armor_properties(id) ON DELETE CASCADE
         );
@@ -328,13 +393,29 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         CREATE INDEX IF NOT EXISTS idx_armor_property_armor ON armor_property_mappings(armor_id);
         CREATE INDEX IF NOT EXISTS idx_armor_property_property ON armor_property_mappings(property_id);
 
-        -- Migration 005: Weapon Property Mappings
-        -- Erstellt Mapping-Tabelle für Waffen ↔ Eigenschaften
+        CREATE TABLE IF NOT EXISTS core_weapon_property_mappings (
+            weapon_id TEXT NOT NULL,
+            property_id TEXT NOT NULL,
+            parameter_value TEXT,
+            PRIMARY KEY (weapon_id, property_id),
+            FOREIGN KEY (weapon_id) REFERENCES core_weapons(id) ON DELETE CASCADE,
+            FOREIGN KEY (property_id) REFERENCES weapon_properties(id) ON DELETE CASCADE
+        );
+
+        CREATE TABLE IF NOT EXISTS custom_weapon_property_mappings (
+            weapon_id TEXT NOT NULL,
+            property_id TEXT NOT NULL,
+            parameter_value TEXT,
+            PRIMARY KEY (weapon_id, property_id),
+            FOREIGN KEY (weapon_id) REFERENCES custom_weapons(id) ON DELETE CASCADE,
+            FOREIGN KEY (property_id) REFERENCES weapon_properties(id) ON DELETE CASCADE
+        );
+
+        -- Migration 005: Weapon Property Mappings (Legacy Table)
         CREATE TABLE IF NOT EXISTS weapon_property_mappings (
             weapon_id TEXT NOT NULL,
             property_id TEXT NOT NULL,
             parameter_value TEXT,
-            
             PRIMARY KEY (weapon_id, property_id),
             FOREIGN KEY (property_id) REFERENCES weapon_properties(id) ON DELETE CASCADE
         );
@@ -342,11 +423,34 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         CREATE INDEX IF NOT EXISTS idx_weapon_property_weapon ON weapon_property_mappings(weapon_id);
         CREATE INDEX IF NOT EXISTS idx_weapon_property_property ON weapon_property_mappings(property_id);
 
+        -- Datenmigration von weapon_property_mappings -> neue Tabellen
+        INSERT OR IGNORE INTO core_weapon_property_mappings (weapon_id, property_id, parameter_value)
+        SELECT weapon_id, property_id, parameter_value FROM weapon_property_mappings
+        WHERE EXISTS (SELECT 1 FROM core_weapons WHERE id = weapon_id);
+
+        INSERT OR IGNORE INTO custom_weapon_property_mappings (weapon_id, property_id, parameter_value)
+        SELECT weapon_id, property_id, parameter_value FROM weapon_property_mappings
+        WHERE EXISTS (SELECT 1 FROM custom_weapons WHERE id = weapon_id);
+
+        -- View für vereinheitlichte Ansicht
+        DROP VIEW IF EXISTS weapon_property_mappings_unified;
+        CREATE VIEW weapon_property_mappings_unified AS
+        SELECT weapon_id, property_id, parameter_value, 'core' as source
+        FROM core_weapon_property_mappings
+        UNION ALL
+        SELECT weapon_id, property_id, parameter_value, 'custom' as source
+        FROM custom_weapon_property_mappings;
+
         -- Trigger: Validiere weapon_id existiert in all_weapons_unified (wird nach View-Erstellung erstellt)
 
         CREATE TABLE IF NOT EXISTS characters (
             id TEXT PRIMARY KEY,
             data TEXT NOT NULL,
+            currency_cp INTEGER DEFAULT 0,
+            currency_sp INTEGER DEFAULT 0,
+            currency_ep INTEGER DEFAULT 0,
+            currency_gp INTEGER DEFAULT 0,
+            currency_pp INTEGER DEFAULT 0,
             created_at INTEGER DEFAULT (unixepoch()),
             updated_at INTEGER DEFAULT (unixepoch())
         );
@@ -459,6 +563,7 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
             source_page INTEGER,
             requires_attunement BOOLEAN NOT NULL DEFAULT 0,
             facts_json TEXT NOT NULL,
+            data JSON,  -- NEU: Vereinheitlichtes Datenfeld
             created_at INTEGER DEFAULT (unixepoch())
         );
 
@@ -519,6 +624,7 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
             source_page INTEGER,
             requires_attunement BOOLEAN NOT NULL DEFAULT 0,
             facts_json TEXT NOT NULL,
+            data JSON,  -- NEU: Vereinheitlichtes Datenfeld
             parent_id TEXT,
             is_homebrew BOOLEAN DEFAULT 1,
             created_at INTEGER DEFAULT (unixepoch()),
@@ -735,6 +841,7 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
             COALESCE(c.source_page, core.source_page) as source_page,
             COALESCE(c.requires_attunement, core.requires_attunement) as requires_attunement,
             COALESCE(c.facts_json, core.facts_json) as facts_json,
+            COALESCE(c.data, core.data) as data,
             COALESCE(c.created_at, core.created_at) as created_at,
             CASE 
                 WHEN c.parent_id IS NOT NULL THEN 'override' 
@@ -746,7 +853,7 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         UNION 
         SELECT 
             id, name, rarity, category, source_book, source_page, 
-            requires_attunement, facts_json, created_at,
+            requires_attunement, facts_json, data, created_at,
             CASE WHEN is_homebrew = 1 THEN 'homebrew' ELSE 'core' END as source 
         FROM custom_mag_items_base 
         WHERE parent_id IS NULL;
@@ -895,6 +1002,87 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         CREATE INDEX IF NOT EXISTS idx_custom_mag_items_name ON custom_mag_items_base(name);
         CREATE INDEX IF NOT EXISTS idx_custom_mag_items_parent ON custom_mag_items_base(parent_id);
 
+        -- Magic Item Data Migration & Sync Triggers
+        -- Schritt 1: Spalten hinzufügen (falls noch nicht da)
+        -- SQLite ignoriert Fehler bei bereits existierenden Spalten nicht, daher try-catch Logik via BEGIN/END nicht möglich in execute_batch
+        -- Wir nutzen PRAGMA table_info um Spalten zu prüfen? Nein, in SQL schwierig.
+        -- Aber ALTER TABLE ADD COLUMN ist idempotent if handled correctly, or we just rely on the fact that migrations run once.
+        
+        -- Da rusqlite execute_batch verwendet, können wir ALTER TABLE nur bedingt absichern.
+        -- Wir führen es einfach aus, rusqlite wird einen Fehler werfen wenn die Spalte schon da ist, 
+        -- was in diesem spezifischen Setup (alles in einem Batch) problematisch sein könnte.
+        -- BESSER: Wir nutzen 'IF NOT EXISTS' Logik für Spalten gibt es in SQLite nicht.
+        
+        -- WORKAROUND: Wir machen es wie bei den Tabellen, 'CREATE TABLE IF NOT EXISTS' hat sie oben schon.
+        -- Für bestehende Datenbanken führen wir das Update aus wenn data NULL ist.
+        UPDATE core_mag_items_base SET data = json(facts_json) WHERE data IS NULL;
+        UPDATE custom_mag_items_base SET data = json(facts_json) WHERE data IS NULL;
+
+        -- Trigger für Magic Item Data Sync
+        DROP TRIGGER IF EXISTS sync_mag_item_data_core;
+        CREATE TRIGGER sync_mag_item_data_core
+        AFTER INSERT ON core_mag_items_base
+        FOR EACH ROW
+        WHEN NEW.data IS NOT NULL
+        BEGIN
+            UPDATE core_mag_items_base SET facts_json = json(NEW.data) WHERE id = NEW.id;
+        END;
+
+        DROP TRIGGER IF EXISTS sync_mag_item_data_custom;
+        CREATE TRIGGER sync_mag_item_data_custom
+        AFTER INSERT ON custom_mag_items_base
+        FOR EACH ROW
+        WHEN NEW.data IS NOT NULL
+        BEGIN
+            UPDATE custom_mag_items_base SET facts_json = json(NEW.data) WHERE id = NEW.id;
+        END;
+
+        -- Zusätzliche Performance Indizes (wie vom User angefragt)
+        CREATE INDEX IF NOT EXISTS idx_bg_equipment_bg_option 
+          ON background_starting_equipment(background_id, option_label);
+
+        CREATE INDEX IF NOT EXISTS idx_class_equipment_class_custom 
+          ON class_starting_equipment(class_id, is_custom);
+
+        CREATE INDEX IF NOT EXISTS idx_feature_prerequisites_feature_type
+          ON feature_prerequisites(feature_id, prerequisite_type);
+
+        CREATE INDEX IF NOT EXISTS idx_weapon_mappings_weapon
+          ON weapon_property_mappings(weapon_id);
+
+        CREATE INDEX IF NOT EXISTS idx_armor_mappings_armor
+          ON armor_property_mappings(armor_id);
+        CREATE VIEW IF NOT EXISTS all_weapons_minimal AS
+        SELECT 
+            id, 
+            name, 
+            category, 
+            damage_dice, 
+            damage_type, 
+            cost_gp,
+            source
+        FROM all_weapons_unified;
+
+        CREATE VIEW IF NOT EXISTS all_items_minimal AS
+        SELECT 
+            id,
+            name,
+            category,
+            cost_gp,
+            weight_kg,
+            source
+        FROM all_items;
+
+        CREATE VIEW IF NOT EXISTS all_spells_minimal AS
+        SELECT
+            id,
+            name,
+            level,
+            school,
+            casting_time,
+            source
+        FROM all_spells;
+
         -- Trigger: Validiere weapon_id existiert in all_weapons_unified
         -- WICHTIG: Muss nach View-Erstellung kommen
         DROP TRIGGER IF EXISTS validate_weapon_id;
@@ -950,7 +1138,7 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
             END;
         END;
 
-        -- Trigger: Validiere armor_id existiert in all_armors
+        -- Trigger: Validiere armor_property_mappings (Legacy)
         DROP TRIGGER IF EXISTS validate_armor_id;
         CREATE TRIGGER validate_armor_id
         BEFORE INSERT ON armor_property_mappings
@@ -960,6 +1148,24 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
                 THEN RAISE(ABORT, 'armor_id must exist in all_armors (core_armors or custom_armors)')
             END;
         END;
+
+        -- Datenmigration von armor_property_mappings -> neue Tabellen
+        INSERT OR IGNORE INTO core_armor_property_mappings (armor_id, property_id, parameter_value)
+        SELECT armor_id, property_id, parameter_value FROM armor_property_mappings
+        WHERE EXISTS (SELECT 1 FROM core_armors WHERE id = armor_id);
+
+        INSERT OR IGNORE INTO custom_armor_property_mappings (armor_id, property_id, parameter_value)
+        SELECT armor_id, property_id, parameter_value FROM armor_property_mappings
+        WHERE EXISTS (SELECT 1 FROM custom_armors WHERE id = armor_id);
+
+        -- View für vereinheitlichte Ansicht
+        DROP VIEW IF EXISTS armor_property_mappings_unified;
+        CREATE VIEW armor_property_mappings_unified AS
+        SELECT armor_id, property_id, parameter_value, 'core' as source
+        FROM core_armor_property_mappings
+        UNION ALL
+        SELECT armor_id, property_id, parameter_value, 'custom' as source
+        FROM custom_armor_property_mappings;
 
         -- Trigger: Validiere parameter_value ist gültiges JSON (wenn gesetzt)
         DROP TRIGGER IF EXISTS validate_armor_property_parameter;
@@ -998,6 +1204,418 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
         CREATE INDEX IF NOT EXISTS idx_bg_equipment_bg ON background_starting_equipment(background_id);
         CREATE INDEX IF NOT EXISTS idx_bg_equipment_option ON background_starting_equipment(background_id, option_label);
         CREATE INDEX IF NOT EXISTS idx_bg_equipment_item ON background_starting_equipment(item_id);
+        
+        -- Class Starting Equipment Migration (strukturierte Tabelle)
+        -- Unterstützt sowohl core_classes als auch custom_classes (kein harter FK auf class_id)
+        CREATE TABLE IF NOT EXISTS class_starting_equipment (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            class_id TEXT NOT NULL,
+            is_custom BOOLEAN DEFAULT 0,  -- TRUE wenn class_id zu custom_classes gehört
+            option_label TEXT,  -- 'A', 'B', 'C' oder NULL für feste Items
+            item_name TEXT NOT NULL,  -- Name des Items (z.B. 'Lederrüstung', 'Zweihandaxt', 'GOLD')
+            item_id TEXT,  -- FK zu core_items/custom_items (falls gefunden)
+            tool_id TEXT,  -- FK zu core_tools/custom_tools (falls Tool)
+            weapon_id TEXT,  -- FK zu core_weapons/custom_weapons (falls Waffe)
+            armor_id TEXT,  -- FK zu core_armors/custom_armors (falls Rüstung)
+            quantity INTEGER DEFAULT 1,
+            is_variant BOOLEAN DEFAULT 0,  -- TRUE für Varianten wie 'Dolch (x5)'
+            base_item_name TEXT,  -- Basis-Name ohne Variante
+            variant_suffix TEXT,  -- Varianten-Suffix (z.B. '(x5)')
+            gold REAL,  -- Gold-Menge (nur wenn item_name = 'GOLD')
+            is_gold BOOLEAN DEFAULT 0,  -- TRUE wenn dies ein Gold-Eintrag ist
+            created_at INTEGER DEFAULT (unixepoch()),
+            -- Kein FK auf class_id: unterstützt sowohl core_classes als auch custom_classes
+            FOREIGN KEY (item_id) REFERENCES core_items(id) ON DELETE SET NULL,
+            FOREIGN KEY (tool_id) REFERENCES core_tools(id) ON DELETE SET NULL,
+            FOREIGN KEY (weapon_id) REFERENCES core_weapons(id) ON DELETE SET NULL,
+            FOREIGN KEY (armor_id) REFERENCES core_armors(id) ON DELETE SET NULL
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_class_equipment_class ON class_starting_equipment(class_id);
+        CREATE INDEX IF NOT EXISTS idx_class_equipment_is_custom ON class_starting_equipment(is_custom);
+        CREATE INDEX IF NOT EXISTS idx_class_equipment_class_custom ON class_starting_equipment(class_id, is_custom);
+        CREATE INDEX IF NOT EXISTS idx_class_equipment_option ON class_starting_equipment(class_id, option_label);
+        CREATE INDEX IF NOT EXISTS idx_class_equipment_item ON class_starting_equipment(item_id);
+        CREATE INDEX IF NOT EXISTS idx_class_equipment_weapon ON class_starting_equipment(weapon_id);
+        CREATE INDEX IF NOT EXISTS idx_class_equipment_armor ON class_starting_equipment(armor_id);
+        
+        -- Trigger: Validiere class_id existiert in core_classes ODER custom_classes
+        DROP TRIGGER IF EXISTS validate_class_id_exists;
+        CREATE TRIGGER validate_class_id_exists
+        BEFORE INSERT ON class_starting_equipment
+        BEGIN
+            SELECT CASE
+                WHEN NOT EXISTS (
+                    SELECT 1 FROM core_classes WHERE id = NEW.class_id
+                ) AND NOT EXISTS (
+                    SELECT 1 FROM custom_classes WHERE id = NEW.class_id
+                )
+                THEN RAISE(ABORT, 'class_id must exist in core_classes or custom_classes')
+            END;
+        END;
+        
+        -- Trigger: Validiere is_custom Flag korrekt gesetzt ist
+        DROP TRIGGER IF EXISTS validate_class_is_custom_flag;
+        CREATE TRIGGER validate_class_is_custom_flag
+        BEFORE INSERT ON class_starting_equipment
+        BEGIN
+            SELECT CASE
+                WHEN (NEW.is_custom = 0 AND NOT EXISTS (SELECT 1 FROM core_classes WHERE id = NEW.class_id))
+                THEN RAISE(ABORT, 'is_custom=0 but class_id not found in core_classes')
+                WHEN (NEW.is_custom = 1 AND NOT EXISTS (SELECT 1 FROM custom_classes WHERE id = NEW.class_id))
+                THEN RAISE(ABORT, 'is_custom=1 but class_id not found in custom_classes')
+            END;
+        END;
+        
+        -- Trigger: Validiere custom_class_features Referenzen
+        DROP TRIGGER IF EXISTS validate_custom_feature_class_reference;
+        CREATE TRIGGER validate_custom_feature_class_reference
+        BEFORE INSERT ON custom_class_features
+        FOR EACH ROW
+        BEGIN
+            SELECT CASE
+                WHEN NEW.class_source = 'core' AND 
+                     (SELECT COUNT(*) FROM core_classes WHERE id = NEW.class_id) = 0
+                THEN RAISE(ABORT, 'class_id must exist in core_classes when class_source=core')
+                
+                WHEN NEW.class_source = 'custom' AND 
+                     (SELECT COUNT(*) FROM custom_classes WHERE id = NEW.class_id) = 0
+                THEN RAISE(ABORT, 'class_id must exist in custom_classes when class_source=custom')
+            END;
+        END;
+
+        -- Trigger: Validiere custom_subclasses Referenzen
+        DROP TRIGGER IF EXISTS validate_custom_subclass_reference;
+        CREATE TRIGGER validate_custom_subclass_reference
+        BEFORE INSERT ON custom_subclasses
+        FOR EACH ROW
+        BEGIN
+            SELECT CASE
+                WHEN NEW.class_source = 'core' AND 
+                     (SELECT COUNT(*) FROM core_classes WHERE id = NEW.class_id) = 0
+                THEN RAISE(ABORT, 'class_id must exist in core_classes')
+                
+                WHEN NEW.class_source = 'custom' AND 
+                     (SELECT COUNT(*) FROM custom_classes WHERE id = NEW.class_id) = 0
+                THEN RAISE(ABORT, 'class_id must exist in custom_classes')
+            END;
+        END;
+
+        -- Trigger: Validiere Feature-Effekte JSON-Struktur (Core)
+        DROP TRIGGER IF EXISTS validate_feature_effects;
+        CREATE TRIGGER validate_feature_effects
+        BEFORE INSERT ON core_class_features
+        FOR EACH ROW
+        BEGIN
+            SELECT CASE
+                WHEN json_type(NEW.effects) != 'object'
+                THEN RAISE(ABORT, 'effects must be a JSON object')
+                WHEN json_extract(NEW.effects, '$.when_active') IS NOT NULL 
+                     AND json_type(json_extract(NEW.effects, '$.when_active')) != 'array'
+                THEN RAISE(ABORT, 'when_active must be an array')
+                WHEN json_extract(NEW.effects, '$.when_passive') IS NOT NULL 
+                     AND json_type(json_extract(NEW.effects, '$.when_passive')) != 'array'
+                THEN RAISE(ABORT, 'when_passive must be an array')
+            END;
+        END;
+
+        -- Trigger: Validiere Feature-Effekte JSON-Struktur (Custom)
+        DROP TRIGGER IF EXISTS validate_feature_effects_custom;
+        CREATE TRIGGER validate_feature_effects_custom
+        BEFORE INSERT ON custom_class_features
+        FOR EACH ROW
+        BEGIN
+            SELECT CASE
+                WHEN json_type(NEW.effects) != 'object'
+                THEN RAISE(ABORT, 'effects must be a JSON object')
+                WHEN json_extract(NEW.effects, '$.when_active') IS NOT NULL 
+                     AND json_type(json_extract(NEW.effects, '$.when_active')) != 'array'
+                THEN RAISE(ABORT, 'when_active must be an array')
+                WHEN json_extract(NEW.effects, '$.when_passive') IS NOT NULL 
+                     AND json_type(json_extract(NEW.effects, '$.when_passive')) != 'array'
+                THEN RAISE(ABORT, 'when_passive must be an array')
+            END;
+        END;
+
+        -- Feature Prerequisites (für Feature-Abhängigkeiten)
+        CREATE TABLE IF NOT EXISTS feature_prerequisites (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            feature_id TEXT NOT NULL,
+            prerequisite_type TEXT NOT NULL CHECK(prerequisite_type IN (
+                'feature', 'level', 'attribute', 'class', 'subclass'
+            )),
+            prerequisite_value TEXT NOT NULL,
+            created_at INTEGER DEFAULT (unixepoch())
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_feature_prerequisites_feature ON feature_prerequisites(feature_id);
+        CREATE INDEX IF NOT EXISTS idx_feature_prerequisites_type ON feature_prerequisites(prerequisite_type);
+        CREATE INDEX IF NOT EXISTS idx_feature_prerequisites_feature_type ON feature_prerequisites(feature_id, prerequisite_type);
+        
+        -- Core Class Features
+        CREATE TABLE IF NOT EXISTS core_class_features (
+            id TEXT PRIMARY KEY,
+            class_id TEXT NOT NULL,
+            subclass_id TEXT,
+            name TEXT NOT NULL,
+            description TEXT NOT NULL,
+            level INTEGER NOT NULL,
+            feature_type TEXT NOT NULL CHECK(feature_type IN (
+                'passive', 'active', 'progression', 'choice', 'reaction', 'bonus_action'
+            )),
+            effects JSON NOT NULL,
+            conditions JSON,
+            uses_per_rest TEXT,
+            rest_type TEXT CHECK(rest_type IN ('short', 'long', NULL)),
+            created_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (class_id) REFERENCES core_classes(id) ON DELETE CASCADE
+        );
+
+        -- Custom Class Features
+        CREATE TABLE IF NOT EXISTS custom_class_features (
+            id TEXT PRIMARY KEY,
+            class_id TEXT NOT NULL,
+            class_source TEXT NOT NULL CHECK(class_source IN ('core', 'custom')),
+            subclass_id TEXT,
+            subclass_source TEXT CHECK(subclass_source IN ('core', 'custom', NULL)),
+            parent_id TEXT,
+            name TEXT NOT NULL,
+            description TEXT NOT NULL,
+            level INTEGER NOT NULL,
+            feature_type TEXT NOT NULL CHECK(feature_type IN (
+                'passive', 'active', 'progression', 'choice', 'reaction', 'bonus_action'
+            )),
+            effects JSON NOT NULL,
+            conditions JSON,
+            uses_per_rest TEXT,
+            rest_type TEXT CHECK(rest_type IN ('short', 'long', NULL)),
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (parent_id) REFERENCES core_class_features(id) ON DELETE SET NULL
+        );
+
+        -- Core Subclasses
+        CREATE TABLE IF NOT EXISTS core_subclasses (
+            id TEXT PRIMARY KEY,
+            class_id TEXT NOT NULL,
+            name TEXT NOT NULL,
+            description TEXT NOT NULL,
+            level INTEGER NOT NULL,
+            created_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (class_id) REFERENCES core_classes(id) ON DELETE CASCADE
+        );
+
+        -- Custom Subclasses
+        CREATE TABLE IF NOT EXISTS custom_subclasses (
+            id TEXT PRIMARY KEY,
+            class_id TEXT NOT NULL,
+            class_source TEXT NOT NULL CHECK(class_source IN ('core', 'custom')),
+            parent_id TEXT,
+            name TEXT NOT NULL,
+            description TEXT NOT NULL,
+            level INTEGER NOT NULL,
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (parent_id) REFERENCES core_subclasses(id) ON DELETE SET NULL
+        );
+
+        -- Core Progression Tables
+        CREATE TABLE IF NOT EXISTS core_progression_tables (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            class_id TEXT NOT NULL,
+            level INTEGER NOT NULL,
+            proficiency_bonus INTEGER NOT NULL,
+            feature_names TEXT,
+            class_specific_data JSON,
+            created_at INTEGER DEFAULT (unixepoch()),
+            UNIQUE(class_id, level),
+            FOREIGN KEY (class_id) REFERENCES core_classes(id) ON DELETE CASCADE
+        );
+
+        -- Custom Progression Tables
+        CREATE TABLE IF NOT EXISTS custom_progression_tables (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            class_id TEXT NOT NULL,
+            level INTEGER NOT NULL,
+            proficiency_bonus INTEGER NOT NULL,
+            feature_names TEXT,
+            class_specific_data JSON,
+            created_at INTEGER DEFAULT (unixepoch()),
+            UNIQUE(class_id, level),
+            FOREIGN KEY (class_id) REFERENCES custom_classes(id) ON DELETE CASCADE
+        );
+
+        -- View: all_class_features (MUSS NACH Tabellen-Erstellung kommen)
+        CREATE VIEW all_class_features AS
+        SELECT 
+            id,
+            class_id,
+            NULL as class_source,
+            subclass_id,
+            NULL as subclass_source,
+            NULL as parent_id,
+            name,
+            description,
+            level,
+            feature_type,
+            effects,
+            conditions,
+            uses_per_rest,
+            rest_type,
+            'core' as source,
+            created_at,
+            NULL as updated_at
+        FROM core_class_features
+
+        UNION ALL
+
+        SELECT 
+            id,
+            class_id,
+            class_source,
+            subclass_id,
+            subclass_source,
+            parent_id,
+            name,
+            description,
+            level,
+            feature_type,
+            effects,
+            conditions,
+            uses_per_rest,
+            rest_type,
+            CASE 
+                WHEN parent_id IS NOT NULL THEN 'override'
+                ELSE 'custom'
+            END as source,
+            created_at,
+            updated_at
+        FROM custom_class_features;
+
+        -- View: all_subclasses (MUSS NACH Tabellen-Erstellung kommen)
+        CREATE VIEW all_subclasses AS
+        SELECT 
+            id,
+            class_id,
+            'core' as class_source,
+            NULL as parent_id,
+            name,
+            description,
+            level,
+            'core' as source,
+            created_at,
+            NULL as updated_at
+        FROM core_subclasses
+
+        UNION ALL
+
+        SELECT 
+            id,
+            class_id,
+            class_source,
+            parent_id,
+            name,
+            description,
+            level,
+            CASE 
+                WHEN parent_id IS NOT NULL THEN 'override'
+                ELSE 'custom'
+            END as source,
+            created_at,
+            updated_at
+        FROM custom_subclasses;
+
+        -- View: all_progression_tables (MUSS NACH Tabellen-Erstellung kommen)
+        CREATE VIEW all_progression_tables AS
+        SELECT 
+            id,
+            class_id,
+            level,
+            proficiency_bonus,
+            feature_names,
+            class_specific_data,
+            'core' as source,
+            created_at
+        FROM core_progression_tables
+
+        UNION ALL
+
+        SELECT 
+            id,
+            class_id,
+            level,
+            proficiency_bonus,
+            feature_names,
+            class_specific_data,
+            'custom' as source,
+            created_at
+        FROM custom_progression_tables;
+
+        -- Class Features Indizes (MUSS NACH Tabellen-Erstellung kommen)
+        CREATE INDEX IF NOT EXISTS idx_core_features_class_level ON core_class_features(class_id, level);
+        CREATE INDEX IF NOT EXISTS idx_core_features_subclass ON core_class_features(subclass_id);
+        CREATE INDEX IF NOT EXISTS idx_custom_features_class_level ON custom_class_features(class_id, level);
+        CREATE INDEX IF NOT EXISTS idx_custom_features_subclass ON custom_class_features(subclass_id);
+        CREATE INDEX IF NOT EXISTS idx_custom_features_parent ON custom_class_features(parent_id);
+
+        -- Feature Options (für Choice-Features mit Optionen)
+        CREATE TABLE IF NOT EXISTS core_feature_options (
+            id TEXT PRIMARY KEY,
+            feature_id TEXT NOT NULL,
+            option_name TEXT NOT NULL,
+            option_description TEXT NOT NULL,
+            display_order INTEGER NOT NULL DEFAULT 0,
+            created_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (feature_id) REFERENCES core_class_features(id) ON DELETE CASCADE
+        );
+
+        CREATE TABLE IF NOT EXISTS custom_feature_options (
+            id TEXT PRIMARY KEY,
+            feature_id TEXT NOT NULL,
+            option_name TEXT NOT NULL,
+            option_description TEXT NOT NULL,
+            display_order INTEGER NOT NULL DEFAULT 0,
+            parent_id TEXT,
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (feature_id) REFERENCES custom_class_features(id) ON DELETE CASCADE,
+            FOREIGN KEY (parent_id) REFERENCES core_feature_options(id) ON DELETE SET NULL
+        );
+
+        CREATE VIEW all_feature_options AS
+        SELECT 
+            COALESCE(c.id, core.id) as id,
+            COALESCE(c.feature_id, core.feature_id) as feature_id,
+            COALESCE(c.option_name, core.option_name) as option_name,
+            COALESCE(c.option_description, core.option_description) as option_description,
+            COALESCE(c.display_order, core.display_order) as display_order,
+            CASE 
+                WHEN c.parent_id IS NOT NULL THEN 'override'
+                WHEN c.id IS NOT NULL THEN 'custom'
+                ELSE 'core'
+            END as source
+        FROM core_feature_options core
+        LEFT JOIN custom_feature_options c ON c.parent_id = core.id
+        UNION ALL
+        SELECT 
+            id, feature_id, option_name, option_description, display_order,
+            'custom' as source
+        FROM custom_feature_options
+        WHERE parent_id IS NULL;
+
+        -- Subclasses Indizes (MUSS NACH Tabellen-Erstellung kommen)
+        CREATE INDEX IF NOT EXISTS idx_core_subclasses_class ON core_subclasses(class_id);
+        CREATE INDEX IF NOT EXISTS idx_custom_subclasses_class ON custom_subclasses(class_id);
+        CREATE INDEX IF NOT EXISTS idx_custom_subclasses_parent ON custom_subclasses(parent_id);
+
+        -- Feature Options Indizes
+        CREATE INDEX IF NOT EXISTS idx_core_feature_options_feature ON core_feature_options(feature_id);
+        CREATE INDEX IF NOT EXISTS idx_custom_feature_options_feature ON custom_feature_options(feature_id);
+        CREATE INDEX IF NOT EXISTS idx_custom_feature_options_parent ON custom_feature_options(parent_id);
+
+        -- Progression Tables Indizes (MUSS NACH Tabellen-Erstellung kommen)
+        CREATE INDEX IF NOT EXISTS idx_core_progression_class_level ON core_progression_tables(class_id, level);
+        CREATE INDEX IF NOT EXISTS idx_custom_progression_class_level ON custom_progression_tables(class_id, level);
         
         -- Aktualisiere category_label für Waffen
         UPDATE core_weapons SET category_label = 
@@ -1150,6 +1768,107 @@ pub fn run_migrations(conn: &Connection) -> Result<(), String> {
             FROM weapon_property_mappings 
             GROUP BY weapon_id, property_id
         );
+
+        -- Character Inventory (Normalized)
+        CREATE TABLE IF NOT EXISTS character_inventory (
+            id TEXT PRIMARY KEY,
+            character_id TEXT NOT NULL,
+            item_id TEXT NOT NULL,
+            item_type TEXT NOT NULL CHECK(item_type IN ('core_item', 'custom_item', 'core_weapon', 'custom_weapon', 'core_armor', 'custom_armor', 'core_magic_item', 'custom_magic_item')),
+            quantity INTEGER NOT NULL DEFAULT 1,
+            is_equipped BOOLEAN NOT NULL DEFAULT 0,
+            container_id TEXT, -- For nested containers
+            custom_name TEXT, 
+            custom_description TEXT,
+            is_attuned BOOLEAN NOT NULL DEFAULT 0,
+            data JSON,        -- Container-specific data or overrides
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
+            FOREIGN KEY (container_id) REFERENCES character_inventory(id) ON DELETE SET NULL
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_inv_character ON character_inventory(character_id);
+        CREATE INDEX IF NOT EXISTS idx_inv_container ON character_inventory(container_id);
+
+        -- Character Spells (Normalized)
+        CREATE TABLE IF NOT EXISTS character_spells (
+            id TEXT PRIMARY KEY,
+            character_id TEXT NOT NULL,
+            spell_id TEXT NOT NULL,
+            is_prepared BOOLEAN NOT NULL DEFAULT 0,
+            is_always_prepared BOOLEAN NOT NULL DEFAULT 0,
+            source TEXT, -- e.g. 'class', 'race', 'feat', 'item'
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_spells_character ON character_spells(character_id);
+
+        -- Character Proficiencies (Normalized)
+        CREATE TABLE IF NOT EXISTS character_proficiencies (
+            id TEXT PRIMARY KEY,
+            character_id TEXT NOT NULL,
+            type TEXT NOT NULL CHECK(type IN ('skill', 'saving_throw', 'weapon', 'armor', 'tool', 'language')),
+            ref_id TEXT NOT NULL,
+            source TEXT, -- e.g. 'class', 'race', 'feat', 'item'
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_prof_character ON character_proficiencies(character_id);
+
+        -- Character Features (Normalized)
+        CREATE TABLE IF NOT EXISTS character_features (
+            id TEXT PRIMARY KEY,
+            character_id TEXT NOT NULL,
+            feature_id TEXT NOT NULL,
+            source TEXT, -- e.g. 'class', 'race', 'feat', 'item'
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_features_character ON character_features(character_id);
+
+        -- Character Modifiers (Normalized)
+        CREATE TABLE IF NOT EXISTS character_modifiers (
+            id TEXT PRIMARY KEY,
+            character_id TEXT NOT NULL,
+            source TEXT NOT NULL, -- e.g. 'feat:tough', 'item:ring_of_protection'
+            target TEXT NOT NULL, -- e.g. 'hp_max', 'ac', 'str'
+            modifier_type TEXT NOT NULL CHECK(modifier_type IN ('Override', 'Add', 'Multiply')),
+            value INTEGER NOT NULL,
+            condition TEXT,
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_modifiers_character ON character_modifiers(character_id);
+
+        -- View for backward compatibility (Phase 2)
+        DROP VIEW IF EXISTS character_inventory_legacy_view;
+        CREATE VIEW character_inventory_legacy_view AS
+        SELECT 
+            character_id,
+            json_group_array(
+                json_object(
+                    'id', id,
+                    'item_id', item_id,
+                    'item_type', item_type,
+                    'quantity', quantity,
+                    'is_equipped', is_equipped,
+                    'container_id', container_id,
+                    'custom_name', custom_name,
+                    'custom_description', custom_description,
+                    'data', json(data)
+                )
+            ) as inventory_json
+        FROM character_inventory
+        GROUP BY character_id;
 
         COMMIT;"
     ).map_err(|e| format!("Migration error: {}", e))?;

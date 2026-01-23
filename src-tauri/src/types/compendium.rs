@@ -66,6 +66,16 @@ pub struct Background {
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct FeatureOption {
+    pub id: String,
+    pub feature_id: String,
+    pub option_name: String,
+    pub option_description: String,
+    pub display_order: i32,
+    pub source: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Armor {
     pub id: String,
     pub name: String,
@@ -213,4 +223,24 @@ pub struct CustomBackground {
     pub data: Value,
     pub parent_id: Option<String>,
     pub is_homebrew: Option<bool>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct ItemMinimal {
+    pub id: String,
+    pub name: String,
+    pub category: String,
+    pub cost_gp: f64,
+    pub weight_kg: f64,
+    pub source: String,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct SpellMinimal {
+    pub id: String,
+    pub name: String,
+    pub level: i32,
+    pub school: String,
+    pub casting_time: String,
+    pub source: String,
 }

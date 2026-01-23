@@ -17,6 +17,9 @@ src-tauri/Cargo.lock
 *.db
 !dnd5e_strict.db
 !sync.db
+# Explizit: Keine DB in src-tauri erlauben
+src-tauri/dnd-nexus.db
+src-tauri/**/*.db
 
 # IDE
 .vscode
