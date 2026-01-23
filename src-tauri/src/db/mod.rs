@@ -1,6 +1,7 @@
 use rusqlite::Connection;
 use std::sync::Mutex;
-use tauri::AppHandle;
+use tauri::{AppHandle, Manager};
+use crate::commands::logging;
 
 pub mod migrations;
 pub mod queries;
@@ -18,6 +19,14 @@ pub fn init_database(_app: &AppHandle) -> Result<Database, String> {
     // NUR Root-Datenbank verwenden - KEINE Runtime-Datenbank mehr
     // Prüfe verschiedene mögliche Pfade zur Root-Datenbank
     let mut project_db_paths: Vec<std::path::PathBuf> = Vec::new();
+
+    // Pfad 0: Tauri Resource Directory (Wichtig für Produktion/Release)
+    if let Ok(resource_dir) = _app.path().resource_dir() {
+        let db_path = resource_dir.join("dnd-nexus.db");
+        if db_path.exists() {
+            project_db_paths.push(db_path);
+        }
+    }
     
     // Pfad 1: Relativ zum Executable (src-tauri/target/... -> ../dnd-nexus.db)
     if let Ok(exe) = std::env::current_exe() {
@@ -80,10 +89,16 @@ pub fn init_database(_app: &AppHandle) -> Result<Database, String> {
     println!("Verwende Root-Datenbank: {:?}", db_path);
     
     let db_path_str = db_path.to_string_lossy().to_string();
-    println!("=== DATENBANK-PFAD: {} ===", db_path_str);
+    let log_msg = format!("Verwende Datenbank: {}", db_path_str);
+    println!("{}", log_msg);
+    let _ = logging::write_log(_app.clone(), log_msg);
     
     // Verbindung herstellen
-    let conn = Connection::open(&db_path).map_err(|e| format!("Konnte Datenbank nicht öffnen ({}): {}", db_path_str, e))?;
+    let conn = Connection::open(&db_path).map_err(|e| {
+        let err_msg = format!("Konnte Datenbank nicht öffnen ({}): {}", db_path_str, e);
+        let _ = logging::write_log(_app.clone(), err_msg.clone());
+        err_msg
+    })?;
     
     // Migrations ausführen (stellt Tabellenstruktur sicher)
     migrations::run_migrations(&conn).map_err(|e| format!("Datenbank-Migration fehlgeschlagen: {}", e))?;

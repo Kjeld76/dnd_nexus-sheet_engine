@@ -88,9 +88,9 @@ fn main() {
             commands::compendium::get_weapons_minimal,
             commands::compendium::get_items_minimal,
             commands::compendium::get_spells_minimal,
-            // commands::logging::write_log,
-            // commands::logging::export_logs,
-            // commands::logging::read_logs,
+            commands::logging::write_log,
+            commands::logging::export_logs,
+            commands::logging::read_logs,
             db::seed::import_phb_data,
             commands::rag::extract_rule_context,
 
