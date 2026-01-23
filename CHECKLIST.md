@@ -13,10 +13,11 @@
   - Ergebnis: weniger Runtime-Risiko + stabilere CI
 
 ### **P1 — Core-Gameplay (Combat)**
-- [ ] **Angriffs-Berechnung:** Angriffswerte mit Waffeneigenschaften und Modifikatoren
+- [x] **Angriffs-Berechnung:** Angriffswerte mit Waffeneigenschaften und Modifikatoren
   - Referenz: `docs/KAMPF_FORMELSAMMLUNG.md`
   - [x] Grundformel (Attribut + Übungsbonus falls geübt) inkl. Finesse/Fernkampf
   - [x] Magische Boni (+1/+2/+3) werden in Angriff **und** Schaden eingerechnet
+
   - [x] Anzeige in Waffenliste (Inventar) + Angriffe-Box nutzt berechnete Werte
   - [ ] Spezialfälle ergänzen: Nebenhand (Two-Weapon Fighting), Versatile/Two-Handed, Wurfwaffen-Range, weitere Property-Effekte
 
@@ -61,7 +62,9 @@
   - Optional: `.light { color-scheme: light; }` ergänzen (Determinismus)
 
 ### ✅ Abgeschlossen
+- [x] **Integration des Sage-Regel-Experten:** High-Fidelity PDF-Parsing & Math-Audit
 - [x] Species Workflow implementiert (automatische Anwendung von Traits, Sprachen)
+
 - [x] Species Traits Komponente erstellt und angezeigt
 - [x] Ability Score Choice Dialog für wählbare Attributsmodifikatoren
 - [x] Traits-Modifikatoren werden in SpeciesTraits angezeigt

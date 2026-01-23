@@ -6,16 +6,19 @@ Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Fixed
-### Fixed
-- **Autonom:** Mathematische Integrität gegen PHB 2024 verifiziert & Backend Cleanup (via Swarm Agent)
-- **UI:** Versiegelung der UI-Komponenten gegen Layout-Regressionen (Magic Numbers in `uiConstants.ts` zentralisiert)
-
 ### Added
-- **Projekt:** Cursor-Regeln (`.cursorrules`) für konsistentes AI-Assisting hinzugefügt
-- **Architecture:** Math-Registry (`docs/math_registry.md`) für zentrale Formel-Validation
-- **PDF-Engine:** High-Fidelity PDF Parser (`pdf-extract`) mit 2-Spalten-Support für Regel-Audits
-- **Agent:** "Sage" Agent Interface (`extract_rule_context`) für Echtzeit-Regelprüfungen gegen PHB 2024
+- **Sage-Agent:** System zur PHB 2024 Regelverifizierung.
+- **PDF-Engine:** High-Fidelity PDF-Parsing-Modul in Rust (`pdf-extract`).
+- **Architecture:** Math-Registry (`docs/math_registry.md`) für zentrale Formel-Validation.
+
+### Fixed
+- **Mathematik:** Konsistenzprüfung aller Kern-Formeln gegen das 2024er Regelwerk.
+- **Backend:** Mathematische Integrität gegen PHB 2024 verifiziert & Backend Cleanup.
+
+### Changed
+- **UI:** UI-Sperre (readOnly) für abgeleitete Werte zur Vermeidung von Fehlberechnungen.
+- **UI:** Versiegelung der UI-Komponenten gegen Layout-Regressionen.
+
 
 
 ## [1.7.16] - 2026-01-18
