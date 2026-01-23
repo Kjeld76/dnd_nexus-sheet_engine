@@ -2634,11 +2634,15 @@ export function Compendium() {
                                 name: weapon.name,
                                 data: weapon.data,
                                 dataType: typeof weapon.data,
-                                dataRange: (weapon.data as any)?.range,
-                                dataAmmunitionType: (weapon.data as any)
-                                  ?.ammunition_type,
-                                dataThrownRange: (weapon.data as any)
-                                  ?.thrown_range,
+                                dataRange: (
+                                  weapon.data as Record<string, unknown>
+                                )?.range,
+                                dataAmmunitionType: (
+                                  weapon.data as Record<string, unknown>
+                                )?.ammunition_type,
+                                dataThrownRange: (
+                                  weapon.data as Record<string, unknown>
+                                )?.thrown_range,
                                 properties: weapon.properties.map((p) => ({
                                   id: p.id,
                                   name: p.name,
@@ -2666,10 +2670,24 @@ export function Compendium() {
                                         const formatParameterValue = (
                                           paramValue: unknown,
                                           propId: string,
-                                          weaponData: any,
+                                          weaponData: Record<string, unknown>,
                                         ): string | null => {
                                           // Versuche zuerst parameter_value
-                                          let parsed: any = null;
+                                          interface ParsedParam {
+                                            range?: {
+                                              normal: number;
+                                              max: number;
+                                            };
+                                            ammunition_type?: string;
+                                            damage?: string;
+                                            unit?: string;
+                                            normal?: number;
+                                            max?: number;
+                                          }
+                                          let parsed:
+                                            | ParsedParam
+                                            | string
+                                            | null = null;
 
                                           if (paramValue != null) {
                                             try {
@@ -2678,7 +2696,9 @@ export function Compendium() {
                                                   ? JSON.parse(paramValue)
                                                   : paramValue;
                                             } catch {
-                                              parsed = paramValue;
+                                              parsed = paramValue as
+                                                | ParsedParam
+                                                | string;
                                             }
                                           }
 
@@ -2703,23 +2723,30 @@ export function Compendium() {
                                             );
                                           }
 
-                                          // Für Wurfwaffen (thrown) - Reichweite aus data.thrown_range oder parameter_value
+                                          // Für Wurfwaffen (thrown)
                                           if (propId === "thrown") {
-                                            // Prüfe zuerst parameter_value, dann weaponData.thrown_range
                                             let range = null;
-                                            if (parsed?.range) {
-                                              range = parsed.range;
+                                            const p = parsed as ParsedParam;
+                                            if (p?.range) {
+                                              range = p.range;
                                             } else if (
-                                              parsed &&
-                                              typeof parsed === "object" &&
-                                              "normal" in parsed &&
-                                              "max" in parsed
+                                              p &&
+                                              typeof p === "object" &&
+                                              "normal" in p &&
+                                              "max" in p
                                             ) {
-                                              range = parsed;
+                                              range = p as {
+                                                normal: number;
+                                                max: number;
+                                              };
                                             } else if (
                                               weaponData?.thrown_range
                                             ) {
-                                              range = weaponData.thrown_range;
+                                              range =
+                                                weaponData.thrown_range as {
+                                                  normal: number;
+                                                  max: number;
+                                                };
                                             }
 
                                             if (
@@ -2732,63 +2759,74 @@ export function Compendium() {
                                             }
                                           }
 
-                                          // Für Fernkampfwaffen (range) - Reichweite aus data.range oder parameter_value
-                                          // WICHTIG: Nur anzeigen, wenn nicht bereits bei "ammunition" angezeigt
+                                          // Für Fernkampfwaffen (range)
                                           if (propId === "range") {
-                                            // Wenn Waffe auch "ammunition" hat, wird Reichweite dort angezeigt
                                             if (hasAmmunition) {
-                                              return null; // Wird bereits bei "ammunition" angezeigt
+                                              return null;
                                             }
 
+                                            const p = parsed as ParsedParam;
                                             const range =
-                                              parsed?.range ||
-                                              parsed ||
+                                              p?.range ||
+                                              (typeof p !== "string"
+                                                ? p
+                                                : null) ||
                                               weaponData?.range;
+
                                             if (
                                               range &&
-                                              (range.normal || range.max)
+                                              typeof range === "object" &&
+                                              ("normal" in range ||
+                                                "max" in range)
                                             ) {
-                                              const normal = range.normal || 0;
-                                              const max = range.max || 0;
+                                              const r = range as {
+                                                normal?: number;
+                                                max?: number;
+                                              };
+                                              const normal = r.normal || 0;
+                                              const max = r.max || 0;
                                               return `${normal}/${max} m`;
                                             }
                                           }
 
-                                          // Für Geschosse (ammunition) - Geschoss-Typ und Reichweite
-                                          // Format: "Geschoss-Typ, normal/max m" oder "normal/max m" (wenn kein Typ)
+                                          // Für Geschosse (ammunition)
                                           if (propId === "ammunition") {
                                             const parts: string[] = [];
+                                            const p = parsed as ParsedParam;
 
-                                            // Geschoss-Typ (Bolzen, Pfeil, Kugel) aus parameter_value oder data.ammunition_type
                                             const ammoType =
-                                              parsed?.ammunition_type ||
-                                              weaponData?.ammunition_type;
+                                              p?.ammunition_type ||
+                                              (weaponData?.ammunition_type as string);
                                             if (ammoType) {
                                               parts.push(ammoType);
                                             }
 
-                                            // Reichweite aus parameter_value oder data.range
-                                            // Prüfe zuerst parameter_value, dann weaponData.range
                                             let range = null;
-                                            if (parsed?.range) {
-                                              range = parsed.range;
+                                            if (p?.range) {
+                                              range = p.range;
                                             } else if (
-                                              parsed &&
-                                              typeof parsed === "object" &&
-                                              "normal" in parsed &&
-                                              "max" in parsed
+                                              p &&
+                                              typeof p === "object" &&
+                                              "normal" in p &&
+                                              "max" in p
                                             ) {
-                                              range = parsed;
+                                              range = p;
                                             } else if (weaponData?.range) {
                                               range = weaponData.range;
                                             }
 
                                             if (
                                               range &&
-                                              (range.normal || range.max)
+                                              typeof range === "object" &&
+                                              ("normal" in range ||
+                                                "max" in range)
                                             ) {
-                                              const normal = range.normal || 0;
-                                              const max = range.max || 0;
+                                              const r = range as {
+                                                normal?: number;
+                                                max?: number;
+                                              };
+                                              const normal = r.normal || 0;
+                                              const max = r.max || 0;
                                               parts.push(`${normal}/${max} m`);
                                             }
 
@@ -2797,17 +2835,18 @@ export function Compendium() {
                                               : null;
                                           }
 
-                                          // Für versatile - Schaden aus data.versatile_damage oder parameter_value
+                                          // Für versatile
                                           if (propId === "versatile") {
+                                            const p = parsed as ParsedParam;
                                             const damage =
-                                              parsed?.damage ||
-                                              weaponData?.versatile_damage;
+                                              p?.damage ||
+                                              (weaponData?.versatile_damage as string);
                                             if (damage) {
                                               return damage;
                                             }
                                           }
 
-                                          // Fallback: JSON formatieren, aber lesbarer
+                                          // Fallback
                                           if (
                                             parsed &&
                                             typeof parsed === "object"

@@ -6,6 +6,8 @@ Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### 
+- **Autonom:**  (via Swarm Agent)
 ### Added
 - **Sage-Agent:** System zur PHB 2024 Regelverifizierung.
 - **PDF-Engine:** High-Fidelity PDF-Parsing-Modul in Rust (`pdf-extract`).
@@ -18,6 +20,7 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v
 ### Changed
 - **UI:** UI-Sperre (readOnly) für abgeleitete Werte zur Vermeidung von Fehlberechnungen.
 - **UI:** Versiegelung der UI-Komponenten gegen Layout-Regressionen.
+- **Code Quality:** Comprehensive cleanup of TypeScript lint errors (resolved `any` types in core components and scripts).
 
 
 

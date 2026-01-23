@@ -12,14 +12,7 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-interface ReportIssue {
-  class: string;
-  level: number;
-  type: 'missing' | 'extra' | 'duplicate' | 'missing_subclass';
-  feature?: string;
-  subclass?: string;
-  description?: string;
-}
+
 
 async function main() {
   const phbText = fs.readFileSync(

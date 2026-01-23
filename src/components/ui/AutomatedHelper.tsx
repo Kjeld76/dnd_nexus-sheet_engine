@@ -1,5 +1,5 @@
 import React from "react";
-import { Bot, Sparkles, Lock } from "lucide-react";
+import { Bot } from "lucide-react";
 import { UI_LOCKED_ICON_CLASS } from "../../lib/uiConstants";
 
 interface Props {

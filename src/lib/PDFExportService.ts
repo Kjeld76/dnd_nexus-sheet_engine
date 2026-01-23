@@ -1,7 +1,11 @@
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
-import { Character, Class, Species, Spell } from "./types";
-import { calculateDerivedStats, SKILL_MAP } from "./characterLogic";
+import { Character, Class, Species, Spell, Attributes } from "./types";
+import {
+  calculateDerivedStats,
+  SKILL_MAP,
+  DerivedStats,
+} from "./characterLogic";
 import { calculateModifier } from "./math";
 
 export class PDFExportService {
@@ -43,7 +47,7 @@ export class PDFExportService {
     return new Uint8Array(this.doc.output("arraybuffer"));
   }
 
-  private addPage1(stats: any) {
+  private addPage1(stats: DerivedStats) {
     this.drawHeader();
     this.drawCombatStats(stats);
     this.drawAttributes();
@@ -52,7 +56,7 @@ export class PDFExportService {
     this.drawWeapons(stats);
   }
 
-  private addPage2(stats: any) {
+  private addPage2(stats: DerivedStats) {
     this.drawInventory(stats);
     this.drawFeaturesAndTraits();
     if (stats.spell_save_dc > 0 || this.character.spells?.length > 0) {
@@ -83,7 +87,7 @@ export class PDFExportService {
     this.currentY += 15;
   }
 
-  private drawCombatStats(stats: any) {
+  private drawCombatStats(stats: DerivedStats) {
     this.doc.setFontSize(14);
     this.doc.text("Kampfwerte", this.margin, this.currentY);
     this.currentY += 8;
@@ -101,7 +105,8 @@ export class PDFExportService {
       { label: "SPEED", value: `${stats.movement_speed}${stats.speed_unit}` },
       {
         label: "GRÖSSE",
-        value: (this.characterSpecies?.data as any)?.size || "M",
+        value:
+          (this.characterSpecies?.data as Record<string, unknown>)?.size || "M",
       },
       { label: "PASSIV-W", value: stats.passive_perception },
     ];
@@ -178,7 +183,7 @@ export class PDFExportService {
     this.currentY += 20;
   }
 
-  private drawSavingThrows(stats: any) {
+  private drawSavingThrows(stats: DerivedStats) {
     this.doc.setFontSize(14);
     this.doc.text("Rettungswürfe", this.margin, this.currentY);
     this.currentY += 5;
@@ -193,9 +198,9 @@ export class PDFExportService {
     };
 
     const saveData = Object.entries(stats.saving_throws).map(
-      ([attr, bonus]: [any, any]) => {
+      ([attr, bonus]: [string, number]) => {
         const isProf = this.character.proficiencies?.saving_throws?.includes(
-          attr,
+          attr as keyof Attributes,
         )
           ? "X"
           : "";
@@ -219,10 +224,12 @@ export class PDFExportService {
       },
     });
 
-    this.currentY = (this.doc as any).lastAutoTable.finalY + 10;
+    this.currentY =
+      (this.doc as unknown as { lastAutoTable: { finalY: number } })
+        .lastAutoTable.finalY + 10;
   }
 
-  private drawSkills(stats: any) {
+  private drawSkills(stats: DerivedStats) {
     this.doc.setFontSize(14);
     this.doc.text("Fertigkeiten", this.margin, this.currentY);
     this.currentY += 5;
@@ -255,17 +262,19 @@ export class PDFExportService {
       },
     });
 
-    this.currentY = (this.doc as any).lastAutoTable.finalY + 10;
+    this.currentY =
+      (this.doc as unknown as { lastAutoTable: { finalY: number } })
+        .lastAutoTable.finalY + 10;
   }
 
-  private drawWeapons(stats: any) {
+  private drawWeapons(stats: DerivedStats) {
     if (!stats.weapon_attacks || stats.weapon_attacks.length === 0) return;
 
     this.doc.setFontSize(14);
     this.doc.text("Waffen & Angriffe", this.margin, this.currentY);
     this.currentY += 5;
 
-    const weaponData = stats.weapon_attacks.map((w: any) => [
+    const weaponData = stats.weapon_attacks.map((w) => [
       w.name,
       w.attack_bonus >= 0 ? `+${w.attack_bonus}` : w.attack_bonus.toString(),
       w.damage,
@@ -283,10 +292,12 @@ export class PDFExportService {
       headStyles: { fillColor: [240, 240, 240], textColor: [0, 0, 0] },
     });
 
-    this.currentY = (this.doc as any).lastAutoTable.finalY + 10;
+    this.currentY =
+      (this.doc as unknown as { lastAutoTable: { finalY: number } })
+        .lastAutoTable.finalY + 10;
   }
 
-  private drawInventory(stats: any) {
+  private drawInventory(stats: DerivedStats) {
     this.doc.setFontSize(14);
     this.doc.text("Ausrüstung & Inventar", this.margin, this.currentY);
 
@@ -357,7 +368,9 @@ export class PDFExportService {
         },
       });
 
-      this.currentY = (this.doc as any).lastAutoTable.finalY + 5;
+      this.currentY =
+        (this.doc as unknown as { lastAutoTable: { finalY: number } })
+          .lastAutoTable.finalY + 5;
     });
 
     this.doc.setFontSize(9);
@@ -367,7 +380,7 @@ export class PDFExportService {
     this.currentY += 15;
   }
 
-  private drawSpellcasting(stats: any) {
+  private drawSpellcasting(stats: DerivedStats) {
     this.doc.setFontSize(14);
     this.doc.text("Zauberwirken", this.margin, this.currentY);
 
@@ -413,7 +426,9 @@ export class PDFExportService {
         headStyles: { fillColor: [240, 240, 240], textColor: [0, 0, 0] },
       });
 
-      this.currentY = (this.doc as any).lastAutoTable.finalY + 10;
+      this.currentY =
+        (this.doc as unknown as { lastAutoTable: { finalY: number } })
+          .lastAutoTable.finalY + 10;
     } else {
       this.currentY += 10;
     }
@@ -439,6 +454,8 @@ export class PDFExportService {
       styles: { fontSize: 8 },
     });
 
-    this.currentY = (this.doc as any).lastAutoTable.finalY + 10;
+    this.currentY =
+      (this.doc as unknown as { lastAutoTable: { finalY: number } })
+        .lastAutoTable.finalY + 10;
   }
 }

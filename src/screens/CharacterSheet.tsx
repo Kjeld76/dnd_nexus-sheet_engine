@@ -122,7 +122,7 @@ const removeBackgroundItem = (
   if (!latestState) return;
 
   const { items, tools, weapons, magicItems, armor } =
-    useCharacterStore.getState() as any;
+    useCompendiumStore.getState();
 
   // 1. Remove from new normalized inventory
   const baseNameForSearch = itemName.includes(" (")
@@ -253,7 +253,7 @@ export function CharacterSheet() {
       let weight = 0;
       if (compendiumItem) {
         // Check for weight_kg property safely
-        const w = (compendiumItem as any).weight_kg;
+        const w = (compendiumItem as { weight_kg?: number }).weight_kg;
         if (typeof w === "number") weight = w;
       }
 
@@ -640,7 +640,7 @@ export function CharacterSheet() {
       invoke("get_class_starting_equipment_options", {
         classId: currentClassId,
       })
-        .then((options: any) => {
+        .then((options: unknown) => {
           if (Array.isArray(options) && options.length > 0) {
             // Cast to compatible type
             setPendingStartingEquipment(options as StartingEquipmentOption[]);

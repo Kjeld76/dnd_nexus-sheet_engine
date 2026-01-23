@@ -113,8 +113,10 @@ export const InventoryTable: React.FC<Props> = ({
 
     return {
       name: invItem.custom_name || match?.name || "Unbekanntes Item",
-      weight: (match as any)?.weight_kg || 0,
-      requiresAttunement: (match as any)?.requires_attunement || false,
+      weight: (match as unknown as Record<string, number>)?.weight_kg || 0,
+      requiresAttunement:
+        (match as unknown as Record<string, boolean>)?.requires_attunement ||
+        false,
     };
   };
 

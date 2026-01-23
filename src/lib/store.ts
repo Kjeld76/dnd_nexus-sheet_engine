@@ -683,14 +683,21 @@ export const useCharacterStore = create<CharacterState>((set, get) => ({
       let slotsMigrated = false;
 
       for (let i = 1; i <= 9; i++) {
-        const slotData = (spellcasting.slots as any)[i];
+        const slotsRecord = spellcasting.slots as Record<
+          string,
+          { total?: number; used?: number }
+        >;
+        const slotData = slotsRecord[i];
+
         if (slotData) {
           if (slotData.total !== undefined) {
-            (slotsToUpdate as any)[`spell_slots_${i}`] = slotData.total;
+            const key = `spell_slots_${i}`;
+            (slotsToUpdate as Record<string, unknown>)[key] = slotData.total;
             slotsMigrated = true;
           }
           if (slotData.used !== undefined) {
-            (slotsToUpdate as any)[`spell_slots_used_${i}`] = slotData.used;
+            const key = `spell_slots_used_${i}`;
+            (slotsToUpdate as Record<string, unknown>)[key] = slotData.used;
             slotsMigrated = true;
           }
         }

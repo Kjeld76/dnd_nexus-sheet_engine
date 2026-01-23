@@ -14,10 +14,7 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-interface LevelFeature {
-  level: number;
-  features: string[];
-}
+
 
 interface SubclassData {
   name: string;
@@ -45,7 +42,7 @@ function parseProgressionTableRow(row: string): { level: number; features: strin
   if (!match) return null;
 
   const level = parseInt(match[1], 10);
-  
+
   // Extrahiere "Klassenmerkmale" Spalte (meist 3. Spalte)
   const columns = row.split('|').map(c => c.trim()).filter(c => c);
   if (columns.length < 3) return null;
@@ -72,12 +69,12 @@ function parseProgressionTableRow(row: string): { level: number; features: strin
 function parseLevelSection(content: string, level: number): string[] {
   const levelHeader = `#### Level ${level}`;
   const nextLevelHeader = `#### Level ${level + 1}`;
-  
+
   const startIdx = content.indexOf(levelHeader);
   if (startIdx === -1) return [];
 
   const endIdx = content.indexOf(nextLevelHeader, startIdx);
-  const section = endIdx === -1 
+  const section = endIdx === -1
     ? content.substring(startIdx)
     : content.substring(startIdx, endIdx);
 
@@ -136,25 +133,25 @@ function featuresMatch(tableFeature: string, actualFeature: string): boolean {
  */
 function parseSubclasses(classSection: string): SubclassData[] {
   const subclasses: SubclassData[] = [];
-  
+
   // Finde "### Unterklassen" Abschnitt
   // Suche nach "### Unterklassen" und extrahiere alles bis zum nächsten "## " (nächste Klasse)
   const subclassStartIdx = classSection.indexOf('### Unterklassen');
   if (subclassStartIdx === -1) return subclasses;
-  
+
   // Finde das Ende: Nächster "## " Header oder Ende des Abschnitts
   const nextClassMatch = classSection.substring(subclassStartIdx).match(/\n## /);
-  const subclassEndIdx = nextClassMatch 
+  const subclassEndIdx = nextClassMatch
     ? subclassStartIdx + nextClassMatch.index
     : classSection.length;
-  
+
   const subclassSection = classSection.substring(subclassStartIdx, subclassEndIdx);
-  
+
   // Finde alle Unterklassen-Header (#### UNTERKLASSENNAME)
   // Verwende Regex, um alle #### Header zu finden
   const lines = subclassSection.split('\n');
   const subclassHeaders: Array<{ name: string; lineIndex: number }> = [];
-  
+
   // Suche nach allen Zeilen, die mit "#### " beginnen (4 # gefolgt von Leerzeichen)
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -176,7 +173,7 @@ function parseSubclasses(classSection: string): SubclassData[] {
   for (let i = 0; i < subclassHeaders.length; i++) {
     const header = subclassHeaders[i];
     const nextHeader = subclassHeaders[i + 1];
-    
+
     // Extrahiere den Inhalt dieser Unterklasse
     const startLine = header.lineIndex + 1; // Nach dem Header
     const endLine = nextHeader ? nextHeader.lineIndex : lines.length;
@@ -185,39 +182,39 @@ function parseSubclasses(classSection: string): SubclassData[] {
 
     // Parse Features nach Level
     const features = new Map<number, string[]>();
-    
+
     // Finde "**Level X:**" Einträge
     const levelRegex = /\*\*Level (\d+):\*\*/g;
     let levelMatch;
     const levelMatches: Array<{ level: number; startIdx: number; endIdx: number }> = [];
-    
+
     // Sammle alle Level-Matches
     while ((levelMatch = levelRegex.exec(subclassContent)) !== null) {
       const level = parseInt(levelMatch[1], 10);
       const startIdx = levelMatch.index + levelMatch[0].length;
-      
+
       // Finde nächsten Level-Eintrag oder Ende
       const nextLevelMatch = subclassContent.substring(startIdx).match(/\*\*Level \d+:\*\*/);
-      const endIdx = nextLevelMatch 
+      const endIdx = nextLevelMatch
         ? startIdx + nextLevelMatch.index
         : subclassContent.length;
-      
+
       levelMatches.push({ level, startIdx, endIdx });
     }
-    
+
     // Parse Features für jedes Level
     for (const levelMatch of levelMatches) {
       const levelSection = subclassContent.substring(levelMatch.startIdx, levelMatch.endIdx);
-      
+
       // Extrahiere Feature-Namen
       const featureRegex = /-\s*\*\*([A-ZÄÖÜ][A-ZÄÖÜ\s]+)\*\*/g;
       const levelFeatures: string[] = [];
       let featureMatch;
-      
+
       while ((featureMatch = featureRegex.exec(levelSection)) !== null) {
         levelFeatures.push(featureMatch[1].trim().toUpperCase());
       }
-      
+
       if (levelFeatures.length > 0) {
         features.set(levelMatch.level, levelFeatures);
       }
@@ -251,11 +248,11 @@ function parseClass(content: string, className: string): ClassData | null {
   // Parse Progressionstabelle
   const progressionTable = new Map<number, string[]>();
   const tableMatch = classSection.match(/### Progressionstabelle:[\s\S]*?\n\n([\s\S]*?)(?=\n###|\n##|$)/);
-  
+
   if (tableMatch) {
     const tableContent = tableMatch[1];
     const rows = tableContent.split('\n').filter(row => row.trim().startsWith('|') && !row.includes('---'));
-    
+
     for (const row of rows) {
       const parsed = parseProgressionTableRow(row);
       if (parsed) {
@@ -304,7 +301,7 @@ function parseClass(content: string, className: string): ClassData | null {
     for (const actualFeature of actual) {
       // Überspringe generische Features
       if (actualFeature.includes('UNTERKLASSENMERKMAL')) continue;
-      
+
       const found = tableFeatures.some(tableFeature => featuresMatch(tableFeature, actualFeature));
       if (!found) {
         extra.push(actualFeature);
@@ -317,13 +314,13 @@ function parseClass(content: string, className: string): ClassData | null {
 
   // Finde doppelte Level
   const duplicateLevels: number[] = [];
-  const levelMatches = classSection.matchAll(/#### Level (\d+)/g);
+  const levelMatches = Array.from(classSection.matchAll(/#### Level (\d+)/g));
   const levelCounts = new Map<number, number>();
   for (const match of levelMatches) {
     const level = parseInt(match[1], 10);
     levelCounts.set(level, (levelCounts.get(level) || 0) + 1);
   }
-  for (const [level, count] of levelCounts.entries()) {
+  for (const [level, count] of Array.from(levelCounts.entries())) {
     if (count > 1) {
       duplicateLevels.push(level);
     }
@@ -335,24 +332,24 @@ function parseClass(content: string, className: string): ClassData | null {
   // Prüfe Unterklassenmerkmale: Für jedes "Unterklassenmerkmal" in der Tabelle
   // muss JEDE Unterklasse ein Feature auf diesem Level haben
   const missingSubclassFeatures = new Map<number, string[]>();
-  
-  for (const [level, tableFeatures] of progressionTable.entries()) {
+
+  for (const [level, tableFeatures] of Array.from(progressionTable.entries())) {
     // Prüfe, ob "Unterklassenmerkmal" in der Tabelle steht
-    const hasSubclassFeature = tableFeatures.some(f => 
+    const hasSubclassFeature = tableFeatures.some(f =>
       f.includes('UNTERKLASSENMERKMAL') || f.includes('UNTERKLASSE')
     );
-    
+
     if (hasSubclassFeature && subclasses.length > 0) {
       // Prüfe, ob ALLE Unterklassen ein Feature auf diesem Level haben
       const missingSubclasses: string[] = [];
-      
+
       for (const subclass of subclasses) {
         const subclassHasFeature = subclass.features.has(level);
         if (!subclassHasFeature) {
           missingSubclasses.push(subclass.name);
         }
       }
-      
+
       if (missingSubclasses.length > 0) {
         missingSubclassFeatures.set(level, missingSubclasses);
       }
@@ -378,14 +375,14 @@ function parseClass(content: string, className: string): ClassData | null {
  */
 function main() {
   const exportPath = path.join(__dirname, '..', 'export_classes.md');
-  
+
   if (!fs.existsSync(exportPath)) {
     console.error(`Datei nicht gefunden: ${exportPath}`);
     process.exit(1);
   }
 
   const content = fs.readFileSync(exportPath, 'utf-8');
-  
+
   const classes = [
     'BARBAR', 'BARDE', 'DRUIDE', 'HEXENMEISTER', 'KLERIKER',
     'KÄMPFER', 'MAGIER', 'MÖNCH', 'PALADIN', 'SCHURKE',
@@ -407,7 +404,7 @@ function main() {
     results.push(classData);
 
     // Zähle Fehler
-    const errors = 
+    const errors =
       classData.missingFeatures.size +
       classData.missingLevels.length +
       classData.duplicateLevels.length +
@@ -427,7 +424,7 @@ function main() {
   // Erstelle Berichtsdatei
   const reportPath = path.join(__dirname, '..', 'CLASS_FEATURES_VERIFICATION_REPORT.md');
   const reportLines: string[] = [];
-  
+
   reportLines.push('# Klassen-Features Prüfbericht');
   reportLines.push('');
   reportLines.push(`**Erstellt am:** ${new Date().toLocaleString('de-DE')}`);
@@ -443,21 +440,21 @@ function main() {
   console.log();
 
   for (const classData of results) {
-    if (classData.missingFeatures.size === 0 && 
-        classData.missingLevels.length === 0 && 
-        classData.duplicateLevels.length === 0 &&
-        classData.extraFeatures.size === 0 &&
-        classData.missingSubclassFeatures.size === 0) {
+    if (classData.missingFeatures.size === 0 &&
+      classData.missingLevels.length === 0 &&
+      classData.duplicateLevels.length === 0 &&
+      classData.extraFeatures.size === 0 &&
+      classData.missingSubclassFeatures.size === 0) {
       continue; // Überspringe Klassen ohne Fehler
     }
 
     const className = classData.name.toUpperCase();
     console.log(`\n## ${className} (${classData.id})`);
     console.log('-'.repeat(80));
-    
+
     reportLines.push(`## ${className} (${classData.id})`);
     reportLines.push('');
-    
+
     // Unterklassen-Info
     if (classData.subclasses.length > 0) {
       console.log(`\n📋 Unterklassen gefunden: ${classData.subclasses.length}`);
@@ -499,7 +496,7 @@ function main() {
       console.log(`\n❌ FEHLENDE FEATURES:`);
       reportLines.push(`### ❌ Fehlende Features`);
       reportLines.push('');
-      for (const [level, features] of classData.missingFeatures.entries()) {
+      for (const [level, features] of Array.from(classData.missingFeatures.entries())) {
         console.log(`   Level ${level}:`);
         reportLines.push(`**Level ${level}:**`);
         for (const feature of features) {
@@ -522,7 +519,7 @@ function main() {
       console.log(`\nℹ️  ZUSÄTZLICHE FEATURES (nicht in Tabelle):`);
       reportLines.push(`### ℹ️ Zusätzliche Features (nicht in Progressionstabelle)`);
       reportLines.push('');
-      for (const [level, features] of classData.extraFeatures.entries()) {
+      for (const [level, features] of Array.from(classData.extraFeatures.entries())) {
         console.log(`   Level ${level}:`);
         reportLines.push(`**Level ${level}:**`);
         for (const feature of features) {
@@ -553,7 +550,7 @@ function main() {
       console.log(`\n❌ FEHLENDE UNTERKLASSENMERKMALE (nicht in allen Unterklassen):`);
       reportLines.push(`### ❌ Fehlende Unterklassenmerkmale`);
       reportLines.push('');
-      for (const [level, missingSubclasses] of classData.missingSubclassFeatures.entries()) {
+      for (const [level, missingSubclasses] of Array.from(classData.missingSubclassFeatures.entries())) {
         console.log(`   Level ${level}:`);
         console.log(`     Progressionstabelle zeigt "Unterklassenmerkmal", aber fehlt in:`);
         reportLines.push(`**Level ${level}:**`);
@@ -586,7 +583,7 @@ function main() {
     console.log(`\n📈 Statistiken:`);
     console.log(`   Progressionstabelle: ${classData.progressionTable.size} Level mit Features`);
     console.log(`   Tatsächliche Features: ${classData.actualFeatures.size} Level mit Features`);
-    
+
     reportLines.push(`### Statistiken`);
     reportLines.push(`- Progressionstabelle: ${classData.progressionTable.size} Level mit Features`);
     reportLines.push(`- Tatsächliche Features: ${classData.actualFeatures.size} Level mit Features`);

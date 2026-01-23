@@ -63,7 +63,7 @@ export const characterApi = {
   async invoke(
     command: string,
     args: Record<string, unknown> = {},
-  ): Promise<any> {
+  ): Promise<unknown> {
     return await invoke(command, args);
   },
 };
