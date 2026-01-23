@@ -263,6 +263,7 @@ export const CharacterSheetLayout: React.FC<Props> = ({
             <HPManagement
               character={character}
               characterClass={characterClass}
+              characterSpecies={characterSpecies}
             />
           </div>
 

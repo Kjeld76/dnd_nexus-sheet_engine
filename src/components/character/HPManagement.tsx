@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Character, Class } from "../../lib/types";
+import { Character, Class, Species } from "../../lib/types";
 import { Heart, Plus, Minus, RotateCcw, Check, X } from "lucide-react";
 import { calculateDerivedStats } from "../../lib/characterLogic";
 import { useCharacterStore } from "../../lib/store";
@@ -7,17 +7,23 @@ import { useCharacterStore } from "../../lib/store";
 interface Props {
   character: Character;
   characterClass?: Class;
+  characterSpecies?: Species;
 }
 
 export const HPManagement: React.FC<Props> = ({
   character,
   characterClass,
+  characterSpecies,
 }) => {
   const { saveCharacter } = useCharacterStore();
   const [editingField, setEditingField] = useState<string | null>(null);
   const [editValue, setEditValue] = useState<string>("");
 
-  const stats = calculateDerivedStats(character, characterClass, []);
+  const stats = calculateDerivedStats(
+    character,
+    characterClass,
+    characterSpecies,
+  );
   const health = character.health;
   const hitDie = (characterClass?.data?.hit_die as number) || 8;
   const conMod = Math.floor((character.attributes.con - 10) / 2);
