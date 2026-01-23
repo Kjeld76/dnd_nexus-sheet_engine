@@ -1,4 +1,5 @@
 use crate::rag::ingest::extract_relevant_pages;
+use std::path::Path;
 
 
 #[tauri::command]
