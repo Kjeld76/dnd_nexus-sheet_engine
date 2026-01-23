@@ -1,6 +1,6 @@
 {
   "name": "dnd-nexus",
-  "version": "1.7.18",
+  "version": "1.7.19",
   "description": "D&D 5e 2024 Character Sheet Manager",
   "type": "module",
   "scripts": {
@@ -9,9 +9,9 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build",
-    "tauri:build:msi": "tauri build --bundles msi",
-    "tauri:build:nsis": "tauri build --bundles nsis",
+    "tauri:build": "pnpm db:pull && tauri build",
+    "tauri:build:msi": "pnpm db:pull && tauri build --bundles msi",
+    "tauri:build:nsis": "pnpm db:pull && tauri build --bundles nsis",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
