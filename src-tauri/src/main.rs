@@ -18,6 +18,11 @@ fn main() {
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_fs::init())
         .setup(|app: &mut tauri::App| {
+            // 1. Logging initialisieren (so früh wie möglich)
+            if let Err(e) = commands::logging::init_logging(app.handle()) {
+                eprintln!("Konnte Logging nicht initialisieren: {}", e);
+            }
+
             // Menü initialisieren
             let menu = menu::build_menu(app.handle())?;
             app.set_menu(menu)?;
@@ -29,8 +34,28 @@ fn main() {
             // ... (menu setup)
 
             // Datenbank initialisieren
-            let database = db::init_database(app.handle())?;
-            app.manage(database);
+            match db::init_database(app.handle()) {
+                Ok(database) => {
+                    app.manage(database);
+                }
+                Err(e) => {
+                    let err_msg = format!("Datenbank-Fehler: {}\n\nDie Anwendung muss beendet werden.", e);
+                    eprintln!("{}", err_msg);
+                    
+                    // Zeige nativen Fehler-Dialog
+                    use tauri_plugin_dialog::DialogExt;
+                    app.dialog()
+                        .message(&err_msg)
+                        .title("D&D Nexus - Startfehler")
+                        .kind(tauri_plugin_dialog::MessageDialogKind::Error)
+                        .show(|_| {
+                            std::process::exit(1);
+                        });
+                    
+                    // Sicherheitshalber (falls Dialog nicht blockiert oder asynchron ist)
+                    // In Tauri 2 ist .show() asynchron für Mobile, aber auf Desktop oft blockierend oder via Callback.
+                }
+            }
             
             Ok(())
         })

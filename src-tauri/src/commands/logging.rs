@@ -4,6 +4,27 @@ use std::fs::OpenOptions;
 use std::io::Write;
 use tauri::{AppHandle, Manager};
 
+pub fn init_logging(app: &AppHandle) -> Result<(), String> {
+    let app_data_dir = app.path().app_data_dir()
+        .map_err(|e| format!("Failed to get app data dir: {}", e))?;
+    
+    std::fs::create_dir_all(&app_data_dir)
+        .map_err(|e| format!("Failed to create app data dir: {}", e))?;
+    
+    let log_file_path = app_data_dir.join("dnd-nexus.log");
+    let mut file = OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(&log_file_path)
+        .map_err(|e| format!("Failed to open log file: {}", e))?;
+    
+    let timestamp = chrono::Local::now().format("%Y-%m-%d %H:%M:%S");
+    writeln!(file, "\n--- APPLICATION START: {} ---", timestamp)
+        .map_err(|e| format!("Failed to write to log file: {}", e))?;
+    
+    Ok(())
+}
+
 #[tauri::command]
 pub fn write_log(app: AppHandle, log_entry: String) -> Result<(), String> {
     let app_data_dir = app.path().app_data_dir()

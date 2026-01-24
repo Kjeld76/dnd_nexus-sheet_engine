@@ -8,6 +8,8 @@ und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v
 ## [Unreleased]
 ### 
 - **Autonom:**  (via Swarm Agent)
+### 
+- **Autonom:**  (via Swarm Agent)
 ### Added
 - **Sage-Agent:** System zur PHB 2024 Regelverifizierung.
 - **PDF-Engine:** High-Fidelity PDF-Parsing-Modul in Rust (`pdf-extract`).

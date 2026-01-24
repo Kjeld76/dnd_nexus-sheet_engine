@@ -22,9 +22,22 @@ pub fn init_database(_app: &AppHandle) -> Result<Database, String> {
 
     // Pfad 0: Tauri Resource Directory (Wichtig für Produktion/Release)
     if let Ok(resource_dir) = _app.path().resource_dir() {
+        // Variante A: Direkt im resource_dir
         let db_path = resource_dir.join("dnd-nexus.db");
         if db_path.exists() {
             project_db_paths.push(db_path);
+        }
+        
+        // Variante B: Im resources Unterordner
+        let db_path_res = resource_dir.join("resources").join("dnd-nexus.db");
+        if db_path_res.exists() {
+            project_db_paths.push(db_path_res);
+        }
+
+        // Variante C: Relative Pfade im Bundle (Windows)
+        let db_path_bundle = resource_dir.join("_up_").join("dnd-nexus.db");
+        if db_path_bundle.exists() {
+            project_db_paths.push(db_path_bundle);
         }
     }
     
