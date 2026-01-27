@@ -6,25 +6,25 @@ Das Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/),
 und dieses Projekt hält sich an [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### 
-- **Autonom:**  (via Swarm Agent)
-### 
-- **Autonom:**  (via Swarm Agent)
-### 
-- **Autonom:**  (via Swarm Agent)
 ### Added
 - **Sage-Agent:** System zur PHB 2024 Regelverifizierung.
 - **PDF-Engine:** High-Fidelity PDF-Parsing-Modul in Rust (`pdf-extract`).
 - **Architecture:** Math-Registry (`docs/math_registry.md`) für zentrale Formel-Validation.
+- **Compendium:** Deep-Linking für Items in Ausrüstungspaketen - Klick auf Items öffnet nun die Item-Details direkt.
+- **Database:** Vollständige Normalisierung von Equipment-Bundles (JSON → relationale n:m-Tabellen).
 
 ### Fixed
 - **Mathematik:** Konsistenzprüfung aller Kern-Formeln gegen das 2024er Regelwerk.
 - **Backend:** Mathematische Integrität gegen PHB 2024 verifiziert & Backend Cleanup.
+- **Compendium:** Duplikate in Ausrüstungspaketen entfernt (z.B. "abdeckbare-laterne" vs. "abdeckbare_laterne").
+- **Compendium:** Item-Mengen werden nun korrekt als eigenständiges Attribut behandelt (nicht Teil des Item-Namens).
+- **UI:** ClickableStatRow-Komponente nutzt nun Item-IDs statt Namen für zuverlässiges Deep-Linking.
 
 ### Changed
 - **UI:** UI-Sperre (readOnly) für abgeleitete Werte zur Vermeidung von Fehlberechnungen.
 - **UI:** Versiegelung der UI-Komponenten gegen Layout-Regressionen.
 - **Code Quality:** Comprehensive cleanup of TypeScript lint errors (resolved `any` types in core components and scripts).
+- **Database:** Equipment-Bundle-Daten werden nun aus relationalen Tabellen geladen (`core_equipment_items`, `core_equipment_tools`).
 
 
 

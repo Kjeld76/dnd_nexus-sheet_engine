@@ -128,6 +128,8 @@ D&D Nexus ist eine moderne Desktop-Anwendung zur Verwaltung von D&D 5e Charakter
 - **Werkzeuge (Tools)**: Werkzeuginformationen
 - **Gegenstände (Items)**: Verschiedene Gegenstände und Ausrüstung
 - **Ausrüstungspakete (Equipment)**: Vorgefertigte Ausrüstungspakete (z.B. Entdeckerausrüstung)
+  - **Deep-Linking**: Klick auf Items in Paketen öffnet direkt die Item-Details
+  - **Normalisierte Daten**: Items und Werkzeuge aus relationalen Tabellen
 - **Talente (Feats)**: Alle verfügbaren Talente
 - **Fertigkeiten (Skills)**: Fertigkeitsinformationen
 - **Hintergründe (Backgrounds)**: Vollständige Hintergrund-Informationen

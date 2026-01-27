@@ -107,6 +107,13 @@
   - Normalisierung von `core_equipment` (JSON-Arrays → relationale Tabellen)
   - Custom-Varianten für magische Items erstellt (konsistente Struktur)
   - Views für einheitliche Abfragen implementiert
+  - Equipment-Bundle-Normalisierung: `core_equipment_items` und `core_equipment_tools` Tabellen
+  - Duplikate in Equipment-Bundles entfernt (ID-Normalisierung)
+- [x] **Compendium - Equipment Bundles:**
+  - Deep-Linking für Items in Ausrüstungspaketen implementiert
+  - ClickableStatRow-Komponente refactored (Item-IDs statt Namen)
+  - URL-basierte Navigation zu spezifischen Items (`?tab=items&id=karte`)
+  - Item-Mengen als eigenständiges Attribut (nicht Teil des Item-Namens)
 - [x] **Combat-Seite - HP-Management:**
   - HP-Anzeige erweitern: Aktuelle HP, Maximale HP, Temporäre HP
   - Hit Dice Anzeige: Verwendet/Verfügbar

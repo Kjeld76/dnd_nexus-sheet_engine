@@ -1,0 +1,297 @@
+
+> dnd-nexus@1.7.21 tauri:dev
+> tauri dev
+
+     Running BeforeDevCommand (`pnpm dev`)
+
+> dnd-nexus@1.7.21 dev /daten/projects/dnd_nexus-sheet_engine
+> vite
+
+     Running DevCommand (`cargo  run --no-default-features --color always --`)
+        Info Watching /daten/projects/dnd_nexus-sheet_engine/src-tauri for changes...
+[1m[33mwarning[0m[1m: unused imports: `Deserialize` and `Serialize`[0m
+ [1m[94m--> [0msrc/core/item_logic.rs:1:13
+  [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m use serde::{Deserialize, Serialize};
+  [1m[94m|[0m             [1m[33m^^^^^^^^^^^[0m  [1m[33m^^^^^^^^^[0m
+  [1m[94m|[0m
+  [1m[94m= [0m[1mnote[0m: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+[1m[33mwarning[0m[1m: unused import: `serde_json::Value`[0m
+ [1m[94m--> [0msrc/commands/character.rs:5:5
+  [1m[94m|[0m
+[1m[94m5[0m [1m[94m|[0m use serde_json::Value;
+  [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: variable does not need to be mutable[0m
+  [1m[94m--> [0msrc/commands/compendium.rs:80:13
+   [1m[94m|[0m
+[1m[94m80[0m [1m[94m|[0m         let mut spell_map: HashMap<String, usize> = spells_list.iter().enumerate().map(|(i, s)| (s.id.clone(), i)).collect();
+   [1m[94m|[0m             [1m[94m----[0m[1m[33m^^^^^^^^^[0m
+   [1m[94m|[0m             [1m[94m|[0m
+   [1m[94m|[0m             [1m[94mhelp: remove this `mut`[0m
+   [1m[94m|[0m
+   [1m[94m= [0m[1mnote[0m: `#[warn(unused_mut)]` (part of `#[warn(unused)]`) on by default
+
+[1m[33mwarning[0m[1m: variable does not need to be mutable[0m
+   [1m[94m--> [0msrc/commands/compendium.rs:186:13
+    [1m[94m|[0m
+[1m[94m186[0m [1m[94m|[0m         let mut species_map: HashMap<String, usize> = species_list.iter().enumerate().map(|(i, s)| (s.id.clone(), i)).collect();
+    [1m[94m|[0m             [1m[94m----[0m[1m[33m^^^^^^^^^^^[0m
+    [1m[94m|[0m             [1m[94m|[0m
+    [1m[94m|[0m             [1m[94mhelp: remove this `mut`[0m
+
+[1m[33mwarning[0m[1m: variable does not need to be mutable[0m
+   [1m[94m--> [0msrc/commands/compendium.rs:252:13
+    [1m[94m|[0m
+[1m[94m252[0m [1m[94m|[0m         let mut class_map: HashMap<String, usize> = classes_list.iter().enumerate().map(|(i, c)| (c.id.clone(), i)).collect();
+    [1m[94m|[0m             [1m[94m----[0m[1m[33m^^^^^^^^^[0m
+    [1m[94m|[0m             [1m[94m|[0m
+    [1m[94m|[0m             [1m[94mhelp: remove this `mut`[0m
+
+[1m[33mwarning[0m[1m: function `is_equipment_package` is never used[0m
+   [1m[94m--> [0msrc/db/inventory.rs:180:4
+    [1m[94m|[0m
+[1m[94m180[0m [1m[94m|[0m fn is_equipment_package(conn: &Connection, item_id: &str) -> AppResult<bool> {
+    [1m[94m|[0m    [1m[33m^^^^^^^^^^^^^^^^^^^^[0m
+    [1m[94m|[0m
+    [1m[94m= [0m[1mnote[0m: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+[1m[33mwarning[0m[1m: fields `name` and `quantity` are never read[0m
+   [1m[94m--> [0msrc/db/inventory.rs:257:9
+    [1m[94m|[0m
+[1m[94m256[0m [1m[94m|[0m pub struct BackgroundItemInput {
+    [1m[94m|[0m            [1m[94m-------------------[0m [1m[94mfields in this struct[0m
+[1m[94m257[0m [1m[94m|[0m     pub name: String,
+    [1m[94m|[0m         [1m[33m^^^^[0m
+[1m[94m258[0m [1m[94m|[0m     pub quantity: i32,
+    [1m[94m|[0m         [1m[33m^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: function `resolve_item_id_by_name` is never used[0m
+   [1m[94m--> [0msrc/db/inventory.rs:272:4
+    [1m[94m|[0m
+[1m[94m272[0m [1m[94m|[0m fn resolve_item_id_by_name(conn: &Connection, name: &str) -> Option<String> {
+    [1m[94m|[0m    [1m[33m^^^^^^^^^^^^^^^^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: function `add_package_items` is never used[0m
+   [1m[94m--> [0msrc/db/inventory.rs:286:4
+    [1m[94m|[0m
+[1m[94m286[0m [1m[94m|[0m fn add_package_items(conn: &Connection, char_id: &str, equipment_id: &str, source: &str, location: &str) -> AppResult<()> {
+    [1m[94m|[0m    [1m[33m^^^^^^^^^^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: function `add_single_item` is never used[0m
+   [1m[94m--> [0msrc/db/inventory.rs:317:4
+    [1m[94m|[0m
+[1m[94m317[0m [1m[94m|[0m fn add_single_item(
+    [1m[94m|[0m    [1m[33m^^^^^^^^^^^^^^^[0m
+
+[1m[33mwarning[0m[1m: method `is_equippable` is never used[0m
+  [1m[94m--> [0msrc/core/types.rs:37:12
+   [1m[94m|[0m
+[1m[94m36[0m [1m[94m|[0m impl EquippableCategory {
+   [1m[94m|[0m [1m[94m-----------------------[0m [1m[94mmethod in this implementation[0m
+[1m[94m37[0m [1m[94m|[0m     pub fn is_equippable(&self) -> bool {
+   [1m[94m|[0m            [1m[33m^^^^^^^^^^^^^[0m
+
+[1m[33mwarning[0m: `dnd-nexus` (bin "dnd-nexus") generated 11 warnings (run `cargo fix --bin "dnd-nexus" -p dnd-nexus` to apply 5 suggestions)
+[1m[92m    Finished[0m ]8;;https://doc.rust-lang.org/cargo/reference/profiles.html#default-profiles\`dev` profile [unoptimized]]8;;\ target(s) in 0.41s
+[1m[92m     Running[0m `target/debug/dnd-nexus`
+✅ Verwende Datenbank: /home/entwickler/.local/share/com.dndnexus.app/dnd-nexus.db
+Datenbank-Fehler: Datenbank-Migration fehlgeschlagen: Migration error: no such column: data in 
+        
+        -- Update weapon data with complete information from PHB 2024
+        -- EINFACHE NAHKAMPFWAFFEN
+        UPDATE core_weapons SET data = json_set(json_set(json_set(data, '$.properties', json('["light", "thrown"]')), '$.thrown_range', json('{"normal": 6, "max": 18}')), '$.source_page', 213) WHERE name = 'Beil';
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(data, '$.properties', json('["finesse", "light", "thrown"]')), '$.thrown_range', json('{"normal": 6, "max": 18}')), '$.source_page', 213), '$.property_details', json('{}')) WHERE name = 'Dolch';
+        UPDATE core_weapons SET data = json_set(json_set(data, '$.properties', json('["versatile"]')), '$.versatile_damage', '1W8') WHERE name = 'Kampfstab';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["light"]')) WHERE name = 'Knüppel';
+        UPDATE core_weapons SET data = json_set(json_set(json_set(data, '$.properties', json('["light", "thrown"]')), '$.thrown_range', json('{"normal": 6, "max": 18}')), '$.source_page', 213) WHERE name IN ('Leichter Hammer', 'leichter Hammer');
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["light"]')) WHERE name = 'Sichel';
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(data, '$.properties', json('["versatile", "thrown"]')), '$.versatile_damage', '1W8'), '$.thrown_range', json('{"normal": 6, "max": 18}')), '$.source_page', 213) WHERE name = 'Speer';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('[]')) WHERE name = 'Streitkolben';
+        UPDATE core_weapons SET data = json_set(json_set(json_set(data, '$.properties', json('["thrown"]')), '$.thrown_range', json('{"normal": 9, "max": 36}')), '$.source_page', 213) WHERE name = 'Wurfspeer';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["two-handed"]')) WHERE name = 'Zweihandknüppel';
+        
+        -- EINFACHE FERNKAMPFWAFFEN
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(data, '$.properties', json('["ammunition", "two-handed"]')), '$.range', json('{"normal": 24, "max": 96}')), '$.ammunition_type', 'Pfeil'), '$.source_page', 213) WHERE name = 'Kurzbogen';
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(json_set(data, '$.properties', json('["ammunition", "loading", "two-handed"]')), '$.range', json('{"normal": 24, "max": 96}')), '$.ammunition_type', 'Bolzen'), '$.source_page', 213), '$.property_details', json('{}')) WHERE name IN ('Leichte Armbrust', 'leichte Armbrust');
+        -- Schleuder: Geschosse (Reichweite 9/36, Kugel) - Gewicht fehlt in Tabelle, setze auf 0
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(data, '$.properties', json('["ammunition"]')), '$.range', json('{"normal": 9, "max": 36}')), '$.ammunition_type', 'Kugel'), '$.source_page', 213) WHERE name = 'Schleuder';
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(data, '$.properties', json('["finesse", "thrown"]')), '$.thrown_range', json('{"normal": 6, "max": 18}')), '$.source_page', 213), '$.property_details', json('{}')) WHERE name = 'Wurfpfeil';
+        
+        -- NAHKAMPF KRIEGSWAFFEN
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(data, '$.properties', json('["versatile", "thrown"]')), '$.versatile_damage', '1W10'), '$.thrown_range', json('{"normal": 6, "max": 18}')), '$.source_page', 213) WHERE name = 'Dreizack';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('[]')) WHERE name = 'Flegel';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["heavy", "reach", "two-handed"]')) WHERE name = 'Glefe';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["heavy", "reach", "two-handed"]')) WHERE name = 'Hellebarde';
+        UPDATE core_weapons SET data = json_set(json_set(data, '$.properties', json('["versatile"]')), '$.versatile_damage', '1W10') WHERE name = 'Kriegshammer';
+        UPDATE core_weapons SET data = json_set(json_set(data, '$.properties', json('["versatile"]')), '$.versatile_damage', '1W10') WHERE name = 'Kriegspicke';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["finesse", "light"]')) WHERE name = 'Krummsäbel';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["finesse", "light"]')) WHERE name = 'Kurzschwert';
+        UPDATE core_weapons SET data = json_set(json_set(data, '$.properties', json('["versatile"]')), '$.versatile_damage', '1W10') WHERE name = 'Langschwert';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["heavy", "reach", "two-handed"]')) WHERE name = 'Lanze';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('[]')) WHERE name = 'Morgenstern';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["finesse", "reach"]')) WHERE name = 'Peitsche';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["heavy", "reach", "two-handed"]')) WHERE name = 'Pike';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["finesse"]')) WHERE name = 'Rapier';
+        UPDATE core_weapons SET data = json_set(json_set(data, '$.properties', json('["versatile"]')), '$.versatile_damage', '1W10') WHERE name = 'Streitaxt';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["heavy", "two-handed"]')) WHERE name = 'Zweihandaxt';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["heavy", "two-handed"]')) WHERE name = 'Zweihandhammer';
+        UPDATE core_weapons SET data = json_set(data, '$.properties', json('["heavy", "two-handed"]')) WHERE name = 'Zweihandschwert';
+        
+        -- FERNKAMPF KRIEGSWAFFEN
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(data, '$.properties', json('["ammunition", "loading"]')), '$.range', json('{"normal": 7.5, "max": 30}')), '$.ammunition_type', 'Blasrohrpfeil'), '$.source_page', 213) WHERE name = 'Blasrohr';
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(json_set(data, '$.properties', json('["ammunition", "light", "loading"]')), '$.range', json('{"normal": 9, "max": 36}')), '$.ammunition_type', 'Bolzen'), '$.source_page', 213), '$.property_details', json('{}')) WHERE name = 'Handarmbrust';
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(json_set(data, '$.properties', json('["ammunition", "heavy", "two-handed"]')), '$.range', json('{"normal": 45, "max": 180}')), '$.ammunition_type', 'Pfeil'), '$.source_page', 213), '$.property_details', json('{}')) WHERE name = 'Langbogen';
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(json_set(data, '$.properties', json('["ammunition", "loading", "two-handed"]')), '$.range', json('{"normal": 12, "max": 36}')), '$.ammunition_type', 'Kugel'), '$.source_page', 213), '$.property_details', json('{}')) WHERE name = 'Muskete';
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(data, '$.properties', json('["ammunition", "loading"]')), '$.range', json('{"normal": 9, "max": 27}')), '$.ammunition_type', 'Kugel'), '$.source_page', 213) WHERE name = 'Pistole';
+        UPDATE core_weapons SET data = json_set(json_set(json_set(json_set(json_set(data, '$.properties', json('["ammunition", "loading", "heavy", "two-handed"]')), '$.range', json('{"normal": 30, "max": 120}')), '$.ammunition_type', 'Bolzen'), '$.source_page', 213), '$.property_details', json('{}')) WHERE name = 'Schwere Armbrust';
+        
+        -- Stelle sicher, dass source_page für alle Waffen gesetzt ist
+        UPDATE core_weapons SET data = json_set(data, '$.source_page', 213) WHERE json_extract(data, '$.source_page') IS NULL;
+        
+
+
+        -- Character Inventory (Normalized)
+        CREATE TABLE IF NOT EXISTS character_inventory (
+            id TEXT PRIMARY KEY,
+            character_id TEXT NOT NULL,
+            item_id TEXT NOT NULL,
+            item_type TEXT NOT NULL CHECK(item_type IN ('core_item', 'custom_item', 'core_weapon', 'custom_weapon', 'core_armor', 'custom_armor', 'core_magic_item', 'custom_magic_item')),
+            quantity INTEGER NOT NULL DEFAULT 1,
+            is_equipped BOOLEAN NOT NULL DEFAULT 0,
+            container_id TEXT, -- For nested containers
+            custom_name TEXT, 
+            custom_description TEXT,
+            is_attuned BOOLEAN NOT NULL DEFAULT 0,
+            data JSON,        -- Container-specific data or overrides
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE,
+            FOREIGN KEY (container_id) REFERENCES character_inventory(id) ON DELETE SET NULL
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_inv_character ON character_inventory(character_id);
+        CREATE INDEX IF NOT EXISTS idx_inv_container ON character_inventory(container_id);
+
+        -- Character Spells (Normalized)
+        CREATE TABLE IF NOT EXISTS character_spells (
+            id TEXT PRIMARY KEY,
+            character_id TEXT NOT NULL,
+            spell_id TEXT NOT NULL,
+            is_prepared BOOLEAN NOT NULL DEFAULT 0,
+            is_always_prepared BOOLEAN NOT NULL DEFAULT 0,
+            source TEXT, -- e.g. 'class', 'race', 'feat', 'item'
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_spells_character ON character_spells(character_id);
+
+        -- Character Proficiencies (Normalized)
+        CREATE TABLE IF NOT EXISTS character_proficiencies (
+            id TEXT PRIMARY KEY,
+            character_id TEXT NOT NULL,
+            type TEXT NOT NULL CHECK(type IN ('skill', 'saving_throw', 'weapon', 'armor', 'tool', 'language')),
+            ref_id TEXT NOT NULL,
+            source TEXT, -- e.g. 'class', 'race', 'feat', 'item'
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_prof_character ON character_proficiencies(character_id);
+
+        -- Character Features (Normalized)
+        CREATE TABLE IF NOT EXISTS character_features (
+            id TEXT PRIMARY KEY,
+            character_id TEXT NOT NULL,
+            feature_id TEXT NOT NULL,
+            source TEXT, -- e.g. 'class', 'race', 'feat', 'item'
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_features_character ON character_features(character_id);
+
+        -- Character Modifiers (Normalized)
+        CREATE TABLE IF NOT EXISTS character_modifiers (
+            id TEXT PRIMARY KEY,
+            character_id TEXT NOT NULL,
+            source TEXT NOT NULL, -- e.g. 'feat:tough', 'item:ring_of_protection'
+            target TEXT NOT NULL, -- e.g. 'hp_max', 'ac', 'str'
+            modifier_type TEXT NOT NULL CHECK(modifier_type IN ('Override', 'Add', 'Multiply')),
+            value INTEGER NOT NULL,
+            condition TEXT,
+            created_at INTEGER DEFAULT (unixepoch()),
+            updated_at INTEGER DEFAULT (unixepoch()),
+            FOREIGN KEY (character_id) REFERENCES characters(id) ON DELETE CASCADE
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_modifiers_character ON character_modifiers(character_id);
+
+        -- View for backward compatibility (Phase 2)
+        DROP VIEW IF EXISTS character_inventory_legacy_view;
+        CREATE VIEW character_inventory_legacy_view AS
+        SELECT 
+            character_id,
+            json_group_array(
+                json_object(
+                    'id', id,
+                    'item_id', item_id,
+                    'item_type', item_type,
+                    'quantity', quantity,
+                    'is_equipped', is_equipped,
+                    'container_id', container_id,
+                    'custom_name', custom_name,
+                    'custom_description', custom_description,
+                    'data', json(data)
+                )
+            ) as inventory_json
+        FROM character_inventory
+        GROUP BY character_id;
+
+        -- Mission: Equippable Item System
+        CREATE VIEW all_equippable_items AS
+        SELECT id, name, 'weapon' as eq_category, 'core_weapon' as source_type FROM core_weapons
+        UNION ALL
+        SELECT id, name, 'weapon' as eq_category, 'custom_weapon' as source_type FROM custom_weapons
+        UNION ALL
+        SELECT id, name, 'armor' as eq_category, 'core_armor' as source_type FROM core_armors
+        UNION ALL
+        SELECT id, name, 'armor' as eq_category, 'custom_armor' as source_type FROM custom_armors
+        UNION ALL
+        SELECT id, name, 'magic' as eq_category, 'core_magic' as source_type FROM core_mag_items_base
+        WHERE category IN ('Weapon', 'Armor', 'Ring', 'Amulet', 'Wand', 'Staff', 'Rod', 'Focus')
+        UNION ALL
+        SELECT id, name, 'magic' as eq_category, 'custom_magic' as source_type FROM custom_mag_items_base
+        WHERE category IN ('Weapon', 'Armor', 'Ring', 'Amulet', 'Wand', 'Staff', 'Rod', 'Focus');
+
+        CREATE INDEX IF NOT EXISTS idx_inventory_equipped_sync ON character_inventory(character_id, is_equipped, item_type);
+
+
+        COMMIT; at offset 181
+
+Die Anwendung muss beendet werden.
+        Info File src-tauri/src/db/migrations.rs changed. Rebuilding application...
+     Running DevCommand (`cargo  run --no-default-features --color always --`)
+[1m[92m   Compiling[0m dnd-nexus v1.7.21 (/daten/projects/dnd_nexus-sheet_engine/src-tauri)
+[1m[96m    Building[0m [=======================> ] 510/511: dnd-nexus(bin)              [K[1m[33mwarning[0m[1m: unused imports: `Deserialize` and `Serialize`[0m
+ [1m[94m--> [0msrc/core/item_logic.rs:1:13
+  [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m use serde::{Deserialize, Serialize};
+  [1m[94m|[0m             [1m[33m^^^^^^^^^^^[0m  [1m[33m^^^^^^^^^[0m
+  [1m[94m|[0m
+  [1m[94m= [0m[1mnote[0m: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+[1m[96m    Building[0m [=======================> ] 510/511: dnd-nexus(bin)              [K[1m[33mwarning[0m[1m: unused import: `serde_json::Value`[0m
+ [1m[94m--> [0msrc/commands/character.rs:5:5
+  [1m[94m|[0m
+[1m[94m5[0m [1m[94m|[0m use serde_json::Value;
+  [1m[94m|[0m     [1m[33m^^^^^^^^^^^^^^^^^[0m
+
+[1m[96m    Building[0m [=======================> ] 510/511: dnd-nexus(bin)               ELIFECYCLE  Command failed.
+Terminated
+       Error The "beforeDevCommand" terminated with a non-zero status code.

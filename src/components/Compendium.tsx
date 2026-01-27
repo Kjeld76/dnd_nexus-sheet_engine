@@ -50,7 +50,6 @@ import {
   getWeaponMasteryName,
 } from "./compendium/compendiumUtils";
 import type {
-  ClickableItem,
   CompendiumEntry,
   IconType,
   SubclassWithFeatures,
@@ -2165,11 +2164,11 @@ export function Compendium() {
                                       const item = items.find(
                                         (it) => it.id === i.item_id,
                                       );
-                                      return item
+                                      const displayName = item
                                         ? `${i.quantity > 1 ? `${i.quantity}x ` : ""}${item.name}`
                                         : `${i.quantity > 1 ? `${i.quantity}x ` : ""}${i.item_id}`;
+                                      return { id: i.item_id, displayName };
                                     })}
-                                    itemsData={items}
                                     onItemClick={(id) => {
                                       setActiveTab("items");
                                       setSelectedId(id);
@@ -2186,11 +2185,11 @@ export function Compendium() {
                                       const tool = tools.find(
                                         (to) => to.id === t.tool_id,
                                       );
-                                      return tool
+                                      const displayName = tool
                                         ? `${t.quantity > 1 ? `${t.quantity}x ` : ""}${tool.name}`
                                         : `${t.quantity > 1 ? `${t.quantity}x ` : ""}${t.tool_id}`;
+                                      return { id: t.tool_id, displayName };
                                     })}
-                                    itemsData={tools}
                                     onItemClick={(id) => {
                                       setActiveTab("tools");
                                       setSelectedId(id);
@@ -2400,8 +2399,15 @@ export function Compendium() {
                               {bg.data?.skills && bg.data.skills.length > 0 && (
                                 <ClickableStatRow
                                   label="Fertigkeiten"
-                                  items={bg.data.skills}
-                                  itemsData={skills}
+                                  items={bg.data.skills.map((s) => {
+                                    const found = skills.find(
+                                      (sk) => sk.name === s,
+                                    );
+                                    return {
+                                      id: found?.id || s,
+                                      displayName: s,
+                                    };
+                                  })}
                                   onItemClick={(id) => {
                                     setActiveTab("skills");
                                     setSelectedId(id);
@@ -2413,8 +2419,13 @@ export function Compendium() {
                               {bg.data?.tool && (
                                 <ClickableStatRow
                                   label="Werkzeug"
-                                  items={[formatBackgroundTool(bg.data.tool)]}
-                                  itemsData={tools}
+                                  items={[
+                                    {
+                                      displayName: formatBackgroundTool(
+                                        bg.data.tool,
+                                      ),
+                                    },
+                                  ]}
                                   onItemClick={(id: string) => {
                                     setActiveTab("tools");
                                     setSelectedId(id);
@@ -2425,8 +2436,14 @@ export function Compendium() {
                               {bg.data?.feat && (
                                 <ClickableStatRow
                                   label="Herkunftstalent"
-                                  items={[bg.data.feat]}
-                                  itemsData={feats}
+                                  items={[
+                                    {
+                                      id: feats.find(
+                                        (f) => f.name === bg.data.feat,
+                                      )?.id,
+                                      displayName: bg.data.feat,
+                                    },
+                                  ]}
                                   onItemClick={(id: string) => {
                                     setActiveTab("feats");
                                     setSelectedId(id);
@@ -2452,13 +2469,15 @@ export function Compendium() {
                                         typeof bg.data.equipment_id === "string"
                                           ? bg.data.equipment_id
                                           : "";
-                                      return (
+                                      const displayName =
                                         equipment.find((eq) => eq.id === eqId)
-                                          ?.name || eqId
-                                      );
+                                          ?.name || eqId;
+                                      return {
+                                        id: eqId,
+                                        displayName,
+                                      };
                                     })(),
                                   ]}
-                                  itemsData={equipment}
                                   onItemClick={(id) => {
                                     setActiveTab("equipment");
                                     setSelectedId(id);
@@ -3007,23 +3026,16 @@ function StatRow({
 function ClickableStatRow({
   label,
   items,
-  itemsData,
   onItemClick,
   highlight = false,
   icon: Icon,
 }: {
   label: string;
-  items: string[];
-  itemsData: ClickableItem[];
+  items: { id?: string | null; displayName: string }[];
   onItemClick: (id: string) => void;
   highlight?: boolean;
   icon?: IconType;
 }) {
-  const findItemId = (itemName: string): string | null => {
-    const found = itemsData.find((item) => item.name === itemName);
-    return found?.id || null;
-  };
-
   return (
     <div className="flex flex-col gap-4 group">
       <div className="flex items-center gap-3">
@@ -3038,18 +3050,12 @@ function ClickableStatRow({
         </span>
       </div>
       <div className="flex flex-wrap gap-2">
-        {items.map((itemName, idx) => {
-          const itemId = findItemId(itemName);
-          const isClickable = itemId !== null;
-
+        {items.map((item, idx) => {
+          const isClickable = !!item.id;
           return (
             <span
               key={idx}
-              onClick={() => {
-                if (isClickable) {
-                  onItemClick(itemId);
-                }
-              }}
+              onClick={() => isClickable && item.id && onItemClick(item.id)}
               className={cn(
                 "text-lg font-bold tracking-tighter transition-all leading-none",
                 highlight
@@ -3059,7 +3065,7 @@ function ClickableStatRow({
                   "cursor-pointer hover:text-primary hover:underline decoration-primary/50 decoration-2 underline-offset-2",
               )}
             >
-              {itemName}
+              {item.displayName}
               {idx < items.length - 1 && (
                 <span className="text-muted-foreground/40 mx-1">,</span>
               )}
